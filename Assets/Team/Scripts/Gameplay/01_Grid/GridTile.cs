@@ -24,7 +24,9 @@ namespace Team.Gameplay.GridSystem
 
     public class GridTile : MonoBehaviour
     {
-        public Vector2 GridID; // Position . TODO: Update it to highlight position properly in vector?
+        public TileID TileID; // ID of the tile in the grid
+
+        public Vector3 TilePosition => transform.position;
 
         public GameObject tilePrefab;
 
@@ -33,7 +35,7 @@ namespace Team.Gameplay.GridSystem
         public TileDirection Direction; //Rotation 
 
         [SerializeField]
-        private Sc_GridManager gridManager;
+        private GridManager gridManager;
 
         [SerializeField]
         private GameObject tileObject = null; //The created tile object
@@ -41,12 +43,14 @@ namespace Team.Gameplay.GridSystem
         /// <summary>
         /// Initialize the tile
         /// </summary>
-        public bool Init(Sc_GridManager _gridManager)
+        public bool Init(GridManager _gridManager, TileID _tileId)
         {
             gridManager = _gridManager;
 
+            TileID = _tileId;
+
             //Check if spawn tile
-            if (ShouldSpawnTile())
+            if (IsTileWalkable())
             {
                 tileObject = SpawnTileObject();
 
@@ -68,7 +72,7 @@ namespace Team.Gameplay.GridSystem
             return Instantiate(tilePrefab, transform);
         }
 
-        private bool ShouldSpawnTile()
+        private bool IsTileWalkable()
         {
             return tileType == TileType.TILE;
         }
@@ -79,15 +83,15 @@ namespace Team.Gameplay.GridSystem
             tileType = TileType.EMPTY;
             DestroyImmediate(tileObject);
             tileObject = null;
-            gridManager?.RemoveTileFromGrid(this);
+            gridManager?.RemoveTileFromGrid(TileID,this);
         }
 
         [ContextMenu("Set Tile to Object")]
         public void SetTileObject()
         {
             tileType = TileType.TILE;
-            SpawnTileObject();
-            gridManager?.AddTileToGrid(this);
+            tileObject = SpawnTileObject();
+            gridManager?.AddTileToGrid(TileID, this);
         }
     }
 }

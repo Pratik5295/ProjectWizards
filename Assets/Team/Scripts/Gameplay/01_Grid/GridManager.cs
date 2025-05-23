@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Team.Gameplay.GridSystem
 {
 
-    public class Sc_GridManager : MonoBehaviour
+    public class GridManager : MonoBehaviour
     {
         [SerializeField] private Vector2 Max_GridSize;
         [SerializeField] private float gridY = 0.5f;   //Where to spawn the grid wrt height, Default is 0.5f
@@ -21,16 +21,22 @@ namespace Team.Gameplay.GridSystem
         private List<GameObject> TileMap = new List<GameObject>();
 
         [SerializeField]
-        private List<GridTile> Grid = new List<GridTile>();
-        public List<GridTile> Grid_Acc
-        {
-            get { return Grid; }
-        }
+        private Dictionary<TileID,GridTile> Grid = new Dictionary<TileID,GridTile>();
+        
 
         private char[] gridCharArray = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J' };
 
         [SerializeField]
         private GameObject ref_gridHolder;
+
+        [ContextMenu("Print Current Grid")]
+        public void PrintGrid()
+        {
+            foreach(var tile in Grid)
+            {
+                Debug.Log($"Tile:(x ={tile.Key.x}, y= {tile.Key.y}) Value: {tile.Value.name}",tile.Value);
+            }
+        }
 
         [ContextMenu("Clear Grid")]
         public void ClearGrid()
@@ -71,24 +77,20 @@ namespace Team.Gameplay.GridSystem
                     float positionX = x * (tileSize + GridSlot_Offset);
                     float positionY = y * (tileSize + GridSlot_Offset);
 
-                    GridTile newSlot = new GridTile
-                    {
-                        GridID = new Vector2(x, y)
-                    };
-
                     //Find the random tile
                     var tileToSpawn = GetRandomTile();
 
                     var spawnedTile = SpawnTile(tileToSpawn,positionX, gridY, positionY);
                     var gridTile = spawnedTile.GetComponent<GridTile>();
-                    bool isWalkable = gridTile.Init(this); //Update this to look cleaner and error check
+                    TileID tileID = new TileID(x, y);
+                    bool isWalkable = gridTile.Init(this, tileID); //Update this to look cleaner and error check
 
-                    newSlot.tilePrefab = spawnedTile;
-                    newSlot.tilePrefab.name = $"Tile: {gridCharArray[x]} , {y}";
+                    spawnedTile.name = $"Tile: {gridCharArray[x]} {x}, {y}";
 
                     if (isWalkable)
                     {
-                        Grid.Add(newSlot);
+                        
+                        Grid.Add(tileID,gridTile);
                     }
                 }
             }
@@ -116,16 +118,16 @@ namespace Team.Gameplay.GridSystem
 
 
         //Helpers for grid creating
-        public void RemoveTileFromGrid(GridTile _tile)
+        public void RemoveTileFromGrid(TileID tileID,GridTile _tile)
         {
-            if (!Grid.Contains(_tile)) return;
-            Grid.Remove(_tile);
+            if (!Grid.ContainsKey(tileID)) return;
+            Grid.Remove(tileID);
         }
 
-        public void AddTileToGrid(GridTile _tile)
+        public void AddTileToGrid(TileID tileID, GridTile _tile)
         {
-            if (Grid.Contains(_tile)) return;
-            Grid.Add(_tile);
+            if (Grid.ContainsKey(tileID)) return;
+            Grid.Add(tileID, _tile);
         }
     }
 }
