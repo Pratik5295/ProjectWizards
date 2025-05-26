@@ -72,7 +72,7 @@ namespace Team.Gameplay.GridSystem
             return Instantiate(tilePrefab, transform);
         }
 
-        private bool IsTileWalkable()
+        public bool IsTileWalkable()
         {
             return tileType == TileType.TILE;
         }

@@ -6,6 +6,8 @@ namespace Team.Gameplay.GridSystem
 
     public class GridManager : MonoBehaviour
     {
+        public static GridManager Instance = null;
+
         [SerializeField] private Vector2 Max_GridSize;
         [SerializeField] private float gridY = 0.5f;   //Where to spawn the grid wrt height, Default is 0.5f
         [SerializeField] private float tileSize = 2f; //Width and height of the tile assuming each tile is square
@@ -28,6 +30,18 @@ namespace Team.Gameplay.GridSystem
 
         [SerializeField]
         private GameObject ref_gridHolder;
+
+        private void Awake()
+        {
+            if(Instance = null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
 
         [ContextMenu("Print Current Grid")]
         public void PrintGrid()
@@ -128,6 +142,18 @@ namespace Team.Gameplay.GridSystem
         {
             if (Grid.ContainsKey(tileID)) return;
             Grid.Add(tileID, _tile);
+        }
+
+        /// <summary>
+        /// Finds the tile associated with the given tile id
+        /// </summary>
+        /// <param name="tileID">Tile ID</param>
+        /// <returns>Returns Grid tile with id</returns>
+        public GridTile FindTile(TileID tileID)
+        {
+            if (!Grid.ContainsKey(tileID)) return null;
+
+            return Grid[tileID];
         }
     }
 }
