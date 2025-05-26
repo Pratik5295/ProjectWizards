@@ -1,72 +1,65 @@
 using System.Collections.Generic;
+using Team.Gameplay.TurnSystem;
 using UnityEngine;
 
-namespace Team.Gameplay.TurnSystem
+public class GameTurnManager : MonoBehaviour
 {
-    public class GameTurnManager : MonoBehaviour
+    private Queue<GameTurn> turnManager;
+
+    public List<GameObject> characterTurns = new List<GameObject>();
+
+    public bool HasCharacterTurns => turnManager.Count > 0;
+
+    [ContextMenu("Load all Units")]
+    public void LoadCharacterUnits()
     {
-        private TurnQueue<GameObject> turnManager;
+        if (turnManager == null)
+            turnManager = new Queue<GameTurn>();
 
-        [SerializeField] private List<GameObject> characterTurns;
-
-        public bool HasCharacterTurns => !turnManager.IsQueueEmpty();
-
-
-        [ContextMenu("Load all Units")]
-        public void LoadCharacterUnits()
+        if (HasCharacterTurns)
         {
-            if(turnManager == null) turnManager = new TurnQueue<GameObject>();
-
-            if (HasCharacterTurns)
-            {
-                //Values exist. Clear them
-                turnManager.ClearQueue();
-            }
-
-            LoadQueue();
+            turnManager.Clear();
         }
 
-        private void LoadQueue()
-        {
-            foreach (var unit in characterTurns)
-            {
-                turnManager.AddToQueue(unit);
-            }
+        LoadQueue();
+    }
 
-            Debug.Log("Loading complete");
+    public void LoadQueue()
+    {
+        foreach (var unit in characterTurns)
+        {
+            turnManager.Enqueue(unit.GetComponent<GameTurn>());
         }
 
-        [ContextMenu("Play All Turns")]
-        public void PlayTurns()
+        Debug.Log($"Loading complete: {turnManager.Count}");
+
+        foreach(var t in turnManager)
         {
-            if (turnManager.IsQueueEmpty())
-            {
-                LoadQueue();
-            }
-
-            //Till the current null is not empty, keep on pushing turns
-            while (!turnManager.IsQueueEmpty())
-            {
-                PlayNextTurn();
-            }
-
-            Debug.Log("Nothing in queue, all turns are empty");
-        }
-
-        [ContextMenu("Play Next Turns")]
-        public void PlayNextTurn()
-        {
-            if (turnManager.PeekCurrentTurn())
-            {
-                //Turn exist
-                GameObject next = turnManager.NextTurn();
-                Debug.Log($"Performing Action: {next.name}");
-            }
-            else
-            {
-                //Next turn is empty
-                Debug.Log("No action exist for next turn");
-            }
+            Debug.Log($"Turn: {t.name}");
         }
     }
+
+    [ContextMenu("Play All Turns")]
+    public async void PlayTurns()
+    {
+        Debug.Log("Starting async turn execution...");
+
+        while(turnManager.Count > 0)
+        {
+            GameTurn turn = turnManager.Dequeue();
+            await turn.PerformAsync();
+        }
+
+        Debug.Log("All turns completed.");
+    }
+
+    [ContextMenu("Play next turn")]
+    public async void PlayNextTurn()
+    {
+        GameTurn turn = turnManager.Dequeue();
+        await turn.PerformAsync();
+
+        Debug.Log("Done");
+    }
+
 }
