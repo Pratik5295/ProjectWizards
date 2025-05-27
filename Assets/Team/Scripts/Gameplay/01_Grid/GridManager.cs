@@ -51,6 +51,12 @@ namespace Team.Gameplay.GridSystem
 
         private void Start()
         {
+            //Check if the tiles are empty
+            if(tiles.Count == 0)
+            {
+                Debug.LogError("There are no tiles in the list",gameObject);
+            }
+
             InitializeDictionary();
         }
 

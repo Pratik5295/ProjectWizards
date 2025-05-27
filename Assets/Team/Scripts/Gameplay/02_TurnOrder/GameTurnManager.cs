@@ -44,6 +44,11 @@ public class GameTurnManager : MonoBehaviour
     {
         Debug.Log("Starting async turn execution...");
 
+        if(turnManager == null)
+        {
+            turnManager = new Queue<GameTurn>();
+        }
+
         if(turnManager.Count == 0)
         {
             Debug.Log("There arent any turns to perform");
@@ -66,14 +71,4 @@ public class GameTurnManager : MonoBehaviour
 
         Debug.Log("All turns completed.");
     }
-
-    [ContextMenu("Play next turn")]
-    public async void PlayNextTurn()
-    {
-        GameTurn turn = turnManager.Dequeue();
-        await turn.PerformAsync();
-
-        Debug.Log("Done");
-    }
-
 }

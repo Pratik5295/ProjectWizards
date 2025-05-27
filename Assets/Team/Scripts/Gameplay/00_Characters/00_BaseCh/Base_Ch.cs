@@ -193,7 +193,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
     public virtual void UseAbility()
     {
-        Debug.LogError($" {gameObject.name} Ability not programmed for character");
+        // Debug.LogError($" {gameObject.name} Ability not programmed for character");
+        StartCoroutine(MoveByAmount(2, new Vector2(0, 1)));
     }
 
 }
