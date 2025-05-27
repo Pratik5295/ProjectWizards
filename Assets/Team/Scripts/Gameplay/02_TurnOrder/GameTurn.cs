@@ -1,13 +1,15 @@
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 
 namespace Team.Gameplay.TurnSystem
 {
     public class GameTurn : MonoBehaviour, IGameMove
     {
-        public GameObject Character; // Could later be Base Character
+        #region Variables
+        public Base_Ch Character; // Could later be Base Character
 
         [SerializeField]
         private float duration; //Only for testing
@@ -16,15 +18,27 @@ namespace Team.Gameplay.TurnSystem
         public Action OnTurnEndedEvent;
 
         private TaskCompletionSource<bool> _turnCompletion;
+        #endregion
 
+        #region Unity Methods
+
+        private void Start()
+        {
+            if(Character == null)
+            {
+                Debug.LogError($"Game Turn: {gameObject.name} is missing character");
+            }
+        }
+        #endregion
+
+        #region Public Methods
         /// <summary>
         /// Prior to playing the move, the game checks if the said character is alive to perform the turn
         /// </summary>
         /// <returns></returns>
         public bool IsAlive()
         {
-            //TODO: Update to handle base character is alive check
-            return true;
+            return Character.IsAlive;
         }
 
         /// <summary>
@@ -37,6 +51,8 @@ namespace Team.Gameplay.TurnSystem
             _turnCompletion = new TaskCompletionSource<bool>();
 
             OnTurnStartedEvent?.Invoke();
+
+            Character.UseAbility();
 
             //Only for testing
             Invoke("TestingCompleteTurn",duration);
@@ -52,7 +68,6 @@ namespace Team.Gameplay.TurnSystem
         /// <summary>
         /// Call this when the turn is done (e.g. after animations or player input).
         /// </summary>
-        [ContextMenu("Complete turn")]
         public void CompleteTurn()
         {
             if (_turnCompletion != null && !_turnCompletion.Task.IsCompleted)
@@ -60,6 +75,8 @@ namespace Team.Gameplay.TurnSystem
                 _turnCompletion.SetResult(true);
             }
         }
+
+        #endregion
 
         /// <summary>
         /// TESTING: TO BE REMOVED

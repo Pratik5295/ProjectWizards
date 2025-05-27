@@ -44,6 +44,12 @@ public class GameTurnManager : MonoBehaviour
     {
         Debug.Log("Starting async turn execution...");
 
+        if(turnManager.Count == 0)
+        {
+            Debug.Log("There arent any turns to perform");
+            LoadQueue();
+        }
+
         while(turnManager.Count > 0)
         {
             GameTurn turn = turnManager.Dequeue();
