@@ -6,7 +6,7 @@ public class GameTurnManager : MonoBehaviour
 {
     private Queue<GameTurn> turnManager;
 
-    public List<GameObject> characterTurns = new List<GameObject>();
+    public List<GameObject> characterTurns = new List<GameObject>(); //This will be used to reset the Queue
 
     public bool HasCharacterTurns => turnManager.Count > 0;
 
@@ -47,7 +47,15 @@ public class GameTurnManager : MonoBehaviour
         while(turnManager.Count > 0)
         {
             GameTurn turn = turnManager.Dequeue();
-            await turn.PerformAsync();
+
+            if (turn.IsAlive())
+            {
+                await turn.PerformAsync();
+            }
+            else
+            {
+                Debug.Log($"{turn.name} Move character is dead, turn skipped");
+            }
         }
 
         Debug.Log("All turns completed.");
