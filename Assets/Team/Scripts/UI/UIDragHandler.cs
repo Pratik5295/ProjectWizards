@@ -1,47 +1,73 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
-namespace Team.UI
+public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    [RequireComponent(typeof(RectTransform))]
-    public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+    public Transform originalParent;
+    private CanvasGroup canvasGroup;
+    private RectTransform rectTransform;
+    private LayoutElement layoutElement;
+    private Vector2 originalPosition;
+    private int originalIndex;
+
+    void Awake()
     {
-        protected RectTransform rectTransform;
-        protected Canvas parentCanvas;
-        protected Vector2 offset;
+        rectTransform = GetComponent<RectTransform>();
+        canvasGroup = GetComponent<CanvasGroup>();
+        layoutElement = GetComponent<LayoutElement>();
+    }
 
-        protected virtual void Awake()
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        originalParent = transform.parent;
+        originalIndex = transform.GetSiblingIndex();
+        originalPosition = rectTransform.anchoredPosition;
+
+        canvasGroup.blocksRaycasts = false;
+        layoutElement.ignoreLayout = true;
+        transform.SetAsLastSibling(); // ensure it's drawn on top
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        rectTransform.position = Mouse.current.position.ReadValue();
+        layoutElement.ignoreLayout = true;
+        // Check for reorder
+        for (int i = 0; i < originalParent.childCount; i++)
         {
-            rectTransform = GetComponent<RectTransform>();
-            parentCanvas = GetComponentInParent<Canvas>();
+            if (originalParent.GetChild(i) == transform) continue;
 
-            if (parentCanvas == null)
+            RectTransform other = originalParent.GetChild(i) as RectTransform;
+            if (RectTransformUtility.RectangleContainsScreenPoint(other, Mouse.current.position.ReadValue()))
             {
-                Debug.LogError("UIDragHandler requires a Canvas parent.");
+                transform.SetSiblingIndex(i);
+                break;
             }
         }
+    }
 
-        public virtual void OnBeginDrag(PointerEventData eventData)
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        canvasGroup.blocksRaycasts = true;
+        layoutElement.ignoreLayout = false;
+
+        // Snap into position
+        transform.SetParent(originalParent);
+        rectTransform.anchoredPosition = Vector2.zero;
+        StartCoroutine(SmoothSnap());
+    }
+
+    private IEnumerator SmoothSnap()
+    {
+        Vector2 targetPos = Vector2.zero;
+        while (Vector2.Distance(rectTransform.anchoredPosition, targetPos) > 0.1f)
         {
-            rectTransform.SetAsLastSibling(); // Bring to front
+            rectTransform.anchoredPosition = Vector2.Lerp(rectTransform.anchoredPosition, targetPos, Time.deltaTime * 10f);
+            yield return null;
         }
-
-        public virtual void OnDrag(PointerEventData eventData)
-        {
-            if (parentCanvas == null) return;
-
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                parentCanvas.transform as RectTransform,
-                eventData.position,
-                parentCanvas.worldCamera,
-                out Vector2 localPoint);
-
-            rectTransform.localPosition = localPoint;
-        }
-
-        public virtual void OnEndDrag(PointerEventData eventData)
-        {
-            // Hook for subclasses
-        }
+        rectTransform.anchoredPosition = targetPos;
     }
 }
