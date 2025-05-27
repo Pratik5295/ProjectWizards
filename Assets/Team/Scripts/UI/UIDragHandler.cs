@@ -28,25 +28,42 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
         canvasGroup.blocksRaycasts = false;
         layoutElement.ignoreLayout = true;
-        transform.SetAsLastSibling(); // ensure it's drawn on top
+        transform.SetAsLastSibling(); // Ensure it's drawn on top
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        rectTransform.position = Mouse.current.position.ReadValue();
+        Vector2 mousePos = Mouse.current.position.ReadValue();
+        Vector2 newMovePos = new Vector2(rectTransform.position.x,mousePos.y);
+        rectTransform.position = newMovePos;
         layoutElement.ignoreLayout = true;
-        // Check for reorder
+
+        float draggedY = newMovePos.y;
+        int newIndex = -1;
+
         for (int i = 0; i < originalParent.childCount; i++)
         {
             if (originalParent.GetChild(i) == transform) continue;
 
             RectTransform other = originalParent.GetChild(i) as RectTransform;
-            if (RectTransformUtility.RectangleContainsScreenPoint(other, Mouse.current.position.ReadValue()))
+            float otherY = other.position.y;
+
+            //TODO: Math check make it better by using offset and considering spacing etc
+            // If mouse is above this child, insert before it
+            if (draggedY > otherY)
             {
-                transform.SetSiblingIndex(i);
+                newIndex = i;
                 break;
             }
         }
+
+        // If we didn’t find any valid spot, insert at the end
+        if (newIndex == -1)
+        {
+            newIndex = originalParent.childCount - 1;
+        }
+
+        transform.SetSiblingIndex(newIndex);
     }
 
     public void OnEndDrag(PointerEventData eventData)
