@@ -24,6 +24,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     private float OffsetValue;
     private float smoothingTime = 1f; //Time to reach the target position.
     private float currentTime; //Current elapsed Time for movement lerp.
+    private float lerpingDelayTime = 0.001f;
 
     private int movementIteration;
 
@@ -120,7 +121,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
             transform.position = Vector3.Lerp(transform.position, targetPosition, lerpAmount);
 
-            yield return new WaitForSeconds(0.001f);
+            yield return new WaitForSeconds(lerpingDelayTime);
         }
 
         if (currentTime >= smoothingTime)
