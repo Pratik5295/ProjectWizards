@@ -78,6 +78,15 @@ namespace Team.Gameplay.TurnSystem
 
         #endregion
 
+        #region Private Methods
+
+        private void InitializeCharacter()
+        {
+
+        }
+
+        #endregion
+
         /// <summary>
         /// TESTING: TO BE REMOVED
         /// </summary>
