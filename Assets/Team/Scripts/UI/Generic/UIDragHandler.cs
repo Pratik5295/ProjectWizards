@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -12,12 +13,26 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     private LayoutElement layoutElement;
     private Vector2 originalPosition;
     private int originalIndex;
+    private int newIndex; //Final index set after the drag has been completed
 
-    void Awake()
+    [SerializeField]
+    private float offsetX;
+
+    [SerializeField]
+    private float posX; //Constant x position
+
+    public Action<int> OnSiblingIndexUpdatedEvent;
+
+    protected virtual void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
         layoutElement = GetComponent<LayoutElement>();
+    }
+
+    protected virtual void Start()
+    {
+        StartCoroutine(GetAccuratePosition());
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -34,7 +49,7 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public void OnDrag(PointerEventData eventData)
     {
         Vector2 mousePos = Mouse.current.position.ReadValue();
-        Vector2 newMovePos = new Vector2(rectTransform.position.x,mousePos.y);
+        Vector2 newMovePos = new Vector2(posX, mousePos.y);
         rectTransform.position = newMovePos;
         layoutElement.ignoreLayout = true;
 
@@ -86,5 +101,21 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             yield return null;
         }
         rectTransform.anchoredPosition = targetPos;
+
+        newIndex = transform.GetSiblingIndex();
+
+        if(originalIndex != newIndex)
+        {
+            originalIndex = newIndex;
+            OnSiblingIndexUpdatedEvent?.Invoke(newIndex);
+        }
+    }
+
+    private IEnumerator GetAccuratePosition()
+    {
+        yield return new WaitForEndOfFrame(); // Wait until layout system finishes
+
+        Vector3 accurateWorldPos = rectTransform.position;
+        posX = accurateWorldPos.x + offsetX;
     }
 }

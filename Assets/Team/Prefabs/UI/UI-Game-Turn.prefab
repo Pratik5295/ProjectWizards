@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 7554951489642248323}
   - component: {fileID: 5501738679531262055}
   - component: {fileID: 6722041604154524934}
-  - component: {fileID: 2588750479764618927}
+  - component: {fileID: 5343650103381198499}
+  - component: {fileID: 1385570991418537669}
   m_Layer: 5
   m_Name: UI-Game-Turn
   m_TagString: Untagged
@@ -110,7 +111,7 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: 0
   m_LayoutPriority: 1
---- !u!114 &2588750479764618927
+--- !u!114 &5343650103381198499
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -119,7 +120,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 6258264882312573246}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43496426aaa4c8d428d7b72a338f0db9, type: 3}
+  m_Script: {fileID: 11500000, guid: e72ccda8ee31f3a4182c4f16c9070f03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   originalParent: {fileID: 0}
+  offsetX: 10
+  posX: 0
+--- !u!114 &1385570991418537669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6258264882312573246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb7aa0d32796ca34ca0f80eb7bd051db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Character: {fileID: 5271915672924904667, guid: 281cf8e21ac8ce348892f63a0067e2e9, type: 3}
+  duration: 2
