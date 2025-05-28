@@ -1,15 +1,22 @@
 using System;
 using System.Threading.Tasks;
+using Team.Gameplay.GridSystem;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 
 namespace Team.Gameplay.TurnSystem
 {
+    [DefaultExecutionOrder(3)]
     public class GameTurn : MonoBehaviour, IGameMove
     {
         #region Variables
-        public Base_Ch Character; // Could later be Base Character
+        public Base_Ch CharacterPrefab;
+
+        [SerializeField]
+        private Base_Ch characterObject;
+
+        [SerializeField]
+        private Vector2 startTileID;  //TODO: later it will come directly from SO
 
         [SerializeField]
         private float duration; //Only for testing
@@ -24,9 +31,13 @@ namespace Team.Gameplay.TurnSystem
 
         private void Start()
         {
-            if(Character == null)
+            if(CharacterPrefab == null)
             {
                 Debug.LogError($"Game Turn: {gameObject.name} is missing character");
+            }
+            else
+            {
+                InitializeCharacter();
             }
         }
         #endregion
@@ -38,7 +49,7 @@ namespace Team.Gameplay.TurnSystem
         /// <returns></returns>
         public bool IsAlive()
         {
-            return Character.IsAlive;
+            return characterObject.IsAlive;
         }
 
         /// <summary>
@@ -52,7 +63,7 @@ namespace Team.Gameplay.TurnSystem
 
             OnTurnStartedEvent?.Invoke();
 
-            Character.UseAbility();
+            characterObject.UseAbility();
 
             //Only for testing
             Invoke("TestingCompleteTurn",duration);
@@ -82,7 +93,12 @@ namespace Team.Gameplay.TurnSystem
 
         private void InitializeCharacter()
         {
+            characterObject = Instantiate(CharacterPrefab);
 
+            TileID tileID = new TileID((int)startTileID.x, (int)startTileID.y);
+            var tile = GridManager.Instance.FindTile(tileID);
+
+            characterObject.transform.position = new Vector3(tile.TilePosition.x, tile.TilePosition.y + 1f, tile.TilePosition.z);
         }
 
         #endregion
