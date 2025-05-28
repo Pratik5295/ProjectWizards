@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Team.Gameplay.GridSystem;
 using UnityEngine;
 
@@ -16,7 +18,7 @@ public class ChRotatorWizard : Base_Ch
 
     private GameObject _rotatorHolder;
 
-    private GridTile[] _tilesToMove;
+    private List<GridTile> _tilesToMove;
 
     void Start()
     {
@@ -30,6 +32,7 @@ public class ChRotatorWizard : Base_Ch
 
     public override void UseAbility()
     {
+        _tilesToMove = new List<GridTile>();
         Vector2 dirOffset = baseRotation.GetFacingDirection() * _abilityStartOffset;
         Vector2 dirOffsetAndTileID = new Vector2(currentTileID.x + dirOffset.x, currentTileID.y + dirOffset.y);
 
@@ -44,14 +47,13 @@ public class ChRotatorWizard : Base_Ch
         GridTile rightTile = ref_gridManager.FindTile(new TileID(centerTile.TileID.x + 1, centerTile.TileID.y));
         GridTile leftTile = ref_gridManager.FindTile(new TileID(centerTile.TileID.x - 1, centerTile.TileID.y));
 
-        _tilesToMove = new GridTile[5];
-        _tilesToMove[0] = centerTile;
-        _tilesToMove[1] = forwardTile;
-        _tilesToMove[2] = backwardTile;
-        _tilesToMove[3] = rightTile;
-        _tilesToMove[4] = leftTile;
+        _tilesToMove.Add(centerTile);
+        _tilesToMove.Add(forwardTile);
+        _tilesToMove.Add(backwardTile);
+        _tilesToMove.Add(rightTile);
+        _tilesToMove.Add(leftTile);
 
-        for (int i = 1; i < _tilesToMove.Length; i++)
+        for (int i = 1; i < _tilesToMove.Count; i++)
         {
             if (!_tilesToMove[i]) { return; }
         }
@@ -60,13 +62,64 @@ public class ChRotatorWizard : Base_Ch
         _rotatorHolder.transform.position = centerTile.TilePosition;
         _rotatorHolder.transform.SetParent(ref_gridManager.transform.GetChild(0));
 
-        for (int i = 0; i < _tilesToMove.Length; i++)
+        for (int i = 0; i < _tilesToMove.Count; i++)
         {
             _tilesToMove[i].transform.SetParent(_rotatorHolder.transform);
             _tilesToMove[i].gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.darkSlateGray;
         }
-
+        TileDataChanges();
         StartCoroutine(LerpUpDown(true));
+    }
+
+    private void TileDataChanges()
+    {
+
+        for(int i = 1; i < _tilesToMove.Count; i++)
+        {
+            //Remove Tiles from dictionary.
+            ref_gridManager.RemoveTileFromGrid(_tilesToMove[i].TileID, _tilesToMove[i]);
+
+            switch (i) // Change Tile ID and rename to new tile name.
+            {
+                case 1:
+                    _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x + 1, _tilesToMove[i].TileID.y - 1);
+                    _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
+                    break;
+                case 2:
+                    _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x - 1, _tilesToMove[i].TileID.y + 1);
+                    _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
+                    break;
+                case 3:
+                    _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x - 1, _tilesToMove[i].TileID.y - 1);
+                    _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
+                    break;
+                case 4:
+                    _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x + 1, _tilesToMove[i].TileID.y + 1);
+                    _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
+                    break;
+                //default:
+                //    continue;
+            }
+
+        }
+
+        for(int j = 1; j < _tilesToMove.Count; j++) //Re-add tile To dictionary, after frame has removed from dictionary.
+        {
+            ref_gridManager.AddTileToGrid(_tilesToMove[j].TileID, _tilesToMove[j]);
+        }
+    }
+
+    private void CleanUpTiles()
+    {
+        _rotatorHolder.transform.DetachChildren();
+        Destroy(_rotatorHolder);
+
+        for(int i = 0; i < _tilesToMove.Count; i++)
+        {
+            _tilesToMove[i].transform.SetParent(ref_gridManager.transform.GetChild(0));
+            _tilesToMove[i].gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.white;
+        }
+        //_tilesToMove.Clear();
     }
 
     private IEnumerator LerpUpDown(bool isLerpingUp)
@@ -91,6 +144,7 @@ public class ChRotatorWizard : Base_Ch
             yield return null;
         }
         if (isLerpingUp) { StartCoroutine(RotateLerp()); }
+        if (!isLerpingUp) { CleanUpTiles(); }
     }
 
 

@@ -21,10 +21,14 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     [Header("Movement Variables")]
     [SerializeField] protected TileID currentTileID = new TileID(0, 0);
 
+
     private float OffsetValue;
     private float smoothingTime = 1f; //Time to reach the target position.
     private float currentTime; //Current elapsed Time for movement lerp.
     private float lerpingDelayTime = 0.001f;
+    private float ydefaultOffset = 1.5f;
+
+    [SerializeField] private AnimationCurve _yMovementCurve;
 
     private int movementIteration;
 
@@ -120,7 +124,9 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
             float lerpAmount = currentTime / smoothingTime;
 
-            transform.position = Vector3.Lerp(transform.position, targetPosition, lerpAmount);
+            float positionYLerped = Mathf.Lerp(transform.position.y, ydefaultOffset + _yMovementCurve.Evaluate(currentTime), lerpAmount);
+            transform.position = new Vector3(Mathf.Lerp(transform.position.x, targetPosition.x, lerpAmount), positionYLerped, Mathf.Lerp(transform.position.z, targetPosition.z, lerpAmount));
+            //transform.position = Vector3.Lerp(positionYLerped, targetPosition, lerpAmount);
 
             yield return new WaitForSeconds(lerpingDelayTime);
         }

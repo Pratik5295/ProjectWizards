@@ -154,14 +154,19 @@ namespace Team.Gameplay.GridSystem
         //Helpers for grid creating
         public void RemoveTileFromGrid(TileID tileID,GridTile _tile)
         {
-            if (!tiles.Contains(_tile)) return;
-            tiles.Remove(_tile);
+            //if (!tiles.Contains(_tile)) { Debug.LogWarning($"I cannot remove tile: {_tile.TileID}"); return; }
+            //tiles.Remove(_tile);
+            if (!Grid.ContainsKey(tileID)) return;
+            Grid.Remove(tileID);
         }
 
         public void AddTileToGrid(TileID tileID, GridTile _tile)
         {
-            if (tiles.Contains(_tile)) return;
-            tiles.Add(_tile);
+            //if (tiles.Contains(_tile)) return;
+            //tiles.Add(_tile);
+
+            if (Grid.ContainsKey(tileID)) return;
+            Grid.Add(tileID, _tile);
         }
 
         /// <summary>
@@ -174,6 +179,11 @@ namespace Team.Gameplay.GridSystem
             if (!Grid.ContainsKey(tileID)) return null;
 
             return Grid[tileID];
+        }
+
+        public string GetNewName(int x, int y)
+        {
+            return $"Tile: {gridCharArray[x]} {x}, {y}";
         }
     }
 }

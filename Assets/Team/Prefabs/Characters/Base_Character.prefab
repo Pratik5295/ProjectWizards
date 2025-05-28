@@ -61,6 +61,7 @@ MeshRenderer:
   m_RayTraceProcedural: 0
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -146,6 +147,7 @@ MeshRenderer:
   m_RayTraceProcedural: 0
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -218,8 +220,53 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CharState: 0
-  GridManager: {fileID: 0}
+  ref_gridManager: {fileID: 0}
   baseRotation: {fileID: 933473269899832427}
+  currentTileID:
+    x: 0
+    y: 0
+  _yMovementCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.49204534
+      outSlope: 0.49204534
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.13540512
+    - serializedVersion: 3
+      time: 0.12
+      value: 1
+      inSlope: 0.033440094
+      outSlope: 0.033440094
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.049204588
+    - serializedVersion: 3
+      time: 0.220328
+      value: 0.05383192
+      inSlope: 13.863744
+      outSlope: 13.863744
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.24255118
+    - serializedVersion: 3
+      time: 0.25
+      value: 0
+      inSlope: -0.995011
+      outSlope: -0.995011
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.061452627
+      outWeight: 0
+    m_PreInfinity: 1
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &933473269899832427
 MonoBehaviour:
   m_ObjectHideFlags: 0

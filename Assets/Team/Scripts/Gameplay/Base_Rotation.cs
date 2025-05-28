@@ -18,13 +18,12 @@ public class Base_Rotation : MonoBehaviour
 
     private void Awake()
     {
-        _rotationArray[0] = new Vector2(0, 1);
+       /* _rotationArray[0] = new Vector2(0, 1);
         _rotationArray[1] = new Vector2(0, -1);
         _rotationArray[2] = new Vector2(1, 0);
-        _rotationArray[3] = new Vector2(-1, 0);
+        _rotationArray[3] = new Vector2(-1, 0);*/
 
-       //Old Code
-      /*  foreach (Enum_GridDirection dir in (Enum_GridDirection[]) Enum.GetValues(typeof(Enum_GridDirection)))
+        foreach (Enum_GridDirection dir in (Enum_GridDirection[]) Enum.GetValues(typeof(Enum_GridDirection)))
         {
             switch (dir)
             {
@@ -41,7 +40,7 @@ public class Base_Rotation : MonoBehaviour
                     _rotationDictionary.Add(dir, new Vector2(-1, 0));
                     break;
             }
-        }*/
+        }
     }
 
     public virtual void RotateToFaceDir(Vector2 dir)
@@ -81,14 +80,13 @@ public class Base_Rotation : MonoBehaviour
     {
         Vector2 direction;
 
-        return _rotationArray[(byte)dirFacing];
+        /*return _rotationArray[(byte)dirFacing];*/
         
-        //OldCode
-        /*if(!_rotationDictionary.TryGetValue(dirFacing, out direction))
+        if(!_rotationDictionary.TryGetValue(dirFacing, out direction))
         {
             Debug.LogError($"{gameObject.name} Base Rotation script couldn't output correct direction!");
             return new Vector2(0,0);
         }
-        return direction;*/
+        return direction;
     }
 }
