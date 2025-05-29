@@ -10,6 +10,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     [Header("Enumerations")]
     [SerializeField] private Enum_CharacterState CharState = Enum_CharacterState.Alive;
 
+    public bool IsAlive => CharState == Enum_CharacterState.Alive;
+
 
     [Header("Script References")]
     [SerializeField] private GridManager ref_gridManager;
@@ -191,7 +193,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
     public virtual void UseAbility()
     {
-        Debug.LogError("Ability not programmed for character");
+        // Debug.LogError($" {gameObject.name} Ability not programmed for character");
+        StartCoroutine(MoveByAmount(2, new Vector2(0, 1)));
     }
 
 }
