@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Team.Gameplay.TurnSystem;
@@ -18,6 +19,8 @@ public class GameTurnManager : MonoBehaviour
     private Transform turnHolder;
 
     public bool HasCharacterTurns => turnManager.Count > 0;
+
+    public Action OnAllTurnsCompleted;  //TODO: Update this to include the round integer
 
     #endregion
 
@@ -116,6 +119,8 @@ public class GameTurnManager : MonoBehaviour
         }
 
         Debug.Log("All turns completed.");
+
+        OnAllTurnsCompleted?.Invoke();
     }
 
     #endregion
