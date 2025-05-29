@@ -15,7 +15,11 @@ namespace Team.Gameplay.GridSystem
         {
             get { return Max_GridSize; }
         }
-        [SerializeField] private float GridSlot_Offset;
+        [SerializeField] private float gridSlot_Offset;
+        public float GridSlot_Offset
+        {
+            get { return gridSlot_Offset; }
+        }
 
         [SerializeField] private GameObject HolderPrefab;
 
@@ -23,6 +27,8 @@ namespace Team.Gameplay.GridSystem
         private List<GameObject> TileMap = new List<GameObject>();
 
         [SerializeField]
+        private List<GridTile> tiles = new List<GridTile>();
+
         private Dictionary<TileID,GridTile> Grid = new Dictionary<TileID,GridTile>();
         
 
@@ -33,7 +39,7 @@ namespace Team.Gameplay.GridSystem
 
         private void Awake()
         {
-            if(Instance = null)
+            if(Instance == null)
             {
                 Instance = this;
             }
@@ -41,6 +47,17 @@ namespace Team.Gameplay.GridSystem
             {
                 Destroy(gameObject);
             }
+        }
+
+        private void Start()
+        {
+            //Check if the tiles are empty
+            if(tiles.Count == 0)
+            {
+                Debug.LogError("There are no tiles in the list",gameObject);
+            }
+
+            InitializeDictionary();
         }
 
         [ContextMenu("Print Current Grid")]
@@ -55,7 +72,7 @@ namespace Team.Gameplay.GridSystem
         [ContextMenu("Clear Grid")]
         public void ClearGrid()
         {
-            Grid.Clear();
+            tiles.Clear();
 
             if (ref_gridHolder == null)
             {
@@ -71,11 +88,19 @@ namespace Team.Gameplay.GridSystem
 
         }
 
+        private void InitializeDictionary()
+        {
+            foreach(var item in tiles)
+            {
+                Grid.Add(item.TileID, item);
+            }
+        }
+
         //Creates Grid and fills up grid with references to tiles and locations.
         [ContextMenu("Create Grid")]
         public void CreateGrid()
         {
-            if (Grid.Count > 0 || ref_gridHolder != null || transform.childCount > 0)
+            if (tiles.Count > 0 || ref_gridHolder != null || transform.childCount > 0)
             {
                 Debug.LogError("Grid already exists, destroy the old grid first. No new grid created");
                 return;
@@ -103,8 +128,9 @@ namespace Team.Gameplay.GridSystem
 
                     if (isWalkable)
                     {
-                        
-                        Grid.Add(tileID,gridTile);
+
+                        //Grid.Add(tileID,gridTile);
+                        tiles.Add(gridTile);
                     }
                 }
             }
@@ -134,14 +160,14 @@ namespace Team.Gameplay.GridSystem
         //Helpers for grid creating
         public void RemoveTileFromGrid(TileID tileID,GridTile _tile)
         {
-            if (!Grid.ContainsKey(tileID)) return;
-            Grid.Remove(tileID);
+            if (!tiles.Contains(_tile)) return;
+            tiles.Remove(_tile);
         }
 
         public void AddTileToGrid(TileID tileID, GridTile _tile)
         {
-            if (Grid.ContainsKey(tileID)) return;
-            Grid.Add(tileID, _tile);
+            if (tiles.Contains(_tile)) return;
+            tiles.Add(_tile);
         }
 
         /// <summary>
