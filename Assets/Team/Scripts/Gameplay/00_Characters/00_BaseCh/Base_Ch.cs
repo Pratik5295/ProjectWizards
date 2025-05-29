@@ -14,19 +14,23 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
 
     [Header("Script References")]
-    [SerializeField] private GridManager ref_gridManager;
+    [SerializeField] protected GridManager ref_gridManager;
 
-    [SerializeField] private Base_Rotation baseRotation;
+    [SerializeField] protected Base_Rotation baseRotation;
 
 
 
     [Header("Movement Variables")]
-    [SerializeField] private TileID currentTileID = new TileID(0, 0);
+    [SerializeField] protected TileID currentTileID = new TileID(0, 0);
+
 
     private float OffsetValue;
     private float smoothingTime = 1f; //Time to reach the target position.
     private float currentTime; //Current elapsed Time for movement lerp.
     private float lerpingDelayTime = 0.001f;
+    private float ydefaultOffset = 1.5f;
+
+    [SerializeField] private AnimationCurve _yMovementCurve;
 
     private int movementIteration;
 
@@ -95,6 +99,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
             TileID desiredTileID = new TileID(currentTileID.x + (int)dir.x, currentTileID.y + (int)dir.y);
             GridTile targetTile = ref_gridManager.FindTile(desiredTileID);
 
+            baseRotation.RotateToFaceDir(dir);
             if (targetTile)
             {
                 Vector3 targetPosition = new Vector3(targetTile.TilePosition.x, desiredLocation.y, targetTile.TilePosition.z);
@@ -121,7 +126,9 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
             float lerpAmount = currentTime / smoothingTime;
 
-            transform.position = Vector3.Lerp(transform.position, targetPosition, lerpAmount);
+            float positionYLerped = Mathf.Lerp(transform.position.y, ydefaultOffset + _yMovementCurve.Evaluate(currentTime), lerpAmount);
+            transform.position = new Vector3(Mathf.Lerp(transform.position.x, targetPosition.x, lerpAmount), positionYLerped, Mathf.Lerp(transform.position.z, targetPosition.z, lerpAmount));
+            //transform.position = Vector3.Lerp(positionYLerped, targetPosition, lerpAmount);
 
             yield return new WaitForSeconds(lerpingDelayTime);
         }
