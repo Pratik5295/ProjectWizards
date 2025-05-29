@@ -89,4 +89,9 @@ public class Base_Rotation : MonoBehaviour
         }
         return direction;
     }
+
+    public void changeFacingDirection(Enum_GridDirection Direction)
+    {
+        dirFacing = Direction;
+    }
 }

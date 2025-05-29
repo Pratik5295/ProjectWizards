@@ -56,7 +56,7 @@ public class ChRotatorWizard : Base_Ch
         {
             if (_tilesToMove[i].ObjectOccupyingTile)
             {
-                _tilesToMove[i].ParentUnparentOccupyingObject();
+                _tilesToMove[i].ParentOccupyingObject();
             }
             _tilesToMove[i].transform.SetParent(_rotatorHolder.transform);
             _tilesToMove[i].gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.darkSlateGray;
@@ -72,22 +72,43 @@ public class ChRotatorWizard : Base_Ch
         {
             //Remove Tiles from dictionary.
             ref_gridManager.RemoveTileFromGrid(_tilesToMove[i].TileID, _tilesToMove[i]);
+            GameObject characterOnTile = null;
+            if (_tilesToMove[i].ObjectOccupyingTile && _tilesToMove[i].ObjectOccupyingTile.CompareTag("Character"))
+            {
+                characterOnTile = _tilesToMove[i].ObjectOccupyingTile;
+            }
 
             switch (i) // Change Tile ID and rename to new tile name.
             {
                 case 1:
+                    if (characterOnTile) 
+                    {
+                        characterOnTile.GetComponent<Base_Rotation>().changeFacingDirection(Enum_GridDirection.NORTH); 
+                    }
                     _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x + 1, _tilesToMove[i].TileID.y - 1);
                     _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
                     break;
                 case 2:
+                    if (characterOnTile)
+                    {
+                        characterOnTile.GetComponent<Base_Rotation>().changeFacingDirection(Enum_GridDirection.SOUTH);
+                    }
                     _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x - 1, _tilesToMove[i].TileID.y + 1);
                     _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
                     break;
                 case 3:
+                    if (characterOnTile)
+                    {
+                        characterOnTile.GetComponent<Base_Rotation>().changeFacingDirection(Enum_GridDirection.EAST);
+                    }
                     _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x - 1, _tilesToMove[i].TileID.y - 1);
                     _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
                     break;
                 case 4:
+                    if (characterOnTile)
+                    {
+                        characterOnTile.GetComponent<Base_Rotation>().changeFacingDirection(Enum_GridDirection.WEST);
+                    }
                     _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x + 1, _tilesToMove[i].TileID.y + 1);
                     _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
                     break;
@@ -112,10 +133,11 @@ public class ChRotatorWizard : Base_Ch
             if (_tilesToMove[i].ObjectOccupyingTile)
             {
                 _tilesToMove[i].ObjectOccupyingTile.GetComponent<Base_Ch>().UpdateCurrentTileID();
-                _tilesToMove[i].ParentUnparentOccupyingObject();
+                _tilesToMove[i].UnparentOccupyingObject();
             }
             _tilesToMove[i].gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.white;
         }
+        OnTurnComplete?.Invoke();
         //_tilesToMove.Clear();
     }
 

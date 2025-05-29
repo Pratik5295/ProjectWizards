@@ -89,7 +89,7 @@ namespace Team.Gameplay.GridSystem
             tileType = TileType.EMPTY;
             DestroyImmediate(tileObject);
             tileObject = null;
-            gridManager?.RemoveTileFromGrid(TileID,this);
+            gridManager?.RemoveTileFromGrid(TileID, this);
         }
 
         [ContextMenu("Set Tile to Object")]
@@ -107,12 +107,17 @@ namespace Team.Gameplay.GridSystem
             objectOccupyingTile = Object;
         }
 
-        public void ParentUnparentOccupyingObject()
+        public void ParentOccupyingObject()
         {
             if (!objectOccupyingTile.CompareTag("Character")) { return; }
-            if (objectOccupyingTile.transform.IsChildOf(transform)) { objectOccupyingTile.transform.SetParent(null); return; }
             objectOccupyingTile.transform.SetParent(transform);
 
+        }
+
+        public void UnparentOccupyingObject()
+        {
+            if (!objectOccupyingTile.CompareTag("Character")) { return; }
+            objectOccupyingTile.transform.SetParent(null);
         }
     }
 }

@@ -47,25 +47,26 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     #endregion
 
 
-    public delegate void Evnt_stateChange();
-    public event Evnt_stateChange OnStateChanged;
+    public System.Action OnStateChanged;
 
-    public delegate void Evnt_OnTurnComplete();
-    public event Evnt_OnTurnComplete OnTurnComplete;
+    public System.Action OnTurnComplete;
 
-    public void InitialiseCharacter()
+    public void InitialiseCharacter(TileID StartingTileID)
     {
         ref_gridManager = GridManager.Instance;
         OffsetValue = ref_gridManager.GridSlot_Offset;
 
         //Set _currentTileID here!!!
+        _currentTileID = StartingTileID;
         currentTile = ref_gridManager.FindTile(_currentTileID);
         currentTile.SetObjectOccupyingTile(this.gameObject);
+
+        baseRotation = GetComponent<Base_Rotation>();
     }
 
     void Start()
     {
-        InitialiseCharacter();
+        //InitialiseCharacter(_currentTileID);
     }
 
     #region Debugging Movement Button Functions
@@ -112,7 +113,6 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
             TileID desiredTileID = new TileID(_currentTileID.x + (int)dir.x, _currentTileID.y + (int)dir.y);
             GridTile targetTile = ref_gridManager.FindTile(desiredTileID);
 
-            baseRotation.RotateToFaceDir(dir);
             if (targetTile)
             {
                 Vector3 targetPosition = new Vector3(targetTile.TilePosition.x, desiredLocation.y, targetTile.TilePosition.z);
@@ -128,6 +128,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
             {
                 StartCoroutine(ShakeCharacter(0.25f));
                 alreadyMoving = false;
+                OnTurnComplete?.Invoke();
                 yield break;
             }
         }
