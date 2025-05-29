@@ -186,7 +186,7 @@ GameObject:
   - component: {fileID: 933473269899832427}
   m_Layer: 0
   m_Name: Base_Character
-  m_TagString: Untagged
+  m_TagString: Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -222,7 +222,7 @@ MonoBehaviour:
   CharState: 0
   ref_gridManager: {fileID: 0}
   baseRotation: {fileID: 933473269899832427}
-  currentTileID:
+  _currentTileID:
     x: 0
     y: 0
   _yMovementCurve:

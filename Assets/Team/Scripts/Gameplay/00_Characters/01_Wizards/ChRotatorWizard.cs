@@ -20,21 +20,11 @@ public class ChRotatorWizard : Base_Ch
 
     private List<GridTile> _tilesToMove;
 
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
-
     public override void UseAbility()
     {
         _tilesToMove = new List<GridTile>();
         Vector2 dirOffset = baseRotation.GetFacingDirection() * _abilityStartOffset;
-        Vector2 dirOffsetAndTileID = new Vector2(currentTileID.x + dirOffset.x, currentTileID.y + dirOffset.y);
+        Vector2 dirOffsetAndTileID = new Vector2(_currentTileID.x + dirOffset.x, _currentTileID.y + dirOffset.y);
 
         GridTile centerTile = ref_gridManager.FindTile(new TileID((int)dirOffsetAndTileID.x, (int)dirOffsetAndTileID.y));
         if (!centerTile)
@@ -64,6 +54,10 @@ public class ChRotatorWizard : Base_Ch
 
         for (int i = 0; i < _tilesToMove.Count; i++)
         {
+            if (_tilesToMove[i].ObjectOccupyingTile)
+            {
+                _tilesToMove[i].ParentUnparentOccupyingObject();
+            }
             _tilesToMove[i].transform.SetParent(_rotatorHolder.transform);
             _tilesToMove[i].gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.darkSlateGray;
         }
@@ -97,8 +91,6 @@ public class ChRotatorWizard : Base_Ch
                     _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x + 1, _tilesToMove[i].TileID.y + 1);
                     _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
                     break;
-                //default:
-                //    continue;
             }
 
         }
@@ -117,6 +109,11 @@ public class ChRotatorWizard : Base_Ch
         for(int i = 0; i < _tilesToMove.Count; i++)
         {
             _tilesToMove[i].transform.SetParent(ref_gridManager.transform.GetChild(0));
+            if (_tilesToMove[i].ObjectOccupyingTile)
+            {
+                _tilesToMove[i].ObjectOccupyingTile.GetComponent<Base_Ch>().UpdateCurrentTileID();
+                _tilesToMove[i].ParentUnparentOccupyingObject();
+            }
             _tilesToMove[i].gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.white;
         }
         //_tilesToMove.Clear();

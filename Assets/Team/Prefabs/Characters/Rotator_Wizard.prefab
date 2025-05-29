@@ -186,7 +186,7 @@ GameObject:
   - component: {fileID: 933473269899832427}
   m_Layer: 0
   m_Name: Rotator_Wizard
-  m_TagString: Untagged
+  m_TagString: Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -222,10 +222,18 @@ MonoBehaviour:
   CharState: 0
   ref_gridManager: {fileID: 0}
   baseRotation: {fileID: 0}
-  currentTileID:
+  _currentTileID:
     x: 0
     y: 0
+  _yMovementCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   _abilityStartOffset: 2
+  _lerpDuration: 0.25
+  _lerpDelay: 0.01
 --- !u!114 &933473269899832427
 MonoBehaviour:
   m_ObjectHideFlags: 0

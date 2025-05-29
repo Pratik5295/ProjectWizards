@@ -40,6 +40,12 @@ namespace Team.Gameplay.GridSystem
         [SerializeField]
         private GameObject tileObject = null; //The created tile object
 
+        private GameObject objectOccupyingTile;
+        public GameObject ObjectOccupyingTile
+        {
+            get { return objectOccupyingTile; }
+        }
+
         /// <summary>
         /// Initialize the tile
         /// </summary>
@@ -92,6 +98,21 @@ namespace Team.Gameplay.GridSystem
             tileType = TileType.TILE;
             tileObject = SpawnTileObject();
             gridManager?.AddTileToGrid(TileID, this);
+        }
+
+        [ContextMenu("Set Object Occupying Tile space")]
+        public void SetObjectOccupyingTile(GameObject Object)
+        {
+            if (!Object) { objectOccupyingTile = null; }
+            objectOccupyingTile = Object;
+        }
+
+        public void ParentUnparentOccupyingObject()
+        {
+            if (!objectOccupyingTile.CompareTag("Character")) { return; }
+            if (objectOccupyingTile.transform.IsChildOf(transform)) { objectOccupyingTile.transform.SetParent(null); return; }
+            objectOccupyingTile.transform.SetParent(transform);
+
         }
     }
 }

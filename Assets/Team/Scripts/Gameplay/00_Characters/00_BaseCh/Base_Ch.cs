@@ -19,7 +19,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
 
     [Header("Movement Variables")]
-    [SerializeField] protected TileID currentTileID = new TileID(0, 0);
+    [SerializeField] protected TileID _currentTileID = new TileID(0, 0);
+    private GridTile currentTile;
 
 
     private float OffsetValue;
@@ -47,10 +48,22 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     public delegate void Evnt_stateChange();
     public event Evnt_stateChange OnStateChanged;
 
-    void Start()
+    public delegate void Evnt_OnTurnComplete();
+    public event Evnt_OnTurnComplete OnTurnComplete;
+
+    public void InitialiseCharacter()
     {
         ref_gridManager = GridManager.Instance;
         OffsetValue = ref_gridManager.GridSlot_Offset;
+
+        //Set _currentTileID here!!!
+        currentTile = ref_gridManager.FindTile(_currentTileID);
+        currentTile.SetObjectOccupyingTile(this.gameObject);
+    }
+
+    void Start()
+    {
+        InitialiseCharacter();
     }
 
     #region Debugging Movement Button Functions
@@ -92,16 +105,20 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         for(int i = 0; i < movementAmount; i++)
         {
             alreadyMoving = true;
-            Vector3 desiredLocation = new Vector3(currentTileID.x + (dir.x * OffsetValue), transform.position.y, currentTileID.y + (dir.y * OffsetValue));
+            Vector3 desiredLocation = new Vector3(_currentTileID.x + (dir.x * OffsetValue), transform.position.y, _currentTileID.y + (dir.y * OffsetValue));
 
-            TileID desiredTileID = new TileID(currentTileID.x + (int)dir.x, currentTileID.y + (int)dir.y);
+            TileID desiredTileID = new TileID(_currentTileID.x + (int)dir.x, _currentTileID.y + (int)dir.y);
             GridTile targetTile = ref_gridManager.FindTile(desiredTileID);
 
             baseRotation.RotateToFaceDir(dir);
             if (targetTile)
             {
                 Vector3 targetPosition = new Vector3(targetTile.TilePosition.x, desiredLocation.y, targetTile.TilePosition.z);
-                currentTileID = targetTile.TileID;
+
+                _currentTileID = targetTile.TileID;
+                currentTile = ref_gridManager.FindTile(_currentTileID);
+                currentTile.SetObjectOccupyingTile(null);
+                targetTile.SetObjectOccupyingTile(this.gameObject);
 
                 yield return StartCoroutine(LerpingMovement(targetPosition));
             }
@@ -112,6 +129,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
                 yield break;
             }
         }
+        OnTurnComplete?.Invoke();
     }
 
     
@@ -164,6 +182,11 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         transform.localPosition = defaultPos;
     }
 
+    public void UpdateCurrentTileID()
+    {
+        _currentTileID = currentTile.TileID;
+    }
+
 
 
     public virtual void HitByProjectile(Enum_ProjectileType projectileType)
@@ -177,7 +200,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
                 CharState = Enum_CharacterState.Incapacitated;
                 break;
         }
-        OnStateChanged();
+        OnStateChanged?.Invoke();
     }
 
     public bool checkStateOfChar()
@@ -190,7 +213,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     {
         if (CharState == Enum_CharacterState.Incapacitated)
         {
-            OnStateChanged();
+            OnStateChanged?.Invoke();
             CharState = Enum_CharacterState.Alive;
         }
     }
