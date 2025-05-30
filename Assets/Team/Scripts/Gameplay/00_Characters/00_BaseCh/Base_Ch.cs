@@ -105,7 +105,9 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     //Moves by a defined amount in a direction, if the tile exists and player can move there. Then passes to lerp.
     public virtual IEnumerator MoveByAmount(int movementAmount, Vector2 dir)
     {
-        for(int i = 0; i < movementAmount; i++)
+        currentTile.SetObjectOccupyingTile(null);
+
+        for (int i = 0; i < movementAmount; i++)
         {
             alreadyMoving = true;
             Vector3 desiredLocation = new Vector3(_currentTileID.x + (dir.x * OffsetValue), transform.position.y, _currentTileID.y + (dir.y * OffsetValue));
@@ -119,8 +121,6 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
                 _currentTileID = targetTile.TileID;
                 currentTile = ref_gridManager.FindTile(_currentTileID);
-                currentTile.SetObjectOccupyingTile(null);
-                targetTile.SetObjectOccupyingTile(this.gameObject);
 
                 yield return StartCoroutine(LerpingMovement(targetPosition));
             }
@@ -132,6 +132,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
                 yield break;
             }
         }
+        currentTile.SetObjectOccupyingTile(this.gameObject);
         OnTurnComplete?.Invoke();
     }
 
