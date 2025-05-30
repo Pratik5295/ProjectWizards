@@ -99,7 +99,6 @@ public class GameTurnManager : MonoBehaviour
 
         if(turnManager.Count == 0)
         {
-            Debug.LogError("There arent any turns to perform");
             await LoadQueue();
         }
 

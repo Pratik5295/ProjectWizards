@@ -40,6 +40,12 @@ namespace Team.Gameplay.GridSystem
         [SerializeField]
         private GameObject tileObject = null; //The created tile object
 
+        private GameObject objectOccupyingTile;
+        public GameObject ObjectOccupyingTile
+        {
+            get { return objectOccupyingTile; }
+        }
+
         /// <summary>
         /// Initialize the tile
         /// </summary>
@@ -83,7 +89,7 @@ namespace Team.Gameplay.GridSystem
             tileType = TileType.EMPTY;
             DestroyImmediate(tileObject);
             tileObject = null;
-            gridManager?.RemoveTileFromGrid(TileID,this);
+            gridManager?.RemoveTileFromGrid(TileID, this);
         }
 
         [ContextMenu("Set Tile to Object")]
@@ -92,6 +98,26 @@ namespace Team.Gameplay.GridSystem
             tileType = TileType.TILE;
             tileObject = SpawnTileObject();
             gridManager?.AddTileToGrid(TileID, this);
+        }
+
+        [ContextMenu("Set Object Occupying Tile space")]
+        public void SetObjectOccupyingTile(GameObject Object)
+        {
+            if (!Object) { objectOccupyingTile = null; }
+            objectOccupyingTile = Object;
+        }
+
+        public void ParentOccupyingObject()
+        {
+            if (!objectOccupyingTile.CompareTag("Character")) { return; }
+            objectOccupyingTile.transform.SetParent(transform);
+
+        }
+
+        public void UnparentOccupyingObject()
+        {
+            if (!objectOccupyingTile.CompareTag("Character")) { return; }
+            objectOccupyingTile.transform.SetParent(null);
         }
     }
 }

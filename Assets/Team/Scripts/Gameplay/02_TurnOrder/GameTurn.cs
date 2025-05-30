@@ -65,9 +65,6 @@ namespace Team.Gameplay.TurnSystem
 
             characterObject.UseAbility();
 
-            //Only for testing
-            Invoke("TestingCompleteTurn",duration);
-
             // Wait until external call completes the turn
             await _turnCompletion.Task;
 
@@ -93,7 +90,13 @@ namespace Team.Gameplay.TurnSystem
 
         private void InitializeCharacter()
         {
+
             //characterObject = Instantiate(CharacterPrefab);
+
+            //characterObject = Instantiate(CharacterPrefab);
+            //characterObject.OnTurnComplete += CompleteTurn;
+            //characterObject.GetComponent<Base_Ch>().InitialiseCharacter(new TileID((int)startTileID.x, (int)startTileID.y));
+
 
             //TileID tileID = new TileID((int)startTileID.x, (int)startTileID.y);
             //var tile = GridManager.Instance.FindTile(tileID);
@@ -102,13 +105,5 @@ namespace Team.Gameplay.TurnSystem
         }
 
         #endregion
-
-        /// <summary>
-        /// TESTING: TO BE REMOVED
-        /// </summary>
-        private void TestingCompleteTurn()
-        {
-            CompleteTurn();
-        }
     }
 }
