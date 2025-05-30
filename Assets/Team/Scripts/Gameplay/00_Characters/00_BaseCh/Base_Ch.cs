@@ -14,19 +14,24 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
 
     [Header("Script References")]
-    [SerializeField] private GridManager ref_gridManager;
+    [SerializeField] protected GridManager ref_gridManager;
 
-    [SerializeField] private Base_Rotation baseRotation;
+    [SerializeField] protected Base_Rotation baseRotation;
 
 
 
     [Header("Movement Variables")]
-    [SerializeField] private TileID currentTileID = new TileID(0, 0);
+    [SerializeField] protected TileID _currentTileID = new TileID(0, 0);
+    private GridTile currentTile;
+
 
     private float OffsetValue;
     private float smoothingTime = 1f; //Time to reach the target position.
     private float currentTime; //Current elapsed Time for movement lerp.
     private float lerpingDelayTime = 0.001f;
+    private float ydefaultOffset = 1.5f;
+
+    [SerializeField] private AnimationCurve _yMovementCurve;
 
     private int movementIteration;
 
@@ -42,13 +47,26 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     #endregion
 
 
-    public delegate void Evnt_stateChange();
-    public event Evnt_stateChange OnStateChanged;
+    public System.Action OnStateChanged;
 
-    void Start()
+    public System.Action OnTurnComplete;
+
+    public void InitialiseCharacter(TileID StartingTileID)
     {
         ref_gridManager = GridManager.Instance;
         OffsetValue = ref_gridManager.GridSlot_Offset;
+
+        //Set _currentTileID here!!!
+        _currentTileID = StartingTileID;
+        currentTile = ref_gridManager.FindTile(_currentTileID);
+        currentTile.SetObjectOccupyingTile(this.gameObject);
+
+        baseRotation = GetComponent<Base_Rotation>();
+    }
+
+    void Start()
+    {
+        //InitialiseCharacter(_currentTileID);
     }
 
     #region Debugging Movement Button Functions
@@ -87,18 +105,22 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     //Moves by a defined amount in a direction, if the tile exists and player can move there. Then passes to lerp.
     public virtual IEnumerator MoveByAmount(int movementAmount, Vector2 dir)
     {
-        for(int i = 0; i < movementAmount; i++)
+        currentTile.SetObjectOccupyingTile(null);
+
+        for (int i = 0; i < movementAmount; i++)
         {
             alreadyMoving = true;
-            Vector3 desiredLocation = new Vector3(currentTileID.x + (dir.x * OffsetValue), transform.position.y, currentTileID.y + (dir.y * OffsetValue));
+            Vector3 desiredLocation = new Vector3(_currentTileID.x + (dir.x * OffsetValue), transform.position.y, _currentTileID.y + (dir.y * OffsetValue));
 
-            TileID desiredTileID = new TileID(currentTileID.x + (int)dir.x, currentTileID.y + (int)dir.y);
+            TileID desiredTileID = new TileID(_currentTileID.x + (int)dir.x, _currentTileID.y + (int)dir.y);
             GridTile targetTile = ref_gridManager.FindTile(desiredTileID);
 
             if (targetTile)
             {
                 Vector3 targetPosition = new Vector3(targetTile.TilePosition.x, desiredLocation.y, targetTile.TilePosition.z);
-                currentTileID = targetTile.TileID;
+
+                _currentTileID = targetTile.TileID;
+                currentTile = ref_gridManager.FindTile(_currentTileID);
 
                 yield return StartCoroutine(LerpingMovement(targetPosition));
             }
@@ -106,9 +128,12 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
             {
                 StartCoroutine(ShakeCharacter(0.25f));
                 alreadyMoving = false;
+                OnTurnComplete?.Invoke();
                 yield break;
             }
         }
+        currentTile.SetObjectOccupyingTile(this.gameObject);
+        OnTurnComplete?.Invoke();
     }
 
     
@@ -121,7 +146,9 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
             float lerpAmount = currentTime / smoothingTime;
 
-            transform.position = Vector3.Lerp(transform.position, targetPosition, lerpAmount);
+            float positionYLerped = Mathf.Lerp(transform.position.y, ydefaultOffset + _yMovementCurve.Evaluate(currentTime), lerpAmount);
+            transform.position = new Vector3(Mathf.Lerp(transform.position.x, targetPosition.x, lerpAmount), positionYLerped, Mathf.Lerp(transform.position.z, targetPosition.z, lerpAmount));
+            //transform.position = Vector3.Lerp(positionYLerped, targetPosition, lerpAmount);
 
             yield return new WaitForSeconds(lerpingDelayTime);
         }
@@ -159,6 +186,11 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         transform.localPosition = defaultPos;
     }
 
+    public void UpdateCurrentTileID()
+    {
+        _currentTileID = currentTile.TileID;
+    }
+
 
 
     public virtual void HitByProjectile(Enum_ProjectileType projectileType)
@@ -172,7 +204,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
                 CharState = Enum_CharacterState.Incapacitated;
                 break;
         }
-        OnStateChanged();
+        OnStateChanged?.Invoke();
     }
 
     public bool checkStateOfChar()
@@ -185,7 +217,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     {
         if (CharState == Enum_CharacterState.Incapacitated)
         {
-            OnStateChanged();
+            OnStateChanged?.Invoke();
             CharState = Enum_CharacterState.Alive;
         }
     }

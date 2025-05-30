@@ -151,7 +151,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -182,10 +182,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3236205127488731490}
-  - component: {fileID: 5271915672924904667}
+  - component: {fileID: 8701032960173701566}
   - component: {fileID: 933473269899832427}
   m_Layer: 0
-  m_Name: Base_Character
+  m_Name: Rotator_Wizard
   m_TagString: Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -207,7 +207,7 @@ Transform:
   - {fileID: 320569409086996540}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5271915672924904667
+--- !u!114 &8701032960173701566
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -216,57 +216,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 5407380294395882597}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fea98c65fa5153c4ea711043ba2e8e43, type: 3}
+  m_Script: {fileID: 11500000, guid: 3b3116b4b447ef240ba718d2bed7b65a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   CharState: 0
   ref_gridManager: {fileID: 0}
-  baseRotation: {fileID: 933473269899832427}
+  baseRotation: {fileID: 0}
   _currentTileID:
     x: 0
     y: 0
   _yMovementCurve:
     serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0.49204534
-      outSlope: 0.49204534
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.13540512
-    - serializedVersion: 3
-      time: 0.12
-      value: 1
-      inSlope: 0.033440094
-      outSlope: 0.033440094
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.049204588
-    - serializedVersion: 3
-      time: 0.220328
-      value: 0.05383192
-      inSlope: 13.863744
-      outSlope: 13.863744
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.24255118
-    - serializedVersion: 3
-      time: 0.25
-      value: 0
-      inSlope: -0.995011
-      outSlope: -0.995011
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.061452627
-      outWeight: 0
-    m_PreInfinity: 1
+    m_Curve: []
+    m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  _abilityStartOffset: 2
+  _lerpDuration: 0.25
+  _lerpDelay: 0.01
 --- !u!114 &933473269899832427
 MonoBehaviour:
   m_ObjectHideFlags: 0

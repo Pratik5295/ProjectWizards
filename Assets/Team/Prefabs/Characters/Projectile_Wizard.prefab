@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: 5923444834090015879}
   - component: {fileID: 6009747551025699060}
   - component: {fileID: 8106642700574524646}
+  - component: {fileID: 4891894288717994594}
   m_Layer: 0
   m_Name: DirectionCube
   m_TagString: Untagged
@@ -173,6 +174,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4891894288717994594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5150221880546262881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c67d759f91fd2ff47a7597ab42bc7b85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5407380294395882597
 GameObject:
   m_ObjectHideFlags: 0
@@ -182,10 +195,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3236205127488731490}
-  - component: {fileID: 5271915672924904667}
+  - component: {fileID: 7676447528062884871}
   - component: {fileID: 933473269899832427}
   m_Layer: 0
-  m_Name: Base_Character
+  m_Name: Projectile_Wizard
   m_TagString: Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -207,7 +220,7 @@ Transform:
   - {fileID: 320569409086996540}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5271915672924904667
+--- !u!114 &7676447528062884871
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -216,12 +229,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5407380294395882597}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fea98c65fa5153c4ea711043ba2e8e43, type: 3}
+  m_Script: {fileID: 11500000, guid: c4ac901582ea89f44ac6674be2c7913a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   CharState: 0
   ref_gridManager: {fileID: 0}
-  baseRotation: {fileID: 933473269899832427}
+  baseRotation: {fileID: 0}
   _currentTileID:
     x: 0
     y: 0
@@ -267,6 +280,8 @@ MonoBehaviour:
     m_PreInfinity: 1
     m_PostInfinity: 2
     m_RotationOrder: 4
+  _projectilePrefab: {fileID: 3625092468094944024, guid: 767c1f910a3067d4c9f7ab18fdd2fe7b, type: 3}
+  _fireFromPoint: {fileID: 5150221880546262881}
 --- !u!114 &933473269899832427
 MonoBehaviour:
   m_ObjectHideFlags: 0
