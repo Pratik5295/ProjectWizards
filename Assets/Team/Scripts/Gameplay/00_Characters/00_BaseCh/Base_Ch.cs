@@ -62,6 +62,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         currentTile.SetObjectOccupyingTile(this.gameObject);
 
         baseRotation = GetComponent<Base_Rotation>();
+
+        transform.position = new Vector3(currentTile.TilePosition.x, currentTile.TilePosition.y + 1f, currentTile.TilePosition.z);
     }
 
     void Start()

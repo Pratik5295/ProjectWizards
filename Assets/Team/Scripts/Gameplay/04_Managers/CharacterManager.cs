@@ -4,10 +4,11 @@ using System;
 using Team.Data;
 using Team.Gameplay.GridSystem;
 using System.Linq;
+using Team.Gameplay.TurnSystem;
 
 namespace Team.Managers
 {
-
+    [DefaultExecutionOrder(2)]
     public class CharacterManager : MonoBehaviour
     {
         
@@ -20,6 +21,9 @@ namespace Team.Managers
 
         [SerializeField]
         private Dictionary<Guid,Base_Ch> CharactersInLevel = new Dictionary<Guid,Base_Ch>();
+
+        [SerializeField]
+        private Transform cardHolder;
 
 
         #region Unity Methods
@@ -61,12 +65,11 @@ namespace Team.Managers
             var characterObject = Instantiate(data.CharacterPrefab);
 
             TileID tileID = new TileID((int)data.StartTileID.x, (int)data.StartTileID.y);
-            var tile = GridManager.Instance.FindTile(tileID);
-
-            characterObject.transform.position = new Vector3(tile.TilePosition.x, tile.TilePosition.y + 1f, tile.TilePosition.z);
 
             var baseCharacterRef = characterObject.GetComponent<Base_Ch>();
-            //TODO:Set current tile reference through here
+            baseCharacterRef.InitialiseCharacter(tileID);
+
+            LoadCardUI(baseCharacterRef, data);
 
             CharactersInLevel.Add(characterKey, baseCharacterRef);
         }
@@ -82,13 +85,32 @@ namespace Team.Managers
         [ContextMenu("Reset all characters")]
         public void ResetAllCharacters()
         {
+            //Delete all characters
             foreach(var _character in CharactersInLevel)
             {
                 Destroy(_character.Value.gameObject);
             }
 
             CharactersInLevel.Clear();
+
+            //Delete all Game Cards
+            for(int i = 0; i < cardHolder.childCount; i++)
+            {
+                var card = cardHolder.GetChild(i);
+                Destroy(card.gameObject);
+            }
         }
+        #endregion
+
+        #region Private Methods
+
+        private void LoadCardUI(Base_Ch _character, CharacterData data)
+        {
+            var gameCard = Instantiate(data.UICardPrefab, cardHolder);
+            var gameTurn = gameCard.GetComponent<GameTurn>();
+            gameTurn.SetupGameTurn(_character);
+        }
+
         #endregion
     }
 }
