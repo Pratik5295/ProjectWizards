@@ -43,7 +43,6 @@ namespace Team.Managers
 
         private void Start()
         {
-           // ForceRebuildTurns(true);
         }
 
         #endregion
@@ -56,6 +55,10 @@ namespace Team.Managers
             {
                 turnManager = new Queue<GameTurn>();
             }
+            else
+            {
+                turnManager.Clear();
+            }
 
             //Wait till the end of frame
             await Task.Yield();
@@ -67,7 +70,7 @@ namespace Team.Managers
             Debug.Log($"Loading complete: {turnManager.Count}");
         }
 
-        public void ForceRebuildTurns(bool start = false)
+        public void ForceRebuildTurns()
         {
             if (turnHolder.childCount == 0)
             {
@@ -79,11 +82,6 @@ namespace Team.Managers
             for (int i = 0; i < turnHolder.childCount; i++)
             {
                 currentTurnOrder.Add(turnHolder.GetChild(i).gameObject);
-
-                //if (start)
-                //{
-                //    originalOrder.Add(turnHolder.GetChild(i).gameObject);
-                //}
             }
         }
 
@@ -104,6 +102,8 @@ namespace Team.Managers
         [ContextMenu("Play All Turns")]
         public async void PlayTurns()
         {
+            await LoadQueue();
+
             Debug.Log("Has moves, now play all turns");
             while (turnManager.Count > 0)
             {

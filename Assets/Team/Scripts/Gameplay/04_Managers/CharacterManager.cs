@@ -49,16 +49,12 @@ namespace Team.Managers
 
         #region Public Methods
 
-        public async void SpawnAllCharacters()
+        public void SpawnAllCharacters()
         {
             foreach (var character in CharactersMap)
             {
                 AddCharacter(character);
             }
-
-            //All characters are spawned. Have the turn order set the current order
-
-            await GameTurnManager.Instance.LoadQueue();
         }
 
         public void AddCharacter(CharacterData data)
