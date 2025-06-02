@@ -7,6 +7,10 @@ public class Base_Rotation : MonoBehaviour
 {
 
     [SerializeField] private Enum_GridDirection dirFacing;
+    public Enum_GridDirection DirectionFacing
+    {
+        get { return dirFacing; }
+    }
 
     private Dictionary<Enum_GridDirection, Vector2> _rotationDictionary = new Dictionary<Enum_GridDirection, Vector2>();
     private Vector2[] _rotationArray = new Vector2[4];
@@ -75,6 +79,17 @@ public class Base_Rotation : MonoBehaviour
         }
     }
 
+    public Vector2 dirToV2(Enum_GridDirection direction)
+    {
+        Vector2 v2Direction;
+
+        if (!_rotationDictionary.TryGetValue(dirFacing, out v2Direction))
+        {
+            Debug.LogError($"{gameObject.name} Base Rotation script couldn't output correct direction!");
+            return new Vector2(0, 0);
+        }
+        return v2Direction;
+    }
 
     public Vector2 GetFacingDirection()
     {

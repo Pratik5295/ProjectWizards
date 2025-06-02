@@ -77,38 +77,27 @@ public class ChRotatorWizard : Base_Ch
             {
                 characterOnTile = _tilesToMove[i].ObjectOccupyingTile;
             }
+            if (characterOnTile)
+            {
+                Base_Rotation charactersRotationSc = characterOnTile.GetComponent<Base_Rotation>();
+                charactersRotationSc.changeFacingDirection(DirectionUtilities.RotateClockwise(charactersRotationSc.DirectionFacing));
+            }
 
             switch (i) // Change Tile ID and rename to new tile name.
             {
                 case 1:
-                    if (characterOnTile) 
-                    {
-                        characterOnTile.GetComponent<Base_Rotation>().changeFacingDirection(Enum_GridDirection.NORTH); 
-                    }
                     _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x + 1, _tilesToMove[i].TileID.y - 1);
                     _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
                     break;
                 case 2:
-                    if (characterOnTile)
-                    {
-                        characterOnTile.GetComponent<Base_Rotation>().changeFacingDirection(Enum_GridDirection.SOUTH);
-                    }
                     _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x - 1, _tilesToMove[i].TileID.y + 1);
                     _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
                     break;
                 case 3:
-                    if (characterOnTile)
-                    {
-                        characterOnTile.GetComponent<Base_Rotation>().changeFacingDirection(Enum_GridDirection.EAST);
-                    }
                     _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x - 1, _tilesToMove[i].TileID.y - 1);
                     _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
                     break;
                 case 4:
-                    if (characterOnTile)
-                    {
-                        characterOnTile.GetComponent<Base_Rotation>().changeFacingDirection(Enum_GridDirection.WEST);
-                    }
                     _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x + 1, _tilesToMove[i].TileID.y + 1);
                     _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
                     break;

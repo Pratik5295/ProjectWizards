@@ -40,7 +40,7 @@ namespace Team.Gameplay.GridSystem
         [SerializeField]
         private GameObject tileObject = null; //The created tile object
 
-        private GameObject objectOccupyingTile;
+        [SerializeField] private GameObject objectOccupyingTile;
         public GameObject ObjectOccupyingTile
         {
             get { return objectOccupyingTile; }

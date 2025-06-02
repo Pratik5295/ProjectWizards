@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface IMoveable 
 {
-    IEnumerator MoveByAmount(int movementAmount, Vector2 dir);
-    IEnumerator LerpingMovement(Vector3 targetPosition);
+    IEnumerator MoveByAmount(int movementAmount, Vector2 dir, bool wasPushed);
+    IEnumerator LerpingMovement(Vector3 targetPosition, bool wasPushed);
 }

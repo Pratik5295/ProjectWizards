@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 29715261}
   - component: {fileID: 29715260}
   - component: {fileID: 29715259}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundBlock(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -237,7 +237,7 @@ GameObject:
   m_Component:
   - component: {fileID: 45863944}
   - component: {fileID: 45863945}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: B 1, 2'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -281,6 +281,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 1675124911}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &125402519
 GameObject:
   m_ObjectHideFlags: 0
@@ -430,7 +431,7 @@ GameObject:
   - component: {fileID: 140190879}
   - component: {fileID: 140190878}
   - component: {fileID: 140190877}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundBlock(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -536,7 +537,7 @@ GameObject:
   m_Component:
   - component: {fileID: 175165532}
   - component: {fileID: 175165533}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: A 0, 1'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -580,6 +581,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 1167207694}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1001 &183934775
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -659,7 +661,7 @@ GameObject:
   m_Component:
   - component: {fileID: 185282218}
   - component: {fileID: 185282219}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: D 3, 3'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -703,6 +705,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 1817027059}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &220032346
 GameObject:
   m_ObjectHideFlags: 0
@@ -715,7 +718,7 @@ GameObject:
   - component: {fileID: 220032350}
   - component: {fileID: 220032349}
   - component: {fileID: 220032348}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundBlock(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -821,7 +824,7 @@ GameObject:
   m_Component:
   - component: {fileID: 237514928}
   - component: {fileID: 237514929}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: A 0, 3'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -865,6 +868,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 1754701584}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &281985751
 GameObject:
   m_ObjectHideFlags: 0
@@ -875,7 +879,7 @@ GameObject:
   m_Component:
   - component: {fileID: 281985752}
   - component: {fileID: 281985753}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: B 1, 0'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -919,6 +923,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 1275669693}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &283617096
 GameObject:
   m_ObjectHideFlags: 0
@@ -931,7 +936,7 @@ GameObject:
   - component: {fileID: 283617100}
   - component: {fileID: 283617099}
   - component: {fileID: 283617098}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundBlock(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1407,7 +1412,7 @@ GameObject:
   - component: {fileID: 366484455}
   - component: {fileID: 366484454}
   - component: {fileID: 366484453}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundBlock(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1513,7 +1518,7 @@ GameObject:
   m_Component:
   - component: {fileID: 413259626}
   - component: {fileID: 413259627}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: E 4, 1'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1557,6 +1562,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 1984362288}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &421551909
 GameObject:
   m_ObjectHideFlags: 0
@@ -1567,7 +1573,7 @@ GameObject:
   m_Component:
   - component: {fileID: 421551910}
   - component: {fileID: 421551911}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: A 0, 2'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1611,6 +1617,68 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 220032346}
+  objectOccupyingTile: {fileID: 0}
+--- !u!1001 &437324120
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1102461595}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 9d7f24d00d5dfeb4696ff51241b31845, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9d7f24d00d5dfeb4696ff51241b31845, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9d7f24d00d5dfeb4696ff51241b31845, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9d7f24d00d5dfeb4696ff51241b31845, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9d7f24d00d5dfeb4696ff51241b31845, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9d7f24d00d5dfeb4696ff51241b31845, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9d7f24d00d5dfeb4696ff51241b31845, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9d7f24d00d5dfeb4696ff51241b31845, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9d7f24d00d5dfeb4696ff51241b31845, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9d7f24d00d5dfeb4696ff51241b31845, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9d7f24d00d5dfeb4696ff51241b31845, type: 3}
+      propertyPath: m_Name
+      value: barrel (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9d7f24d00d5dfeb4696ff51241b31845, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9d7f24d00d5dfeb4696ff51241b31845, type: 3}
 --- !u!4 &446039482 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 87a450eea4497424aa28bddf19b61b71, type: 3}
@@ -1626,7 +1694,7 @@ GameObject:
   m_Component:
   - component: {fileID: 448806014}
   - component: {fileID: 448806015}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: C 2, 2'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1670,6 +1738,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 1783806279}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &524064227
 GameObject:
   m_ObjectHideFlags: 0
@@ -1736,7 +1805,7 @@ GameObject:
   m_Component:
   - component: {fileID: 588576691}
   - component: {fileID: 588576692}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: E 4, 2'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1780,6 +1849,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 29715257}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &631970433
 GameObject:
   m_ObjectHideFlags: 0
@@ -1790,7 +1860,7 @@ GameObject:
   m_Component:
   - component: {fileID: 631970434}
   - component: {fileID: 631970435}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: C 2, 0'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1834,6 +1904,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 1041496810}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &652524122
 GameObject:
   m_ObjectHideFlags: 0
@@ -1846,7 +1917,7 @@ GameObject:
   - component: {fileID: 652524126}
   - component: {fileID: 652524125}
   - component: {fileID: 652524124}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundBlock(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1942,6 +2013,16 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 652524122}
   m_Mesh: {fileID: 1048604457303117381, guid: 14df8c1aff3e03e42a7e33d3854ee68d, type: 3}
+--- !u!1 &691110370 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 9d7f24d00d5dfeb4696ff51241b31845, type: 3}
+  m_PrefabInstance: {fileID: 437324120}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &691110371 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9d7f24d00d5dfeb4696ff51241b31845, type: 3}
+  m_PrefabInstance: {fileID: 437324120}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &698026457
 GameObject:
   m_ObjectHideFlags: 0
@@ -2073,7 +2154,7 @@ GameObject:
   m_Component:
   - component: {fileID: 717367423}
   - component: {fileID: 717367424}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: D 3, 1'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2117,6 +2198,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 2028879788}
+  objectOccupyingTile: {fileID: 0}
 --- !u!114 &810863095 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5271915672924904667, guid: 281cf8e21ac8ce348892f63a0067e2e9, type: 3}
@@ -2140,7 +2222,7 @@ GameObject:
   - component: {fileID: 830956876}
   - component: {fileID: 830956875}
   - component: {fileID: 830956874}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundBlock(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2249,7 +2331,7 @@ GameObject:
   - component: {fileID: 840428523}
   - component: {fileID: 840428522}
   - component: {fileID: 840428521}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundBlock(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2355,7 +2437,7 @@ GameObject:
   m_Component:
   - component: {fileID: 846656903}
   - component: {fileID: 846656904}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: B 1, 3'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2399,6 +2481,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 1333035515}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &909779824
 GameObject:
   m_ObjectHideFlags: 0
@@ -2409,7 +2492,7 @@ GameObject:
   m_Component:
   - component: {fileID: 909779825}
   - component: {fileID: 909779826}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: E 4, 0'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2453,6 +2536,18 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 840428519}
+  objectOccupyingTile: {fileID: 0}
+--- !u!114 &1007487457 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7676447528062884871, guid: 857c71a3f0fef0441bf97948988089c4, type: 3}
+  m_PrefabInstance: {fileID: 1524453173}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4ac901582ea89f44ac6674be2c7913a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1041496810
 GameObject:
   m_ObjectHideFlags: 0
@@ -2465,7 +2560,7 @@ GameObject:
   - component: {fileID: 1041496814}
   - component: {fileID: 1041496813}
   - component: {fileID: 1041496812}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundBlock(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2613,6 +2708,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: arrows
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 87a450eea4497424aa28bddf19b61b71, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2628,7 +2727,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1098181379}
   - component: {fileID: 1098181380}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: C 2, 1'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2672,6 +2771,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 283617096}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &1102461594
 GameObject:
   m_ObjectHideFlags: 0
@@ -2682,7 +2782,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1102461595}
   - component: {fileID: 1102461596}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: C 2, 4'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2703,6 +2803,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2047634558}
+  - {fileID: 691110371}
   m_Father: {fileID: 524064228}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1102461596
@@ -2726,6 +2827,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 2047634557}
+  objectOccupyingTile: {fileID: 691110370}
 --- !u!1001 &1136526271
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2757,14 +2859,14 @@ PrefabInstance:
     - target: {fileID: 1336978856375675059, guid: 2d24820223c4956408f5c5e7e24aad56, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1202576794}
+      objectReference: {fileID: 1007487457}
     - target: {fileID: 1336978856375675059, guid: 2d24820223c4956408f5c5e7e24aad56, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: UseAbility
       objectReference: {fileID: 0}
     - target: {fileID: 1336978856375675059, guid: 2d24820223c4956408f5c5e7e24aad56, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: ChRotatorWizard, Assembly-CSharp
+      value: ChProjectileWizard, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1336978856375675059, guid: 2d24820223c4956408f5c5e7e24aad56, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -2899,7 +3001,7 @@ GameObject:
   - component: {fileID: 1167207698}
   - component: {fileID: 1167207697}
   - component: {fileID: 1167207696}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundBlock(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3006,17 +3108,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 859b55ca8e3122a46a28ffdaf00ed647, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1202576794 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8701032960173701566, guid: a8c80c0f4c49117419965fcf9c5e16f6, type: 3}
-  m_PrefabInstance: {fileID: 340579530}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b3116b4b447ef240ba718d2bed7b65a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1275669693
 GameObject:
   m_ObjectHideFlags: 0
@@ -3029,7 +3120,7 @@ GameObject:
   - component: {fileID: 1275669697}
   - component: {fileID: 1275669696}
   - component: {fileID: 1275669695}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundBlock(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3135,7 +3226,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1317900253}
   - component: {fileID: 1317900254}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: E 4, 4'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3179,6 +3270,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 1346890674}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &1333035515
 GameObject:
   m_ObjectHideFlags: 0
@@ -3191,7 +3283,7 @@ GameObject:
   - component: {fileID: 1333035519}
   - component: {fileID: 1333035518}
   - component: {fileID: 1333035517}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundBlock(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3299,7 +3391,7 @@ GameObject:
   - component: {fileID: 1346890678}
   - component: {fileID: 1346890677}
   - component: {fileID: 1346890676}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundBlock(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3412,7 +3504,7 @@ GameObject:
   - component: {fileID: 1504868617}
   - component: {fileID: 1504868616}
   - component: {fileID: 1504868615}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundBlock(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3508,6 +3600,79 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1504868613}
   m_Mesh: {fileID: 1048604457303117381, guid: 14df8c1aff3e03e42a7e33d3854ee68d, type: 3}
+--- !u!1001 &1524453173
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3236205127488731490, guid: 857c71a3f0fef0441bf97948988089c4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3236205127488731490, guid: 857c71a3f0fef0441bf97948988089c4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3236205127488731490, guid: 857c71a3f0fef0441bf97948988089c4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3236205127488731490, guid: 857c71a3f0fef0441bf97948988089c4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3236205127488731490, guid: 857c71a3f0fef0441bf97948988089c4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3236205127488731490, guid: 857c71a3f0fef0441bf97948988089c4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3236205127488731490, guid: 857c71a3f0fef0441bf97948988089c4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3236205127488731490, guid: 857c71a3f0fef0441bf97948988089c4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3236205127488731490, guid: 857c71a3f0fef0441bf97948988089c4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3236205127488731490, guid: 857c71a3f0fef0441bf97948988089c4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4891894288717994594, guid: 857c71a3f0fef0441bf97948988089c4, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5407380294395882597, guid: 857c71a3f0fef0441bf97948988089c4, type: 3}
+      propertyPath: m_Name
+      value: Projectile_Wizard
+      objectReference: {fileID: 0}
+    - target: {fileID: 6514168762064557779, guid: 857c71a3f0fef0441bf97948988089c4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7676447528062884871, guid: 857c71a3f0fef0441bf97948988089c4, type: 3}
+      propertyPath: _projectileRange
+      value: -60
+      objectReference: {fileID: 0}
+    - target: {fileID: 7676447528062884871, guid: 857c71a3f0fef0441bf97948988089c4, type: 3}
+      propertyPath: _projectilePrefab
+      value: 
+      objectReference: {fileID: 3625092468094944024, guid: 3d4d34703d5b66249bca19cbcc3a194f, type: 3}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 857c71a3f0fef0441bf97948988089c4, type: 3}
 --- !u!1 &1626474098
 GameObject:
   m_ObjectHideFlags: 0
@@ -3520,7 +3685,7 @@ GameObject:
   - component: {fileID: 1626474102}
   - component: {fileID: 1626474101}
   - component: {fileID: 1626474100}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundBlock(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3626,7 +3791,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1636312823}
   - component: {fileID: 1636312824}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: D 3, 4'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3670,6 +3835,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 2005188080}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &1675124911
 GameObject:
   m_ObjectHideFlags: 0
@@ -3682,7 +3848,7 @@ GameObject:
   - component: {fileID: 1675124915}
   - component: {fileID: 1675124914}
   - component: {fileID: 1675124913}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundBlock(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3790,7 +3956,7 @@ GameObject:
   - component: {fileID: 1754701588}
   - component: {fileID: 1754701587}
   - component: {fileID: 1754701586}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundBlock(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3899,7 +4065,7 @@ GameObject:
   - component: {fileID: 1772877558}
   - component: {fileID: 1772877557}
   - component: {fileID: 1772877556}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundBlock(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4007,7 +4173,7 @@ GameObject:
   - component: {fileID: 1783806283}
   - component: {fileID: 1783806282}
   - component: {fileID: 1783806281}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundBlock(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4131,7 +4297,7 @@ GameObject:
   - component: {fileID: 1817027063}
   - component: {fileID: 1817027062}
   - component: {fileID: 1817027061}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundBlock(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4237,7 +4403,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1819600005}
   - component: {fileID: 1819600006}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: B 1, 1'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4281,6 +4447,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 1772877554}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &1826687986
 GameObject:
   m_ObjectHideFlags: 0
@@ -4293,7 +4460,7 @@ GameObject:
   - component: {fileID: 1826687990}
   - component: {fileID: 1826687989}
   - component: {fileID: 1826687988}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundBlock(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4399,7 +4566,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1837050567}
   - component: {fileID: 1837050568}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: A 0, 4'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4443,6 +4610,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 652524122}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &1848645430
 GameObject:
   m_ObjectHideFlags: 0
@@ -4453,7 +4621,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1848645431}
   - component: {fileID: 1848645432}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: E 4, 3'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4497,6 +4665,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 366484451}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &1855058537
 GameObject:
   m_ObjectHideFlags: 0
@@ -4507,7 +4676,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1855058538}
   - component: {fileID: 1855058539}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: B 1, 4'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4551,6 +4720,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 140190875}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &1930833644
 GameObject:
   m_ObjectHideFlags: 0
@@ -4561,7 +4731,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1930833645}
   - component: {fileID: 1930833646}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: D 3, 0'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4605,6 +4775,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 1626474098}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &1931762906
 GameObject:
   m_ObjectHideFlags: 0
@@ -4615,7 +4786,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1931762907}
   - component: {fileID: 1931762908}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: C 2, 3'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4659,6 +4830,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 830956872}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &1984362288
 GameObject:
   m_ObjectHideFlags: 0
@@ -4671,7 +4843,7 @@ GameObject:
   - component: {fileID: 1984362292}
   - component: {fileID: 1984362291}
   - component: {fileID: 1984362290}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundBlock(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4777,7 +4949,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1998825533}
   - component: {fileID: 1998825534}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: A 0, 0'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4821,6 +4993,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 1826687986}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &2005188080
 GameObject:
   m_ObjectHideFlags: 0
@@ -4833,7 +5006,7 @@ GameObject:
   - component: {fileID: 2005188084}
   - component: {fileID: 2005188083}
   - component: {fileID: 2005188082}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundBlock(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4941,7 +5114,7 @@ GameObject:
   - component: {fileID: 2028879792}
   - component: {fileID: 2028879791}
   - component: {fileID: 2028879790}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundBlock(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5047,7 +5220,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2041400148}
   - component: {fileID: 2041400149}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: D 3, 2'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5091,6 +5264,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 1504868613}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &2047634557
 GameObject:
   m_ObjectHideFlags: 0
@@ -5103,7 +5277,7 @@ GameObject:
   - component: {fileID: 2047634561}
   - component: {fileID: 2047634560}
   - component: {fileID: 2047634559}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundBlock(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5250,6 +5424,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 9d7f24d00d5dfeb4696ff51241b31845, type: 3}
       propertyPath: m_Name
       value: barrel
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9d7f24d00d5dfeb4696ff51241b31845, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5547,3 +5725,4 @@ SceneRoots:
   - {fileID: 183934775}
   - {fileID: 1136526271}
   - {fileID: 323009605}
+  - {fileID: 1524453173}

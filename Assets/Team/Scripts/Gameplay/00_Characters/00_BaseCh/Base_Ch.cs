@@ -17,11 +17,19 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     [SerializeField] protected GridManager ref_gridManager;
 
     [SerializeField] protected Base_Rotation baseRotation;
+    public Base_Rotation BaseRotation
+    {
+        get { return baseRotation; }
+    }
 
 
 
     [Header("Movement Variables")]
     [SerializeField] protected TileID _currentTileID = new TileID(0, 0);
+    public TileID CurrentTileID
+    {
+        get { return _currentTileID; }
+    }
     private GridTile currentTile;
 
 
@@ -66,7 +74,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
     void Start()
     {
-        //InitialiseCharacter(_currentTileID);
+        InitialiseCharacter(_currentTileID);
     }
 
     #region Debugging Movement Button Functions
@@ -103,7 +111,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     #endregion
 
     //Moves by a defined amount in a direction, if the tile exists and player can move there. Then passes to lerp.
-    public virtual IEnumerator MoveByAmount(int movementAmount, Vector2 dir)
+    public virtual IEnumerator MoveByAmount(int movementAmount, Vector2 dir, bool wasPushed = false)
     {
         currentTile.SetObjectOccupyingTile(null);
 
@@ -115,14 +123,14 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
             TileID desiredTileID = new TileID(_currentTileID.x + (int)dir.x, _currentTileID.y + (int)dir.y);
             GridTile targetTile = ref_gridManager.FindTile(desiredTileID);
 
-            if (targetTile)
+            if (targetTile && !targetTile.ObjectOccupyingTile)
             {
                 Vector3 targetPosition = new Vector3(targetTile.TilePosition.x, desiredLocation.y, targetTile.TilePosition.z);
 
                 _currentTileID = targetTile.TileID;
                 currentTile = ref_gridManager.FindTile(_currentTileID);
 
-                yield return StartCoroutine(LerpingMovement(targetPosition));
+                yield return StartCoroutine(LerpingMovement(targetPosition, wasPushed));
             }
             else
             {
@@ -133,20 +141,26 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
             }
         }
         currentTile.SetObjectOccupyingTile(this.gameObject);
+        if (wasPushed) { yield break; }
         OnTurnComplete?.Invoke();
     }
 
     
     //Lerps the movement to the next available tile.
-    public virtual IEnumerator LerpingMovement(Vector3 targetPosition)
+    public virtual IEnumerator LerpingMovement(Vector3 targetPosition, bool wasPushed = false)
     {
+        float positionYLerped = ydefaultOffset;
         while (currentTime < smoothingTime)
         {
             currentTime += Time.deltaTime;
 
             float lerpAmount = currentTime / smoothingTime;
 
-            float positionYLerped = Mathf.Lerp(transform.position.y, ydefaultOffset + _yMovementCurve.Evaluate(currentTime), lerpAmount);
+            if (!wasPushed)
+            {
+                positionYLerped = Mathf.Lerp(transform.position.y, ydefaultOffset + _yMovementCurve.Evaluate(currentTime), lerpAmount);
+            }
+
             transform.position = new Vector3(Mathf.Lerp(transform.position.x, targetPosition.x, lerpAmount), positionYLerped, Mathf.Lerp(transform.position.z, targetPosition.z, lerpAmount));
             //transform.position = Vector3.Lerp(positionYLerped, targetPosition, lerpAmount);
 
@@ -207,7 +221,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         OnStateChanged?.Invoke();
     }
 
-    public bool checkStateOfChar()
+    public bool checkIfCharAlive()
     {
         if (CharState == Enum_CharacterState.Alive) { return true; }
         else return false;
@@ -226,7 +240,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     public virtual void UseAbility()
     {
         // Debug.LogError($" {gameObject.name} Ability not programmed for character");
-        StartCoroutine(MoveByAmount(2, new Vector2(0, 1)));
+        StartCoroutine(MoveByAmount(2, baseRotation.GetFacingDirection()));
     }
 
 }
