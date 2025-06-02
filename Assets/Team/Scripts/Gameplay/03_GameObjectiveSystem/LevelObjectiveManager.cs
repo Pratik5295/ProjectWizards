@@ -42,7 +42,10 @@ namespace Team.Gameplay.ObjectiveSystem
                 Debug.LogWarning("Game Turn Manager not found");
             }
 
+            //Turn Manager wouldn't have loaded here, need to handle this via the game load data?
             RegisterEvents();
+
+            InitalizeObjectives();
         }
 
         private void OnDestroy()
@@ -78,7 +81,20 @@ namespace Team.Gameplay.ObjectiveSystem
         /// </summary>
         public void InitalizeObjectives()
         {
+            CharacterManager characterManager = CharacterManager.Instance;
+            foreach(var objective in levelObjectives)
+            {
+                var characterObject = characterManager.GetCharacter(objective.Data.ObjectiveTargetName);
 
+                if(characterObject == null)
+                {
+                    Debug.LogError($"Could find objective target for: {objective.Data.ObjectiveName}",gameObject);
+                }
+                else
+                {
+                    objective.SetCharacterReference(characterObject);
+                }
+            }
         }
 
         #endregion

@@ -21,7 +21,7 @@ namespace Team.Managers
         private List<CharacterData> CharactersMap = new List<CharacterData>(); 
 
         [SerializeField]
-        private Dictionary<Guid,Base_Ch> CharactersInLevel = new Dictionary<Guid,Base_Ch>();
+        private Dictionary<CharacterData, Base_Ch> CharactersInLevel = new Dictionary<CharacterData, Base_Ch>();
 
         [SerializeField]
         private Transform cardHolder;
@@ -49,6 +49,13 @@ namespace Team.Managers
 
         #region Public Methods
 
+        public Base_Ch GetCharacter(string _characterName)
+        {
+            var characterObject = CharactersInLevel.First(x => x.Key.CharacterID == _characterName).Value;
+
+            return characterObject;
+        } 
+
         public void SpawnAllCharacters()
         {
             foreach (var character in CharactersMap)
@@ -59,9 +66,6 @@ namespace Team.Managers
 
         public void AddCharacter(CharacterData data)
         {
-            //Create a key
-            Guid characterKey = Guid.NewGuid();
-
             //Spawn the character
             var characterObject = Instantiate(data.CharacterPrefab);
 
@@ -72,7 +76,7 @@ namespace Team.Managers
 
             LoadCardUI(baseCharacterRef, data);
 
-            CharactersInLevel.Add(characterKey, baseCharacterRef);
+            CharactersInLevel.Add(data, baseCharacterRef);
         }
 
         public void RemoveCharacter(Base_Ch _character)
