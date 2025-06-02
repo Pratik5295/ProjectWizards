@@ -14,6 +14,9 @@ namespace Team.Gameplay.ObjectiveSystem
         [SerializeField]
         private List<GenericObjective> levelObjectives = new List<GenericObjective>();
 
+        [SerializeField]
+        private List<GameObjectiveData> objectiveMap = new List<GameObjectiveData>();
+
         [Header("Components")]
         [SerializeField]
         private GameTurnManager turnManager;
@@ -82,18 +85,19 @@ namespace Team.Gameplay.ObjectiveSystem
         public void InitalizeObjectives()
         {
             CharacterManager characterManager = CharacterManager.Instance;
-            foreach(var objective in levelObjectives)
+            foreach (var data in objectiveMap)
             {
-                var characterObject = characterManager.GetCharacter(objective.Data.ObjectiveTargetName);
+                var objective = ObjectiveFactory.CreateObjective(data);
 
-                if(characterObject == null)
+                var characterObject = characterManager.GetCharacter(data.ObjectiveTargetName);
+                if (characterObject == null)
                 {
-                    Debug.LogError($"Could find objective target for: {objective.Data.ObjectiveName}",gameObject);
+                    Debug.LogError($"Could not find character target for objective: {data.ObjectiveName}", gameObject);
+                    continue;
                 }
-                else
-                {
-                    objective.SetCharacterReference(characterObject);
-                }
+
+                objective.SetCharacterReference(characterObject);
+                levelObjectives.Add(objective);
             }
         }
 
@@ -103,17 +107,16 @@ namespace Team.Gameplay.ObjectiveSystem
 
         private void OnRoundTurnsCompletedHandler()
         {
-            if(levelObjectives.Count == 0)
+            if (levelObjectives.Count == 0)
             {
                 Debug.LogWarning("There are no objectives for this level?");
                 return;
             }
 
-            //Loop through each objective the list has and check if completed
             foreach (var objective in levelObjectives)
             {
-                var res = objective.CheckObjectiveComplete();
-                Debug.Log($"Objective: {objective.gameObject.name} is {res}");
+                bool result = objective.CheckObjectiveComplete();
+                Debug.Log($"Objective: {objective.Data.ObjectiveName} is {(result ? "Complete" : "Incomplete")}");
             }
         }
 

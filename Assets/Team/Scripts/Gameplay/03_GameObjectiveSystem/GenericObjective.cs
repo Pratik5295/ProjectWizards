@@ -27,8 +27,11 @@ namespace Team.Gameplay.ObjectiveSystem
         public TileID LocationTileID;
     }
 
-    public class GenericObjective : MonoBehaviour
+    [System.Serializable]
+    public class GenericObjective
     {
+        public string ObjectiveName;
+
         [SerializeField]
         protected GameObjectiveData data;
 
@@ -41,6 +44,13 @@ namespace Team.Gameplay.ObjectiveSystem
         protected bool isCompleted = false;
 
         public bool IsCompleted => isCompleted;
+
+        public GenericObjective(GameObjectiveData data)
+        {
+            this.ObjectiveName = data.ObjectiveName;
+            this.data = data;
+        }
+
 
         public void SetCharacterReference(Base_Ch _character)
         {
