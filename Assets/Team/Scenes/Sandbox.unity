@@ -1456,11 +1456,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaf0652538062cf46b9c83f4b02359bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelObjectives:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  levelObjectives: []
   turnManager: {fileID: 0}
 --- !u!4 &341624804
 Transform:
@@ -1669,12 +1665,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CharactersMap:
-  - CharacterPrefab: {fileID: 5407380294395882597, guid: 281cf8e21ac8ce348892f63a0067e2e9, type: 3}
+  - CharacterID: Wizard 01
+    CharacterPrefab: {fileID: 5407380294395882597, guid: 281cf8e21ac8ce348892f63a0067e2e9, type: 3}
     StartTileID:
       x: 0
       y: 0
     UICardPrefab: {fileID: 6258264882312573246, guid: ca31cde62dbff8f4aa9db4f9596205a6, type: 3}
-  - CharacterPrefab: {fileID: 5407380294395882597, guid: 281cf8e21ac8ce348892f63a0067e2e9, type: 3}
+  - CharacterID: Wizard 02
+    CharacterPrefab: {fileID: 5407380294395882597, guid: a8c80c0f4c49117419965fcf9c5e16f6, type: 3}
     StartTileID:
       x: 1
       y: 0

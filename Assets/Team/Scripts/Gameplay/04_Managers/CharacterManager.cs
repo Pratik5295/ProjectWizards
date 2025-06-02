@@ -5,6 +5,7 @@ using Team.Data;
 using Team.Gameplay.GridSystem;
 using System.Linq;
 using Team.Gameplay.TurnSystem;
+using Team.UI.Gameplay;
 
 namespace Team.Managers
 {
@@ -48,12 +49,16 @@ namespace Team.Managers
 
         #region Public Methods
 
-        public void SpawnAllCharacters()
+        public async void SpawnAllCharacters()
         {
             foreach (var character in CharactersMap)
             {
                 AddCharacter(character);
             }
+
+            //All characters are spawned. Have the turn order set the current order
+
+            await GameTurnManager.Instance.LoadQueue();
         }
 
         public void AddCharacter(CharacterData data)
@@ -109,6 +114,11 @@ namespace Team.Managers
             var gameCard = Instantiate(data.UICardPrefab, cardHolder);
             var gameTurn = gameCard.GetComponent<GameTurn>();
             gameTurn.SetupGameTurn(_character);
+
+            var cardUI = gameCard.GetComponent<UIGameCard>();
+            cardUI.PopulateUICardData(data);
+
+            GameTurnManager.Instance.AddCharacterToTurnOrder(gameCard);
         }
 
         #endregion

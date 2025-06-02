@@ -1,10 +1,11 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Team.Managers;
 
 namespace Team.Gameplay.ObjectiveSystem
 {
     //Make sure it runs after Game Turn Manager
-    [DefaultExecutionOrder(1)]
+    [DefaultExecutionOrder(3)]
     public class LevelObjectiveManager : MonoBehaviour
     {
         #region Variables
@@ -86,6 +87,12 @@ namespace Team.Gameplay.ObjectiveSystem
 
         private void OnRoundTurnsCompletedHandler()
         {
+            if(levelObjectives.Count == 0)
+            {
+                Debug.LogWarning("There are no objectives for this level?");
+                return;
+            }
+
             //Loop through each objective the list has and check if completed
             foreach (var objective in levelObjectives)
             {
