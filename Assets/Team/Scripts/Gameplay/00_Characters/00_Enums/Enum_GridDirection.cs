@@ -16,4 +16,9 @@ public static class DirectionUtilities
     {
         return (Enum_GridDirection)(((int)dir + 1) % 4);
     }
+
+    public static Enum_GridDirection RotateAntiClockwise(Enum_GridDirection dir)
+    {
+        return (Enum_GridDirection)(((int)dir + 3) % 4);
+    }
 }

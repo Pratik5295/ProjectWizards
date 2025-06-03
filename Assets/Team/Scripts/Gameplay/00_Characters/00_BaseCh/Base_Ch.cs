@@ -26,6 +26,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
     [Header("Movement Variables")]
     [SerializeField] protected TileID _currentTileID = new TileID(0, 0);
+    protected TileID _previousTileID = new TileID(0, 0);
     public TileID CurrentTileID
     {
         get { return _currentTileID; }
@@ -66,6 +67,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
         //Set _currentTileID here!!!
         _currentTileID = StartingTileID;
+        _previousTileID = _currentTileID;
         currentTile = ref_gridManager.FindTile(_currentTileID);
         currentTile.SetObjectOccupyingTile(this.gameObject);
 
@@ -113,6 +115,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     //Moves by a defined amount in a direction, if the tile exists and player can move there. Then passes to lerp.
     public virtual IEnumerator MoveByAmount(int movementAmount, Vector2 dir, bool wasPushed = false)
     {
+        _previousTileID = _currentTileID;
         currentTile.SetObjectOccupyingTile(null);
 
         for (int i = 0; i < movementAmount; i++)
@@ -176,6 +179,19 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         }
 
         alreadyMoving = false;
+    }
+
+    [ContextMenu("Undo Movement")]
+    public virtual void UndoAction()
+    {
+        currentTile.SetObjectOccupyingTile(null);
+
+        _currentTileID = _previousTileID;
+        currentTile = ref_gridManager.FindTile(_currentTileID);
+
+        currentTile.SetObjectOccupyingTile(this.gameObject);
+
+        transform.position = new Vector3(currentTile.TilePosition.x, transform.position.y, currentTile.TilePosition.z);
     }
 
     //Shakes character if path or tile is invalid.

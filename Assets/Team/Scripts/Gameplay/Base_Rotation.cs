@@ -12,6 +12,8 @@ public class Base_Rotation : MonoBehaviour
         get { return dirFacing; }
     }
 
+    private Enum_GridDirection _previousDirFacing;
+
     private Dictionary<Enum_GridDirection, Vector2> _rotationDictionary = new Dictionary<Enum_GridDirection, Vector2>();
     private Vector2[] _rotationArray = new Vector2[4];
 
@@ -49,6 +51,7 @@ public class Base_Rotation : MonoBehaviour
 
     public virtual void RotateToFaceDir(Vector2 dir)
     {
+        _previousDirFacing = dirFacing;
         switch (dir.x)
         {
             case 1:
@@ -107,6 +110,7 @@ public class Base_Rotation : MonoBehaviour
 
     public void changeFacingDirection(Enum_GridDirection Direction)
     {
+        _previousDirFacing = dirFacing;
         dirFacing = Direction;
     }
 }

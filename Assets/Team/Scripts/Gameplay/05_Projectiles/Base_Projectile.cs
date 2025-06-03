@@ -1,5 +1,7 @@
 using UnityEngine;
 using Team.Enum.Character;
+using Team.MetaConstants;
+
 
 public class Base_Projectile : MonoBehaviour
 {
@@ -54,7 +56,10 @@ public class Base_Projectile : MonoBehaviour
 
     public virtual void OnTriggerEnter(Collider other)
     {
-        Destroy(gameObject);
+
+        if (_collisionEffect) { _collisionEffect.Play(); }
+
+        Destroy(this.gameObject);
     }
 
     public virtual void CleanUp()

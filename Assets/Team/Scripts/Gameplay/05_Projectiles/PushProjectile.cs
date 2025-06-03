@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using Team.Gameplay.GridSystem;
+using Team.MetaConstants;
 
 public class PushProjectile : Base_Projectile
 {
@@ -12,15 +13,13 @@ public class PushProjectile : Base_Projectile
     {
         if (other.gameObject == CastingWizard || other.gameObject.layer == 3) { return; } //Check that the collision isnt with the wizard that casted the projectile.
 
-        if (other.CompareTag("Character"))
+        if (other.CompareTag(MetaConstants.CharacterTag))
         {
             Base_Ch characterScript = other.gameObject.GetComponent<Base_Ch>();
             Vector2 direction = characterScript.BaseRotation.dirToV2(_projectileDir);
             StartCoroutine(characterScript.MoveByAmount((int)_pushAmount, direction, true));
         }
-        if (_collisionEffect) { _collisionEffect.Play(); }
-
-        Destroy(this.gameObject);
+        base.OnTriggerEnter(other);
     }
 
     public override void CleanUp()
