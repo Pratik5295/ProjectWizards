@@ -6,6 +6,7 @@ using Team.Gameplay.GridSystem;
 using System.Linq;
 using Team.Gameplay.TurnSystem;
 using Team.UI.Gameplay;
+using Team.Gameplay.Characters;
 
 namespace Team.Managers
 {
@@ -18,10 +19,16 @@ namespace Team.Managers
 
         [Tooltip("Load all the characters that would be spawned")]
         [SerializeField]
-        private List<CharacterData> CharactersMap = new List<CharacterData>(); 
+        private List<CharacterData> CharactersMap = new List<CharacterData>();
+
+        [SerializeField]
+        private List<CharacterReskinData> _characterReskinList = new List<CharacterReskinData>();
 
         [SerializeField]
         private Dictionary<CharacterData, Base_Ch> CharactersInLevel = new Dictionary<CharacterData, Base_Ch>();
+
+        [SerializeField]
+        private Dictionary<CharacterColorCode, CharacterReskinData> _characterReskinMap = new Dictionary<CharacterColorCode, CharacterReskinData>();
 
         [SerializeField]
         private Transform cardHolder;
@@ -42,6 +49,7 @@ namespace Team.Managers
 
         private void Start()
         {
+            LoadCharacterReskinMap();
             SpawnAllCharacters();
         }
 
@@ -73,6 +81,12 @@ namespace Team.Managers
 
             var baseCharacterRef = characterObject.GetComponent<Base_Ch>();
             baseCharacterRef.InitialiseCharacter(tileID);
+
+            //Reskin character if reskinner exists
+            if(characterObject.TryGetComponent<CharacterReskinner>(out var characterReskinner))
+            {
+                characterReskinner.SetCharacterReskin(data.CharacterSkin);
+            }
 
             LoadCardUI(baseCharacterRef, data);
 
@@ -119,6 +133,17 @@ namespace Team.Managers
             cardUI.PopulateUICardData(data);
 
             GameTurnManager.Instance.AddCharacterToTurnOrder(gameCard);
+        }
+
+        private void LoadCharacterReskinMap()
+        {
+            foreach(var _characterSkin in _characterReskinList)
+            {
+                if (!_characterReskinMap.ContainsKey(_characterSkin.CharacterCode))
+                {
+                    _characterReskinMap.Add(_characterSkin.CharacterCode, _characterSkin);
+                }
+            }
         }
 
         #endregion

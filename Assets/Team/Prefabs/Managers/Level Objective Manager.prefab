@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2943911903192822034
+--- !u!1 &3120106934005311449
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,42 +8,55 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4825854240345169298}
-  - component: {fileID: 734372333597614410}
+  - component: {fileID: 4254206908453149956}
+  - component: {fileID: 8509643606690861747}
   m_Layer: 0
-  m_Name: GameTurn
+  m_Name: Level Objective Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4825854240345169298
+--- !u!4 &4254206908453149956
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2943911903192822034}
+  m_GameObject: {fileID: 3120106934005311449}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &734372333597614410
+--- !u!114 &8509643606690861747
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2943911903192822034}
+  m_GameObject: {fileID: 3120106934005311449}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb7aa0d32796ca34ca0f80eb7bd051db, type: 3}
+  m_Script: {fileID: 11500000, guid: eaf0652538062cf46b9c83f4b02359bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterObject: {fileID: 0}
-  startTileID: {x: 0, y: 0}
-  duration: 2
+  _objectiveMap:
+  - ObjectiveName: Kill Wizard 01
+    ObjectiveTargetName: Wizard 01
+    Type: 1
+    LocationTileID:
+      x: 0
+      y: 0
+  - ObjectiveName: Ensure Wizard 02 Survives
+    ObjectiveTargetName: Wizard 02
+    Type: 2
+    LocationTileID:
+      x: 0
+      y: 0
+  _levelObjectives: []
+  turnManager: {fileID: 0}
+  objectivesHolder: {fileID: 0}
