@@ -3,11 +3,25 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Team.Gameplay.GridSystem;
 using UnityEngine;
+using Team.MetaConstants;
+
+namespace Team.MetaConstants
+{
+    public static partial class MetaConstants
+    {
+        public enum Enum_Rotation
+        {
+            Clockwise,
+            AntiClockwise
+        }
+    }
+}
 
 public class ChRotatorWizard : Base_Ch
 {
 
     [Header("Rotator Wizard Variables")]
+    private MetaConstants.Enum_Rotation rotation = MetaConstants.Enum_Rotation.Clockwise;
     [SerializeField]
     private int _abilityStartOffset;
 
@@ -18,30 +32,12 @@ public class ChRotatorWizard : Base_Ch
 
     private GameObject _rotatorHolder;
 
+    private GridTile centerTile;
     private List<GridTile> _tilesToMove;
 
     public override void UseAbility()
     {
-        _tilesToMove = new List<GridTile>();
-        Vector2 dirOffset = baseRotation.GetFacingDirection() * _abilityStartOffset;
-        Vector2 dirOffsetAndTileID = new Vector2(_currentTileID.x + dirOffset.x, _currentTileID.y + dirOffset.y);
-
-        GridTile centerTile = ref_gridManager.FindTile(new TileID((int)dirOffsetAndTileID.x, (int)dirOffsetAndTileID.y));
-        if (!centerTile)
-        {
-            Debug.Log("Cant Execute Ability as no tiles no center tile.");
-            return;
-        }
-        GridTile forwardTile = ref_gridManager.FindTile(new TileID(centerTile.TileID.x, centerTile.TileID.y + 1));
-        GridTile backwardTile = ref_gridManager.FindTile(new TileID(centerTile.TileID.x, centerTile.TileID.y - 1));
-        GridTile rightTile = ref_gridManager.FindTile(new TileID(centerTile.TileID.x + 1, centerTile.TileID.y));
-        GridTile leftTile = ref_gridManager.FindTile(new TileID(centerTile.TileID.x - 1, centerTile.TileID.y));
-
-        _tilesToMove.Add(centerTile);
-        _tilesToMove.Add(forwardTile);
-        _tilesToMove.Add(backwardTile);
-        _tilesToMove.Add(rightTile);
-        _tilesToMove.Add(leftTile);
+        GetTilesToRotate();
 
         for (int i = 1; i < _tilesToMove.Count; i++)
         {
@@ -61,8 +57,61 @@ public class ChRotatorWizard : Base_Ch
             _tilesToMove[i].transform.SetParent(_rotatorHolder.transform);
             _tilesToMove[i].gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.darkSlateGray;
         }
+        rotation = MetaConstants.Enum_Rotation.Clockwise;
         TileDataChanges();
         StartCoroutine(LerpUpDown(true));
+    }
+
+    [ContextMenu("Undo Rotation")]
+    public override void UndoAction()
+    {
+         GetTilesToRotate();
+
+         for (int i = 1; i < _tilesToMove.Count; i++)
+         {
+             if (!_tilesToMove[i]) { return; }
+         }
+
+         _rotatorHolder = new GameObject("_rotatorHolder");
+         _rotatorHolder.transform.position = centerTile.TilePosition;
+         _rotatorHolder.transform.SetParent(ref_gridManager.transform.GetChild(0));
+
+         for (int i = 0; i < _tilesToMove.Count; i++)
+         {
+             if (_tilesToMove[i].ObjectOccupyingTile)
+             {
+                 _tilesToMove[i].ParentOccupyingObject();
+             }
+             _tilesToMove[i].transform.SetParent(_rotatorHolder.transform);
+             _tilesToMove[i].gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.darkSlateGray;
+         }
+        rotation = MetaConstants.Enum_Rotation.AntiClockwise;
+         TileDataChanges();
+         StartCoroutine(LerpUpDown(true));
+    }
+
+    private void GetTilesToRotate()
+    {
+        _tilesToMove = new List<GridTile>();
+        Vector2 dirOffset = baseRotation.GetFacingDirection() * _abilityStartOffset;
+        Vector2 dirOffsetAndTileID = new Vector2(_currentTileID.x + dirOffset.x, _currentTileID.y + dirOffset.y);
+
+        centerTile = ref_gridManager.FindTile(new TileID((int)dirOffsetAndTileID.x, (int)dirOffsetAndTileID.y));
+        if (!centerTile)
+        {
+            Debug.Log("Cant Execute Ability as no tiles no center tile.");
+            return;
+        }
+        GridTile forwardTile = ref_gridManager.FindTile(new TileID(centerTile.TileID.x, centerTile.TileID.y + 1));
+        GridTile backwardTile = ref_gridManager.FindTile(new TileID(centerTile.TileID.x, centerTile.TileID.y - 1));
+        GridTile rightTile = ref_gridManager.FindTile(new TileID(centerTile.TileID.x + 1, centerTile.TileID.y));
+        GridTile leftTile = ref_gridManager.FindTile(new TileID(centerTile.TileID.x - 1, centerTile.TileID.y));
+
+        _tilesToMove.Add(centerTile);
+        _tilesToMove.Add(forwardTile);
+        _tilesToMove.Add(backwardTile);
+        _tilesToMove.Add(rightTile);
+        _tilesToMove.Add(leftTile);
     }
 
     private void TileDataChanges()
@@ -77,42 +126,64 @@ public class ChRotatorWizard : Base_Ch
             {
                 characterOnTile = _tilesToMove[i].ObjectOccupyingTile;
             }
-
-            switch (i) // Change Tile ID and rename to new tile name.
+            if (characterOnTile)
             {
-                case 1:
-                    if (characterOnTile) 
+                Base_Rotation charactersRotationSc = characterOnTile.GetComponent<Base_Rotation>();
+                if(rotation == MetaConstants.Enum_Rotation.AntiClockwise) 
+                { 
+                    charactersRotationSc.changeFacingDirection(DirectionUtilities.RotateAntiClockwise(charactersRotationSc.DirectionFacing));
+                }
+                if (rotation == MetaConstants.Enum_Rotation.Clockwise)
+                {
+                    charactersRotationSc.changeFacingDirection(DirectionUtilities.RotateClockwise(charactersRotationSc.DirectionFacing));
+                }
+            }
+            switch (rotation)
+            {
+                case MetaConstants.Enum_Rotation.Clockwise:
+                    switch (i) // Change Tile ID and rename to new tile name.
                     {
-                        characterOnTile.GetComponent<Base_Rotation>().changeFacingDirection(Enum_GridDirection.NORTH); 
+                        case 1:
+                            _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x + 1, _tilesToMove[i].TileID.y - 1);
+                            _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
+                            break;
+                        case 2:
+                            _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x - 1, _tilesToMove[i].TileID.y + 1);
+                            _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
+                            break;
+                        case 3:
+                            _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x - 1, _tilesToMove[i].TileID.y - 1);
+                            _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
+                            break;
+                        case 4:
+                            _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x + 1, _tilesToMove[i].TileID.y + 1);
+                            _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
+                            break;
                     }
-                    _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x + 1, _tilesToMove[i].TileID.y - 1);
-                    _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
-                    break;
-                case 2:
-                    if (characterOnTile)
+                  break;
+                case MetaConstants.Enum_Rotation.AntiClockwise:
+                    switch (i) // Change Tile ID and rename to new tile name.
                     {
-                        characterOnTile.GetComponent<Base_Rotation>().changeFacingDirection(Enum_GridDirection.SOUTH);
+                        case 1:
+                            _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x - 1, _tilesToMove[i].TileID.y - 1);
+                            _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
+                            break;
+                        case 2:
+                            _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x + 1, _tilesToMove[i].TileID.y + 1);
+                            _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
+                            break;
+                        case 3:
+                            _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x - 1, _tilesToMove[i].TileID.y + 1);
+                            _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
+                            break;
+                        case 4:
+                            _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x + 1, _tilesToMove[i].TileID.y - 1);
+                            _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
+                            break;
                     }
-                    _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x - 1, _tilesToMove[i].TileID.y + 1);
-                    _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
-                    break;
-                case 3:
-                    if (characterOnTile)
-                    {
-                        characterOnTile.GetComponent<Base_Rotation>().changeFacingDirection(Enum_GridDirection.EAST);
-                    }
-                    _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x - 1, _tilesToMove[i].TileID.y - 1);
-                    _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
-                    break;
-                case 4:
-                    if (characterOnTile)
-                    {
-                        characterOnTile.GetComponent<Base_Rotation>().changeFacingDirection(Enum_GridDirection.WEST);
-                    }
-                    _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x + 1, _tilesToMove[i].TileID.y + 1);
-                    _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
                     break;
             }
+
 
         }
 
@@ -170,11 +241,12 @@ public class ChRotatorWizard : Base_Ch
     private IEnumerator RotateLerp()
     {
         float elapsedTime = 0f;
+        float RotationValue = GetRotationValue(rotation);
 
         Quaternion startingRotation = _rotatorHolder.transform.rotation;
 
-        Vector3 targetV3 = new Vector3(_rotatorHolder.transform.rotation.x, _rotatorHolder.transform.rotation.y + 90, _rotatorHolder.transform.rotation.z);
-        Quaternion targetRotation = Quaternion.Euler(_rotatorHolder.transform.rotation.x, _rotatorHolder.transform.rotation.y + 90, _rotatorHolder.transform.rotation.z);
+        Vector3 targetV3 = new Vector3(_rotatorHolder.transform.rotation.x, _rotatorHolder.transform.rotation.y + RotationValue, _rotatorHolder.transform.rotation.z);
+        Quaternion targetRotation = Quaternion.Euler(_rotatorHolder.transform.rotation.x, _rotatorHolder.transform.rotation.y + RotationValue, _rotatorHolder.transform.rotation.z);
 
         while (elapsedTime < _lerpDuration)
         {
@@ -189,5 +261,18 @@ public class ChRotatorWizard : Base_Ch
 
         _rotatorHolder.transform.rotation = targetRotation;
         StartCoroutine(LerpUpDown(false));
+    }
+
+    private float GetRotationValue(MetaConstants.Enum_Rotation Rotation)
+    {
+        switch (Rotation)
+        {
+            case MetaConstants.Enum_Rotation.Clockwise:
+                return 90f;
+            case MetaConstants.Enum_Rotation.AntiClockwise:
+                return -90f;
+        }
+        Debug.LogWarning($"{gameObject}: Get Rotation Value: Wasnt able to be determined whether it was clockwise or Anti-Clockwise.");
+        return 90f;
     }
 }

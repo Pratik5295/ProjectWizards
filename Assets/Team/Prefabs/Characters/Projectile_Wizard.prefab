@@ -186,6 +186,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c67d759f91fd2ff47a7597ab42bc7b85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startPoint: {fileID: 0}
+  endPoint: {fileID: 0}
+  controlPoint: {fileID: 0}
 --- !u!1 &5407380294395882597
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,6 +200,7 @@ GameObject:
   - component: {fileID: 3236205127488731490}
   - component: {fileID: 7676447528062884871}
   - component: {fileID: 933473269899832427}
+  - component: {fileID: 2803533931978526133}
   m_Layer: 0
   m_Name: Projectile_Wizard
   m_TagString: Character
@@ -282,6 +286,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   _projectilePrefab: {fileID: 3625092468094944024, guid: 767c1f910a3067d4c9f7ab18fdd2fe7b, type: 3}
   _fireFromPoint: {fileID: 5150221880546262881}
+  _projectileRange: -1
 --- !u!114 &933473269899832427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,3 +300,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dirFacing: 0
+--- !u!65 &2803533931978526133
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5407380294395882597}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.5, y: 0.61, z: 0.4}
+  m_Center: {x: 0, y: 0.3, z: 0}

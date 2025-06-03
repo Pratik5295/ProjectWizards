@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 2281852738733362449}
   - component: {fileID: 4069745272858068626}
   - component: {fileID: 3992528492060488253}
-  - component: {fileID: 4052065706905574721}
+  - component: {fileID: 6029156872118688268}
+  - component: {fileID: 5236300430708862904}
   m_Layer: 0
-  m_Name: Test_Projectile
+  m_Name: Push_Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65,7 +66,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3625092468094944024}
-  m_Mesh: {fileID: -2643173543783292932, guid: 9d7f24d00d5dfeb4696ff51241b31845, type: 3}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &3992528492060488253
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -89,7 +90,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6538903991835684241, guid: adc4dae8837639d4c90cf02131bbbc63, type: 3}
+  - {fileID: 2100000, guid: 91c0701f2e59aaa4aa8070d3b87243a0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -111,7 +112,34 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &4052065706905574721
+--- !u!54 &6029156872118688268
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3625092468094944024}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &5236300430708862904
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,8 +148,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 3625092468094944024}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d48229a21cfbac4abf443c723bbcaed, type: 3}
+  m_Script: {fileID: 11500000, guid: 0588f9d3dc6dd0f4daae5c06396aa1c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 1
-  _lifespan: 5
+  _projectileType: 1
+  _projectileDir: 0
+  CastingWizard: {fileID: 0}
+  curve: {fileID: 0}
+  _speed: 2
+  _lifespan: 2
+  _collisionEffect: {fileID: 0}
+  _pushAmount: 1
