@@ -124,7 +124,6 @@ namespace Team.Gameplay.ObjectiveSystem
             foreach (var objective in levelObjectives)
             {
                 bool result = objective.CheckObjectiveComplete();
-                Debug.Log($"Objective: {objective.Data.ObjectiveName} is {(result ? "Complete" : "Incomplete")}");
 
                 objectivesHolder.UpdateObjective(objective.Data,result);
             }

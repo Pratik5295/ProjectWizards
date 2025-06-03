@@ -66,8 +66,5 @@ namespace Team.Gameplay.ObjectiveSystem
         {
             return isCompleted;
         }
-
-        [ContextMenu("Complete Objective")]
-        public void ForceCompleteObjectiveStatus() => isCompleted = true;
     }
 }
