@@ -10,5 +10,8 @@ namespace Team.Data
         public GameObject CharacterPrefab;  //Prefab to be loaded
         public TileID StartTileID;
         public GameObject UICardPrefab;
+
+        //Reskin Details
+        public CharacterReskinData CharacterSkin;
     }
 }
