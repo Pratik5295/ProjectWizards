@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Team.Managers;
+using Team.UI;
+using UnityEngine.Rendering;
 
 namespace Team.Gameplay.ObjectiveSystem
 {
@@ -12,14 +14,18 @@ namespace Team.Gameplay.ObjectiveSystem
         public static LevelObjectiveManager Instance = null;
 
         [SerializeField]
-        private List<GenericObjective> levelObjectives = new List<GenericObjective>();
+        private List<GameObjectiveData> ObjectiveMap = new List<GameObjectiveData>();
 
+        [Header("Private Local cache, dont fill")]
         [SerializeField]
-        private List<GameObjectiveData> objectiveMap = new List<GameObjectiveData>();
+        private List<GenericObjective> levelObjectives = new List<GenericObjective>();
 
         [Header("Components")]
         [SerializeField]
         private GameTurnManager turnManager;
+
+        [SerializeField]
+        private UIObjectivesHolder objectivesHolder;
         #endregion
 
         #region Unity Methods
@@ -85,7 +91,7 @@ namespace Team.Gameplay.ObjectiveSystem
         public void InitalizeObjectives()
         {
             CharacterManager characterManager = CharacterManager.Instance;
-            foreach (var data in objectiveMap)
+            foreach (var data in ObjectiveMap)
             {
                 var objective = ObjectiveFactory.CreateObjective(data);
 
@@ -98,6 +104,8 @@ namespace Team.Gameplay.ObjectiveSystem
 
                 objective.SetCharacterReference(characterObject);
                 levelObjectives.Add(objective);
+
+                objectivesHolder.AddObjective(data);
             }
         }
 
@@ -117,6 +125,8 @@ namespace Team.Gameplay.ObjectiveSystem
             {
                 bool result = objective.CheckObjectiveComplete();
                 Debug.Log($"Objective: {objective.Data.ObjectiveName} is {(result ? "Complete" : "Incomplete")}");
+
+                objectivesHolder.UpdateObjective(objective.Data,result);
             }
         }
 
