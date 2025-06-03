@@ -13,11 +13,12 @@ namespace Team.Gameplay.ObjectiveSystem
         public static LevelObjectiveManager Instance = null;
 
         [SerializeField]
-        private List<GameObjectiveData> ObjectiveMap = new List<GameObjectiveData>();
+        private List<GameObjectiveData> _objectiveMap = new List<GameObjectiveData>();
 
         [Header("Private Local cache, dont fill")]
         [SerializeField]
-        private List<GenericObjective> levelObjectives = new List<GenericObjective>();
+        private List<GenericObjective> _levelObjectives = new List<GenericObjective>();
+
 
         [Header("Components")]
         [SerializeField]
@@ -90,7 +91,7 @@ namespace Team.Gameplay.ObjectiveSystem
         public void InitalizeObjectives()
         {
             CharacterManager characterManager = CharacterManager.Instance;
-            foreach (var data in ObjectiveMap)
+            foreach (var data in _objectiveMap)
             {
                 var objective = ObjectiveFactory.CreateObjective(data);
 
@@ -102,7 +103,7 @@ namespace Team.Gameplay.ObjectiveSystem
                 }
 
                 objective.SetCharacterReference(characterObject);
-                levelObjectives.Add(objective);
+                _levelObjectives.Add(objective);
 
                 objectivesHolder.AddObjective(data);
             }
@@ -114,13 +115,13 @@ namespace Team.Gameplay.ObjectiveSystem
 
         private void OnRoundTurnsCompletedHandler()
         {
-            if (levelObjectives.Count == 0)
+            if (_levelObjectives.Count == 0)
             {
                 Debug.LogWarning("There are no objectives for this level?");
                 return;
             }
 
-            foreach (var objective in levelObjectives)
+            foreach (var objective in _levelObjectives)
             {
                 bool result = objective.CheckObjectiveComplete();
 

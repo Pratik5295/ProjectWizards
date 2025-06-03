@@ -1456,20 +1456,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaf0652538062cf46b9c83f4b02359bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObjectiveMap:
+  _objectiveMap:
   - ObjectiveName: Kill Wizard 01
     ObjectiveTargetName: Wizard 01
     Type: 1
     LocationTileID:
       x: 0
       y: 0
-  - ObjectiveName: Ensure Wizard 02 survives
+  - ObjectiveName: Ensure Wizard 02 Survives
     ObjectiveTargetName: Wizard 02
     Type: 2
     LocationTileID:
       x: 0
       y: 0
-  levelObjectives: []
+  _levelObjectives: []
   turnManager: {fileID: 0}
   objectivesHolder: {fileID: 6431141280707554566}
 --- !u!4 &341624804
