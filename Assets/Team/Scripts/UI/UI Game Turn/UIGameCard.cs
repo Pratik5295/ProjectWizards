@@ -1,3 +1,7 @@
+using Team.Data;
+using Team.Managers;
+using UnityEngine.InputSystem;
+
 namespace Team.UI.Gameplay
 {
     public class UIGameCard : UIDragHandler
@@ -21,6 +25,16 @@ namespace Team.UI.Gameplay
         {
             //Force the turn manager to rebuild
             GameTurnManager.Instance.ForceRebuildTurns();
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        public void PopulateUICardData(CharacterData data)
+        {
+            //Set Card Game Object data
+            gameObject.name = $"Game-Card: {data.CharacterID}";
         }
 
         #endregion

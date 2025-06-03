@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Team.Gameplay.GridSystem
 {
-
+    [DefaultExecutionOrder(-10)]
     public class GridManager : MonoBehaviour
     {
         public static GridManager Instance = null;
