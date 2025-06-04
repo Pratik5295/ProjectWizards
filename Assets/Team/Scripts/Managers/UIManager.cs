@@ -56,7 +56,7 @@ namespace Team.Managers
 
         private void OnRoundTurnsCompletedHandler()
         {
-            playButton.SetActive(true);
+            playButton.SetActive(false);
             restartButton.SetActive(true);
         }
 
