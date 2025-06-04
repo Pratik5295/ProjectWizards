@@ -66,5 +66,10 @@ namespace Team.Gameplay.ObjectiveSystem
         {
             return isCompleted;
         }
+
+        public void ResetObjective()
+        {
+            isCompleted = false;
+        }
     }
 }

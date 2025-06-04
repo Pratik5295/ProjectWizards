@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Team.Gameplay.ObjectiveSystem;
 using Team.Gameplay.TurnSystem;
 using UnityEngine;
 
@@ -13,7 +14,8 @@ namespace Team.Managers
 
         #region Variables
         [Header("Components")]
-        private Queue<GameTurn> turnManager;
+        private Queue<GameTurn> turnQueue;
+        private Stack<GameTurn> _historyStack = new Stack<GameTurn>();
 
         public List<GameObject> originalOrder = new List<GameObject>();
         public List<GameObject> currentTurnOrder = new List<GameObject>(); //This will be used to reset the Queue
@@ -21,9 +23,11 @@ namespace Team.Managers
         [SerializeField]
         private Transform turnHolder;
 
-        public bool HasCharacterTurns => turnManager.Count > 0;
+        public bool HasCharacterTurns => turnQueue.Count > 0;
 
+        public Action OnTurnsProcessingEvent;
         public Action OnAllTurnsCompleted;  //TODO: Update this to include the round integer
+        public Action OnResetLastTurnCompleted; //TODO: To include which turn count was the round reset to
 
         #endregion
 
@@ -51,23 +55,23 @@ namespace Team.Managers
 
         public async Task LoadQueue()
         {
-            if (turnManager == null)
+            if (turnQueue == null)
             {
-                turnManager = new Queue<GameTurn>();
+                turnQueue = new Queue<GameTurn>();
             }
             else
             {
-                turnManager.Clear();
+                turnQueue.Clear();
             }
 
             //Wait till the end of frame
             await Task.Yield();
             foreach (var unit in currentTurnOrder)
             {
-                turnManager.Enqueue(unit.GetComponent<GameTurn>());
+                turnQueue.Enqueue(unit.GetComponent<GameTurn>());
             }
 
-            Debug.Log($"Loading complete: {turnManager.Count}");
+            Debug.Log($"Loading complete: {turnQueue.Count}");
         }
 
         public void ForceRebuildTurns()
@@ -102,16 +106,21 @@ namespace Team.Managers
         [ContextMenu("Play All Turns")]
         public async void PlayTurns()
         {
+            OnTurnsProcessingEvent?.Invoke();
+
             await LoadQueue();
 
             Debug.Log("Has moves, now play all turns");
-            while (turnManager.Count > 0)
+            while (turnQueue.Count > 0)
             {
-                GameTurn turn = turnManager.Dequeue();
+                GameTurn turn = turnQueue.Dequeue();
 
                 if (turn.IsAlive())
                 {
                     await turn.PerformAsync();
+
+                    //Turn was performed by the character, update the stack
+                    _historyStack.Push(turn);
                 }
                 else
                 {
@@ -122,6 +131,35 @@ namespace Team.Managers
             Debug.Log("All turns completed.");
 
             OnAllTurnsCompleted?.Invoke();
+        }
+
+        [ContextMenu("Reset Turns")]
+        public async void ResetAllTurns()
+        {
+            OnTurnsProcessingEvent?.Invoke();
+            //Reset all moves performed by the characters
+            while (_historyStack.Count > 0)
+            {
+                GameTurn turn = _historyStack.Pop();
+                await turn.Undo();
+            }
+            Debug.Log("Undo Moves Complete");
+
+            //Reset the turn order to original ui order
+            currentTurnOrder.Clear();
+            for (int i = 0; i < originalOrder.Count; i++)
+            {
+                var turn = originalOrder[i];
+                currentTurnOrder.Add(turn);
+                turn.transform.SetSiblingIndex(i);
+            }
+
+            //Set All Objectives to be incomplete
+            LevelObjectiveManager.Instance.ResetAllObjectives();
+
+            //Notify that undo was completed
+            OnResetLastTurnCompleted?.Invoke();
+
         }
 
         #endregion

@@ -66,6 +66,18 @@ namespace Team.Gameplay.TurnSystem
             Debug.Log($"{name} finished turn");
         }
 
+        public async Task Undo()
+        {
+            _turnCompletion = new TaskCompletionSource<bool>();
+
+            characterObject.UndoAction();
+
+            await _turnCompletion.Task;
+
+            Debug.Log($"{name} Undo Completed");
+
+        }
+
         /// <summary>
         /// Call this when the turn is done (e.g. after animations or player input).
         /// </summary>
