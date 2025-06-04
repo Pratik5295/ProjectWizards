@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
+using Team.MetaConstants;
+
 
 namespace Team.Gameplay.GridSystem
 {
     public enum TileType
     {
         EMPTY = 0, //Highlights no tile
-        TILE = 1 //Tile has content (not an empty tile)
+        TILE = 1, //Tile has content (not an empty tile)
+        OCCUPIEDTILE = 2 //Tile contains object
     }
 
     public enum TileFacing
@@ -44,6 +47,7 @@ namespace Team.Gameplay.GridSystem
         public GameObject ObjectOccupyingTile
         {
             get { return objectOccupyingTile; }
+            set { objectOccupyingTile = value; }
         }
 
         /// <summary>
@@ -100,7 +104,43 @@ namespace Team.Gameplay.GridSystem
             gridManager?.AddTileToGrid(TileID, this);
         }
 
-        [ContextMenu("Set Object Occupying Tile space")]
+        [ContextMenu("Spawn Object Occupying Tile space")]
+        public void SpawnObjectOnTile()
+        {
+            if (!tileObject) { SetTileObject(); }
+            if (objectOccupyingTile && tileObject.transform.childCount > 0 || !gridManager.DefaultObstacle) { return; }
+            tileType = TileType.OCCUPIEDTILE;
+            Vector3 spawnLocation = new Vector3(tileObject.transform.position.x, 1.5f, tileObject.transform.position.z);
+            if (objectOccupyingTile)
+            {
+                GameObject InstantiatedObject = Instantiate(objectOccupyingTile, spawnLocation, Quaternion.identity, tileObject.transform);
+                objectOccupyingTile = InstantiatedObject;
+                if (!InstantiatedObject.GetComponent<Collider>())
+                {
+                    InstantiatedObject.AddComponent<BoxCollider>();
+                }
+                if (!InstantiatedObject.GetComponent<ObstacleData>()) 
+                {
+                    ObstacleData obstacleData = InstantiatedObject.AddComponent<ObstacleData>();
+                    obstacleData.UpdateObstacleTileData(TileID, this);
+                }
+            }
+            else
+            {
+                objectOccupyingTile = Instantiate(gridManager.DefaultObstacle, spawnLocation, Quaternion.identity, tileObject.transform);
+                if (!objectOccupyingTile.GetComponent<Collider>())
+                {
+                    objectOccupyingTile.AddComponent<BoxCollider>();
+                }
+                if (!objectOccupyingTile.GetComponent<ObstacleData>())
+                {
+                    objectOccupyingTile.AddComponent<ObstacleData>();
+                }
+                objectOccupyingTile.GetComponent<ObstacleData>().UpdateObstacleTileData(TileID, this);
+            }
+            objectOccupyingTile.tag = MetaConstants.MetaConstants.EnvironmentTag;
+        }
+
         public void SetObjectOccupyingTile(GameObject Object)
         {
             if (!Object) { objectOccupyingTile = null; }

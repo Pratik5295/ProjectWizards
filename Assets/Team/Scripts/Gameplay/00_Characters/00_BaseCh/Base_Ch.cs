@@ -60,25 +60,27 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
     public System.Action OnTurnComplete;
 
-    public void InitialiseCharacter(TileID StartingTileID)
+    public void InitialiseCharacter(TileID StartingTileID, Enum_GridDirection startingDirection)
     {
         ref_gridManager = GridManager.Instance;
         OffsetValue = ref_gridManager.GridSlot_Offset;
 
-        //Set _currentTileID here!!!
         _currentTileID = StartingTileID;
         _previousTileID = _currentTileID;
         currentTile = ref_gridManager.FindTile(_currentTileID);
         currentTile.SetObjectOccupyingTile(this.gameObject);
 
         baseRotation = GetComponent<Base_Rotation>();
+        baseRotation.changeFacingDirection(startingDirection);
+        Vector2 v2Dir = baseRotation.dirToV2(baseRotation.DirectionFacing);
+        baseRotation.RotateToFaceDir(v2Dir);
 
         transform.position = new Vector3(currentTile.TilePosition.x, currentTile.TilePosition.y + 1f, currentTile.TilePosition.z);
     }
 
     void Start()
     {
-        InitialiseCharacter(_currentTileID);
+        //InitialiseCharacter(_currentTileID, Enum_GridDirection.NORTH);
     }
 
     #region Debugging Movement Button Functions

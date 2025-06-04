@@ -80,7 +80,7 @@ namespace Team.Managers
             TileID tileID = new TileID((int)data.StartTileID.x, (int)data.StartTileID.y);
 
             var baseCharacterRef = characterObject.GetComponent<Base_Ch>();
-            baseCharacterRef.InitialiseCharacter(tileID);
+            baseCharacterRef.InitialiseCharacter(tileID, data.FacingDirection);
 
             //Reskin character if reskinner exists
             if(characterObject.TryGetComponent<CharacterReskinner>(out var characterReskinner))
