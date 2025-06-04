@@ -44,10 +44,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b9bb3baf363d3a449e67d6d32027cd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GridID: {x: 0, y: 0}
-  tilePrefab: {fileID: 5925538716140807718, guid: 3b811938707c6df4ba51c6c483bcf651, type: 3}
+  TileID:
+    x: 0
+    y: 0
+  tilePrefab: {fileID: 3022992393789012284, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
   tileType: 1
   Direction:
     TileFacing: 0
   gridManager: {fileID: 0}
   tileObject: {fileID: 0}
+  objectOccupyingTile: {fileID: 0}
