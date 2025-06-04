@@ -17,11 +17,21 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     [SerializeField] protected GridManager ref_gridManager;
 
     [SerializeField] protected Base_Rotation baseRotation;
+    public Base_Rotation BaseRotation
+    {
+        get { return baseRotation; }
+    }
 
 
 
     [Header("Movement Variables")]
-    [SerializeField] protected TileID currentTileID = new TileID(0, 0);
+    [SerializeField] protected TileID _currentTileID = new TileID(0, 0);
+    protected TileID _previousTileID = new TileID(0, 0);
+    public TileID CurrentTileID
+    {
+        get { return _currentTileID; }
+    }
+    private GridTile currentTile;
 
 
     private float OffsetValue;
@@ -46,13 +56,29 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     #endregion
 
 
-    public delegate void Evnt_stateChange();
-    public event Evnt_stateChange OnStateChanged;
+    public System.Action OnStateChanged;
 
-    void Start()
+    public System.Action OnTurnComplete;
+
+    public void InitialiseCharacter(TileID StartingTileID)
     {
         ref_gridManager = GridManager.Instance;
         OffsetValue = ref_gridManager.GridSlot_Offset;
+
+        //Set _currentTileID here!!!
+        _currentTileID = StartingTileID;
+        _previousTileID = _currentTileID;
+        currentTile = ref_gridManager.FindTile(_currentTileID);
+        currentTile.SetObjectOccupyingTile(this.gameObject);
+
+        baseRotation = GetComponent<Base_Rotation>();
+
+        transform.position = new Vector3(currentTile.TilePosition.x, currentTile.TilePosition.y + 1f, currentTile.TilePosition.z);
+    }
+
+    void Start()
+    {
+        InitialiseCharacter(_currentTileID);
     }
 
     #region Debugging Movement Button Functions
@@ -89,44 +115,57 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     #endregion
 
     //Moves by a defined amount in a direction, if the tile exists and player can move there. Then passes to lerp.
-    public virtual IEnumerator MoveByAmount(int movementAmount, Vector2 dir)
+    public virtual IEnumerator MoveByAmount(int movementAmount, Vector2 dir, bool wasPushed = false)
     {
-        for(int i = 0; i < movementAmount; i++)
+        _previousTileID = _currentTileID;
+        currentTile.SetObjectOccupyingTile(null);
+
+        for (int i = 0; i < movementAmount; i++)
         {
             alreadyMoving = true;
-            Vector3 desiredLocation = new Vector3(currentTileID.x + (dir.x * OffsetValue), transform.position.y, currentTileID.y + (dir.y * OffsetValue));
+            Vector3 desiredLocation = new Vector3(_currentTileID.x + (dir.x * OffsetValue), transform.position.y, _currentTileID.y + (dir.y * OffsetValue));
 
-            TileID desiredTileID = new TileID(currentTileID.x + (int)dir.x, currentTileID.y + (int)dir.y);
+            TileID desiredTileID = new TileID(_currentTileID.x + (int)dir.x, _currentTileID.y + (int)dir.y);
             GridTile targetTile = ref_gridManager.FindTile(desiredTileID);
 
-            baseRotation.RotateToFaceDir(dir);
-            if (targetTile)
+            if (targetTile && !targetTile.ObjectOccupyingTile)
             {
                 Vector3 targetPosition = new Vector3(targetTile.TilePosition.x, desiredLocation.y, targetTile.TilePosition.z);
-                currentTileID = targetTile.TileID;
 
-                yield return StartCoroutine(LerpingMovement(targetPosition));
+                _currentTileID = targetTile.TileID;
+                currentTile = ref_gridManager.FindTile(_currentTileID);
+
+                yield return StartCoroutine(LerpingMovement(targetPosition, wasPushed));
             }
             else
             {
                 StartCoroutine(ShakeCharacter(0.25f));
                 alreadyMoving = false;
+                OnTurnComplete?.Invoke();
                 yield break;
             }
         }
+        currentTile.SetObjectOccupyingTile(this.gameObject);
+        if (wasPushed) { yield break; }
+        OnTurnComplete?.Invoke();
     }
 
     
     //Lerps the movement to the next available tile.
-    public virtual IEnumerator LerpingMovement(Vector3 targetPosition)
+    public virtual IEnumerator LerpingMovement(Vector3 targetPosition, bool wasPushed = false)
     {
+        float positionYLerped = ydefaultOffset;
         while (currentTime < smoothingTime)
         {
             currentTime += Time.deltaTime;
 
             float lerpAmount = currentTime / smoothingTime;
 
-            float positionYLerped = Mathf.Lerp(transform.position.y, ydefaultOffset + _yMovementCurve.Evaluate(currentTime), lerpAmount);
+            if (!wasPushed)
+            {
+                positionYLerped = Mathf.Lerp(transform.position.y, ydefaultOffset + _yMovementCurve.Evaluate(currentTime), lerpAmount);
+            }
+
             transform.position = new Vector3(Mathf.Lerp(transform.position.x, targetPosition.x, lerpAmount), positionYLerped, Mathf.Lerp(transform.position.z, targetPosition.z, lerpAmount));
             //transform.position = Vector3.Lerp(positionYLerped, targetPosition, lerpAmount);
 
@@ -142,6 +181,19 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         }
 
         alreadyMoving = false;
+    }
+
+    [ContextMenu("Undo Movement")]
+    public virtual void UndoAction()
+    {
+        currentTile.SetObjectOccupyingTile(null);
+
+        _currentTileID = _previousTileID;
+        currentTile = ref_gridManager.FindTile(_currentTileID);
+
+        currentTile.SetObjectOccupyingTile(this.gameObject);
+
+        transform.position = new Vector3(currentTile.TilePosition.x, transform.position.y, currentTile.TilePosition.z);
     }
 
     //Shakes character if path or tile is invalid.
@@ -166,6 +218,11 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         transform.localPosition = defaultPos;
     }
 
+    public void UpdateCurrentTileID()
+    {
+        _currentTileID = currentTile.TileID;
+    }
+
 
 
     public virtual void HitByProjectile(Enum_ProjectileType projectileType)
@@ -179,10 +236,10 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
                 CharState = Enum_CharacterState.Incapacitated;
                 break;
         }
-        OnStateChanged();
+        OnStateChanged?.Invoke();
     }
 
-    public bool checkStateOfChar()
+    public bool checkIfCharAlive()
     {
         if (CharState == Enum_CharacterState.Alive) { return true; }
         else return false;
@@ -192,7 +249,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     {
         if (CharState == Enum_CharacterState.Incapacitated)
         {
-            OnStateChanged();
+            OnStateChanged?.Invoke();
             CharState = Enum_CharacterState.Alive;
         }
     }
@@ -201,7 +258,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     public virtual void UseAbility()
     {
         // Debug.LogError($" {gameObject.name} Ability not programmed for character");
-        StartCoroutine(MoveByAmount(2, new Vector2(0, 1)));
+        StartCoroutine(MoveByAmount(2, baseRotation.GetFacingDirection()));
     }
 
 }

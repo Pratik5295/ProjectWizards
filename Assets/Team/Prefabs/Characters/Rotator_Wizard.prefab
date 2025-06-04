@@ -184,9 +184,10 @@ GameObject:
   - component: {fileID: 3236205127488731490}
   - component: {fileID: 8701032960173701566}
   - component: {fileID: 933473269899832427}
+  - component: {fileID: 3136886351939346752}
   m_Layer: 0
   m_Name: Rotator_Wizard
-  m_TagString: Untagged
+  m_TagString: Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -222,10 +223,18 @@ MonoBehaviour:
   CharState: 0
   ref_gridManager: {fileID: 0}
   baseRotation: {fileID: 0}
-  currentTileID:
+  _currentTileID:
     x: 0
     y: 0
+  _yMovementCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   _abilityStartOffset: 2
+  _lerpDuration: 0.25
+  _lerpDelay: 0.01
 --- !u!114 &933473269899832427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,3 +248,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dirFacing: 0
+--- !u!65 &3136886351939346752
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5407380294395882597}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.5, y: 0.61, z: 0.4}
+  m_Center: {x: 0, y: 0.3, z: 0}

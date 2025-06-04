@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Team.Gameplay.GridSystem;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 
 namespace Team.Gameplay.TurnSystem
@@ -10,7 +11,6 @@ namespace Team.Gameplay.TurnSystem
     public class GameTurn : MonoBehaviour, IGameMove
     {
         #region Variables
-        public Base_Ch CharacterPrefab;
 
         [SerializeField]
         private Base_Ch characterObject;
@@ -31,14 +31,7 @@ namespace Team.Gameplay.TurnSystem
 
         private void Start()
         {
-            if(CharacterPrefab == null)
-            {
-                Debug.LogError($"Game Turn: {gameObject.name} is missing character");
-            }
-            else
-            {
-                InitializeCharacter();
-            }
+
         }
         #endregion
 
@@ -65,9 +58,6 @@ namespace Team.Gameplay.TurnSystem
 
             characterObject.UseAbility();
 
-            //Only for testing
-            Invoke("TestingCompleteTurn",duration);
-
             // Wait until external call completes the turn
             await _turnCompletion.Task;
 
@@ -87,28 +77,17 @@ namespace Team.Gameplay.TurnSystem
             }
         }
 
+        public void SetupGameTurn(Base_Ch _character)
+        {
+            characterObject = _character;
+            characterObject.OnTurnComplete += CompleteTurn;
+        }
+
         #endregion
 
         #region Private Methods
 
-        private void InitializeCharacter()
-        {
-            characterObject = Instantiate(CharacterPrefab);
-
-            TileID tileID = new TileID((int)startTileID.x, (int)startTileID.y);
-            var tile = GridManager.Instance.FindTile(tileID);
-
-            characterObject.transform.position = new Vector3(tile.TilePosition.x, tile.TilePosition.y + 1f, tile.TilePosition.z);
-        }
 
         #endregion
-
-        /// <summary>
-        /// TESTING: TO BE REMOVED
-        /// </summary>
-        private void TestingCompleteTurn()
-        {
-            CompleteTurn();
-        }
     }
 }
