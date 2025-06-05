@@ -71,7 +71,6 @@ namespace Team.Managers
                 turnQueue.Enqueue(unit.GetComponent<GameTurn>());
             }
 
-            Debug.Log($"Loading complete: {turnQueue.Count}");
         }
 
         public void ForceRebuildTurns()
@@ -110,7 +109,6 @@ namespace Team.Managers
 
             await LoadQueue();
 
-            Debug.Log("Has moves, now play all turns");
             while (turnQueue.Count > 0)
             {
                 GameTurn turn = turnQueue.Dequeue();
@@ -143,7 +141,6 @@ namespace Team.Managers
                 GameTurn turn = _historyStack.Pop();
                 await turn.Undo();
             }
-            Debug.Log("Undo Moves Complete");
 
             //Reset the turn order to original ui order
             currentTurnOrder.Clear();
