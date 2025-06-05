@@ -1,5 +1,6 @@
 using UnityEngine;
 using Team.MetaConstants;
+using Team.Gameplay.GridSystem;
 
 public class FireballProjectile : Base_Projectile
 {
@@ -11,6 +12,11 @@ public class FireballProjectile : Base_Projectile
         if (other.CompareTag(MetaConstants.CharacterTag))
         {
             other.GetComponent<Base_Ch>().HitByProjectile(_projectileType);
+        }
+        if (other.CompareTag(MetaConstants.EnvironmentTag))
+        {
+            //other.gameObject.GetComponent<ObstacleData>().clearTileData();
+            Destroy(other.gameObject);
         }
         base.OnTriggerEnter(other);
     }

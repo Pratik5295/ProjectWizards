@@ -10,6 +10,7 @@ public class ChProjectileWizard : Base_Ch
     [SerializeField] private GameObject _fireFromPoint;
 
     private GameObject ProjectileInstance;
+    private Base_Projectile scProjectile;
     private QuadraticCurve curve;
 
     [Header("---Wizard Projectile Stats---")]
@@ -38,7 +39,19 @@ public class ChProjectileWizard : Base_Ch
     public override void UseAbility()
     {
         ProjectileInstance = Instantiate(_projectilePrefab, _fireFromPoint.transform.position, Quaternion.identity);
-        ProjectileInstance.GetComponent<Base_Projectile>().curve = curve;
-        ProjectileInstance.GetComponent<Base_Projectile>().CastingWizard = this.gameObject;
+        scProjectile = ProjectileInstance.GetComponent<Base_Projectile>();
+
+        scProjectile.curve = curve;
+        scProjectile.CastingWizard = this.gameObject;
+        scProjectile.OnProjectileEnd += endTurn;
+    }
+
+    private void endTurn()
+    {
+        scProjectile.OnProjectileEnd -= endTurn;
+        ProjectileInstance = null;
+        scProjectile = null;
+
+        OnTurnComplete();
     }
 }
