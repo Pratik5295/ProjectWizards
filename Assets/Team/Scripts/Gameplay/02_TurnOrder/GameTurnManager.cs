@@ -5,6 +5,13 @@ using Team.Gameplay.ObjectiveSystem;
 using Team.Gameplay.TurnSystem;
 using UnityEngine;
 
+namespace Team.MetaConstants
+{
+    public static partial class MetaConstants
+    {
+        public const float PauseBetweenTurn = 2f;
+    }
+
 namespace Team.Managers
 {
     [DefaultExecutionOrder(4)]
@@ -117,7 +124,7 @@ namespace Team.Managers
                 {
                     await turn.PerformAsync();
 
-                    await Task.Delay(TimeSpan.FromSeconds(2));
+                    await Task.Delay(TimeSpan.FromSeconds(MetaConstants.PauseBetweenTurn));
 
                     //Turn was performed by the character, update the stack
                     _historyStack.Push(turn);
