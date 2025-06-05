@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Team.UI.Gameplay
 {
-    public class UIGameCard : UIDragHandler
+    public class UIGameCard : UIDragHandler, IInputDetectable
     {
         [SerializeField]
         private Image cardImage;
@@ -40,6 +40,11 @@ namespace Team.UI.Gameplay
             //Set Card Game Object data
             gameObject.name = $"Game-Card: {data.CharacterID}";
             cardImage.color = data.CharacterSkin.CharacterColor;
+        }
+
+        public void OnDetectPlayerInput()
+        {
+            Debug.Log($"Player input detected on:{name}");
         }
 
         #endregion
