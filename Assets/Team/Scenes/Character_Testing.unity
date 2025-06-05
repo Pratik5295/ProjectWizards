@@ -282,7 +282,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 1937183002}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!1 &55512848
 GameObject:
   m_ObjectHideFlags: 0
@@ -337,7 +337,116 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 1911608099}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
+--- !u!1 &58139079
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 58139080}
+  - component: {fileID: 58139083}
+  - component: {fileID: 58139082}
+  - component: {fileID: 58139081}
+  m_Layer: 3
+  m_Name: GroundBlock(Clone)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &58139080
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 58139079}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 748222397}
+  m_Father: {fileID: 132314032}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &58139081
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 58139079}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.1, y: 1, z: 2.1}
+  m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!23 &58139082
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 58139079}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: -6538903991835684241, guid: 14df8c1aff3e03e42a7e33d3854ee68d, type: 3}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &58139083
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 58139079}
+  m_Mesh: {fileID: 1048604457303117381, guid: 14df8c1aff3e03e42a7e33d3854ee68d, type: 3}
 --- !u!1 &58812367
 GameObject:
   m_ObjectHideFlags: 0
@@ -528,7 +637,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 378741172}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!1 &125402519
 GameObject:
   m_ObjectHideFlags: 0
@@ -696,7 +805,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1093398350}
+  - {fileID: 58139080}
   m_Father: {fileID: 882435084}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &132314033
@@ -715,12 +824,12 @@ MonoBehaviour:
     x: 3
     y: 1
   tilePrefab: {fileID: 5925538716140807718, guid: 3b811938707c6df4ba51c6c483bcf651, type: 3}
-  tileType: 1
+  tileType: 2
   Direction:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
-  tileObject: {fileID: 1093398349}
-  objectOccupyingTile: {fileID: 0}
+  tileObject: {fileID: 58139079}
+  _startingObject: {fileID: 919132149155446097, guid: 9d7f24d00d5dfeb4696ff51241b31845, type: 3}
 --- !u!1 &140306037
 GameObject:
   m_ObjectHideFlags: 0
@@ -775,7 +884,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 1122493691}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!224 &149217667 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 111691958000763782, guid: 2d24820223c4956408f5c5e7e24aad56, type: 3}
@@ -1012,7 +1121,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 482029439}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!1 &241496018
 GameObject:
   m_ObjectHideFlags: 0
@@ -1543,7 +1652,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 2076257114}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!1 &367677539
 GameObject:
   m_ObjectHideFlags: 0
@@ -1598,7 +1707,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 153085316}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!1 &378741172
 GameObject:
   m_ObjectHideFlags: 0
@@ -2193,7 +2302,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 1609002650}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!1 &633477078
 GameObject:
   m_ObjectHideFlags: 0
@@ -2248,7 +2357,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 665429714}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!1 &654111107
 GameObject:
   m_ObjectHideFlags: 0
@@ -2303,7 +2412,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 844418500}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!1 &665429714
 GameObject:
   m_ObjectHideFlags: 0
@@ -2599,7 +2708,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 1216029090}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!1 &698026457
 GameObject:
   m_ObjectHideFlags: 0
@@ -2721,6 +2830,127 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &748222396
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 748222397}
+  - component: {fileID: 748222401}
+  - component: {fileID: 748222400}
+  - component: {fileID: 748222399}
+  - component: {fileID: 748222398}
+  m_Layer: 0
+  m_Name: barrel(Clone)
+  m_TagString: Environment
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &748222397
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 748222396}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 58139080}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &748222398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 748222396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9e4c24d5ed9c744aa93d2c4634974f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &748222399
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 748222396}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.51762676, y: 0.47619042, z: 0.51762676}
+  m_Center: {x: 0, y: 0.23809521, z: 0}
+--- !u!23 &748222400
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 748222396}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: -6538903991835684241, guid: 9d7f24d00d5dfeb4696ff51241b31845, type: 3}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &748222401
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 748222396}
+  m_Mesh: {fileID: -2643173543783292932, guid: 9d7f24d00d5dfeb4696ff51241b31845, type: 3}
 --- !u!1 &803288267
 GameObject:
   m_ObjectHideFlags: 0
@@ -2775,7 +3005,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 447282415}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!114 &810863095 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5271915672924904667, guid: 281cf8e21ac8ce348892f63a0067e2e9, type: 3}
@@ -3491,114 +3721,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 930065613}
   m_Mesh: {fileID: 1048604457303117381, guid: 14df8c1aff3e03e42a7e33d3854ee68d, type: 3}
---- !u!1 &1093398349
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1093398350}
-  - component: {fileID: 1093398353}
-  - component: {fileID: 1093398352}
-  - component: {fileID: 1093398351}
-  m_Layer: 3
-  m_Name: GroundBlock(Clone)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1093398350
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1093398349}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 132314032}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1093398351
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1093398349}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.1, y: 1, z: 2.1}
-  m_Center: {x: 0, y: 0.5, z: 0}
---- !u!23 &1093398352
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1093398349}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: -6538903991835684241, guid: 14df8c1aff3e03e42a7e33d3854ee68d, type: 3}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &1093398353
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1093398349}
-  m_Mesh: {fileID: 1048604457303117381, guid: 14df8c1aff3e03e42a7e33d3854ee68d, type: 3}
 --- !u!1 &1099925655
 GameObject:
   m_ObjectHideFlags: 0
@@ -3653,7 +3775,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 241496018}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!1 &1122493691
 GameObject:
   m_ObjectHideFlags: 0
@@ -4006,7 +4128,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 1663852313}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!1 &1216029090
 GameObject:
   m_ObjectHideFlags: 0
@@ -4169,7 +4291,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 930065613}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!1 &1384640879
 GameObject:
   m_ObjectHideFlags: 0
@@ -4224,7 +4346,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 3695908}
-  objectOccupyingTile: {fileID: 1679940105}
+  _startingObject: {fileID: 0}
 --- !u!1 &1402510234
 GameObject:
   m_ObjectHideFlags: 0
@@ -4279,7 +4401,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 902598383}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!1 &1484752870
 GameObject:
   m_ObjectHideFlags: 0
@@ -4334,7 +4456,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 853860897}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!1 &1507273364
 GameObject:
   m_ObjectHideFlags: 0
@@ -4486,7 +4608,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 2047964546}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!1001 &1524453173
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4726,7 +4848,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 2021168012}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!1 &1663852313
 GameObject:
   m_ObjectHideFlags: 0
@@ -4972,7 +5094,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 829211719}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!1 &1894007077
 GameObject:
   m_ObjectHideFlags: 0
@@ -5027,7 +5149,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 927626983}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!1 &1911608099
 GameObject:
   m_ObjectHideFlags: 0
@@ -5298,7 +5420,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 455989384}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!1 &2021168012
 GameObject:
   m_ObjectHideFlags: 0
@@ -5569,7 +5691,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 466622644}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!1 &2076257114
 GameObject:
   m_ObjectHideFlags: 0

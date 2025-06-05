@@ -43,11 +43,12 @@ namespace Team.Gameplay.GridSystem
         [SerializeField]
         private GameObject tileObject = null; //The created tile object
 
-        [SerializeField] private GameObject objectOccupyingTile;
+        [SerializeField] private GameObject _startingObject;
+
+        private GameObject objectOccupyingTile;
         public GameObject ObjectOccupyingTile
         {
             get { return objectOccupyingTile; }
-            set { objectOccupyingTile = value; }
         }
 
         /// <summary>
@@ -108,12 +109,12 @@ namespace Team.Gameplay.GridSystem
         public void SpawnObjectOnTile()
         {
             if (!tileObject) { SetTileObject(); }
-            if (objectOccupyingTile && tileObject.transform.childCount > 0 || !gridManager.DefaultObstacle) { return; }
+            if (isTileOccupied() || !gridManager.DefaultObstacle) { return; }
             tileType = TileType.OCCUPIEDTILE;
             Vector3 spawnLocation = new Vector3(tileObject.transform.position.x, 1.5f, tileObject.transform.position.z);
-            if (objectOccupyingTile)
+            if (_startingObject)
             {
-                GameObject InstantiatedObject = Instantiate(objectOccupyingTile, spawnLocation, Quaternion.identity, tileObject.transform);
+                GameObject InstantiatedObject = Instantiate(_startingObject, spawnLocation, Quaternion.identity, tileObject.transform);
                 objectOccupyingTile = InstantiatedObject;
                 if (!InstantiatedObject.GetComponent<Collider>())
                 {
@@ -139,6 +140,11 @@ namespace Team.Gameplay.GridSystem
                 objectOccupyingTile.GetComponent<ObstacleData>().UpdateObstacleTileData(TileID, this);
             }
             objectOccupyingTile.tag = MetaConstants.MetaConstants.EnvironmentTag;
+        }
+
+        private bool isTileOccupied()
+        {
+            return objectOccupyingTile && tileObject.transform.childCount > 0;
         }
 
         public void SetObjectOccupyingTile(GameObject Object)
