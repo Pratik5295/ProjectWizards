@@ -109,6 +109,15 @@ namespace Team.Gameplay.ObjectiveSystem
             }
         }
 
+        public void ResetAllObjectives()
+        {
+            foreach(var objective in _levelObjectives)
+            {
+                objective.ResetObjective();
+                objectivesHolder.UpdateObjective(objective.Data, false);
+            }
+        }
+
         #endregion
 
         #region Private Methods

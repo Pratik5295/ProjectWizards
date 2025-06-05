@@ -194,6 +194,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         currentTile.SetObjectOccupyingTile(this.gameObject);
 
         transform.position = new Vector3(currentTile.TilePosition.x, transform.position.y, currentTile.TilePosition.z);
+
+        OnTurnComplete?.Invoke();
     }
 
     //Shakes character if path or tile is invalid.

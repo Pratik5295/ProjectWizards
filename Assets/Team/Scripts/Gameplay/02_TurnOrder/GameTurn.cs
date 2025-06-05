@@ -50,8 +50,6 @@ namespace Team.Gameplay.TurnSystem
         /// </summary>
         public async Task PerformAsync()
         {
-            Debug.Log($"{name} performs turn");
-
             _turnCompletion = new TaskCompletionSource<bool>();
 
             OnTurnStartedEvent?.Invoke();
@@ -62,8 +60,16 @@ namespace Team.Gameplay.TurnSystem
             await _turnCompletion.Task;
 
             OnTurnEndedEvent?.Invoke();
+        }
 
-            Debug.Log($"{name} finished turn");
+        public async Task Undo()
+        {
+            _turnCompletion = new TaskCompletionSource<bool>();
+
+            characterObject.UndoAction();
+
+            await _turnCompletion.Task;
+
         }
 
         /// <summary>
