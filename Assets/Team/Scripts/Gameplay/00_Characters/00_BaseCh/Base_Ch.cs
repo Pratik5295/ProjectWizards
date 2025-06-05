@@ -150,15 +150,11 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
                 _currentTileID = targetTile.TileID;
                 currentTile = ref_gridManager.FindTile(_currentTileID);
 
-                PlayerMove playerMove = new PlayerMove(true);
-                HistoryStack.Push(playerMove);
-
                 yield return StartCoroutine(LerpingMovement(targetPosition, wasPushed));
-
-                Debug.Log("HADHAKDHKJAD",gameObject);
             }
             else
             {
+                Debug.Log("NULL TILE");
                 StartCoroutine(ShakeCharacter(0.25f));
                 alreadyMoving = false;
                 OnTurnComplete?.Invoke();
@@ -167,11 +163,10 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         }
         currentTile.SetObjectOccupyingTile(this.gameObject);
 
-     
+        PlayerMove playerMove = new PlayerMove(true);
+        HistoryStack.Push(playerMove);
 
         if (wasPushed) { yield break; }
-
-      
 
         OnTurnComplete?.Invoke();
     }
@@ -180,6 +175,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     //Lerps the movement to the next available tile.
     public virtual IEnumerator LerpingMovement(Vector3 targetPosition, bool wasPushed = false)
     {
+        currentTime = 0;
+        //Vector3 startingPosition = transform.position;
         float positionYLerped = ydefaultOffset;
         while (currentTime < smoothingTime)
         {
@@ -195,7 +192,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
             transform.position = new Vector3(Mathf.Lerp(transform.position.x, targetPosition.x, lerpAmount), positionYLerped, Mathf.Lerp(transform.position.z, targetPosition.z, lerpAmount));
             //transform.position = Vector3.Lerp(positionYLerped, targetPosition, lerpAmount);
 
-            yield return new WaitForSeconds(lerpingDelayTime);
+            yield return null;
         }
 
         if (currentTime >= smoothingTime)

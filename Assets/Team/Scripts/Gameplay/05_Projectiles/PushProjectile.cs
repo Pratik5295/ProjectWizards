@@ -17,7 +17,7 @@ public class PushProjectile : Base_Projectile
         {
             Base_Ch characterScript = other.gameObject.GetComponent<Base_Ch>();
             Vector2 direction = characterScript.BaseRotation.dirToV2(_projectileDir);
-            StartCoroutine(characterScript.MoveByAmount((int)_pushAmount, direction));
+            characterScript.StartCoroutine(characterScript.MoveByAmount((int)_pushAmount, direction, true));
         }
         base.OnTriggerEnter(other);
     }
