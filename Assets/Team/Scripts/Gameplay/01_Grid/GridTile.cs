@@ -45,6 +45,7 @@ namespace Team.Gameplay.GridSystem
 
         [SerializeField] private GameObject _startingObject;
 
+        [SerializeField]
         private GameObject objectOccupyingTile;
         public GameObject ObjectOccupyingTile
         {
@@ -59,6 +60,11 @@ namespace Team.Gameplay.GridSystem
             gridManager = _gridManager;
 
             TileID = _tileId;
+
+            if (objectOccupyingTile)
+            {
+                objectOccupyingTile.GetComponent<ObstacleData>().UpdateObstacleTileData(TileID, this);
+            }
 
             //Check if spawn tile
             if (IsTileWalkable())
@@ -109,9 +115,11 @@ namespace Team.Gameplay.GridSystem
         public void SpawnObjectOnTile()
         {
             if (!tileObject) { SetTileObject(); }
-            if (isTileOccupied() || !gridManager.DefaultObstacle) { return; }
+            if (isTileOccupied() || canSpawnAnyObject()) { return; }
+
             tileType = TileType.OCCUPIEDTILE;
             Vector3 spawnLocation = new Vector3(tileObject.transform.position.x, 1.5f, tileObject.transform.position.z);
+
             if (_startingObject)
             {
                 GameObject InstantiatedObject = Instantiate(_startingObject, spawnLocation, Quaternion.identity, tileObject.transform);
@@ -142,9 +150,22 @@ namespace Team.Gameplay.GridSystem
             objectOccupyingTile.tag = MetaConstants.MetaConstants.EnvironmentTag;
         }
 
+        [ContextMenu("Re-Update Obstacle Data")]
+        public void UpdateObstacleData()
+        {
+            if (!objectOccupyingTile) { return; }
+            objectOccupyingTile.GetComponent<ObstacleData>().UpdateObstacleTileData(TileID, this);
+        }
+
+
         private bool isTileOccupied()
         {
             return objectOccupyingTile && tileObject.transform.childCount > 0;
+        }
+
+        private bool canSpawnAnyObject()
+        {
+            return !gridManager.DefaultObstacle && !_startingObject;
         }
 
         public void SetObjectOccupyingTile(GameObject Object)
@@ -164,6 +185,11 @@ namespace Team.Gameplay.GridSystem
         {
             if (!objectOccupyingTile.CompareTag("Character")) { return; }
             objectOccupyingTile.transform.SetParent(null);
+        }
+
+        public void SetTileType(TileType typeOfTile)
+        {
+            tileType = typeOfTile;
         }
     }
 }

@@ -143,7 +143,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
             TileID desiredTileID = new TileID(_currentTileID.x + (int)dir.x, _currentTileID.y + (int)dir.y);
             GridTile targetTile = ref_gridManager.FindTile(desiredTileID);
 
-            if (targetTile && !targetTile.ObjectOccupyingTile)
+            if (targetTile && targetTile.IsTileWalkable())
             {
                 Vector3 targetPosition = new Vector3(targetTile.TilePosition.x, desiredLocation.y, targetTile.TilePosition.z);
 
@@ -154,7 +154,6 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
             }
             else
             {
-                Debug.Log("NULL TILE");
                 StartCoroutine(ShakeCharacter(0.25f));
                 alreadyMoving = false;
                 OnTurnComplete?.Invoke();
@@ -224,6 +223,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
     protected void UndoMovement()
     {
+        if (_currentTileID == _previousTileID) { return; }
         currentTile.SetObjectOccupyingTile(null);
 
         _currentTileID = _previousTileID;

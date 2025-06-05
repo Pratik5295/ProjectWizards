@@ -1,6 +1,7 @@
 using UnityEngine;
 using Team.MetaConstants;
 using Team.Gameplay.GridSystem;
+using Team.Managers;
 
 public class FireballProjectile : Base_Projectile
 {
@@ -12,12 +13,24 @@ public class FireballProjectile : Base_Projectile
         if (other.CompareTag(MetaConstants.CharacterTag))
         {
             other.GetComponent<Base_Ch>().HitByProjectile(_projectileType);
+            other.transform.GetComponentInChildren<MeshRenderer>().enabled = false;
+            //Needs to reset when restarting.
         }
         if (other.CompareTag(MetaConstants.EnvironmentTag))
         {
-            //other.gameObject.GetComponent<ObstacleData>().clearTileData();
-            Destroy(other.gameObject);
+            other.gameObject.GetComponent<ObstacleData>().MakeTileWalkable();
+            if (!other.GetComponent<MeshRenderer>())
+            {
+                other.GetComponentInChildren<MeshRenderer>().enabled = false;
+            }
+            else
+            {
+                other.GetComponent<MeshRenderer>().enabled = false;
+            }
+
         }
+        GameTurnManager.Instance.AddDestroyedObject(other.gameObject);
+
         base.OnTriggerEnter(other);
     }
 
