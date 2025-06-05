@@ -69,29 +69,50 @@ public class ChRotatorWizard : Base_Ch
     [ContextMenu("Undo Rotation")]
     public override void UndoAction()
     {
-         GetTilesToRotate();
+        Debug.Log($"Moves count: {HistoryStack.Count}");
 
-         for (int i = 1; i < _tilesToMove.Count; i++)
-         {
-             if (!_tilesToMove[i]) { return; }
-         }
+        while (HistoryStack.Count > 0)
+        {
+            var move = HistoryStack.Pop();
 
-         _rotatorHolder = new GameObject("_rotatorHolder");
-         _rotatorHolder.transform.position = centerTile.TilePosition;
-         _rotatorHolder.transform.SetParent(ref_gridManager.transform.GetChild(0));
+            if (move.wasMoved)
+            {
+                UndoMovement();
+            }
+            else
+            {
+                UndoRotate();
+            }
+        }
 
-         for (int i = 0; i < _tilesToMove.Count; i++)
-         {
-             if (_tilesToMove[i].ObjectOccupyingTile)
-             {
-                 _tilesToMove[i].ParentOccupyingObject();
-             }
-             _tilesToMove[i].transform.SetParent(_rotatorHolder.transform);
-             _tilesToMove[i].gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.darkSlateGray;
-         }
+        OnTurnComplete?.Invoke();
+    }
+
+    private void UndoRotate()
+    {
+        GetTilesToRotate();
+
+        for (int i = 1; i < _tilesToMove.Count; i++)
+        {
+            if (!_tilesToMove[i]) { return; }
+        }
+
+        _rotatorHolder = new GameObject("_rotatorHolder");
+        _rotatorHolder.transform.position = centerTile.TilePosition;
+        _rotatorHolder.transform.SetParent(ref_gridManager.transform.GetChild(0));
+
+        for (int i = 0; i < _tilesToMove.Count; i++)
+        {
+            if (_tilesToMove[i].ObjectOccupyingTile)
+            {
+                _tilesToMove[i].ParentOccupyingObject();
+            }
+            _tilesToMove[i].transform.SetParent(_rotatorHolder.transform);
+            _tilesToMove[i].gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.darkSlateGray;
+        }
         rotation = MetaConstants.Enum_Rotation.AntiClockwise;
-         TileDataChanges();
-         StartCoroutine(LerpUpDown(true));
+        TileDataChanges();
+        StartCoroutine(LerpUpDown(true));
     }
 
     private void GetTilesToRotate()
@@ -212,6 +233,9 @@ public class ChRotatorWizard : Base_Ch
             }
             _tilesToMove[i].gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.white;
         }
+
+        PlayerMove move = new PlayerMove(false);
+        HistoryStack.Push(move);
         OnTurnComplete?.Invoke();
         //_tilesToMove.Clear();
     }

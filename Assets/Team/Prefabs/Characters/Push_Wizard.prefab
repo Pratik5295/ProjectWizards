@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: 5923444834090015879}
   - component: {fileID: 6009747551025699060}
   - component: {fileID: 8106642700574524646}
+  - component: {fileID: 4891894288717994594}
   m_Layer: 0
   m_Name: DirectionCube
   m_TagString: Untagged
@@ -151,7 +152,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -173,6 +174,21 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4891894288717994594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5150221880546262881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c67d759f91fd2ff47a7597ab42bc7b85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startPoint: {fileID: 0}
+  endPoint: {fileID: 0}
+  controlPoint: {fileID: 0}
 --- !u!1 &5407380294395882597
 GameObject:
   m_ObjectHideFlags: 0
@@ -182,11 +198,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3236205127488731490}
-  - component: {fileID: 8701032960173701566}
+  - component: {fileID: 7676447528062884871}
   - component: {fileID: 933473269899832427}
-  - component: {fileID: 3136886351939346752}
+  - component: {fileID: 2803533931978526133}
   m_Layer: 0
-  m_Name: Rotator_Wizard
+  m_Name: Push_Wizard
   m_TagString: Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -208,7 +224,7 @@ Transform:
   - {fileID: 320569409086996540}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8701032960173701566
+--- !u!114 &7676447528062884871
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -217,7 +233,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5407380294395882597}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b3116b4b447ef240ba718d2bed7b65a, type: 3}
+  m_Script: {fileID: 11500000, guid: c4ac901582ea89f44ac6674be2c7913a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   CharState: 0
@@ -268,9 +284,9 @@ MonoBehaviour:
     m_PreInfinity: 1
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _abilityStartOffset: 2
-  _lerpDuration: 0.25
-  _lerpDelay: 0.01
+  _projectilePrefab: {fileID: 3625092468094944024, guid: 3d4d34703d5b66249bca19cbcc3a194f, type: 3}
+  _fireFromPoint: {fileID: 5150221880546262881}
+  _projectileRange: -100
 --- !u!114 &933473269899832427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,7 +300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dirFacing: 0
---- !u!65 &3136886351939346752
+--- !u!65 &2803533931978526133
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
