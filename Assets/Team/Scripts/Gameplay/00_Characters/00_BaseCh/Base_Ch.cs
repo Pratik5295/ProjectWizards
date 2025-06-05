@@ -4,6 +4,17 @@ using Team.Gameplay.GridSystem;
 using Team.Enum.Character;
 using UnityEngine;
 
+[System.Serializable]
+public class PlayerMove
+{
+    public bool wasMoved;
+
+    public PlayerMove(bool _move)
+    {
+        wasMoved = _move;
+    }
+}
+
 [DefaultExecutionOrder(2)]
 public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbility
 {
@@ -11,6 +22,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     [SerializeField] private Enum_CharacterState CharState = Enum_CharacterState.Alive;
 
     public bool IsAlive => CharState == Enum_CharacterState.Alive;
+
+    public Stack<PlayerMove> HistoryStack = new Stack<PlayerMove>();
 
 
     [Header("Script References")]
@@ -141,6 +154,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
             }
             else
             {
+                Debug.Log("NULL TILE");
                 StartCoroutine(ShakeCharacter(0.25f));
                 alreadyMoving = false;
                 OnTurnComplete?.Invoke();
@@ -148,7 +162,12 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
             }
         }
         currentTile.SetObjectOccupyingTile(this.gameObject);
+
+        PlayerMove playerMove = new PlayerMove(true);
+        HistoryStack.Push(playerMove);
+
         if (wasPushed) { yield break; }
+
         OnTurnComplete?.Invoke();
     }
 
@@ -156,6 +175,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     //Lerps the movement to the next available tile.
     public virtual IEnumerator LerpingMovement(Vector3 targetPosition, bool wasPushed = false)
     {
+        currentTime = 0;
+        //Vector3 startingPosition = transform.position;
         float positionYLerped = ydefaultOffset;
         while (currentTime < smoothingTime)
         {
@@ -171,7 +192,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
             transform.position = new Vector3(Mathf.Lerp(transform.position.x, targetPosition.x, lerpAmount), positionYLerped, Mathf.Lerp(transform.position.z, targetPosition.z, lerpAmount));
             //transform.position = Vector3.Lerp(positionYLerped, targetPosition, lerpAmount);
 
-            yield return new WaitForSeconds(lerpingDelayTime);
+            yield return null;
         }
 
         if (currentTime >= smoothingTime)
@@ -188,6 +209,21 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     [ContextMenu("Undo Movement")]
     public virtual void UndoAction()
     {
+        while (HistoryStack.Count > 0)
+        {
+            var move = HistoryStack.Pop();
+
+            if (move.wasMoved)
+            {
+                UndoMovement();
+            }
+        }
+
+        OnTurnComplete?.Invoke();
+    }
+
+    protected void UndoMovement()
+    {
         currentTile.SetObjectOccupyingTile(null);
 
         _currentTileID = _previousTileID;
@@ -196,8 +232,6 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         currentTile.SetObjectOccupyingTile(this.gameObject);
 
         transform.position = new Vector3(currentTile.TilePosition.x, transform.position.y, currentTile.TilePosition.z);
-
-        OnTurnComplete?.Invoke();
     }
 
     //Shakes character if path or tile is invalid.
