@@ -23,6 +23,8 @@ public class Base_Projectile : MonoBehaviour
     [Header("Particle Effects")]
     [SerializeField] protected ParticleSystem _collisionEffect;
 
+    public System.Action OnProjectileEnd;
+
     void Start()
     {
         time = 0f;
@@ -59,11 +61,13 @@ public class Base_Projectile : MonoBehaviour
 
         if (_collisionEffect) { _collisionEffect.Play(); }
 
+        OnProjectileEnd();
         Destroy(this.gameObject);
     }
 
     public virtual void CleanUp()
     {
+        OnProjectileEnd();
         Destroy(gameObject);
     }
 }
