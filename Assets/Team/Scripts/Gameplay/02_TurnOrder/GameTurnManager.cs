@@ -117,6 +117,8 @@ namespace Team.Managers
                 {
                     await turn.PerformAsync();
 
+                    await Task.Delay(TimeSpan.FromSeconds(2));
+
                     //Turn was performed by the character, update the stack
                     _historyStack.Push(turn);
                 }
