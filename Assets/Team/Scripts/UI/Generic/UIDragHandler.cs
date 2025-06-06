@@ -1,9 +1,7 @@
 using System;
 using System.Collections;
-using Team.MetaConstants;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace Team.MetaConstants
@@ -15,122 +13,101 @@ namespace Team.MetaConstants
     }
 }
 
-public class UIDragHandler : MonoBehaviour
+public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public Transform originalParent;
     private CanvasGroup canvasGroup;
     private RectTransform rectTransform;
     private LayoutElement layoutElement;
-    private Vector2 originalPosition;
     private int originalIndex;
-    private int newIndex; //Final index set after the drag has been completed
+    private int newIndex;
 
     [SerializeField]
     private float offsetX;
 
-    [SerializeField]
-    private float posX; //Constant x position
-
     public Action<int> OnSiblingIndexUpdatedEvent;
 
-    protected virtual void Awake()
+    private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
         layoutElement = GetComponent<LayoutElement>();
     }
 
-    protected virtual void Start()
-    {
-        StartCoroutine(GetAccuratePosition());
-    }
-
-    protected virtual void Update()
-    {
-    }
-
-    public void OnBeginDrag()
+    public void OnBeginDrag(PointerEventData eventData)
     {
         originalParent = transform.parent;
         originalIndex = transform.GetSiblingIndex();
-        originalPosition = rectTransform.anchoredPosition;
 
         canvasGroup.blocksRaycasts = false;
         layoutElement.ignoreLayout = true;
-        transform.SetAsLastSibling(); // Ensure it's drawn on top
+        transform.SetAsLastSibling();
+
+        // Calculate offset for smooth dragging
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            originalParent as RectTransform,
+            eventData.position,
+            eventData.pressEventCamera,
+            out Vector2 localPointerPos
+        );
+        offsetX = rectTransform.anchoredPosition.x - localPointerPos.x;
     }
 
-    public void OnDrag()
+    public void OnDrag(PointerEventData eventData)
     {
-        Vector2 mousePos = Mouse.current.position.ReadValue();
-        Vector2 newMovePos = new Vector2(posX, mousePos.y);
-        rectTransform.position = newMovePos;
-        layoutElement.ignoreLayout = true;
+        if (!GameInputManager.Instance.IsPointerPressed) return;
 
-        float draggedY = newMovePos.y;
-        int newIndex = -1;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            originalParent as RectTransform,
+            eventData.position,
+            eventData.pressEventCamera,
+            out Vector2 localPoint
+        );
+
+        rectTransform.anchoredPosition = new Vector2(localPoint.x + offsetX, rectTransform.anchoredPosition.y);
+
+        newIndex = -1;
 
         for (int i = 0; i < originalParent.childCount; i++)
         {
             if (originalParent.GetChild(i) == transform) continue;
 
-            RectTransform other = originalParent.GetChild(i) as RectTransform;
-            float otherY = other.position.y;
-
-            //TODO: Math check make it better by using offset and considering spacing etc
-            // If mouse is above this child, insert before it
-            if (draggedY > otherY)
+            RectTransform sibling = originalParent.GetChild(i) as RectTransform;
+            if (RectTransformUtility.RectangleContainsScreenPoint(sibling, eventData.position, eventData.pressEventCamera))
             {
                 newIndex = i;
+                transform.SetSiblingIndex(i);
                 break;
             }
         }
 
-        // If we didn’t find any valid spot, insert at the end
         if (newIndex == -1)
         {
             newIndex = originalParent.childCount - 1;
+            transform.SetSiblingIndex(newIndex);
         }
-
-        transform.SetSiblingIndex(newIndex);
     }
 
-    public void OnEndDrag()
+    public void OnEndDrag(PointerEventData eventData)
     {
         canvasGroup.blocksRaycasts = true;
         layoutElement.ignoreLayout = false;
 
-        // Snap into position
         transform.SetParent(originalParent);
-        rectTransform.anchoredPosition = Vector2.zero;
-        StartCoroutine(SmoothSnap());
+        StartCoroutine(FinalizeDrag());
     }
 
-    private IEnumerator SmoothSnap()
+    private IEnumerator FinalizeDrag()
     {
-        Vector2 targetPos = Vector2.zero;
-        while (Vector2.Distance(rectTransform.anchoredPosition, targetPos) > MetaConstants.UISnapThreshold)
-        {
-            rectTransform.anchoredPosition = Vector2.Lerp(rectTransform.anchoredPosition, targetPos, Time.deltaTime * MetaConstants.UICardMoveSpeed);
-            yield return null;
-        }
-        rectTransform.anchoredPosition = targetPos;
+        // Wait one frame to allow Unity to settle layout system
+        yield return new WaitForEndOfFrame();
 
-        newIndex = transform.GetSiblingIndex();
+        LayoutRebuilder.ForceRebuildLayoutImmediate(originalParent as RectTransform);
 
-        if(originalIndex != newIndex)
+        if (originalIndex != newIndex)
         {
             originalIndex = newIndex;
             OnSiblingIndexUpdatedEvent?.Invoke(newIndex);
         }
-    }
-
-    private IEnumerator GetAccuratePosition()
-    {
-        yield return new WaitForEndOfFrame(); // Wait until layout system finishes
-
-        Vector3 accurateWorldPos = rectTransform.position;
-        posX = accurateWorldPos.x + offsetX;
-        //posY = accurateWorldPos.y + 
     }
 }
