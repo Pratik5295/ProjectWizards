@@ -26,27 +26,50 @@ public class GameInputManager : MonoBehaviour
     public Action<Vector2> OnMouseUpEvent;
     public Action<float> OnMouseDragEvent;
 
+    [SerializeField]
+    private IInputDetectable uiElement = null;
+
     public void OnPoint(InputValue inputValue)
     {
         currentPosition = inputValue.Get<Vector2>();
         //Debug.Log($"Pointing at: {currentPosition}");
         if (isClicked)
         {
-            CheckRaycast();
+            if (CheckRaycast())
+            {
+                uiElement.OnElementDragged();
+            }
         }
     }
 
     public void OnClick(InputValue inputValue)
     {
         isClicked = inputValue.isPressed;
+
+        if(uiElement != null)
+        {
+            if (isClicked)
+            {
+                //Pressed down on it
+                uiElement.OnElementDown();
+
+            }
+            else
+            {
+                //Released
+                uiElement.OnElementUp();
+                uiElement = null;
+            }
+        }
+
     }
 
-    private void CheckRaycast()
+    private bool CheckRaycast()
     {
         if (graphicRaycaster == null || eventSystem == null)
         {
             Debug.LogWarning("GraphicRaycaster or EventSystem reference missing!");
-            return;
+            return false;
         }
 
         // Set up PointerEventData at the current pointer position
@@ -59,21 +82,22 @@ public class GameInputManager : MonoBehaviour
 
         if (results.Count > 0)
         {
-            IInputDetectable uiElement;
             foreach (RaycastResult result in results)
             {
                 Debug.Log($"UI Element hit: {result.gameObject.name}");
 
-                if(result.gameObject.TryGetComponent<IInputDetectable>(out uiElement))
+                if (result.gameObject.TryGetComponent<IInputDetectable>(out uiElement))
                 {
-                    uiElement.OnDetectPlayerInput();
-                    break;
+                    return true;
                 }
             }
         }
         else
         {
             Debug.Log("No UI element hit by raycast.");
+            uiElement = null;
         }
+
+        return false;
     }
 }

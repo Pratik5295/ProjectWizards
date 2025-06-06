@@ -42,9 +42,22 @@ namespace Team.UI.Gameplay
             cardImage.color = data.CharacterSkin.CharacterColor;
         }
 
-        public void OnDetectPlayerInput()
+        public void OnElementDragged()
         {
-            Debug.Log($"Player input detected on:{name}");
+            Debug.Log($"Player input dragged on:{name}");
+            OnDrag();
+        }
+
+        public void OnElementDown()
+        {
+            Debug.Log($"Player input down on:{name}");
+            OnBeginDrag();
+        }
+
+        public void OnElementUp()
+        {
+            Debug.Log($"Player input up on:{name}");
+            OnEndDrag();
         }
 
         #endregion

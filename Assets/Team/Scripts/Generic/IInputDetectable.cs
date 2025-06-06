@@ -2,5 +2,9 @@
 
 public interface IInputDetectable
 {
-    void OnDetectPlayerInput();
+    void OnElementDragged();
+
+    void OnElementDown();
+
+    void OnElementUp();
 }

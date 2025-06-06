@@ -15,7 +15,7 @@ namespace Team.MetaConstants
     }
 }
 
-public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class UIDragHandler : MonoBehaviour
 {
     public Transform originalParent;
     private CanvasGroup canvasGroup;
@@ -42,68 +42,68 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     protected virtual void Start()
     {
-        //StartCoroutine(GetAccuratePosition());
+        StartCoroutine(GetAccuratePosition());
     }
 
     protected virtual void Update()
     {
     }
 
-    public void OnBeginDrag(PointerEventData eventData)
+    public void OnBeginDrag()
     {
-        //originalParent = transform.parent;
-        //originalIndex = transform.GetSiblingIndex();
-        //originalPosition = rectTransform.anchoredPosition;
+        originalParent = transform.parent;
+        originalIndex = transform.GetSiblingIndex();
+        originalPosition = rectTransform.anchoredPosition;
 
-        //canvasGroup.blocksRaycasts = false;
-        //layoutElement.ignoreLayout = true;
-        //transform.SetAsLastSibling(); // Ensure it's drawn on top
+        canvasGroup.blocksRaycasts = false;
+        layoutElement.ignoreLayout = true;
+        transform.SetAsLastSibling(); // Ensure it's drawn on top
     }
 
-    public void OnDrag(PointerEventData eventData)
+    public void OnDrag()
     {
-        //Vector2 mousePos = Mouse.current.position.ReadValue();
-        //Vector2 newMovePos = new Vector2(posX, mousePos.y);
-        //rectTransform.position = newMovePos;
-        //layoutElement.ignoreLayout = true;
+        Vector2 mousePos = Mouse.current.position.ReadValue();
+        Vector2 newMovePos = new Vector2(posX, mousePos.y);
+        rectTransform.position = newMovePos;
+        layoutElement.ignoreLayout = true;
 
-        //float draggedY = newMovePos.y;
-        //int newIndex = -1;
+        float draggedY = newMovePos.y;
+        int newIndex = -1;
 
-        //for (int i = 0; i < originalParent.childCount; i++)
-        //{
-        //    if (originalParent.GetChild(i) == transform) continue;
+        for (int i = 0; i < originalParent.childCount; i++)
+        {
+            if (originalParent.GetChild(i) == transform) continue;
 
-        //    RectTransform other = originalParent.GetChild(i) as RectTransform;
-        //    float otherY = other.position.y;
+            RectTransform other = originalParent.GetChild(i) as RectTransform;
+            float otherY = other.position.y;
 
-        //    //TODO: Math check make it better by using offset and considering spacing etc
-        //    // If mouse is above this child, insert before it
-        //    if (draggedY > otherY)
-        //    {
-        //        newIndex = i;
-        //        break;
-        //    }
-        //}
+            //TODO: Math check make it better by using offset and considering spacing etc
+            // If mouse is above this child, insert before it
+            if (draggedY > otherY)
+            {
+                newIndex = i;
+                break;
+            }
+        }
 
-        //// If we didn’t find any valid spot, insert at the end
-        //if (newIndex == -1)
-        //{
-        //    newIndex = originalParent.childCount - 1;
-        //}
+        // If we didn’t find any valid spot, insert at the end
+        if (newIndex == -1)
+        {
+            newIndex = originalParent.childCount - 1;
+        }
 
-        //transform.SetSiblingIndex(newIndex);
+        transform.SetSiblingIndex(newIndex);
     }
 
-    public void OnEndDrag(PointerEventData eventData)
+    public void OnEndDrag()
     {
-        //canvasGroup.blocksRaycasts = true;
-        //layoutElement.ignoreLayout = false;
+        canvasGroup.blocksRaycasts = true;
+        layoutElement.ignoreLayout = false;
 
-        //// Snap into position
-        //transform.SetParent(originalParent);
-        //rectTransform.anchoredPosition = Vector2.zero;
-        //StartCoroutine(SmoothSnap());
+        // Snap into position
+        transform.SetParent(originalParent);
+        rectTransform.anchoredPosition = Vector2.zero;
+        StartCoroutine(SmoothSnap());
     }
 
     private IEnumerator SmoothSnap()
