@@ -16,7 +16,7 @@ public class PlayerMove
 }
 
 [DefaultExecutionOrder(2)]
-public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbility
+public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbility, IDestroyable
 {
     [Header("Enumerations")]
     [SerializeField] private Enum_CharacterState CharState = Enum_CharacterState.Alive;
@@ -38,6 +38,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
 
     [Header("Movement Variables")]
+    [Header("---Tile Variables---")]
     [SerializeField] protected TileID _currentTileID = new TileID(0, 0);
     protected TileID _previousTileID = new TileID(0, 0);
     public TileID CurrentTileID
@@ -51,7 +52,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     private float smoothingTime = 1f; //Time to reach the target position.
     private float currentTime; //Current elapsed Time for movement lerp.
     private float lerpingDelayTime = 0.001f;
-    private float ydefaultOffset = 1.5f;
+    private float ySpawnOffset = 1.5f;
+    private float ydefaultOffset = 2.5f;
 
     [SerializeField] private AnimationCurve _yMovementCurve;
 
@@ -66,6 +68,11 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     private float shakeTimer = 0f;
 
     private float maxShakeAmount = 0.3f;
+    #endregion
+
+    #region Mesh And Collider
+    private Collider _collider;
+    private MeshRenderer _meshRenderer;
     #endregion
 
 
@@ -88,7 +95,10 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         Vector2 v2Dir = baseRotation.dirToV2(baseRotation.DirectionFacing);
         baseRotation.RotateToFaceDir(v2Dir);
 
-        transform.position = new Vector3(currentTile.TilePosition.x, currentTile.TilePosition.y + 1f, currentTile.TilePosition.z);
+        transform.position = new Vector3(currentTile.TilePosition.x, currentTile.TilePosition.y + ySpawnOffset, currentTile.TilePosition.z);
+
+        _collider = GetComponent<Collider>();
+        _meshRenderer = transform.GetChild(0).GetComponent<MeshRenderer>();
     }
 
     void Start()
@@ -269,6 +279,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         {
             case Enum_ProjectileType.Fireball:
                 CharState = Enum_CharacterState.Dead;
+
+                DisableObject();
                 break;
             case Enum_ProjectileType.NonLethalRound:
                 CharState = Enum_CharacterState.Incapacitated;
@@ -283,9 +295,15 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         else return false;
     }
 
-    private void resetCharState()
+    public void resetCharState(bool isResettingTurn = false)
     {
         if (CharState == Enum_CharacterState.Incapacitated)
+        {
+            OnStateChanged?.Invoke();
+            CharState = Enum_CharacterState.Alive;
+        }
+
+        if (CharState == Enum_CharacterState.Dead && isResettingTurn)
         {
             OnStateChanged?.Invoke();
             CharState = Enum_CharacterState.Alive;
@@ -299,4 +317,17 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         StartCoroutine(MoveByAmount(2, baseRotation.GetFacingDirection()));
     }
 
+    #region Enabling and Disabling Character
+    public void EnableObject()
+    {
+        _meshRenderer.enabled = true;
+        _collider.enabled = true;
+    }
+
+    public void DisableObject()
+    {
+        _meshRenderer.enabled = false;
+        _collider.enabled = false;
+    }
+    #endregion
 }

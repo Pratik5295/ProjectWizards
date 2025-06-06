@@ -62,6 +62,10 @@ public class ChRotatorWizard : Base_Ch
             _tilesToMove[i].gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.darkSlateGray;
         }
         rotation = MetaConstants.Enum_Rotation.Clockwise;
+
+        PlayerMove move = new PlayerMove(false);
+        HistoryStack.Push(move);
+
         TileDataChanges();
         StartCoroutine(LerpUpDown(true));
     }
@@ -233,9 +237,6 @@ public class ChRotatorWizard : Base_Ch
             }
             _tilesToMove[i].gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.white;
         }
-
-        PlayerMove move = new PlayerMove(false);
-        HistoryStack.Push(move);
         OnTurnComplete?.Invoke();
         //_tilesToMove.Clear();
     }

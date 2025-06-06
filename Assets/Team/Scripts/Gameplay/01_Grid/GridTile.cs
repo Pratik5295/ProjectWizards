@@ -132,6 +132,7 @@ namespace Team.Gameplay.GridSystem
                 {
                     ObstacleData obstacleData = InstantiatedObject.AddComponent<ObstacleData>();
                     obstacleData.UpdateObstacleTileData(TileID, this);
+                    obstacleData.InitialiseObstacleData();
                 }
             }
             else
@@ -146,6 +147,7 @@ namespace Team.Gameplay.GridSystem
                     objectOccupyingTile.AddComponent<ObstacleData>();
                 }
                 objectOccupyingTile.GetComponent<ObstacleData>().UpdateObstacleTileData(TileID, this);
+                objectOccupyingTile.GetComponent<ObstacleData>().InitialiseObstacleData();
             }
             objectOccupyingTile.tag = MetaConstants.MetaConstants.EnvironmentTag;
         }
@@ -155,6 +157,7 @@ namespace Team.Gameplay.GridSystem
         {
             if (!objectOccupyingTile) { return; }
             objectOccupyingTile.GetComponent<ObstacleData>().UpdateObstacleTileData(TileID, this);
+            objectOccupyingTile.GetComponent<ObstacleData>().InitialiseObstacleData();
         }
 
 

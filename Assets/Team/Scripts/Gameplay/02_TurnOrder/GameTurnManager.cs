@@ -173,20 +173,12 @@ namespace Team.MetaConstants
                 {
                     if (DestroyedObjects[i].CompareTag(MetaConstants.MetaConstants.CharacterTag))
                     {
-                        DestroyedObjects[i].GetComponentInChildren<MeshRenderer>().enabled = true;
+                        DestroyedObjects[i].GetComponent<Base_Ch>().EnableObject();
+                        DestroyedObjects[i].GetComponent<Base_Ch>().resetCharState(true);
                     }
                     else
                     {
-                        DestroyedObjects[i].GetComponent<ObstacleData>().MakeTileUnwalkable();
-                        if (DestroyedObjects[i].GetComponent<MeshRenderer>())
-                        {
-                            DestroyedObjects[i].GetComponent<MeshRenderer>().enabled = true;
-                        }
-                        else
-                        {
-                            DestroyedObjects[i].GetComponentInChildren<MeshRenderer>().enabled = true;
-                        }
-
+                        DestroyedObjects[i].GetComponent<ObstacleData>().EnableObject();
                     }
                 }
 

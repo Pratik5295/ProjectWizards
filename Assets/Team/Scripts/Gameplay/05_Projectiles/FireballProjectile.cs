@@ -13,21 +13,10 @@ public class FireballProjectile : Base_Projectile
         if (other.CompareTag(MetaConstants.CharacterTag))
         {
             other.GetComponent<Base_Ch>().HitByProjectile(_projectileType);
-            other.transform.GetComponentInChildren<MeshRenderer>().enabled = false;
-            //Needs to reset when restarting.
         }
-        if (other.CompareTag(MetaConstants.EnvironmentTag))
+        if (other.CompareTag(MetaConstants.EnvironmentTag) && other.GetComponent<ObstacleData>())
         {
-            other.gameObject.GetComponent<ObstacleData>().MakeTileWalkable();
-            if (!other.GetComponent<MeshRenderer>())
-            {
-                other.GetComponentInChildren<MeshRenderer>().enabled = false;
-            }
-            else
-            {
-                other.GetComponent<MeshRenderer>().enabled = false;
-            }
-
+            other.gameObject.GetComponent<ObstacleData>().DisableObject();
         }
         GameTurnManager.Instance.AddDestroyedObject(other.gameObject);
 
