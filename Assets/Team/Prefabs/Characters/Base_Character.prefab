@@ -185,6 +185,7 @@ GameObject:
   - component: {fileID: 5271915672924904667}
   - component: {fileID: 933473269899832427}
   - component: {fileID: 2854362121696547531}
+  - component: {fileID: 3760308623249308038}
   m_Layer: 0
   m_Name: Base_Character
   m_TagString: Character
@@ -296,3 +297,24 @@ MonoBehaviour:
   _bodyMeshes:
   - {fileID: 8106642700574524646}
   - {fileID: 8564023545181033933}
+--- !u!65 &3760308623249308038
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5407380294395882597}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.5, y: 0.61, z: 0.4}
+  m_Center: {x: 0, y: 0.3, z: 0}

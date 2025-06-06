@@ -37,6 +37,13 @@ namespace Team.Gameplay.GridSystem
         [SerializeField]
         private GameObject ref_gridHolder;
 
+        [SerializeField]
+        private GameObject _defaultObstacle;
+        public GameObject DefaultObstacle
+        {
+            get { return _defaultObstacle; }
+        }
+
         private void Awake()
         {
             if(Instance == null)

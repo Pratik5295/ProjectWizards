@@ -14,6 +14,10 @@ namespace Team.MetaConstants
             Clockwise,
             AntiClockwise
         }
+
+        public static float lerpUpAmount = 3f;
+
+        public static float holderLerpUpOffset = 0.5f;
     }
 }
 
@@ -65,29 +69,50 @@ public class ChRotatorWizard : Base_Ch
     [ContextMenu("Undo Rotation")]
     public override void UndoAction()
     {
-         GetTilesToRotate();
+        Debug.Log($"Moves count: {HistoryStack.Count}");
 
-         for (int i = 1; i < _tilesToMove.Count; i++)
-         {
-             if (!_tilesToMove[i]) { return; }
-         }
+        while (HistoryStack.Count > 0)
+        {
+            var move = HistoryStack.Pop();
 
-         _rotatorHolder = new GameObject("_rotatorHolder");
-         _rotatorHolder.transform.position = centerTile.TilePosition;
-         _rotatorHolder.transform.SetParent(ref_gridManager.transform.GetChild(0));
+            if (move.wasMoved)
+            {
+                UndoMovement();
+            }
+            else
+            {
+                UndoRotate();
+            }
+        }
 
-         for (int i = 0; i < _tilesToMove.Count; i++)
-         {
-             if (_tilesToMove[i].ObjectOccupyingTile)
-             {
-                 _tilesToMove[i].ParentOccupyingObject();
-             }
-             _tilesToMove[i].transform.SetParent(_rotatorHolder.transform);
-             _tilesToMove[i].gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.darkSlateGray;
-         }
+        OnTurnComplete?.Invoke();
+    }
+
+    private void UndoRotate()
+    {
+        GetTilesToRotate();
+
+        for (int i = 1; i < _tilesToMove.Count; i++)
+        {
+            if (!_tilesToMove[i]) { return; }
+        }
+
+        _rotatorHolder = new GameObject("_rotatorHolder");
+        _rotatorHolder.transform.position = centerTile.TilePosition;
+        _rotatorHolder.transform.SetParent(ref_gridManager.transform.GetChild(0));
+
+        for (int i = 0; i < _tilesToMove.Count; i++)
+        {
+            if (_tilesToMove[i].ObjectOccupyingTile)
+            {
+                _tilesToMove[i].ParentOccupyingObject();
+            }
+            _tilesToMove[i].transform.SetParent(_rotatorHolder.transform);
+            _tilesToMove[i].gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.darkSlateGray;
+        }
         rotation = MetaConstants.Enum_Rotation.AntiClockwise;
-         TileDataChanges();
-         StartCoroutine(LerpUpDown(true));
+        TileDataChanges();
+        StartCoroutine(LerpUpDown(true));
     }
 
     private void GetTilesToRotate()
@@ -208,6 +233,9 @@ public class ChRotatorWizard : Base_Ch
             }
             _tilesToMove[i].gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.white;
         }
+
+        PlayerMove move = new PlayerMove(false);
+        HistoryStack.Push(move);
         OnTurnComplete?.Invoke();
         //_tilesToMove.Clear();
     }
@@ -216,11 +244,11 @@ public class ChRotatorWizard : Base_Ch
     {
         float elapsedTime = 0f;
         Vector3 _holderStartPos = _rotatorHolder.transform.position;
-        Vector3 _holderEndPos = new Vector3(_rotatorHolder.transform.position.x, 0.5f, _rotatorHolder.transform.position.z); //Need Pratik to add a default position to grid tile script, so that the hard coded value can be changed.
+        Vector3 _holderEndPos = new Vector3(_rotatorHolder.transform.position.x, MetaConstants.holderLerpUpOffset, _rotatorHolder.transform.position.z); //Need Pratik to add a default position to grid tile script, so that the hard coded value can be changed.
 
         if (isLerpingUp)
         {
-            _holderEndPos = new Vector3(_rotatorHolder.transform.position.x, _tilesToMove[0].TilePosition.y * 3, _rotatorHolder.transform.position.z);
+            _holderEndPos = new Vector3(_rotatorHolder.transform.position.x, _tilesToMove[0].TilePosition.y * MetaConstants.lerpUpAmount, _rotatorHolder.transform.position.z);
         }
 
         while (elapsedTime < _lerpDuration)
