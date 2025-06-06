@@ -80,6 +80,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
     public System.Action OnTurnComplete;
 
+    [ContextMenu("Initialise this Character")]
     public void InitialiseCharacter(TileID StartingTileID, Enum_GridDirection startingDirection)
     {
         ref_gridManager = GridManager.Instance;
