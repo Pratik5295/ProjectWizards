@@ -283,6 +283,7 @@ MonoBehaviour:
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 1937183002}
   _startingObject: {fileID: 0}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &55512848
 GameObject:
   m_ObjectHideFlags: 0
@@ -338,6 +339,7 @@ MonoBehaviour:
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 1911608099}
   _startingObject: {fileID: 0}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &58139079
 GameObject:
   m_ObjectHideFlags: 0
@@ -638,6 +640,7 @@ MonoBehaviour:
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 378741172}
   _startingObject: {fileID: 0}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &125402519
 GameObject:
   m_ObjectHideFlags: 0
@@ -830,6 +833,7 @@ MonoBehaviour:
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 58139079}
   _startingObject: {fileID: 919132149155446097, guid: 9d7f24d00d5dfeb4696ff51241b31845, type: 3}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &140306037
 GameObject:
   m_ObjectHideFlags: 0
@@ -885,6 +889,7 @@ MonoBehaviour:
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 1122493691}
   _startingObject: {fileID: 0}
+  objectOccupyingTile: {fileID: 0}
 --- !u!224 &149217667 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 111691958000763782, guid: 2d24820223c4956408f5c5e7e24aad56, type: 3}
@@ -1122,6 +1127,7 @@ MonoBehaviour:
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 482029439}
   _startingObject: {fileID: 0}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &241496018
 GameObject:
   m_ObjectHideFlags: 0
@@ -1653,6 +1659,7 @@ MonoBehaviour:
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 2076257114}
   _startingObject: {fileID: 0}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &367677539
 GameObject:
   m_ObjectHideFlags: 0
@@ -1708,6 +1715,7 @@ MonoBehaviour:
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 153085316}
   _startingObject: {fileID: 0}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &378741172
 GameObject:
   m_ObjectHideFlags: 0
@@ -2303,6 +2311,7 @@ MonoBehaviour:
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 1609002650}
   _startingObject: {fileID: 0}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &633477078
 GameObject:
   m_ObjectHideFlags: 0
@@ -2358,6 +2367,7 @@ MonoBehaviour:
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 665429714}
   _startingObject: {fileID: 0}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &654111107
 GameObject:
   m_ObjectHideFlags: 0
@@ -2413,6 +2423,7 @@ MonoBehaviour:
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 844418500}
   _startingObject: {fileID: 0}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &665429714
 GameObject:
   m_ObjectHideFlags: 0
@@ -2709,6 +2720,7 @@ MonoBehaviour:
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 1216029090}
   _startingObject: {fileID: 0}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &698026457
 GameObject:
   m_ObjectHideFlags: 0
@@ -2877,6 +2889,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9e4c24d5ed9c744aa93d2c4634974f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _myTileID:
+    x: 0
+    y: 0
+  _myGridTile: {fileID: 0}
+  _collider: {fileID: 0}
+  _meshRenderer: {fileID: 0}
 --- !u!65 &748222399
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3006,6 +3024,7 @@ MonoBehaviour:
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 447282415}
   _startingObject: {fileID: 0}
+  objectOccupyingTile: {fileID: 0}
 --- !u!114 &810863095 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5271915672924904667, guid: 281cf8e21ac8ce348892f63a0067e2e9, type: 3}
@@ -3776,6 +3795,7 @@ MonoBehaviour:
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 241496018}
   _startingObject: {fileID: 0}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &1122493691
 GameObject:
   m_ObjectHideFlags: 0
@@ -3915,14 +3935,14 @@ PrefabInstance:
     - target: {fileID: 1336978856375675059, guid: 2d24820223c4956408f5c5e7e24aad56, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1511972884}
+      objectReference: {fileID: 1202576795}
     - target: {fileID: 1336978856375675059, guid: 2d24820223c4956408f5c5e7e24aad56, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: UseAbility
+      value: UndoAction
       objectReference: {fileID: 0}
     - target: {fileID: 1336978856375675059, guid: 2d24820223c4956408f5c5e7e24aad56, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: ChProjectileWizard, Assembly-CSharp
+      value: ChRotatorWizard, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1336978856375675059, guid: 2d24820223c4956408f5c5e7e24aad56, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -4129,6 +4149,7 @@ MonoBehaviour:
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 1663852313}
   _startingObject: {fileID: 0}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &1216029090
 GameObject:
   m_ObjectHideFlags: 0
@@ -4292,6 +4313,7 @@ MonoBehaviour:
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 930065613}
   _startingObject: {fileID: 0}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &1384640879
 GameObject:
   m_ObjectHideFlags: 0
@@ -4347,6 +4369,7 @@ MonoBehaviour:
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 3695908}
   _startingObject: {fileID: 0}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &1402510234
 GameObject:
   m_ObjectHideFlags: 0
@@ -4402,6 +4425,7 @@ MonoBehaviour:
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 902598383}
   _startingObject: {fileID: 0}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &1484752870
 GameObject:
   m_ObjectHideFlags: 0
@@ -4457,6 +4481,7 @@ MonoBehaviour:
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 853860897}
   _startingObject: {fileID: 0}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &1507273364
 GameObject:
   m_ObjectHideFlags: 0
@@ -4543,17 +4568,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1507273364}
   m_Mesh: {fileID: -3511351338622633257, guid: 293303659d93c7e4685f90325f206c31, type: 3}
---- !u!114 &1511972884 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7676447528062884871, guid: 857c71a3f0fef0441bf97948988089c4, type: 3}
-  m_PrefabInstance: {fileID: 1524453173}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4ac901582ea89f44ac6674be2c7913a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1513430786
 GameObject:
   m_ObjectHideFlags: 0
@@ -4609,6 +4623,7 @@ MonoBehaviour:
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 2047964546}
   _startingObject: {fileID: 0}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1001 &1524453173
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4849,6 +4864,7 @@ MonoBehaviour:
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 2021168012}
   _startingObject: {fileID: 0}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &1663852313
 GameObject:
   m_ObjectHideFlags: 0
@@ -5003,6 +5019,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9e4c24d5ed9c744aa93d2c4634974f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _myTileID:
+    x: 0
+    y: 0
+  _myGridTile: {fileID: 0}
+  _collider: {fileID: 0}
+  _meshRenderer: {fileID: 0}
 --- !u!65 &1679940108
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5095,6 +5117,7 @@ MonoBehaviour:
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 829211719}
   _startingObject: {fileID: 0}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &1894007077
 GameObject:
   m_ObjectHideFlags: 0
@@ -5150,6 +5173,7 @@ MonoBehaviour:
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 927626983}
   _startingObject: {fileID: 0}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &1911608099
 GameObject:
   m_ObjectHideFlags: 0
@@ -5421,6 +5445,7 @@ MonoBehaviour:
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 455989384}
   _startingObject: {fileID: 0}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &2021168012
 GameObject:
   m_ObjectHideFlags: 0
@@ -5692,6 +5717,7 @@ MonoBehaviour:
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 466622644}
   _startingObject: {fileID: 0}
+  objectOccupyingTile: {fileID: 0}
 --- !u!1 &2076257114
 GameObject:
   m_ObjectHideFlags: 0

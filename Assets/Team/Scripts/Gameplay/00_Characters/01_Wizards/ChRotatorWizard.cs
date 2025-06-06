@@ -62,6 +62,10 @@ public class ChRotatorWizard : Base_Ch
             _tilesToMove[i].gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.darkSlateGray;
         }
         rotation = MetaConstants.Enum_Rotation.Clockwise;
+
+        PlayerMove move = new PlayerMove(false);
+        HistoryStack.Push(move);
+
         TileDataChanges();
         StartCoroutine(LerpUpDown(true));
     }
@@ -228,14 +232,19 @@ public class ChRotatorWizard : Base_Ch
             _tilesToMove[i].transform.SetParent(ref_gridManager.transform.GetChild(0));
             if (_tilesToMove[i].ObjectOccupyingTile)
             {
-                _tilesToMove[i].ObjectOccupyingTile.GetComponent<Base_Ch>().UpdateCurrentTileID();
+                if (_tilesToMove[i].ObjectOccupyingTile.CompareTag(MetaConstants.CharacterTag))
+                {
+                    _tilesToMove[i].ObjectOccupyingTile.GetComponent<Base_Ch>().UpdateCurrentTileID();
+                }
+                else if (_tilesToMove[i].ObjectOccupyingTile.CompareTag(MetaConstants.EnvironmentTag))
+                {
+                    _tilesToMove[i].ObjectOccupyingTile.GetComponent<ObstacleData>().UpdateObstacleTileData(_tilesToMove[i].TileID, _tilesToMove[i]);
+                }
+
                 _tilesToMove[i].UnparentOccupyingObject();
             }
             _tilesToMove[i].gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.white;
         }
-
-        PlayerMove move = new PlayerMove(false);
-        HistoryStack.Push(move);
         OnTurnComplete?.Invoke();
         //_tilesToMove.Clear();
     }
