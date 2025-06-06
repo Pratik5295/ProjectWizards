@@ -142,6 +142,29 @@ namespace Team.MetaConstants
                 OnAllTurnsCompleted?.Invoke();
             }
 
+        [ContextMenu("Play Next Turn")]
+        public async void PlayNextTurn()
+        {
+            OnTurnsProcessingEvent?.Invoke();
+            await LoadQueue();
+
+            GameTurn[] array = turnQueue.ToArray();
+
+            GameTurn nextTurn = array[0];
+
+            if (nextTurn.IsAlive())
+            {
+                await nextTurn.PerformAsync();
+                _historyStack.Push(nextTurn);
+
+            }
+
+            Debug.Log("All turns completed.");
+
+            OnAllTurnsCompleted?.Invoke();
+
+        }
+
             [ContextMenu("Reset Turns")]
             public async void ResetAllTurns()
             {
