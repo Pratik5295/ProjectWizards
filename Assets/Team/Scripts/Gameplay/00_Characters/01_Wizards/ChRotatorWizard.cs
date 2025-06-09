@@ -133,6 +133,13 @@ public class ChRotatorWizard : Base_Ch
 
         centerTile = ref_gridManager.FindTile(new TileID((int)dirOffsetAndTileID.x, (int)dirOffsetAndTileID.y));
 
+        if (!centerTile)
+        {
+            Debug.Log("Cant Execute Ability as no tiles no center tile.");
+            return;
+        }
+
+
         GridTile forwardTile = ref_gridManager.FindTile(new TileID(centerTile.TileID.x, centerTile.TileID.y + 1));
         GridTile backwardTile = ref_gridManager.FindTile(new TileID(centerTile.TileID.x, centerTile.TileID.y - 1));
         GridTile rightTile = ref_gridManager.FindTile(new TileID(centerTile.TileID.x + 1, centerTile.TileID.y));

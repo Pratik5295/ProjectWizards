@@ -68,8 +68,11 @@ namespace Team.Managers
         {
             foreach (var character in CharactersMap)
             {
+                Debug.Log($"Loading character: {character.CharacterID}");
                 AddCharacter(character);
             }
+
+            GameTurnManager.Instance.OnCharactersLoaded();
         }
 
         public void AddCharacter(CharacterData data)

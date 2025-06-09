@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Team.Gameplay.TurnSystem;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -15,6 +16,9 @@ namespace Team.MetaConstants
 
 public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    [SerializeField]
+    private TurnHolder _turnHolder;
+
     public Transform originalParent;
     private CanvasGroup canvasGroup;
     private RectTransform rectTransform;
@@ -33,6 +37,8 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         canvasGroup = GetComponent<CanvasGroup>();
         layoutElement = GetComponent<LayoutElement>();
         originalParent = transform.parent;
+
+        _turnHolder = originalParent.GetComponent<TurnHolder>();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -89,13 +95,17 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         //    transform.SetSiblingIndex(newIndex);
         //}
 
-        Debug.Log($"{gameObject.name} Pos X: {rectTransform.localPosition.x}");
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
         canvasGroup.blocksRaycasts = true;
         layoutElement.ignoreLayout = false;
+
+        newIndex = _turnHolder.GetIndex(rectTransform.localPosition.x);
+        transform.SetSiblingIndex(newIndex);
+
+        Debug.Log($"New Index; {newIndex}");
 
         transform.SetParent(originalParent);
         StartCoroutine(FinalizeDrag());
@@ -107,6 +117,8 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         yield return new WaitForEndOfFrame();
 
         LayoutRebuilder.ForceRebuildLayoutImmediate(originalParent as RectTransform);
+
+       
 
         if (originalIndex != newIndex)
         {

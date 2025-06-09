@@ -32,7 +32,7 @@ namespace Team.MetaConstants
             public List<GameObject> currentTurnOrder = new List<GameObject>(); //This will be used to reset the Queue
 
             [SerializeField]
-            private Transform turnHolder;
+            private TurnHolder turnHolder;
 
             public bool HasCharacterTurns => turnQueue.Count > 0;
 
@@ -86,16 +86,16 @@ namespace Team.MetaConstants
 
             public void ForceRebuildTurns()
             {
-                if (turnHolder.childCount == 0)
+                if (turnHolder.transform.childCount == 0)
                 {
                     Debug.LogError("Character turns are missing");
                     return;
                 }
 
                 currentTurnOrder.Clear();
-                for (int i = 0; i < turnHolder.childCount; i++)
+                for (int i = 0; i < turnHolder.transform.childCount; i++)
                 {
-                    currentTurnOrder.Add(turnHolder.GetChild(i).gameObject);
+                    currentTurnOrder.Add(turnHolder.transform.GetChild(i).gameObject);
                 }
             }
 
@@ -190,6 +190,15 @@ namespace Team.MetaConstants
 
             }
 
-            #endregion
+        #endregion
+
+        #region Turn Holder Section
+
+        public void OnCharactersLoaded()
+        {
+            turnHolder.InitializeComplete();
         }
+
+        #endregion
+    }
 }
