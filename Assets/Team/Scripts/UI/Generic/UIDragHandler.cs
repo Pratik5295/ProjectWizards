@@ -32,11 +32,11 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         rectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
         layoutElement = GetComponent<LayoutElement>();
+        originalParent = transform.parent;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        originalParent = transform.parent;
         originalIndex = transform.GetSiblingIndex();
 
         canvasGroup.blocksRaycasts = false;
@@ -51,6 +51,8 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             out Vector2 localPointerPos
         );
         offsetX = rectTransform.anchoredPosition.x - localPointerPos.x;
+
+        transform.SetAsLastSibling();
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -68,24 +70,26 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
         newIndex = -1;
 
-        for (int i = 0; i < originalParent.childCount; i++)
-        {
-            if (originalParent.GetChild(i) == transform) continue;
+        //for (int i = 0; i < originalParent.childCount; i++)
+        //{
+        //    if (originalParent.GetChild(i) == transform) continue;
 
-            RectTransform sibling = originalParent.GetChild(i) as RectTransform;
-            if (RectTransformUtility.RectangleContainsScreenPoint(sibling, eventData.position, eventData.pressEventCamera))
-            {
-                newIndex = i;
-                transform.SetSiblingIndex(i);
-                break;
-            }
-        }
+        //    RectTransform sibling = originalParent.GetChild(i) as RectTransform;
+        //    if (RectTransformUtility.RectangleContainsScreenPoint(sibling, eventData.position, eventData.pressEventCamera))
+        //    {
+        //        newIndex = i;
+        //        transform.SetSiblingIndex(i);
+        //        break;
+        //    }
+        //}
 
-        if (newIndex == -1)
-        {
-            newIndex = originalParent.childCount - 1;
-            transform.SetSiblingIndex(newIndex);
-        }
+        //if (newIndex == -1)
+        //{
+        //    newIndex = originalParent.childCount - 1;
+        //    transform.SetSiblingIndex(newIndex);
+        //}
+
+        Debug.Log($"{gameObject.name} Pos X: {rectTransform.localPosition.x}");
     }
 
     public void OnEndDrag(PointerEventData eventData)

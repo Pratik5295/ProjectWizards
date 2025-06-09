@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8562399517729207440}
   - component: {fileID: 7286285720378082910}
+  - component: {fileID: 9038617936645162544}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -62,6 +63,20 @@ MonoBehaviour:
   m_ChildScaleWidth: 1
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &9038617936645162544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2480899442014786946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f736f1dedfaf3044b1a07980afa6786, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardSize: 200
+  spacing: 0
 --- !u!1 &4900722413851721876
 GameObject:
   m_ObjectHideFlags: 0

@@ -25,12 +25,12 @@ namespace Team.MetaConstants
             [Header("Components")]
             private Queue<GameTurn> turnQueue;
             private Stack<GameTurn> _historyStack = new Stack<GameTurn>();
+            [SerializeField]
+            private TurnHolder turnHolder;
 
             public List<GameObject> originalOrder = new List<GameObject>();
             public List<GameObject> currentTurnOrder = new List<GameObject>(); //This will be used to reset the Queue
 
-            [SerializeField]
-            private Transform turnHolder;
 
             public bool HasCharacterTurns => turnQueue.Count > 0;
 
@@ -84,16 +84,16 @@ namespace Team.MetaConstants
 
             public void ForceRebuildTurns()
             {
-                if (turnHolder.childCount == 0)
+                if (turnHolder.transform.childCount == 0)
                 {
                     Debug.LogError("Character turns are missing");
                     return;
                 }
 
                 currentTurnOrder.Clear();
-                for (int i = 0; i < turnHolder.childCount; i++)
+                for (int i = 0; i < turnHolder.transform.childCount; i++)
                 {
-                    currentTurnOrder.Add(turnHolder.GetChild(i).gameObject);
+                    currentTurnOrder.Add(turnHolder.transform.GetChild(i).gameObject);
                 }
             }
 
@@ -124,12 +124,13 @@ namespace Team.MetaConstants
 
                     if (turn.IsAlive())
                     {
-                        await turn.PerformAsync();
+                    Debug.Log($"Performing turn: {turn.name}");
+                    await turn.PerformAsync();
 
-                        //await Task.Delay(TimeSpan.FromSeconds(2f));
-
-                        //Turn was performed by the character, update the stack
-                        _historyStack.Push(turn);
+                    //await Task.Delay(TimeSpan.FromSeconds(2f));
+                    Debug.Log($"Completed turn: {turn.name}");
+                    //Turn was performed by the character, update the stack
+                    _historyStack.Push(turn);
                     }
                     else
                     {
