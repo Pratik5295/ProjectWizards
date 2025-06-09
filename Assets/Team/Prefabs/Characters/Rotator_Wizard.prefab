@@ -185,6 +185,7 @@ GameObject:
   - component: {fileID: 8701032960173701566}
   - component: {fileID: 933473269899832427}
   - component: {fileID: 3136886351939346752}
+  - component: {fileID: 6142953301238890639}
   m_Layer: 0
   m_Name: Rotator_Wizard
   m_TagString: Character
@@ -305,3 +306,17 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0.3, z: 0.07}
+--- !u!114 &6142953301238890639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5407380294395882597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f39bbac03a24ccb4a89a249e0895351b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bodyMeshes:
+  - {fileID: 8404958254488607872}

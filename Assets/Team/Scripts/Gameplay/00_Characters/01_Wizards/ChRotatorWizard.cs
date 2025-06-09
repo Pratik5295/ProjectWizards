@@ -42,6 +42,12 @@ public class ChRotatorWizard : Base_Ch
     public override void UseAbility()
     {
         GetTilesToRotate();
+        if (!centerTile)
+        {
+            Debug.Log("Cant Execute Ability as no tiles no center tile.");
+            OnTurnComplete();
+            return;
+        }
 
         for (int i = 1; i < _tilesToMove.Count; i++)
         {
@@ -126,11 +132,7 @@ public class ChRotatorWizard : Base_Ch
         Vector2 dirOffsetAndTileID = new Vector2(_currentTileID.x + dirOffset.x, _currentTileID.y + dirOffset.y);
 
         centerTile = ref_gridManager.FindTile(new TileID((int)dirOffsetAndTileID.x, (int)dirOffsetAndTileID.y));
-        if (!centerTile)
-        {
-            Debug.Log("Cant Execute Ability as no tiles no center tile.");
-            return;
-        }
+
         GridTile forwardTile = ref_gridManager.FindTile(new TileID(centerTile.TileID.x, centerTile.TileID.y + 1));
         GridTile backwardTile = ref_gridManager.FindTile(new TileID(centerTile.TileID.x, centerTile.TileID.y - 1));
         GridTile rightTile = ref_gridManager.FindTile(new TileID(centerTile.TileID.x + 1, centerTile.TileID.y));
