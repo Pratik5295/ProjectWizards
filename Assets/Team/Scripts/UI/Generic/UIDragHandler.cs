@@ -16,10 +16,10 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     private int newIndex; //Final index set after the drag has been completed
 
     [SerializeField]
-    private float offsetX;
+    private float offsetY;
 
     [SerializeField]
-    private float posX; //Constant x position
+    private float posY; //Constant y position
 
     public Action<int> OnSiblingIndexUpdatedEvent;
 
@@ -49,11 +49,11 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public void OnDrag(PointerEventData eventData)
     {
         Vector2 mousePos = Mouse.current.position.ReadValue();
-        Vector2 newMovePos = new Vector2(posX, mousePos.y);
+        Vector2 newMovePos = new Vector2(mousePos.x, posY);
         rectTransform.position = newMovePos;
         layoutElement.ignoreLayout = true;
 
-        float draggedY = newMovePos.y;
+        float draggedX = newMovePos.x;
         int newIndex = -1;
 
         for (int i = 0; i < originalParent.childCount; i++)
@@ -61,11 +61,11 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             if (originalParent.GetChild(i) == transform) continue;
 
             RectTransform other = originalParent.GetChild(i) as RectTransform;
-            float otherY = other.position.y;
+            float otherX = other.position.x;
 
             //TODO: Math check make it better by using offset and considering spacing etc
             // If mouse is above this child, insert before it
-            if (draggedY > otherY)
+            if (draggedX > otherX)
             {
                 newIndex = i;
                 break;
@@ -116,6 +116,6 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         yield return new WaitForEndOfFrame(); // Wait until layout system finishes
 
         Vector3 accurateWorldPos = rectTransform.position;
-        posX = accurateWorldPos.x + offsetX;
+        posY = accurateWorldPos.y + offsetY;
     }
 }
