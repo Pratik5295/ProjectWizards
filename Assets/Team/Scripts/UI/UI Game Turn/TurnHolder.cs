@@ -72,11 +72,34 @@ namespace Team.Gameplay.TurnSystem
 
                 for (int i = 0; i < cardRanges.Count; i++)
                 {
-                    if (_positionX >= cardRanges[i].start && _positionX < cardRanges[i].end)
+                    //if (_positionX >= cardRanges[i].start && _positionX < cardRanges[i].end)
+                    //{
+                    //    index =  i;
+                    //    return index;
+                    //}
+
+                    //Check if the only the start is greater
+                    if(_positionX >= cardRanges[i].start)
                     {
-                        index =  i - 1;
+                        index = i;
+
+                        //Check if it goes beyond that ranges' end
+                        if(_positionX <= cardRanges[i].end)
+                        {
+                            return index;
+                        }
+                        else
+                        {
+                            index++;
+                            continue;
+                        }
                     }
                 }
+            }
+
+            if(index == -1)
+            {
+                index = 0;
             }
 
             return index;
@@ -89,7 +112,7 @@ namespace Team.Gameplay.TurnSystem
             for (int i = 0; i < numberOfChildren; i++)
             {
                 float start = startingPosX + i * (cardSize + spacing);
-                float end = start + cardSize;
+                float end = start + (cardSize/2);
 
                 cardRanges.Add(new CardRange { start = start, end = end });
             }
