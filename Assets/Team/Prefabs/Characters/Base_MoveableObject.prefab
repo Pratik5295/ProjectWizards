@@ -40,7 +40,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5063510673096400438}
-  m_Mesh: {fileID: -7659660354936277904, guid: 17545a4e5f6ee3e43945a03c95822712, type: 3}
+  m_Mesh: {fileID: 1490014688594724021, guid: addbecb17f6b7504c942abf26635bfe8, type: 3}
 --- !u!23 &8564023545181033933
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -63,7 +63,8 @@ MeshRenderer:
   m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials: []
+  m_Materials:
+  - {fileID: -6538903991835684241, guid: 7821338d8f4cdd145a3896f1077411df, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -96,10 +97,9 @@ GameObject:
   - component: {fileID: 3236205127488731490}
   - component: {fileID: 5271915672924904667}
   - component: {fileID: 933473269899832427}
-  - component: {fileID: 2854362121696547531}
   - component: {fileID: 3760308623249308038}
   m_Layer: 0
-  m_Name: Base_Character
+  m_Name: Base_MoveableObject
   m_TagString: Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -145,40 +145,22 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0.49204534
-      outSlope: 0.49204534
-      tangentMode: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.13540512
-    - serializedVersion: 3
-      time: 0.12
-      value: 1
-      inSlope: 0.033440094
-      outSlope: 0.033440094
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.049204588
-    - serializedVersion: 3
-      time: 0.220328
-      value: 0.05383192
-      inSlope: 13.863744
-      outSlope: 13.863744
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.24255118
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 0.25
       value: 0
-      inSlope: -0.995011
-      outSlope: -0.995011
-      tangentMode: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
       weightedMode: 0
-      inWeight: 0.061452627
+      inWeight: 0.33333334
       outWeight: 0
-    m_PreInfinity: 1
+    m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
 --- !u!114 &933473269899832427
@@ -194,20 +176,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dirFacing: 0
---- !u!114 &2854362121696547531
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5407380294395882597}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f39bbac03a24ccb4a89a249e0895351b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _bodyMeshes:
-  - {fileID: 8564023545181033933}
 --- !u!65 &3760308623249308038
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -227,5 +195,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0.3, z: 0.05}
+  m_Size: {x: 0.5, y: 0.5, z: 0.5}
+  m_Center: {x: 0, y: 0.25, z: 0}

@@ -43,6 +43,7 @@ public class ChProjectileWizard : Base_Ch
 
         scProjectile.curve = curve;
         scProjectile.CastingWizard = this.gameObject;
+        scProjectile._projectileDir = baseRotation.DirectionFacing;
         scProjectile.OnProjectileEnd += endTurn;
     }
 

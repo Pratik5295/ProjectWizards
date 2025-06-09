@@ -25,12 +25,14 @@ namespace Team.MetaConstants
             [Header("Components")]
             private Queue<GameTurn> turnQueue;
             private Stack<GameTurn> _historyStack = new Stack<GameTurn>();
-            [SerializeField]
-            private TurnHolder turnHolder;
+
+            public List<GameObject> DestroyedObjects = new List<GameObject>();
 
             public List<GameObject> originalOrder = new List<GameObject>();
             public List<GameObject> currentTurnOrder = new List<GameObject>(); //This will be used to reset the Queue
 
+            [SerializeField]
+            private Transform turnHolder;
 
             public bool HasCharacterTurns => turnQueue.Count > 0;
 
@@ -84,16 +86,16 @@ namespace Team.MetaConstants
 
             public void ForceRebuildTurns()
             {
-                if (turnHolder.transform.childCount == 0)
+                if (turnHolder.childCount == 0)
                 {
                     Debug.LogError("Character turns are missing");
                     return;
                 }
 
                 currentTurnOrder.Clear();
-                for (int i = 0; i < turnHolder.transform.childCount; i++)
+                for (int i = 0; i < turnHolder.childCount; i++)
                 {
-                    currentTurnOrder.Add(turnHolder.transform.GetChild(i).gameObject);
+                    currentTurnOrder.Add(turnHolder.GetChild(i).gameObject);
                 }
             }
 
@@ -104,6 +106,11 @@ namespace Team.MetaConstants
 
                 if (currentTurnOrder.Contains(_turnObject)) return;
                 currentTurnOrder.Add(_turnObject);
+            }
+
+            public void AddDestroyedObject(GameObject _destroyedObject)
+            {
+                DestroyedObjects.Add(_destroyedObject);
             }
 
             #endregion
@@ -124,13 +131,12 @@ namespace Team.MetaConstants
 
                     if (turn.IsAlive())
                     {
-                    Debug.Log($"Performing turn: {turn.name}");
-                    await turn.PerformAsync();
+                        await turn.PerformAsync();
 
-                    //await Task.Delay(TimeSpan.FromSeconds(2f));
-                    Debug.Log($"Completed turn: {turn.name}");
-                    //Turn was performed by the character, update the stack
-                    _historyStack.Push(turn);
+                        await Task.Delay(TimeSpan.FromSeconds(2f));
+
+                        //Turn was performed by the character, update the stack
+                        _historyStack.Push(turn);
                     }
                     else
                     {
@@ -142,29 +148,6 @@ namespace Team.MetaConstants
 
                 OnAllTurnsCompleted?.Invoke();
             }
-
-        [ContextMenu("Play Next Turn")]
-        public async void PlayNextTurn()
-        {
-            OnTurnsProcessingEvent?.Invoke();
-            await LoadQueue();
-
-            GameTurn[] array = turnQueue.ToArray();
-
-            GameTurn nextTurn = array[0];
-
-            if (nextTurn.IsAlive())
-            {
-                await nextTurn.PerformAsync();
-                _historyStack.Push(nextTurn);
-
-            }
-
-            Debug.Log("All turns completed.");
-
-            OnAllTurnsCompleted?.Invoke();
-
-        }
 
             [ContextMenu("Reset Turns")]
             public async void ResetAllTurns()
@@ -184,6 +167,19 @@ namespace Team.MetaConstants
                     var turn = originalOrder[i];
                     currentTurnOrder.Add(turn);
                     turn.transform.SetSiblingIndex(i);
+                }
+
+                for (int i = 0; i < DestroyedObjects.Count; i++)
+                {
+                    if (DestroyedObjects[i].CompareTag(MetaConstants.MetaConstants.CharacterTag))
+                    {
+                        DestroyedObjects[i].GetComponent<Base_Ch>().EnableObject();
+                        DestroyedObjects[i].GetComponent<Base_Ch>().resetCharState(true);
+                    }
+                    else
+                    {
+                        DestroyedObjects[i].GetComponent<ObstacleData>().EnableObject();
+                    }
                 }
 
                 //Set All Objectives to be incomplete
