@@ -1,5 +1,6 @@
 using Team.Data;
 using Team.Managers;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,9 @@ namespace Team.UI.Gameplay
     {
         [SerializeField]
         private Image cardImage;
+
+        [SerializeField]
+        private TextMeshProUGUI nameText;
 
         #region Unity Methods
         protected void Start()
@@ -35,6 +39,8 @@ namespace Team.UI.Gameplay
         {
             gameObject.name = $"Game-Card: {data.CharacterID}";
             cardImage.color = data.CharacterSkin.CharacterColor;
+
+            nameText.text = data.CharacterID;
         }
         #endregion
     }

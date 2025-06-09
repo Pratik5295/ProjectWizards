@@ -6465,7 +6465,15 @@ PrefabInstance:
       objectReference: {fileID: 325277608}
     - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
       propertyPath: CharactersMap.Array.size
-      value: 4
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
+      propertyPath: CharactersMap.Array.data[0].CharacterID
+      value: Fire Wizard 01
+      objectReference: {fileID: 0}
+    - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
+      propertyPath: CharactersMap.Array.data[1].CharacterID
+      value: Fire Wizard 012
       objectReference: {fileID: 0}
     - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
       propertyPath: CharactersMap.Array.data[2].CharacterID
@@ -6476,6 +6484,10 @@ PrefabInstance:
       value: Wizard 04
       objectReference: {fileID: 0}
     - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
+      propertyPath: CharactersMap.Array.data[0].UICardPrefab
+      value: 
+      objectReference: {fileID: 6258264882312573246, guid: ca31cde62dbff8f4aa9db4f9596205a6, type: 3}
+    - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
       propertyPath: CharactersMap.Array.data[2].UICardPrefab
       value: 
       objectReference: {fileID: 6258264882312573246, guid: ca31cde62dbff8f4aa9db4f9596205a6, type: 3}
@@ -6483,6 +6495,10 @@ PrefabInstance:
       propertyPath: CharactersMap.Array.data[3].UICardPrefab
       value: 
       objectReference: {fileID: 6258264882312573246, guid: ca31cde62dbff8f4aa9db4f9596205a6, type: 3}
+    - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
+      propertyPath: CharactersMap.Array.data[1].StartTileID.x
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
       propertyPath: CharactersMap.Array.data[2].StartTileID.x
       value: 2
@@ -6500,6 +6516,14 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
+      propertyPath: CharactersMap.Array.data[0].CharacterPrefab
+      value: 
+      objectReference: {fileID: 5407380294395882597, guid: a0b6075a9aa68a6489dd045aa099c594, type: 3}
+    - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
+      propertyPath: CharactersMap.Array.data[1].CharacterPrefab
+      value: 
+      objectReference: {fileID: 5407380294395882597, guid: a0b6075a9aa68a6489dd045aa099c594, type: 3}
+    - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
       propertyPath: CharactersMap.Array.data[2].CharacterPrefab
       value: 
       objectReference: {fileID: 5407380294395882597, guid: a8c80c0f4c49117419965fcf9c5e16f6, type: 3}
@@ -6516,6 +6540,14 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
+      propertyPath: CharactersMap.Array.data[0].CharacterSkin.SkinMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 419fe366c67e0c5448ce0f92f5ea0370, type: 2}
+    - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
+      propertyPath: CharactersMap.Array.data[1].CharacterSkin.SkinMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: da98eb23e0994874da55d0329b64cc4d, type: 2}
+    - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
       propertyPath: CharactersMap.Array.data[2].CharacterSkin.SkinMaterial
       value: 
       objectReference: {fileID: 2100000, guid: 91c0701f2e59aaa4aa8070d3b87243a0, type: 2}
@@ -6524,12 +6556,48 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1151844921754575795, guid: 130ce026aaf2b9f4693d1a515f050167, type: 3}
     - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
+      propertyPath: CharactersMap.Array.data[1].CharacterSkin.CharacterCode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
       propertyPath: CharactersMap.Array.data[2].CharacterSkin.CharacterCode
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
       propertyPath: CharactersMap.Array.data[3].CharacterSkin.CharacterCode
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
+      propertyPath: CharactersMap.Array.data[0].CharacterSkin.CharacterColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
+      propertyPath: CharactersMap.Array.data[0].CharacterSkin.CharacterColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
+      propertyPath: CharactersMap.Array.data[0].CharacterSkin.CharacterColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
+      propertyPath: CharactersMap.Array.data[0].CharacterSkin.CharacterColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
+      propertyPath: CharactersMap.Array.data[1].CharacterSkin.CharacterColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
+      propertyPath: CharactersMap.Array.data[1].CharacterSkin.CharacterColor.b
+      value: 0.9622642
+      objectReference: {fileID: 0}
+    - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
+      propertyPath: CharactersMap.Array.data[1].CharacterSkin.CharacterColor.g
+      value: 0.077162705
+      objectReference: {fileID: 0}
+    - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
+      propertyPath: CharactersMap.Array.data[1].CharacterSkin.CharacterColor.r
+      value: 0.10747175
       objectReference: {fileID: 0}
     - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
       propertyPath: CharactersMap.Array.data[2].CharacterSkin.CharacterColor.a
