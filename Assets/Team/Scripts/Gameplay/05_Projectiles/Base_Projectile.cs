@@ -6,7 +6,7 @@ using Team.MetaConstants;
 public class Base_Projectile : MonoBehaviour
 {
     [SerializeField] protected Enum_ProjectileType _projectileType;
-    [SerializeField] protected Enum_GridDirection _projectileDir;
+    [SerializeField] public Enum_GridDirection _projectileDir;
 
     public GameObject CastingWizard;
 

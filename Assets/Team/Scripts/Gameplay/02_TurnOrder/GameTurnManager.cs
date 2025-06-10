@@ -26,6 +26,8 @@ namespace Team.MetaConstants
             private Queue<GameTurn> turnQueue;
             private Stack<GameTurn> _historyStack = new Stack<GameTurn>();
 
+            public List<GameObject> DestroyedObjects = new List<GameObject>();
+
             public List<GameObject> originalOrder = new List<GameObject>();
             public List<GameObject> currentTurnOrder = new List<GameObject>(); //This will be used to reset the Queue
 
@@ -106,6 +108,11 @@ namespace Team.MetaConstants
                 currentTurnOrder.Add(_turnObject);
             }
 
+            public void AddDestroyedObject(GameObject _destroyedObject)
+            {
+                DestroyedObjects.Add(_destroyedObject);
+            }
+
             #endregion
 
 
@@ -160,6 +167,19 @@ namespace Team.MetaConstants
                     var turn = originalOrder[i];
                     currentTurnOrder.Add(turn);
                     turn.transform.SetSiblingIndex(i);
+                }
+
+                for (int i = 0; i < DestroyedObjects.Count; i++)
+                {
+                    if (DestroyedObjects[i].CompareTag(MetaConstants.MetaConstants.CharacterTag))
+                    {
+                        DestroyedObjects[i].GetComponent<Base_Ch>().EnableObject();
+                        DestroyedObjects[i].GetComponent<Base_Ch>().resetCharState(true);
+                    }
+                    else
+                    {
+                        DestroyedObjects[i].GetComponent<ObstacleData>().EnableObject();
+                    }
                 }
 
                 //Set All Objectives to be incomplete

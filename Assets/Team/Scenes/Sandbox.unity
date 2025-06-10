@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 34486843}
   - component: {fileID: 34486842}
   - component: {fileID: 34486841}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile-Default(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -327,7 +327,7 @@ GameObject:
   m_Component:
   - component: {fileID: 47463669}
   - component: {fileID: 47463668}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: B 1, 2'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -355,7 +355,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 479133518}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!4 &47463669
 Transform:
   m_ObjectHideFlags: 0
@@ -537,7 +537,7 @@ GameObject:
   - component: {fileID: 144472372}
   - component: {fileID: 144472371}
   - component: {fileID: 144472370}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile-Default(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -645,7 +645,7 @@ GameObject:
   - component: {fileID: 212950614}
   - component: {fileID: 212950613}
   - component: {fileID: 212950612}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile-Default(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -751,7 +751,7 @@ GameObject:
   m_Component:
   - component: {fileID: 214480040}
   - component: {fileID: 214480039}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: D 3, 4'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -779,7 +779,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 144472369}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!4 &214480040
 Transform:
   m_ObjectHideFlags: 0
@@ -806,7 +806,7 @@ GameObject:
   m_Component:
   - component: {fileID: 234441770}
   - component: {fileID: 234441769}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: D 3, 3'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -834,7 +834,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 1284174403}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!4 &234441770
 Transform:
   m_ObjectHideFlags: 0
@@ -861,7 +861,7 @@ GameObject:
   m_Component:
   - component: {fileID: 240774513}
   - component: {fileID: 240774512}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: E 4, 0'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -889,7 +889,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 418061609}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!4 &240774513
 Transform:
   m_ObjectHideFlags: 0
@@ -916,7 +916,7 @@ GameObject:
   m_Component:
   - component: {fileID: 250880866}
   - component: {fileID: 250880865}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: B 1, 1'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -944,7 +944,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 464800237}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!4 &250880866
 Transform:
   m_ObjectHideFlags: 0
@@ -985,17 +985,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 325277607}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 43765504}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -160}
+  m_SizeDelta: {x: -965, y: 965.0004}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &325277609
 MonoBehaviour:
@@ -1038,7 +1038,7 @@ GameObject:
   m_Component:
   - component: {fileID: 350311610}
   - component: {fileID: 350311609}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: B 1, 4'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1066,7 +1066,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 1897437829}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!4 &350311610
 Transform:
   m_ObjectHideFlags: 0
@@ -1093,7 +1093,7 @@ GameObject:
   m_Component:
   - component: {fileID: 356272498}
   - component: {fileID: 356272497}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: A 0, 0'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1121,7 +1121,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 1617575667}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!4 &356272498
 Transform:
   m_ObjectHideFlags: 0
@@ -1148,7 +1148,7 @@ GameObject:
   m_Component:
   - component: {fileID: 402541636}
   - component: {fileID: 402541635}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: C 2, 1'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1176,7 +1176,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 1505392602}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!4 &402541636
 Transform:
   m_ObjectHideFlags: 0
@@ -1205,7 +1205,7 @@ GameObject:
   - component: {fileID: 418061612}
   - component: {fileID: 418061611}
   - component: {fileID: 418061610}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile-Default(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1313,7 +1313,7 @@ GameObject:
   - component: {fileID: 464800240}
   - component: {fileID: 464800239}
   - component: {fileID: 464800238}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile-Default(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1421,7 +1421,7 @@ GameObject:
   - component: {fileID: 479133521}
   - component: {fileID: 479133520}
   - component: {fileID: 479133519}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile-Default(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1532,7 +1532,7 @@ GameObject:
   m_Component:
   - component: {fileID: 500849703}
   - component: {fileID: 500849702}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: D 3, 0'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1560,7 +1560,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 711699233}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!4 &500849703
 Transform:
   m_ObjectHideFlags: 0
@@ -1587,7 +1587,7 @@ GameObject:
   m_Component:
   - component: {fileID: 505025047}
   - component: {fileID: 505025046}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: C 2, 3'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1615,7 +1615,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 1366185833}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!4 &505025047
 Transform:
   m_ObjectHideFlags: 0
@@ -1642,7 +1642,7 @@ GameObject:
   m_Component:
   - component: {fileID: 573889690}
   - component: {fileID: 573889689}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: E 4, 1'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1670,7 +1670,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 212950611}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!4 &573889690
 Transform:
   m_ObjectHideFlags: 0
@@ -1699,7 +1699,7 @@ GameObject:
   - component: {fileID: 631201084}
   - component: {fileID: 631201083}
   - component: {fileID: 631201082}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile-Default(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1807,7 +1807,7 @@ GameObject:
   - component: {fileID: 639867098}
   - component: {fileID: 639867097}
   - component: {fileID: 639867096}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile-Default(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1913,7 +1913,7 @@ GameObject:
   m_Component:
   - component: {fileID: 640401968}
   - component: {fileID: 640401967}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: C 2, 4'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1941,7 +1941,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 777407437}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!4 &640401968
 Transform:
   m_ObjectHideFlags: 0
@@ -1970,7 +1970,7 @@ GameObject:
   - component: {fileID: 658346668}
   - component: {fileID: 658346667}
   - component: {fileID: 658346666}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile-Default(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2318,7 +2318,7 @@ GameObject:
   m_Component:
   - component: {fileID: 704087113}
   - component: {fileID: 704087112}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: B 1, 3'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2346,7 +2346,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 1662999768}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!4 &704087113
 Transform:
   m_ObjectHideFlags: 0
@@ -2375,7 +2375,7 @@ GameObject:
   - component: {fileID: 711699236}
   - component: {fileID: 711699235}
   - component: {fileID: 711699234}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile-Default(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2518,7 +2518,7 @@ GameObject:
   - component: {fileID: 777407440}
   - component: {fileID: 777407439}
   - component: {fileID: 777407438}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile-Default(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2624,7 +2624,7 @@ GameObject:
   m_Component:
   - component: {fileID: 803413183}
   - component: {fileID: 803413182}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: D 3, 2'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2652,7 +2652,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 1715992919}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!4 &803413183
 Transform:
   m_ObjectHideFlags: 0
@@ -2681,7 +2681,7 @@ GameObject:
   - component: {fileID: 878771179}
   - component: {fileID: 878771178}
   - component: {fileID: 878771177}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile-Default(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3054,7 +3054,7 @@ GameObject:
   - component: {fileID: 1151292215}
   - component: {fileID: 1151292214}
   - component: {fileID: 1151292213}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile-Default(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3160,7 +3160,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1182487175}
   - component: {fileID: 1182487174}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: B 1, 0'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3188,7 +3188,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 1701562751}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!4 &1182487175
 Transform:
   m_ObjectHideFlags: 0
@@ -3217,7 +3217,7 @@ GameObject:
   - component: {fileID: 1284174406}
   - component: {fileID: 1284174405}
   - component: {fileID: 1284174404}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile-Default(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3328,7 +3328,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1358517028}
   - component: {fileID: 1358517027}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: A 0, 4'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3356,7 +3356,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 2134474886}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!4 &1358517028
 Transform:
   m_ObjectHideFlags: 0
@@ -3385,7 +3385,7 @@ GameObject:
   - component: {fileID: 1366185836}
   - component: {fileID: 1366185835}
   - component: {fileID: 1366185834}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile-Default(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3491,7 +3491,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1402517390}
   - component: {fileID: 1402517389}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: E 4, 2'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3519,7 +3519,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 639867095}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!4 &1402517390
 Transform:
   m_ObjectHideFlags: 0
@@ -3548,7 +3548,7 @@ GameObject:
   - component: {fileID: 1505392605}
   - component: {fileID: 1505392604}
   - component: {fileID: 1505392603}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile-Default(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3654,7 +3654,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1550136699}
   - component: {fileID: 1550136700}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: E 4, 4'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3698,7 +3698,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 2065103397}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!1 &1577996635
 GameObject:
   m_ObjectHideFlags: 0
@@ -3869,10 +3869,10 @@ RectTransform:
   - {fileID: 43765504}
   m_Father: {fileID: 681962650}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 100, y: 0}
-  m_SizeDelta: {x: 200, y: 600}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -100, y: 85}
+  m_SizeDelta: {x: 1125, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1587147602
 MonoBehaviour:
@@ -3888,7 +3888,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Content: {fileID: 325277608}
   m_Horizontal: 1
-  m_Vertical: 1
+  m_Vertical: 0
   m_MovementType: 1
   m_Elasticity: 0.1
   m_Inertia: 1
@@ -3952,7 +3952,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1590870256}
   - component: {fileID: 1590870255}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: A 0, 1'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3980,7 +3980,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 658346665}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!4 &1590870256
 Transform:
   m_ObjectHideFlags: 0
@@ -4006,7 +4006,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1591683493}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Holder(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4063,7 +4063,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1592096968}
   - component: {fileID: 1592096967}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: A 0, 2'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4091,7 +4091,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 1151292212}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!4 &1592096968
 Transform:
   m_ObjectHideFlags: 0
@@ -4253,7 +4253,7 @@ GameObject:
   - component: {fileID: 1617575670}
   - component: {fileID: 1617575669}
   - component: {fileID: 1617575668}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile-Default(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4361,7 +4361,7 @@ GameObject:
   - component: {fileID: 1662999771}
   - component: {fileID: 1662999770}
   - component: {fileID: 1662999769}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile-Default(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4469,7 +4469,7 @@ GameObject:
   - component: {fileID: 1683127170}
   - component: {fileID: 1683127169}
   - component: {fileID: 1683127168}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile-Default(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4577,7 +4577,7 @@ GameObject:
   - component: {fileID: 1701562754}
   - component: {fileID: 1701562753}
   - component: {fileID: 1701562752}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile-Default(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4685,7 +4685,7 @@ GameObject:
   - component: {fileID: 1715992922}
   - component: {fileID: 1715992921}
   - component: {fileID: 1715992920}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile-Default(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4927,7 +4927,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1789427831}
   - component: {fileID: 1789427830}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: E 4, 3'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4955,7 +4955,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 631201081}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!4 &1789427831
 Transform:
   m_ObjectHideFlags: 0
@@ -5079,7 +5079,7 @@ GameObject:
   - component: {fileID: 1809995894}
   - component: {fileID: 1809995893}
   - component: {fileID: 1809995892}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile-Default(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5187,7 +5187,7 @@ GameObject:
   - component: {fileID: 1897437832}
   - component: {fileID: 1897437831}
   - component: {fileID: 1897437830}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile-Default(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5293,7 +5293,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1941924162}
   - component: {fileID: 1941924161}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: D 3, 1'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5321,7 +5321,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 878771176}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!4 &1941924162
 Transform:
   m_ObjectHideFlags: 0
@@ -5348,7 +5348,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2006044914}
   - component: {fileID: 2006044913}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: A 0, 3'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5376,7 +5376,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 1809995891}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!4 &2006044914
 Transform:
   m_ObjectHideFlags: 0
@@ -5403,7 +5403,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2051846887}
   - component: {fileID: 2051846886}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: C 2, 2'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5431,7 +5431,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 34486840}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!4 &2051846887
 Transform:
   m_ObjectHideFlags: 0
@@ -5496,7 +5496,7 @@ GameObject:
   - component: {fileID: 2065103401}
   - component: {fileID: 2065103400}
   - component: {fileID: 2065103399}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile-Default(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5602,7 +5602,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2073437836}
   - component: {fileID: 2073437835}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'Tile: C 2, 0'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5630,7 +5630,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 1794949876}
   tileObject: {fileID: 1683127167}
-  objectOccupyingTile: {fileID: 0}
+  _startingObject: {fileID: 0}
 --- !u!4 &2073437836
 Transform:
   m_ObjectHideFlags: 0
@@ -5659,7 +5659,7 @@ GameObject:
   - component: {fileID: 2134474889}
   - component: {fileID: 2134474888}
   - component: {fileID: 2134474887}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile-Default(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6570,6 +6570,18 @@ PrefabInstance:
       propertyPath: cardHolder
       value: 
       objectReference: {fileID: 325277608}
+    - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
+      propertyPath: CharactersMap.Array.data[1].StartTileID.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
+      propertyPath: CharactersMap.Array.data[0].CharacterPrefab
+      value: 
+      objectReference: {fileID: 5407380294395882597, guid: 857c71a3f0fef0441bf97948988089c4, type: 3}
+    - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
+      propertyPath: CharactersMap.Array.data[0].FacingDirection
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
