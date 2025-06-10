@@ -2073,6 +2073,8 @@ MonoBehaviour:
   _currentTileID:
     x: 3
     y: 5
+  ySpawnOffset: 1
+  ydefaultOffset: 1.5
   _yMovementCurve:
     serializedVersion: 2
     m_Curve:
@@ -5553,7 +5555,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1049929177
 RectTransform:
   m_ObjectHideFlags: 0

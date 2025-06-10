@@ -95,7 +95,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3236205127488731490}
-  - component: {fileID: 5271915672924904667}
+  - component: {fileID: 4084169156861407942}
   - component: {fileID: 933473269899832427}
   - component: {fileID: 3760308623249308038}
   m_Layer: 0
@@ -121,7 +121,7 @@ Transform:
   - {fileID: 320569409086996540}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5271915672924904667
+--- !u!114 &4084169156861407942
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,36 +130,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 5407380294395882597}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fea98c65fa5153c4ea711043ba2e8e43, type: 3}
+  m_Script: {fileID: 11500000, guid: 43348d283c5157d448b23b94c9dc232c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   CharState: 0
   ref_gridManager: {fileID: 0}
-  baseRotation: {fileID: 933473269899832427}
+  baseRotation: {fileID: 0}
   _currentTileID:
     x: 0
     y: 0
+  ySpawnOffset: 1.5
+  ydefaultOffset: 2.5
   _yMovementCurve:
     serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.25
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
+    m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
