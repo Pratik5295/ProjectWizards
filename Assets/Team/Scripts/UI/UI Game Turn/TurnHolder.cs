@@ -30,6 +30,11 @@ namespace Team.Gameplay.TurnSystem
         [SerializeField]
         private List<CardRange> cardRanges = new List<CardRange>();
 
+        [SerializeField]
+        private GameObject selected = null;
+
+        public bool HasSelected => selected != null;
+
         [ContextMenu("Get Starting Position")]
         public void CalculateExtremePositions()
         {
@@ -116,6 +121,11 @@ namespace Team.Gameplay.TurnSystem
 
                 cardRanges.Add(new CardRange { start = start, end = end });
             }
+        }
+
+        public void SetSelected(GameObject _selected)
+        {
+            selected = _selected;
         }
     }
 }

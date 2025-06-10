@@ -17,7 +17,7 @@ namespace Team.GameConstants
 public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     [SerializeField]
-    private TurnHolder _turnHolder;
+    protected TurnHolder _turnHolder;
 
     public Transform originalParent;
     private CanvasGroup canvasGroup;
@@ -59,6 +59,8 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         offsetX = rectTransform.anchoredPosition.x - localPointerPos.x;
 
         transform.SetAsLastSibling();
+
+        _turnHolder.SetSelected(gameObject);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -85,6 +87,9 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         transform.SetSiblingIndex(newIndex);
 
         transform.SetParent(originalParent);
+
+        _turnHolder.SetSelected(null);
+
         StartCoroutine(FinalizeDrag());
     }
 

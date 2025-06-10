@@ -61,6 +61,8 @@ namespace Team.UI.Gameplay
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            if (_turnHolder.HasSelected) return;
+
             characterReskinner.ShowOutline();
 
             transform.localScale = selectedScale;
