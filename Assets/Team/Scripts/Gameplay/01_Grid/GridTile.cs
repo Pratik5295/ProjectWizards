@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using Team.MetaConstants;
+using Team.GameConstants;
 
 
 namespace Team.Gameplay.GridSystem
@@ -149,7 +149,7 @@ namespace Team.Gameplay.GridSystem
                 objectOccupyingTile.GetComponent<ObstacleData>().UpdateObstacleTileData(TileID, this);
                 objectOccupyingTile.GetComponent<ObstacleData>().InitialiseObstacleData();
             }
-            objectOccupyingTile.tag = MetaConstants.MetaConstants.EnvironmentTag;
+            objectOccupyingTile.tag = GameConstants.MetaConstants.EnvironmentTag;
         }
 
         [ContextMenu("Re-Update Obstacle Data")]

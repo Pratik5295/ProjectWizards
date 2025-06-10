@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Team.MetaConstants
+namespace Team.GameConstants
 {
     public static partial class MetaConstants
     {
@@ -74,27 +74,6 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
         rectTransform.anchoredPosition = new Vector2(localPoint.x + offsetX, rectTransform.anchoredPosition.y);
 
-        newIndex = -1;
-
-        //for (int i = 0; i < originalParent.childCount; i++)
-        //{
-        //    if (originalParent.GetChild(i) == transform) continue;
-
-        //    RectTransform sibling = originalParent.GetChild(i) as RectTransform;
-        //    if (RectTransformUtility.RectangleContainsScreenPoint(sibling, eventData.position, eventData.pressEventCamera))
-        //    {
-        //        newIndex = i;
-        //        transform.SetSiblingIndex(i);
-        //        break;
-        //    }
-        //}
-
-        //if (newIndex == -1)
-        //{
-        //    newIndex = originalParent.childCount - 1;
-        //    transform.SetSiblingIndex(newIndex);
-        //}
-
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -105,8 +84,6 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         newIndex = _turnHolder.GetIndex(rectTransform.localPosition.x);
         transform.SetSiblingIndex(newIndex);
 
-        Debug.Log($"New Index; {newIndex}");
-
         transform.SetParent(originalParent);
         StartCoroutine(FinalizeDrag());
     }
@@ -116,9 +93,13 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         // Wait one frame to allow Unity to settle layout system
         yield return new WaitForEndOfFrame();
 
+        CanvasUpdater();
+    }
+
+    private void CanvasUpdater()
+    {
         LayoutRebuilder.ForceRebuildLayoutImmediate(originalParent as RectTransform);
 
-       
 
         if (originalIndex != newIndex)
         {

@@ -133,7 +133,8 @@ namespace Team.Managers
             gameTurn.SetupGameTurn(_character);
 
             var cardUI = gameCard.GetComponent<UIGameCard>();
-            cardUI.PopulateUICardData(data);
+            var characterSkinner = _character.GetComponent<CharacterReskinner>();
+            cardUI.PopulateUICardData(data, characterSkinner);
 
             GameTurnManager.Instance.AddCharacterToTurnOrder(gameCard);
         }

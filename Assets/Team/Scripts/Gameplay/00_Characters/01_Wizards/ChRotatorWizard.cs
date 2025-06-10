@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Team.Gameplay.GridSystem;
 using UnityEngine;
-using Team.MetaConstants;
+using Team.GameConstants;
 
-namespace Team.MetaConstants
+namespace Team.GameConstants
 {
     public static partial class MetaConstants
     {

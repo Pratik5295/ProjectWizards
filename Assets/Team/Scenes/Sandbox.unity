@@ -6496,8 +6496,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6258264882312573246, guid: ca31cde62dbff8f4aa9db4f9596205a6, type: 3}
     - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
+      propertyPath: CharactersMap.Array.data[0].StartTileID.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
+      propertyPath: CharactersMap.Array.data[0].StartTileID.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
       propertyPath: CharactersMap.Array.data[1].StartTileID.x
-      value: 1
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
+      propertyPath: CharactersMap.Array.data[1].StartTileID.y
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
       propertyPath: CharactersMap.Array.data[2].StartTileID.x
@@ -6520,9 +6532,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5407380294395882597, guid: a0b6075a9aa68a6489dd045aa099c594, type: 3}
     - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
+      propertyPath: CharactersMap.Array.data[0].FacingDirection
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
       propertyPath: CharactersMap.Array.data[1].CharacterPrefab
       value: 
       objectReference: {fileID: 5407380294395882597, guid: a0b6075a9aa68a6489dd045aa099c594, type: 3}
+    - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
+      propertyPath: CharactersMap.Array.data[1].FacingDirection
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2673317980307375532, guid: f557caa7a243ff24a889c70687f4d090, type: 3}
       propertyPath: CharactersMap.Array.data[2].CharacterPrefab
       value: 

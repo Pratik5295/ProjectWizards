@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Team.Gameplay.ObjectiveSystem;
 using Team.Gameplay.TurnSystem;
-using Team.MetaConstants;
+using Team.GameConstants;
 using UnityEngine;
 
-namespace Team.MetaConstants
+namespace Team.GameConstants
 {
     public static partial class MetaConstants
     {
@@ -171,7 +171,7 @@ namespace Team.MetaConstants
 
                 for (int i = 0; i < DestroyedObjects.Count; i++)
                 {
-                    if (DestroyedObjects[i].CompareTag(MetaConstants.MetaConstants.CharacterTag))
+                    if (DestroyedObjects[i].CompareTag(GameConstants.MetaConstants.CharacterTag))
                     {
                         DestroyedObjects[i].GetComponent<Base_Ch>().EnableObject();
                         DestroyedObjects[i].GetComponent<Base_Ch>().resetCharState(true);
