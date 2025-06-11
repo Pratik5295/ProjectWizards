@@ -183,19 +183,19 @@ public class ChRotatorWizard : Base_Ch
                     {
                         case 1:
                             _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x + 1, _tilesToMove[i].TileID.y - 1);
-                            _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
+                            _tilesToMove[i].name = MetaConstants.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
                             break;
                         case 2:
                             _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x - 1, _tilesToMove[i].TileID.y + 1);
-                            _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
+                            _tilesToMove[i].name = MetaConstants.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
                             break;
                         case 3:
                             _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x - 1, _tilesToMove[i].TileID.y - 1);
-                            _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
+                            _tilesToMove[i].name = MetaConstants.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
                             break;
                         case 4:
                             _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x + 1, _tilesToMove[i].TileID.y + 1);
-                            _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
+                            _tilesToMove[i].name = MetaConstants.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
                             break;
                     }
                   break;
@@ -204,19 +204,19 @@ public class ChRotatorWizard : Base_Ch
                     {
                         case 1:
                             _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x - 1, _tilesToMove[i].TileID.y - 1);
-                            _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
+                            _tilesToMove[i].name = MetaConstants.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
                             break;
                         case 2:
                             _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x + 1, _tilesToMove[i].TileID.y + 1);
-                            _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
+                            _tilesToMove[i].name = MetaConstants.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
                             break;
                         case 3:
                             _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x - 1, _tilesToMove[i].TileID.y + 1);
-                            _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
+                            _tilesToMove[i].name = MetaConstants.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
                             break;
                         case 4:
                             _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x + 1, _tilesToMove[i].TileID.y - 1);
-                            _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
+                            _tilesToMove[i].name = MetaConstants.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
                             break;
                     }
                     break;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Team.Gameplay.GridSystem;
 using Team.Enum.Character;
 using UnityEngine;
+using Team.GameConstants;
 
 [System.Serializable]
 public class PlayerMove
@@ -86,8 +87,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     public void InitialiseCharacter(TileID StartingTileID, Enum_GridDirection startingDirection)
     {
         ref_gridManager = GridManager.Instance;
-        OffsetValue = ref_gridManager.GridSlot_Offset;
-
+        OffsetValue = MetaConstants.GridSlot_Offset;
         _currentTileID = StartingTileID;
         _previousTileID = _currentTileID;
         currentTile = ref_gridManager.FindTile(_currentTileID);
