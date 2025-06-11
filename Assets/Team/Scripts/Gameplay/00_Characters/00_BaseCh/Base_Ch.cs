@@ -106,7 +106,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
     void Start()
     {
-        //InitialiseCharacter(_currentTileID, Enum_GridDirection.NORTH);
+        InitialiseCharacter(_currentTileID, Enum_GridDirection.NORTH);
     }
 
     #region Debugging Movement Button Functions
