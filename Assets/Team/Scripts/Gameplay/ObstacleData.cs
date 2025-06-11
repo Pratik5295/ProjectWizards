@@ -5,6 +5,8 @@ public class ObstacleData : MonoBehaviour, IDestroyable
 {
     [SerializeField]
     private TileID _myTileID;
+
+    public TileID CurrentTileID => _myTileID;
     [SerializeField]
     private GridTile _myGridTile;
 
