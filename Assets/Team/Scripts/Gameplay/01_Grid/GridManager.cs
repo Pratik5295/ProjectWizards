@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Team.Gameplay.GameLevelSystem;
 using UnityEngine;
 
 namespace Team.Gameplay.GridSystem
@@ -9,9 +10,9 @@ namespace Team.Gameplay.GridSystem
         public static GridManager Instance = null;
 
         [SerializeField]
-        private LevelTileCreator levelTile;
+        private GameLevel gameLevel;
 
-        public LevelTileCreator CurrentTileParent => levelTile;
+        public LevelTileCreator CurrentTileParent => gameLevel.LevelTiles;
 
         [SerializeField]
         private List<GridTile> tiles = new List<GridTile>(); //Dictionary is made from these tiles ***
@@ -33,7 +34,7 @@ namespace Team.Gameplay.GridSystem
         private void Start()
         {
             //Check if the tiles are empty
-            if(levelTile != null && tiles.Count == 0)
+            if(gameLevel != null && tiles.Count == 0)
             {
                 //Load all the tiles
                 LoadTilesFromLevelTiles();
@@ -44,9 +45,9 @@ namespace Team.Gameplay.GridSystem
 
         #region Tile Creator Section
 
-        public void SetCurrentLevelTile(LevelTileCreator _levelTile)
+        public void SetCurrentLevelTile(GameLevel _level)
         {
-            levelTile = _levelTile;
+            gameLevel = _level;
 
             //Load all the tiles
             LoadTilesFromLevelTiles();
@@ -57,8 +58,8 @@ namespace Team.Gameplay.GridSystem
 
         private void LoadTilesFromLevelTiles()
         {
-            
-            foreach (var tile in levelTile.Tiles)
+            tiles.Clear();
+            foreach (var tile in gameLevel.LevelTiles.Tiles)
             {
                 tiles.Add(tile);
             }
@@ -70,6 +71,7 @@ namespace Team.Gameplay.GridSystem
 
         public void InitializeDictionary()
         {
+            Grid.Clear();
             foreach(var item in tiles)
             {
                 Grid.Add(item.TileID, item);
