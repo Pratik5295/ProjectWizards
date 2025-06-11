@@ -153,6 +153,7 @@ namespace Team.GameConstants
             public async void ResetAllTurns()
             {
                 OnTurnsProcessingEvent?.Invoke();
+                ResetDestroyedEntities();
                 //Reset all moves performed by the characters
                 while (_historyStack.Count > 0)
                 {
@@ -169,25 +170,30 @@ namespace Team.GameConstants
                     turn.transform.SetSiblingIndex(i);
                 }
 
-                for (int i = 0; i < DestroyedObjects.Count; i++)
-                {
-                    if (DestroyedObjects[i].CompareTag(GameConstants.MetaConstants.CharacterTag))
-                    {
-                        DestroyedObjects[i].GetComponent<Base_Ch>().EnableObject();
-                        DestroyedObjects[i].GetComponent<Base_Ch>().resetCharState(true);
-                    }
-                    else
-                    {
-                        DestroyedObjects[i].GetComponent<ObstacleData>().EnableObject();
-                    }
-                }
-
                 //Set All Objectives to be incomplete
                 LevelObjectiveManager.Instance.ResetAllObjectives();
 
                 //Notify that undo was completed
                 OnResetLastTurnCompleted?.Invoke();
 
+            }
+
+            public void ResetDestroyedEntities()
+            {
+                for (int i = 0; i < DestroyedObjects.Count; i++)
+                {
+                    if (DestroyedObjects[i].CompareTag(MetaConstants.CharacterTag))
+                    {
+                        DestroyedObjects[i].GetComponent<Base_Ch>().EnableObject();
+                        DestroyedObjects[i].GetComponent<Base_Ch>().resetCharState(true);
+                        DestroyedObjects[i].GetComponent<Base_Ch>().UndoAction();
+                    }
+                    else
+                    {
+                        DestroyedObjects[i].GetComponent<ObstacleData>().EnableObject();
+                    }
+                }
+                DestroyedObjects.Clear();
             }
 
         #endregion
