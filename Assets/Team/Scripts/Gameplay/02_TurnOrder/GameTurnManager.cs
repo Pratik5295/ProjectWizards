@@ -182,7 +182,7 @@ namespace Team.GameConstants
             {
                 for (int i = 0; i < DestroyedObjects.Count; i++)
                 {
-                    if (DestroyedObjects[i].CompareTag(MetaConstants.MetaConstants.CharacterTag))
+                    if (DestroyedObjects[i].CompareTag(MetaConstants.CharacterTag))
                     {
                         DestroyedObjects[i].GetComponent<Base_Ch>().EnableObject();
                         DestroyedObjects[i].GetComponent<Base_Ch>().resetCharState(true);
