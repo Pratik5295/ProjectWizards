@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using Team.Gameplay.GridSystem;
-using Team.MetaConstants;
+using Team.GameConstants;
 
 public class PushProjectile : Base_Projectile
 {

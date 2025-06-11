@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Team.Gameplay.ObjectiveSystem;
 using Team.Gameplay.TurnSystem;
-using Team.MetaConstants;
+using Team.GameConstants;
 using UnityEngine;
 
-namespace Team.MetaConstants
+namespace Team.GameConstants
 {
     public static partial class MetaConstants
     {
@@ -32,7 +32,7 @@ namespace Team.MetaConstants
             public List<GameObject> currentTurnOrder = new List<GameObject>(); //This will be used to reset the Queue
 
             [SerializeField]
-            private Transform turnHolder;
+            private TurnHolder turnHolder;
 
             public bool HasCharacterTurns => turnQueue.Count > 0;
 
@@ -86,16 +86,16 @@ namespace Team.MetaConstants
 
             public void ForceRebuildTurns()
             {
-                if (turnHolder.childCount == 0)
+                if (turnHolder.transform.childCount == 0)
                 {
                     Debug.LogError("Character turns are missing");
                     return;
                 }
 
                 currentTurnOrder.Clear();
-                for (int i = 0; i < turnHolder.childCount; i++)
+                for (int i = 0; i < turnHolder.transform.childCount; i++)
                 {
-                    currentTurnOrder.Add(turnHolder.GetChild(i).gameObject);
+                    currentTurnOrder.Add(turnHolder.transform.GetChild(i).gameObject);
                 }
             }
 
@@ -153,6 +153,7 @@ namespace Team.MetaConstants
             public async void ResetAllTurns()
             {
                 OnTurnsProcessingEvent?.Invoke();
+                ResetDestroyedEntities();
                 //Reset all moves performed by the characters
                 while (_historyStack.Count > 0)
                 {
@@ -169,19 +170,6 @@ namespace Team.MetaConstants
                     turn.transform.SetSiblingIndex(i);
                 }
 
-                for (int i = 0; i < DestroyedObjects.Count; i++)
-                {
-                    if (DestroyedObjects[i].CompareTag(MetaConstants.MetaConstants.CharacterTag))
-                    {
-                        DestroyedObjects[i].GetComponent<Base_Ch>().EnableObject();
-                        DestroyedObjects[i].GetComponent<Base_Ch>().resetCharState(true);
-                    }
-                    else
-                    {
-                        DestroyedObjects[i].GetComponent<ObstacleData>().EnableObject();
-                    }
-                }
-
                 //Set All Objectives to be incomplete
                 LevelObjectiveManager.Instance.ResetAllObjectives();
 
@@ -190,6 +178,33 @@ namespace Team.MetaConstants
 
             }
 
-            #endregion
+            public void ResetDestroyedEntities()
+            {
+                for (int i = 0; i < DestroyedObjects.Count; i++)
+                {
+                    if (DestroyedObjects[i].CompareTag(MetaConstants.CharacterTag))
+                    {
+                        DestroyedObjects[i].GetComponent<Base_Ch>().EnableObject();
+                        DestroyedObjects[i].GetComponent<Base_Ch>().resetCharState(true);
+                        DestroyedObjects[i].GetComponent<Base_Ch>().UndoAction();
+                    }
+                    else
+                    {
+                        DestroyedObjects[i].GetComponent<ObstacleData>().EnableObject();
+                    }
+                }
+                DestroyedObjects.Clear();
+            }
+
+        #endregion
+
+        #region Turn Holder Section
+
+        public void OnCharactersLoaded()
+        {
+            turnHolder.InitializeComplete();
         }
+
+        #endregion
+    }
 }

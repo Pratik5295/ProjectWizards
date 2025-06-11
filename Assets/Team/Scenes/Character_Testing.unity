@@ -3935,14 +3935,14 @@ PrefabInstance:
     - target: {fileID: 1336978856375675059, guid: 2d24820223c4956408f5c5e7e24aad56, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1202576795}
+      objectReference: {fileID: 1606216641}
     - target: {fileID: 1336978856375675059, guid: 2d24820223c4956408f5c5e7e24aad56, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: UndoAction
+      value: UseAbility
       objectReference: {fileID: 0}
     - target: {fileID: 1336978856375675059, guid: 2d24820223c4956408f5c5e7e24aad56, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: ChRotatorWizard, Assembly-CSharp
+      value: ChProjectileWizard, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1336978856375675059, guid: 2d24820223c4956408f5c5e7e24aad56, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -4695,12 +4695,23 @@ PrefabInstance:
     - target: {fileID: 7676447528062884871, guid: 857c71a3f0fef0441bf97948988089c4, type: 3}
       propertyPath: _projectilePrefab
       value: 
-      objectReference: {fileID: 3625092468094944024, guid: 122d323c62190ee489f082c0d09dbb1c, type: 3}
+      objectReference: {fileID: 3625092468094944024, guid: 3d4d34703d5b66249bca19cbcc3a194f, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 857c71a3f0fef0441bf97948988089c4, type: 3}
+--- !u!114 &1606216641 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7676447528062884871, guid: 857c71a3f0fef0441bf97948988089c4, type: 3}
+  m_PrefabInstance: {fileID: 1524453173}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4ac901582ea89f44ac6674be2c7913a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1609002650
 GameObject:
   m_ObjectHideFlags: 0

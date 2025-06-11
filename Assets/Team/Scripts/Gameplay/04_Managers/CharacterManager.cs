@@ -68,8 +68,11 @@ namespace Team.Managers
         {
             foreach (var character in CharactersMap)
             {
+                Debug.Log($"Loading character: {character.CharacterID}");
                 AddCharacter(character);
             }
+
+            GameTurnManager.Instance.OnCharactersLoaded();
         }
 
         public void AddCharacter(CharacterData data)
@@ -130,7 +133,8 @@ namespace Team.Managers
             gameTurn.SetupGameTurn(_character);
 
             var cardUI = gameCard.GetComponent<UIGameCard>();
-            cardUI.PopulateUICardData(data);
+            var characterSkinner = _character.GetComponent<CharacterReskinner>();
+            cardUI.PopulateUICardData(data, characterSkinner);
 
             GameTurnManager.Instance.AddCharacterToTurnOrder(gameCard);
         }

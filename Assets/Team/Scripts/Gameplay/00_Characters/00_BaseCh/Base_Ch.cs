@@ -52,8 +52,10 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     private float smoothingTime = 1f; //Time to reach the target position.
     private float currentTime; //Current elapsed Time for movement lerp.
     private float lerpingDelayTime = 0.001f;
+    [SerializeField]
     private float ySpawnOffset = 1.5f;
-    private float ydefaultOffset = 2.5f;
+    [SerializeField]
+    private float ydefaultOffset = 1.5f;
 
     [SerializeField] private AnimationCurve _yMovementCurve;
 
@@ -315,7 +317,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     public virtual void UseAbility()
     {
         // Debug.LogError($" {gameObject.name} Ability not programmed for character");
-        StartCoroutine(MoveByAmount(2, baseRotation.GetFacingDirection()));
+        StartCoroutine(MoveByAmount(1, baseRotation.GetFacingDirection()));
     }
 
     #region Enabling and Disabling Character
