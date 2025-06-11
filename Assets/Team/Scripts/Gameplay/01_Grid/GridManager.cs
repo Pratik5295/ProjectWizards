@@ -83,10 +83,12 @@ namespace Team.Gameplay.GridSystem
 
             if (ref_gridHolder == null)
             {
-                if (transform.childCount > 0)
-                {
-                    ref_gridHolder = transform.GetChild(0).gameObject;
-                }
+                //if (transform.childCount > 0)
+                //{
+                //    ref_gridHolder = transform.GetChild(0).gameObject;
+                //}
+
+                ref_gridHolder = GameObject.Find("Tiles"); //TODO: Will all be transformed into different kind of finders (TBD)
             }
 
             DestroyImmediate(ref_gridHolder);
@@ -114,7 +116,8 @@ namespace Team.Gameplay.GridSystem
             }
 
             ref_gridHolder = Instantiate(HolderPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-            ref_gridHolder.transform.SetParent(transform);
+            ref_gridHolder.name = "Tiles";
+            //ref_gridHolder.transform.SetParent(transform);
 
             for (int x = 0; x < Max_GridSize.x; x++)
             {
