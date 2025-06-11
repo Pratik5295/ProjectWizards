@@ -8,18 +8,15 @@ namespace Team.Gameplay.GridSystem
     {
         public static GridManager Instance = null;
 
+        [SerializeField]
+        private LevelTileCreator levelTile;
 
+        public LevelTileCreator CurrentTileParent => levelTile;
 
         [SerializeField]
         private List<GridTile> tiles = new List<GridTile>(); //Dictionary is made from these tiles ***
 
         private Dictionary<TileID,GridTile> Grid = new Dictionary<TileID,GridTile>();
-
- 
-
-        [SerializeField]
-        private GameObject ref_gridHolder;
-
 
         private void Awake()
         {
@@ -36,13 +33,38 @@ namespace Team.Gameplay.GridSystem
         private void Start()
         {
             //Check if the tiles are empty
-            if(tiles.Count == 0)
+            if(levelTile != null && tiles.Count == 0)
             {
-                Debug.LogError("There are no tiles in the list",gameObject);
+                //Load all the tiles
+                LoadTilesFromLevelTiles();
             }
 
             InitializeDictionary();
         }
+
+        #region Tile Creator Section
+
+        public void SetCurrentLevelTile(LevelTileCreator _levelTile)
+        {
+            levelTile = _levelTile;
+
+            //Load all the tiles
+            LoadTilesFromLevelTiles();
+
+            //Initialize Dictionary
+            InitializeDictionary();
+        }
+
+        private void LoadTilesFromLevelTiles()
+        {
+            
+            foreach (var tile in levelTile.Tiles)
+            {
+                tiles.Add(tile);
+            }
+        }
+
+        #endregion
 
         #region Grid Dictionary Section
 

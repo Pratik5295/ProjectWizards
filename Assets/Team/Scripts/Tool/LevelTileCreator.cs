@@ -40,6 +40,8 @@ namespace Team.Gameplay.GridSystem
         [SerializeField]
         private List<GridTile> tiles = new List<GridTile>();
 
+        public List<GridTile> Tiles => tiles;
+
 
         [SerializeField]
         private GameObject _defaultObstacle;

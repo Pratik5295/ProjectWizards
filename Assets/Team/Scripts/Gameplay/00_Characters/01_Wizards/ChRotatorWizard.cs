@@ -56,7 +56,7 @@ public class ChRotatorWizard : Base_Ch
 
         _rotatorHolder = new GameObject("_rotatorHolder");
         _rotatorHolder.transform.position = centerTile.TilePosition;
-        _rotatorHolder.transform.SetParent(ref_gridManager.transform.GetChild(0));
+        _rotatorHolder.transform.SetParent(ref_gridManager.CurrentTileParent.transform);
 
         for (int i = 0; i < _tilesToMove.Count; i++)
         {
@@ -109,7 +109,7 @@ public class ChRotatorWizard : Base_Ch
 
         _rotatorHolder = new GameObject("_rotatorHolder");
         _rotatorHolder.transform.position = centerTile.TilePosition;
-        _rotatorHolder.transform.SetParent(ref_gridManager.transform.GetChild(0));
+        _rotatorHolder.transform.SetParent(ref_gridManager.CurrentTileParent.transform);
 
         for (int i = 0; i < _tilesToMove.Count; i++)
         {
@@ -238,7 +238,7 @@ public class ChRotatorWizard : Base_Ch
 
         for(int i = 0; i < _tilesToMove.Count; i++)
         {
-            _tilesToMove[i].transform.SetParent(ref_gridManager.transform.GetChild(0));
+            _tilesToMove[i].transform.SetParent(ref_gridManager.CurrentTileParent.transform);
             if (_tilesToMove[i].ObjectOccupyingTile)
             {
                 if (_tilesToMove[i].ObjectOccupyingTile.CompareTag(MetaConstants.CharacterTag))
