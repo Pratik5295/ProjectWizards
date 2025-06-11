@@ -1,5 +1,5 @@
 using UnityEngine;
-using Team.MetaConstants;
+using Team.GameConstants;
 using Team.Gameplay.GridSystem;
 using Team.Managers;
 

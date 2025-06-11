@@ -1,6 +1,6 @@
 using UnityEngine;
 using Team.Enum.Character;
-using Team.MetaConstants;
+using Team.GameConstants;
 
 
 public class Base_Projectile : MonoBehaviour
