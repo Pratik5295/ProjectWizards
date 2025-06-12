@@ -178,6 +178,24 @@ namespace Team.GameConstants
 
             }
 
+        [ContextMenu("Play Next Turn")]
+        public async void PlayNextTurn()
+        {
+            OnTurnsProcessingEvent?.Invoke();
+
+            if(turnQueue.Count > 0)
+            {
+                GameTurn turn = turnQueue.Dequeue();
+
+                if (turn.IsAlive())
+                {
+                    await turn.PerformAsync();
+                }
+            }
+
+            OnAllTurnsCompleted?.Invoke();
+        }
+
             public void ResetDestroyedEntities()
             {
                 for (int i = 0; i < DestroyedObjects.Count; i++)

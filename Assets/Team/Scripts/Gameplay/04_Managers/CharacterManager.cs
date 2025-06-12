@@ -50,12 +50,27 @@ namespace Team.Managers
         private void Start()
         {
             LoadCharacterReskinMap();
-            SpawnAllCharacters();
+           
         }
 
         #endregion
 
         #region Public Methods
+
+        public void LoadCharactersFromLeveData(List<CharacterData> _characters)
+        {
+            CharactersMap.Clear();
+
+            //Load all the characters
+            foreach (CharacterData character in _characters)
+            {
+                CharactersMap.Add(character);
+            }
+
+            //Initialize character dictionary & spawn characters
+            SpawnAllCharacters();
+
+        }
 
         public Base_Ch GetCharacter(string _characterName)
         {
