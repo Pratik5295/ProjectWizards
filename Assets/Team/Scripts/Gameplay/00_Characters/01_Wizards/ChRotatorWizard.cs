@@ -47,8 +47,8 @@ public class ChRotatorWizard : Base_Ch
     {
         base.InitialiseCharacter(StartingTileID, startingDirection);
 
-        _landingVFXManager = Instantiate(_rotationLandingVFX).GetComponent<VFXManager>();
-        _landingVFXManager.transform.position = new Vector3(transform.position.x, _landingVFXManager.transform.position.y, transform.position.z);
+        //_landingVFXManager = Instantiate(_rotationLandingVFX).GetComponent<VFXManager>();
+        //_landingVFXManager.transform.position = new Vector3(transform.position.x, _landingVFXManager.transform.position.y, transform.position.z);
     }
 
     public override void UseAbility()
