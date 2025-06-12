@@ -190,11 +190,16 @@ namespace Team.GameConstants
                     }
                     else
                     {
-                        DestroyedObjects[i].GetComponent<ObstacleData>().EnableObject();
+                         DestroyedObjects[i].GetComponent<ObstacleData>().EnableObject();
+                        if (DestroyedObjects[i].GetComponent<Base_Ch>())
+                        {
+                            DestroyedObjects[i].GetComponent<Base_Ch>().resetCharState(true);
+                            DestroyedObjects[i].GetComponent<Base_Ch>().UndoAction();
+                        }
                     }
                 }
                 DestroyedObjects.Clear();
-            }
+        }
 
         #endregion
 
