@@ -41,6 +41,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     [Header("---Tile Variables---")]
     [SerializeField] protected TileID _currentTileID = new TileID(0, 0);
     protected TileID _previousTileID = new TileID(0, 0);
+    [SerializeField] protected TileID _startTileID = new TileID(0, 0);
     public TileID CurrentTileID
     {
         get { return _currentTileID; }
@@ -91,6 +92,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
         _currentTileID = StartingTileID;
         _previousTileID = _currentTileID;
+        _startTileID = _currentTileID;
+
         currentTile = ref_gridManager.FindTile(_currentTileID);
         currentTile.SetObjectOccupyingTile(this.gameObject);
 
@@ -237,10 +240,10 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
     protected void UndoMovement()
     {
-        if (_currentTileID == _previousTileID) { return; }
+        if (_currentTileID == _startTileID) { return; }
         currentTile.SetObjectOccupyingTile(null);
 
-        _currentTileID = _previousTileID;
+        _currentTileID = _startTileID;
         currentTile = ref_gridManager.FindTile(_currentTileID);
 
         currentTile.SetObjectOccupyingTile(this.gameObject);
