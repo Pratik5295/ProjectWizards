@@ -42,4 +42,9 @@ public class VFXManager : MonoBehaviour
             _childObjects[i].SetActive(false);
         }
     }
+
+    public void CleanUpEffect()
+    {
+        Destroy(gameObject);
+    }
 }

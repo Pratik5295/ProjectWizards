@@ -41,14 +41,16 @@ public class ChRotatorWizard : Base_Ch
 
     [Header("Rotation VFX")]
     [SerializeField] private GameObject _rotationLandingVFX;
+    private float _landingVFXOffset;
     private VFXManager _landingVFXManager;
 
     public override void InitialiseCharacter(TileID StartingTileID, Enum_GridDirection startingDirection)
     {
         base.InitialiseCharacter(StartingTileID, startingDirection);
 
-        //_landingVFXManager = Instantiate(_rotationLandingVFX).GetComponent<VFXManager>();
-        //_landingVFXManager.transform.position = new Vector3(transform.position.x, _landingVFXManager.transform.position.y, transform.position.z);
+        _landingVFXManager = Instantiate(_rotationLandingVFX).GetComponent<VFXManager>();
+        _landingVFXOffset = _landingVFXManager.transform.position.y;
+        _landingVFXManager.transform.position = new Vector3(transform.position.x, _landingVFXOffset, transform.position.z);
     }
 
     public override void UseAbility()
@@ -145,8 +147,8 @@ public class ChRotatorWizard : Base_Ch
 
         centerTile = ref_gridManager.FindTile(new TileID((int)dirOffsetAndTileID.x, (int)dirOffsetAndTileID.y));
 
-        /*_landingVFXManager.transform.SetParent(centerTile.transform);
-        _landingVFXManager.transform.position = new Vector3(0, _landingVFXManager.transform.position.y, 0);*/
+        _landingVFXManager.transform.SetParent(centerTile.transform);
+        _landingVFXManager.transform.localPosition = new Vector3(0, _landingVFXOffset, 0);
 
         if (!centerTile)
         {
@@ -297,9 +299,11 @@ public class ChRotatorWizard : Base_Ch
         if (isLerpingUp) { StartCoroutine(RotateLerp()); }
         if (!isLerpingUp)
         {
-            GameObject instance = Instantiate(_rotationLandingVFX, centerTile.transform);
-            instance.transform.localPosition = new Vector3(0, instance.transform.position.y, 0);
-            //_landingVFXManager.EnableParticleEffectChildren();
+            /*GameObject instance = Instantiate(_rotationLandingVFX, centerTile.transform);
+            instance.transform.localPosition = new Vector3(0, instance.transform.position.y, 0);*/
+            _landingVFXManager.transform.localPosition = new Vector3(0, _landingVFXOffset, 0);
+            _landingVFXManager.EnableParticleEffectChildren();
+
             CleanUpTiles();
         }
     }
