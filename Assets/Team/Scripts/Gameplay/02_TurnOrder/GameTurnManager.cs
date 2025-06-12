@@ -218,7 +218,7 @@ namespace Team.GameConstants
                     }
                 }
                 DestroyedObjects.Clear();
-            }
+        }
 
         #endregion
 
