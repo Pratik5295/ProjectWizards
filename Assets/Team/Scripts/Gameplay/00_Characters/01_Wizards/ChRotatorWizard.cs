@@ -253,7 +253,7 @@ public class ChRotatorWizard : Base_Ch
         _rotatorHolder.transform.DetachChildren();
         Destroy(_rotatorHolder);
 
-        for(int i = 0; i < _tilesToMove.Count; i++)
+        for (int i = 0; i < _tilesToMove.Count; i++)
         {
             _tilesToMove[i].transform.SetParent(ref_gridManager.transform.GetChild(0));
             if (_tilesToMove[i].ObjectOccupyingTile)
@@ -265,6 +265,10 @@ public class ChRotatorWizard : Base_Ch
                 else if (_tilesToMove[i].ObjectOccupyingTile.CompareTag(MetaConstants.EnvironmentTag))
                 {
                     _tilesToMove[i].ObjectOccupyingTile.GetComponent<ObstacleData>().UpdateObstacleTileData(_tilesToMove[i].TileID, _tilesToMove[i]);
+                    if (_tilesToMove[i].ObjectOccupyingTile.GetComponent<Base_Ch>())
+                    {
+                        _tilesToMove[i].ObjectOccupyingTile.GetComponent<Base_Ch>().UpdateCurrentTileID();
+                    }
                 }
 
                 _tilesToMove[i].UnparentOccupyingObject();
