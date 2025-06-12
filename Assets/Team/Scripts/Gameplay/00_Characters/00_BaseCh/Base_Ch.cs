@@ -52,6 +52,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     private float smoothingTime = 1f; //Time to reach the target position.
     private float currentTime; //Current elapsed Time for movement lerp.
     private float lerpingDelayTime = 0.001f;
+    [Header("Y Offset and Movement Jump Variables")]
     [SerializeField]
     private float ySpawnOffset = 1.5f;
     [SerializeField]
@@ -83,7 +84,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     public System.Action OnTurnComplete;
 
     [ContextMenu("Initialise this Character")]
-    public void InitialiseCharacter(TileID StartingTileID, Enum_GridDirection startingDirection)
+    public virtual void InitialiseCharacter(TileID StartingTileID, Enum_GridDirection startingDirection)
     {
         ref_gridManager = GridManager.Instance;
         OffsetValue = ref_gridManager.GridSlot_Offset;
