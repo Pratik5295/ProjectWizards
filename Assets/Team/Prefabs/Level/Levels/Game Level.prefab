@@ -1898,8 +1898,74 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LevelTiles: {fileID: 5856545672580884406}
-  CharactersMap: []
-  _objectiveMap: []
+  CharactersMap:
+  - CharacterID: Fireball Wizard 01
+    CharacterPrefab: {fileID: 5407380294395882597, guid: a0b6075a9aa68a6489dd045aa099c594, type: 3}
+    StartTileID:
+      x: 1
+      y: 3
+    FacingDirection: 2
+    UICardPrefab: {fileID: 6258264882312573246, guid: ca31cde62dbff8f4aa9db4f9596205a6, type: 3}
+    CharacterSkin:
+      CharacterCode: 0
+      SkinMaterial: {fileID: 2100000, guid: 419fe366c67e0c5448ce0f92f5ea0370, type: 2}
+      CharacterColor: {r: 1, g: 0, b: 0, a: 1}
+  - CharacterID: Rotation Wizard 01
+    CharacterPrefab: {fileID: 5407380294395882597, guid: a8c80c0f4c49117419965fcf9c5e16f6, type: 3}
+    StartTileID:
+      x: 2
+      y: 2
+    FacingDirection: 0
+    UICardPrefab: {fileID: 6258264882312573246, guid: ca31cde62dbff8f4aa9db4f9596205a6, type: 3}
+    CharacterSkin:
+      CharacterCode: 1
+      SkinMaterial: {fileID: 2100000, guid: da98eb23e0994874da55d0329b64cc4d, type: 2}
+      CharacterColor: {r: 0, g: 0.6606591, b: 1, a: 1}
+  - CharacterID: Fireball Wizard 02
+    CharacterPrefab: {fileID: 5407380294395882597, guid: a0b6075a9aa68a6489dd045aa099c594, type: 3}
+    StartTileID:
+      x: 5
+      y: 3
+    FacingDirection: 3
+    UICardPrefab: {fileID: 6258264882312573246, guid: ca31cde62dbff8f4aa9db4f9596205a6, type: 3}
+    CharacterSkin:
+      CharacterCode: 0
+      SkinMaterial: {fileID: 2100000, guid: 419fe366c67e0c5448ce0f92f5ea0370, type: 2}
+      CharacterColor: {r: 1, g: 0, b: 0.0324955, a: 1}
+  - CharacterID: Push Wizard 01
+    CharacterPrefab: {fileID: 5407380294395882597, guid: 13d5d07571039354bb2e9285b85bf4b7, type: 3}
+    StartTileID:
+      x: 0
+      y: 2
+    FacingDirection: 1
+    UICardPrefab: {fileID: 6258264882312573246, guid: ca31cde62dbff8f4aa9db4f9596205a6, type: 3}
+    CharacterSkin:
+      CharacterCode: 1
+      SkinMaterial: {fileID: 2100000, guid: 91c0701f2e59aaa4aa8070d3b87243a0, type: 2}
+      CharacterColor: {r: 1, g: 0.930426, b: 0, a: 1}
+  - CharacterID: Push Wizard 02
+    CharacterPrefab: {fileID: 5407380294395882597, guid: 13d5d07571039354bb2e9285b85bf4b7, type: 3}
+    StartTileID:
+      x: 4
+      y: 7
+    FacingDirection: 2
+    UICardPrefab: {fileID: 6258264882312573246, guid: ca31cde62dbff8f4aa9db4f9596205a6, type: 3}
+    CharacterSkin:
+      CharacterCode: 1
+      SkinMaterial: {fileID: 2100000, guid: 91c0701f2e59aaa4aa8070d3b87243a0, type: 2}
+      CharacterColor: {r: 1, g: 0.99501103, b: 0, a: 1}
+  _objectiveMap:
+  - ObjectiveName: Ensure All Wizards Survive
+    ObjectiveTargets:
+    - Fireball Wizard 01
+    - Rotation Wizard 01
+    - Fireball Wizard 02
+    - Push Wizard 01
+    - Push Wizard 02
+    Type: 2
+    LocationTileID:
+      x: 0
+      y: 0
 --- !u!1 &1504090365327217427
 GameObject:
   m_ObjectHideFlags: 0
@@ -8536,6 +8602,12 @@ MonoBehaviour:
   _currentTileID:
     x: 3
     y: 5
+  _previousTileID:
+    x: 0
+    y: 0
+  _startTileID:
+    x: 0
+    y: 0
   ySpawnOffset: 1.5
   ydefaultOffset: 2.5
   _yMovementCurve:
@@ -8544,6 +8616,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  _obstacleData: {fileID: 0}
 --- !u!114 &1944222903235132469
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Team.Data;
 using Team.Gameplay.GridSystem;
 using Team.Gameplay.ObjectiveSystem;
+using Team.Managers;
 using UnityEngine;
 
 namespace Team.Gameplay.GameLevelSystem
@@ -32,6 +33,10 @@ namespace Team.Gameplay.GameLevelSystem
         public void LoadLevel()
         {
             GridManager.Instance.SetCurrentLevelTile(this);
+
+            CharacterManager.Instance.LoadCharactersFromLeveData(CharactersMap);
+
+            LevelObjectiveManager.Instance.LoadObjectivesFromLevelData(_objectiveMap);
         }
     }
 }

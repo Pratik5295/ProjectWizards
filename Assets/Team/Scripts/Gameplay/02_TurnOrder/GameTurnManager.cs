@@ -153,7 +153,7 @@ namespace Team.GameConstants
             public async void ResetAllTurns()
             {
                 OnTurnsProcessingEvent?.Invoke();
-                ResetDestroyedEntities();
+          
                 //Reset all moves performed by the characters
                 while (_historyStack.Count > 0)
                 {
@@ -170,8 +170,9 @@ namespace Team.GameConstants
                     turn.transform.SetSiblingIndex(i);
                 }
 
-                //Set All Objectives to be incomplete
-                LevelObjectiveManager.Instance.ResetAllObjectives();
+            ResetDestroyedEntities();
+            //Set All Objectives to be incomplete
+            LevelObjectiveManager.Instance.ResetAllObjectives();
 
                 //Notify that undo was completed
                 OnResetLastTurnCompleted?.Invoke();
@@ -209,6 +210,11 @@ namespace Team.GameConstants
                     else
                     {
                         DestroyedObjects[i].GetComponent<ObstacleData>().EnableObject();
+                        if (DestroyedObjects[i].GetComponent<Base_Ch>())
+                        {
+                            DestroyedObjects[i].GetComponent<Base_Ch>().resetCharState(true);
+                            DestroyedObjects[i].GetComponent<Base_Ch>().UndoAction();
+                        }
                     }
                 }
                 DestroyedObjects.Clear();
