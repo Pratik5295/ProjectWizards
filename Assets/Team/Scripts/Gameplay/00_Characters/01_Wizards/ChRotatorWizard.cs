@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Team.Gameplay.GridSystem;
 using UnityEngine;
 using Team.GameConstants;
+using UnityEditor.Experimental.GraphView;
 
 namespace Team.GameConstants
 {
@@ -248,6 +249,10 @@ public class ChRotatorWizard : Base_Ch
                 else if (_tilesToMove[i].ObjectOccupyingTile.CompareTag(MetaConstants.EnvironmentTag))
                 {
                     _tilesToMove[i].ObjectOccupyingTile.GetComponent<ObstacleData>().UpdateObstacleTileData(_tilesToMove[i].TileID, _tilesToMove[i]);
+                    if (_tilesToMove[i].ObjectOccupyingTile.GetComponent<Base_Ch>())
+                    {
+                        _tilesToMove[i].ObjectOccupyingTile.GetComponent<Base_Ch>().UpdateCurrentTileID();
+                    }
                 }
 
                 _tilesToMove[i].UnparentOccupyingObject();
