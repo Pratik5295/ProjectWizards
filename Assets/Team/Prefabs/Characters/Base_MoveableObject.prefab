@@ -139,14 +139,18 @@ MonoBehaviour:
   _currentTileID:
     x: 0
     y: 0
-  ySpawnOffset: 1.5
-  ydefaultOffset: 2.5
+  _startTileID:
+    x: 0
+    y: 0
+  ySpawnOffset: 1
+  ydefaultOffset: 1
   _yMovementCurve:
     serializedVersion: 2
     m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  _obstacleData: {fileID: 0}
 --- !u!114 &933473269899832427
 MonoBehaviour:
   m_ObjectHideFlags: 0
