@@ -1539,6 +1539,10 @@ MonoBehaviour:
   _myTileID:
     x: 1
     y: 2
+  _startTileID:
+    x: 0
+    y: 0
+  _startTile: {fileID: 0}
   _myGridTile: {fileID: 332360001}
   _collider: {fileID: 130223881}
   _meshRenderer: {fileID: 1530951248}
@@ -6371,6 +6375,10 @@ MonoBehaviour:
   _myTileID:
     x: 3
     y: 5
+  _startTileID:
+    x: 0
+    y: 0
+  _startTile: {fileID: 0}
   _myGridTile: {fileID: 1343526345}
   _collider: {fileID: 743884911}
   _meshRenderer: {fileID: 1928576639}
@@ -6426,14 +6434,36 @@ MonoBehaviour:
   _currentTileID:
     x: 3
     y: 5
-  ySpawnOffset: 1.5
-  ydefaultOffset: 2.5
+  _startTileID:
+    x: 0
+    y: 0
+  ySpawnOffset: 1
+  ydefaultOffset: 1.5
   _yMovementCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  _obstacleData: {fileID: 0}
 --- !u!4 &743884914
 Transform:
   m_ObjectHideFlags: 0
@@ -16360,6 +16390,30 @@ PrefabInstance:
     - target: {fileID: 8509643606690861747, guid: b0a6b0178f3cd6d4bb76bd079efb0460, type: 3}
       propertyPath: _objectiveMap.Array.data[0].ObjectiveTargetName
       value: Fireball Wizard 01
+      objectReference: {fileID: 0}
+    - target: {fileID: 8509643606690861747, guid: b0a6b0178f3cd6d4bb76bd079efb0460, type: 3}
+      propertyPath: _objectiveMap.Array.data[0].ObjectiveTargets.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8509643606690861747, guid: b0a6b0178f3cd6d4bb76bd079efb0460, type: 3}
+      propertyPath: '_objectiveMap.Array.data[0].ObjectiveTargets.Array.data[0]'
+      value: Fireball Wizard 01
+      objectReference: {fileID: 0}
+    - target: {fileID: 8509643606690861747, guid: b0a6b0178f3cd6d4bb76bd079efb0460, type: 3}
+      propertyPath: '_objectiveMap.Array.data[0].ObjectiveTargets.Array.data[1]'
+      value: Rotation Wizard 01
+      objectReference: {fileID: 0}
+    - target: {fileID: 8509643606690861747, guid: b0a6b0178f3cd6d4bb76bd079efb0460, type: 3}
+      propertyPath: '_objectiveMap.Array.data[0].ObjectiveTargets.Array.data[2]'
+      value: Fireball Wizard 02
+      objectReference: {fileID: 0}
+    - target: {fileID: 8509643606690861747, guid: b0a6b0178f3cd6d4bb76bd079efb0460, type: 3}
+      propertyPath: '_objectiveMap.Array.data[0].ObjectiveTargets.Array.data[3]'
+      value: Push Wizard 01
+      objectReference: {fileID: 0}
+    - target: {fileID: 8509643606690861747, guid: b0a6b0178f3cd6d4bb76bd079efb0460, type: 3}
+      propertyPath: '_objectiveMap.Array.data[0].ObjectiveTargets.Array.data[4]'
+      value: Push Wizard 02
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

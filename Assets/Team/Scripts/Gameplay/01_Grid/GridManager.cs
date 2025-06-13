@@ -19,6 +19,23 @@ namespace Team.Gameplay.GridSystem
 
         private Dictionary<TileID,GridTile> Grid = new Dictionary<TileID,GridTile>();
 
+        //Obstacles data
+        [Tooltip ("DONT FILL IT")]
+        public List<GameObject> Obstacles = new List<GameObject>();
+        
+
+        private char[] gridCharArray = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J' };
+
+        [SerializeField]
+        private GameObject ref_gridHolder;
+
+        [SerializeField]
+        private GameObject _defaultObstacle;
+        public GameObject DefaultObstacle
+        {
+            get { return _defaultObstacle; }
+        }
+
         private void Awake()
         {
             if(Instance == null)
@@ -41,6 +58,8 @@ namespace Team.Gameplay.GridSystem
             }
 
             InitializeDictionary();
+            FindAllObstacles();
+
         }
 
         #region Tile Creator Section
@@ -69,7 +88,18 @@ namespace Team.Gameplay.GridSystem
 
         #region Grid Dictionary Section
 
-        public void InitializeDictionary()
+        private void FindAllObstacles()
+        {
+            foreach(var tile in tiles)
+            {
+                if(tile.tileType == TileType.OCCUPIEDTILE)
+                {
+                    Obstacles.Add(tile.ObjectOccupyingTile);
+                }
+            }
+        }
+
+        private void InitializeDictionary()
         {
             Grid.Clear();
             foreach(var item in tiles)
