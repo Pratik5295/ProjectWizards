@@ -1,10 +1,16 @@
-using UnityEngine;
 using Team.Gameplay.GridSystem;
+using UnityEngine;
 
 public class ObstacleData : MonoBehaviour, IDestroyable
 {
     [SerializeField]
     private TileID _myTileID;
+
+    [SerializeField]
+    private TileID _startTileID;
+
+    [SerializeField]
+    private GridTile _startTile;
 
     public TileID CurrentTileID => _myTileID;
     [SerializeField]
@@ -14,6 +20,12 @@ public class ObstacleData : MonoBehaviour, IDestroyable
     private Collider _collider;
     [SerializeField]
     private MeshRenderer _meshRenderer;
+
+    private void Start()
+    {
+        _startTileID = _myTileID;
+        _startTile = _myGridTile;
+    }
 
     [ContextMenu("Initialise Obstacle Data")]
     public void InitialiseObstacleData()
@@ -67,4 +79,17 @@ public class ObstacleData : MonoBehaviour, IDestroyable
         _myGridTile = updatedGridTile;
     }
 
+    public void ResetToStart()
+    {
+        //Make my curent tile to tile walkable
+        MakeTileWalkable();
+
+        UpdateObstacleTileData(_startTileID, _startTile);
+
+        Vector3 tilePosition = new Vector3(_startTile.transform.position.x, 1.5f, _startTile.transform.position.z);
+        transform.position = tilePosition;
+
+        //Make my start tile as unwalkable
+        MakeTileUnwalkable();
+    }
 }
