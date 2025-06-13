@@ -219,6 +219,8 @@ namespace Team.Managers
         {
             OnTurnsProcessingEvent?.Invoke();
 
+            await LoadQueue();
+
             if (turnQueue.Count > 0)
             {
                 GameTurn turn = turnQueue.Dequeue();
