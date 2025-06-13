@@ -278,6 +278,12 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         _currentTileID = currentTile.TileID;
     }
 
+    public void SetCurrentTile(TileID updatedTileID, GridTile updatedGridTile)
+    {
+        _currentTileID = updatedTileID;
+        currentTile = updatedGridTile;
+    }
+
 
 
     public virtual void HitByProjectile(Enum_ProjectileType projectileType)
