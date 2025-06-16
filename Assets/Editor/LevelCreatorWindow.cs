@@ -12,6 +12,7 @@ namespace Team.Tool
     public class LevelCreatorWindow : EditorWindow
     {
         private GameObject root;
+        private GameObject charactersRoot;  //Root game object for visualizing characters
         private GameLevel GameLevel => root.GetComponent<GameLevel>();
 
 
@@ -28,7 +29,8 @@ namespace Team.Tool
 
         //Objectives
         private List<GameObjectiveData> objectiveList = new List<GameObjectiveData>();
-        
+
+        private bool showCharacters = false;
 
         private Vector2 scrollPos;
         private Vector2 objectiveScrollPos;
@@ -73,9 +75,17 @@ namespace Team.Tool
                 FillCharacterMapData();
                 FillObjectiveMapData();
 
+                if(characterList.Count > 0)
+                {
+                    //Visualize characters button
+                    CharacterVisualizerButton();
+                }
+
                 if (characterList.Count > 0 && objectiveList.Count > 0)
                 {
+                    
 
+                    //Save to prefab button
                     if (GUILayout.Button("Save to Prefab"))
                     {
                         //Save data to the root level for characters and objectives
@@ -83,6 +93,11 @@ namespace Team.Tool
                         Debug.Log("Game prefab will be saved at this location");
                     }
                 }
+            }
+
+            if(GUILayout.Button("Reset Tool Data"))
+            {
+                ResetAllValues();
             }
 
             
@@ -141,7 +156,7 @@ namespace Team.Tool
             tileCreator.CreateGrid();
         }
 
-        #region Character Map Section
+        #region Character Map & Visualizing Section
 
         private void FillCharacterMapData()
         {
@@ -173,7 +188,6 @@ namespace Team.Tool
                 character.StartTileID.y = EditorGUILayout.IntField("  Y", character.StartTileID.y);
 
                 character.FacingDirection = (Enum_GridDirection)EditorGUILayout.EnumPopup("Facing Direction", character.FacingDirection);
-                character.UICardPrefab = (GameObject)EditorGUILayout.ObjectField("UI Card Prefab", character.UICardPrefab, typeof(GameObject), false);
 
                 if (GUILayout.Button("Remove Character"))
                 {
@@ -188,6 +202,49 @@ namespace Team.Tool
             EditorGUILayout.EndScrollView();
 
             GUILayout.Space(10);
+        }
+
+        private void CharacterVisualizerButton()
+        {
+            if (showCharacters)
+            {
+                //Hide character buttons
+                if(GUILayout.Button("Hide Characters"))
+                {
+                    showCharacters = false;
+                    DestroyImmediate(charactersRoot);
+                }
+            }
+            else
+            {
+                //Show character button
+                if(GUILayout.Button("Show Characters"))
+                {
+                    showCharacters = true;
+
+                    OnVisualizeCharacters();
+                }
+            }
+        }
+
+        private void OnVisualizeCharacters()
+        {
+            if (characterList.Count == 0) return;
+
+            charactersRoot = new GameObject("Characters");
+            charactersRoot.transform.position = Vector3.zero;
+
+            foreach (var character in characterList)
+            {
+                var characterObject = Instantiate(character.CharacterPrefab);
+                characterObject.name = $"{character.CharacterID}";
+                characterObject.transform.SetParent(charactersRoot.transform);
+
+                TileID tileID = new TileID((int)character.StartTileID.x, (int)character.StartTileID.y);
+
+                var baseCharacterRef = characterObject.GetComponent<Base_Ch>();
+                baseCharacterRef.InitialiseCharacter(tileID, character.FacingDirection);
+            }
         }
 
         #endregion
@@ -270,7 +327,7 @@ namespace Team.Tool
 
         #endregion
 
-
+        #region Save & Data Section
         /// <summary>
         /// Save Button Logic Handling
         /// </summary>
@@ -300,11 +357,31 @@ namespace Team.Tool
                 // Optionally, focus the Project window and select the new prefab asset
                 EditorUtility.FocusProjectWindow();
                 Selection.activeObject = prefab;
+
+                ResetAllValues();
             }
             else
             {
                 Debug.LogError("Failed to save prefab.");
             }
         }
+
+        private void ResetAllValues()
+        {
+            characterList.Clear();
+            objectiveList.Clear();
+
+            DestroyImmediate(root);
+
+            tileSize = Vector2.one;
+            levelId = string.Empty;
+
+            tileCreator = null;
+            root = null;
+
+            showCharacters = false;
+        }
+
+        #endregion
     }
 }

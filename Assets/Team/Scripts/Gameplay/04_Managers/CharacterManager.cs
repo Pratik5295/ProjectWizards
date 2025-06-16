@@ -33,6 +33,9 @@ namespace Team.Managers
         [SerializeField]
         private Transform cardHolder;
 
+        [SerializeField]
+        private GameObject UIGameCardPrefab;
+
 
         #region Unity Methods
         private void Awake()
@@ -153,7 +156,7 @@ namespace Team.Managers
 
         private void LoadCardUI(Base_Ch _character, CharacterData data)
         {
-            var gameCard = Instantiate(data.UICardPrefab, cardHolder);
+            var gameCard = Instantiate(UIGameCardPrefab, cardHolder);
             var gameTurn = gameCard.GetComponent<GameTurn>();
             gameTurn.SetupGameTurn(_character);
 
