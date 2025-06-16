@@ -12,6 +12,9 @@ public class ObstacleData : MonoBehaviour, IDestroyable
     [SerializeField]
     private GridTile _startTile;
 
+    [SerializeField]
+    private Enum_GridDirection _startingDirection;
+
     public TileID CurrentTileID => _myTileID;
     [SerializeField]
     private GridTile _myGridTile;
@@ -25,6 +28,11 @@ public class ObstacleData : MonoBehaviour, IDestroyable
     {
         _startTileID = _myTileID;
         _startTile = _myGridTile;
+
+        if(gameObject.TryGetComponent<Base_Rotation>(out var ch))
+        {
+            _startingDirection = ch.DirectionFacing;
+        }
     }
 
     [ContextMenu("Initialise Obstacle Data")]
@@ -91,5 +99,12 @@ public class ObstacleData : MonoBehaviour, IDestroyable
 
         //Make my start tile as unwalkable
         MakeTileUnwalkable();
+
+        if(gameObject.TryGetComponent<Base_Ch>(out var obstacle))
+        {
+            //obstacle.SetCurrentTile(_startTileID, _startTile);
+
+            obstacle.InitialiseCharacter(_startTileID, _startingDirection);
+        }
     }
 }
