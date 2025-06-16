@@ -255,7 +255,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     }
 
     //Shakes character if path or tile is invalid.
-    private IEnumerator ShakeCharacter(float MaxShakeTime)
+    protected IEnumerator ShakeCharacter(float MaxShakeTime)
     {
         Vector3 defaultPos = transform.localPosition;
 
