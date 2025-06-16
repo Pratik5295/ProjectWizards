@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Team.GameConstants;
 using UnityEngine;
 
@@ -121,6 +122,13 @@ namespace Team.Gameplay.GridSystem
         public void SetGridSize(Vector2 _size)
         {
             Max_GridSize = _size;
+        }
+
+        public GameObject GetTile(TileID _tileID)
+        {
+            var tile = tiles.Single(tile => tile.TileID == _tileID);
+
+            return tile.gameObject; 
         }
     }
 }

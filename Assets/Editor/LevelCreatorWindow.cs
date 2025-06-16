@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using log4net.Util;
 using Team.Data;
 using Team.Gameplay.GameLevelSystem;
 using Team.Gameplay.GridSystem;
@@ -243,8 +244,34 @@ namespace Team.Tool
                 TileID tileID = new TileID((int)character.StartTileID.x, (int)character.StartTileID.y);
 
                 var baseCharacterRef = characterObject.GetComponent<Base_Ch>();
-                baseCharacterRef.InitialiseCharacter(tileID, character.FacingDirection);
+
+                //Set Position
+                var tile = tileCreator.GetTile(tileID);
+                characterObject.transform.position = new Vector3(tile.transform.position.x, tile.transform.position.y + baseCharacterRef.YSpawnOffset, tile.transform.position.z);
+
+                //Set Rotation
+                characterObject.transform.eulerAngles = RotateToFaceDir(character.FacingDirection);
             }
+        }
+
+        public Vector3 RotateToFaceDir(Enum_GridDirection dir)
+        {
+            switch (dir)
+            {
+                case Enum_GridDirection.EAST:
+                    return new Vector3(0, 90, 0);
+
+                case Enum_GridDirection.WEST:
+                    return new Vector3(0, 270, 0);
+
+                case Enum_GridDirection.NORTH:
+                    return new Vector3(0, 0, 0);
+
+                case Enum_GridDirection.SOUTH:
+                    return new Vector3(0, 180, 0);
+            }
+
+            return Vector3.zero;
         }
 
         #endregion

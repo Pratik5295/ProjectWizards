@@ -58,6 +58,9 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     [Header("Y Offset and Movement Jump Variables")]
     [SerializeField]
     private float ySpawnOffset = 1.5f;
+
+    public float YSpawnOffset => ySpawnOffset;
+
     [SerializeField]
     private float ydefaultOffset = 1.5f;
 
@@ -102,8 +105,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         baseRotation = GetComponent<Base_Rotation>();
         startingDirection = _startingDirection;
         baseRotation.changeFacingDirection(startingDirection);
-        Vector2 v2Dir = baseRotation.dirToV2(baseRotation.DirectionFacing);
-        baseRotation.RotateToFaceDir(v2Dir);
+       
 
         transform.position = new Vector3(currentTile.TilePosition.x, currentTile.TilePosition.y + ySpawnOffset, currentTile.TilePosition.z);
 
