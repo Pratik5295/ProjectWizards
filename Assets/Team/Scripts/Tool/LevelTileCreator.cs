@@ -50,6 +50,7 @@ namespace Team.Gameplay.GridSystem
             get { return _defaultObstacle; }
         }
 
+
         [SerializeField]
         private GameObject _defaultTile;
        
@@ -111,5 +112,15 @@ namespace Team.Gameplay.GridSystem
             return Instantiate(_tile, new Vector3(x, y, z), Quaternion.identity, transform);
         }
 
+
+        public void SetDefaultTile(GameObject _tile)
+        {
+            _defaultTile = _tile;
+        }
+
+        public void SetGridSize(Vector2 _size)
+        {
+            Max_GridSize = _size;
+        }
     }
 }

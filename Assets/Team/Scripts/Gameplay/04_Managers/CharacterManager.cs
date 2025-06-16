@@ -119,8 +119,8 @@ namespace Team.Managers
            Destroy(kvp.Value.gameObject);
         }
 
-        [ContextMenu("Reset all characters")]
-        public void ResetAllCharacters()
+        [ContextMenu("Remove all characters")]
+        public void RemoveAllCharacters()
         {
             //Delete all characters
             foreach(var _character in CharactersInLevel)
@@ -137,6 +137,15 @@ namespace Team.Managers
                 Destroy(card.gameObject);
             }
         }
+
+        public void ResetAllCharacters()
+        {
+            foreach (var _character in CharactersInLevel)
+            {
+                _character.Value.UndoMovement();
+            }
+        }
+
         #endregion
 
         #region Private Methods

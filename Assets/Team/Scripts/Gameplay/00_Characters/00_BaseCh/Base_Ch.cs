@@ -241,7 +241,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         OnTurnComplete?.Invoke();
     }
 
-    protected void UndoMovement()
+    public void UndoMovement()
     {
         if (_currentTileID == _startTileID) { return; }
         currentTile.SetObjectOccupyingTile(null);
@@ -253,6 +253,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
         transform.position = new Vector3(currentTile.TilePosition.x, transform.position.y, currentTile.TilePosition.z);
     }
+
 
     //Shakes character if path or tile is invalid.
     protected IEnumerator ShakeCharacter(float MaxShakeTime)

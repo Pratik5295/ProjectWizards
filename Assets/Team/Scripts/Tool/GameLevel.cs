@@ -38,5 +38,28 @@ namespace Team.Gameplay.GameLevelSystem
 
             LevelObjectiveManager.Instance.LoadObjectivesFromLevelData(_objectiveMap);
         }
+
+        #region Tool Helper Section
+        public void LoadChaacterMap(List<CharacterData> _data)
+        {
+            CharactersMap.Clear();
+
+            foreach (var character in _data)
+            {
+                CharactersMap.Add(character);   
+            }
+        }
+
+        public void LoadObjectiveMap(List<GameObjectiveData> _data)
+        {
+            _objectiveMap.Clear();
+
+            foreach(var objective in _data)
+            {
+                _objectiveMap.Add(objective);
+            }
+        }
+
+        #endregion
     }
 }

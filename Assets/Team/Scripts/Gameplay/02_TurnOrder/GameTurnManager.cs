@@ -202,16 +202,28 @@ namespace Team.Managers
                 turn.transform.SetSiblingIndex(i);
             }
 
+
+            Invoke(nameof(DelayReset), 2f);
+
+
+        }
+
+        private void DelayReset()
+        {
+
             ResetDestroyedEntities();
             //Set All Objectives to be incomplete
             LevelObjectiveManager.Instance.ResetAllObjectives();
 
             ResetObstacles();
 
+            //Reset all characters to their saved start position
+            ResetCharactersToStart();
+
             //Notify that undo was completed
             OnResetLastTurnCompleted?.Invoke();
 
-
+            Debug.Log("Completed reset");
         }
 
         [ContextMenu("Play Next Turn")]
@@ -264,6 +276,11 @@ namespace Team.Managers
                 }
             }
             DestroyedObjects.Clear();
+        }
+
+        private void ResetCharactersToStart()
+        {
+            CharacterManager.Instance.ResetAllCharacters();
         }
 
         #endregion
