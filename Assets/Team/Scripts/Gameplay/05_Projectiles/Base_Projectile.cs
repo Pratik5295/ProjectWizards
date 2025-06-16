@@ -9,6 +9,7 @@ public class Base_Projectile : MonoBehaviour
     [SerializeField] public Enum_GridDirection _projectileDir;
 
     public GameObject CastingWizard;
+    public GameObject _prefabReference;
 
 
     [Header("Curve, Speed and Timing Variables")]
@@ -58,6 +59,11 @@ public class Base_Projectile : MonoBehaviour
 
     public virtual void OnTriggerEnter(Collider other)
     {
+
+        if (other.GetComponent<ChRedirectWizard>())
+        {
+            other.GetComponent<ChRedirectWizard>().TryAbsorbProjectile(_projectileType, _prefabReference, _projectileDir, 1);
+        }
 
         if (_collisionEffect) { _collisionEffect.Play(); }
 
