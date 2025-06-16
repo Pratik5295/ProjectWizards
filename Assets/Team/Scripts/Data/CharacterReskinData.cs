@@ -12,6 +12,7 @@ namespace Team.Data
     [System.Serializable]
     public class CharacterReskinData
     {
+        //TO BE REMOVED?
         public CharacterColorCode CharacterCode;
 
         public Material SkinMaterial;

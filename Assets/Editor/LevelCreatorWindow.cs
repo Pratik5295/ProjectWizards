@@ -1,10 +1,13 @@
 using System.Collections.Generic;
 using Team.Data;
+using Team.Gameplay.Characters;
 using Team.Gameplay.GameLevelSystem;
 using Team.Gameplay.GridSystem;
 using Team.Gameplay.ObjectiveSystem;
+using Team.UI.Gameplay;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 namespace Team.Tool
 {
@@ -189,6 +192,19 @@ namespace Team.Tool
 
                 character.FacingDirection = (Enum_GridDirection)EditorGUILayout.EnumPopup("Facing Direction", character.FacingDirection);
 
+
+                // RESKIN SECTION
+                GUILayout.Label("Character Reskin Data", EditorStyles.miniBoldLabel);
+                if (character.CharacterSkin == null)
+                {
+                    character.CharacterSkin = new CharacterReskinData(); // Ensure it's not null
+                }
+
+                character.CharacterSkin.CharacterCode = (CharacterColorCode)EditorGUILayout.EnumPopup("Character Code", character.CharacterSkin.CharacterCode);
+                character.CharacterSkin.SkinMaterial = (Material)EditorGUILayout.ObjectField("Skin Material", character.CharacterSkin.SkinMaterial, typeof(Material), false);
+                character.CharacterSkin.CharacterColor = EditorGUILayout.ColorField("Character Color", character.CharacterSkin.CharacterColor);
+                character.CharacterSkin.CharacterColor.a = 1f;
+
                 if (GUILayout.Button("Remove Character"))
                 {
                     characterList.RemoveAt(i);
@@ -250,6 +266,15 @@ namespace Team.Tool
 
                 //Set Rotation
                 characterObject.transform.eulerAngles = RotateToFaceDir(character.FacingDirection);
+
+                //Skin the character
+                if (characterObject.TryGetComponent<CharacterReskinner>(out var characterReskinner))
+                {
+                    characterReskinner.ToolSetCharacterSkin(character.CharacterSkin);
+
+                    characterReskinner.UICharacter.PopulateCharacterUI(character.CharacterID, character.CharacterSkin);
+                }
+
             }
         }
 
