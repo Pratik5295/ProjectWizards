@@ -130,5 +130,23 @@ namespace Team.Gameplay.GridSystem
 
             return tile.gameObject; 
         }
+
+        [ContextMenu("Show Tile UI")]
+        public void ShowTileUI()
+        {
+            foreach(var tile in tiles)
+            {
+                tile.ShowTileUI();
+            }
+        }
+
+        [ContextMenu("Hide Tile UI")]
+        public void HideTileUI()
+        {
+            foreach(var tile in tiles)
+            {
+                tile.HideTileUI();
+            }
+        }
     }
 }

@@ -45,6 +45,8 @@ namespace Team.Gameplay.GridSystem
 
         [SerializeField] private GameObject _startingObject;
 
+        [SerializeField] private UITile tileUI;
+
         [SerializeField]
         private GameObject objectOccupyingTile;
         public GameObject ObjectOccupyingTile
@@ -190,6 +192,20 @@ namespace Team.Gameplay.GridSystem
         public void SetTileType(TileType typeOfTile)
         {
             tileType = typeOfTile;
+        }
+
+        public void ShowTileUI()
+        {
+            tileUI.gameObject.SetActive(true);
+
+            string tileID = $"{TileID.x}, {TileID.y}";
+
+            tileUI.PopulateTileText(tileID);
+        }
+
+        public void HideTileUI()
+        {
+            tileUI.gameObject.SetActive(false); 
         }
     }
 }
