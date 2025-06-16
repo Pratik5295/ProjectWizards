@@ -43,6 +43,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     [SerializeField] protected TileID _currentTileID = new TileID(0, 0);
     [SerializeField] protected TileID _previousTileID = new TileID(0, 0);
     [SerializeField] protected TileID _startTileID = new TileID(0, 0);
+    private Enum_GridDirection startingDirection;
     public TileID CurrentTileID
     {
         get { return _currentTileID; }
@@ -86,7 +87,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     public System.Action OnTurnComplete;
 
     [ContextMenu("Initialise this Character")]
-    public virtual void InitialiseCharacter(TileID StartingTileID, Enum_GridDirection startingDirection)
+    public virtual void InitialiseCharacter(TileID StartingTileID, Enum_GridDirection _startingDirection)
     {
         ref_gridManager = GridManager.Instance;
         OffsetValue = MetaConstants.GridSlot_Offset;
@@ -99,6 +100,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         currentTile.SetObjectOccupyingTile(this.gameObject);
 
         baseRotation = GetComponent<Base_Rotation>();
+        startingDirection = _startingDirection;
         baseRotation.changeFacingDirection(startingDirection);
         Vector2 v2Dir = baseRotation.dirToV2(baseRotation.DirectionFacing);
         baseRotation.RotateToFaceDir(v2Dir);
@@ -243,7 +245,11 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
     public void UndoMovement()
     {
-        if (_currentTileID == _startTileID) { return; }
+        if (_currentTileID == _startTileID) 
+        {
+            transform.position = new Vector3(currentTile.TilePosition.x, transform.position.y, currentTile.TilePosition.z);
+            return; 
+        }
         currentTile.SetObjectOccupyingTile(null);
 
         _currentTileID = _startTileID;
@@ -252,8 +258,16 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         currentTile.SetObjectOccupyingTile(this.gameObject);
 
         transform.position = new Vector3(currentTile.TilePosition.x, transform.position.y, currentTile.TilePosition.z);
+
+        ResetRotationToStart();
     }
 
+    private void ResetRotationToStart()
+    {
+        baseRotation.changeFacingDirection(startingDirection);
+        Vector2 v2Dir = baseRotation.dirToV2(baseRotation.DirectionFacing);
+        baseRotation.RotateToFaceDir(v2Dir);
+    }
 
     //Shakes character if path or tile is invalid.
     protected IEnumerator ShakeCharacter(float MaxShakeTime)
