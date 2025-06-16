@@ -94,6 +94,7 @@ namespace Team.Managers
         {
             //Spawn the character
             var characterObject = Instantiate(data.CharacterPrefab);
+            characterObject.name = $"{data.CharacterID}";
 
             TileID tileID = new TileID((int)data.StartTileID.x, (int)data.StartTileID.y);
 
