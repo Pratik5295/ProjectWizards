@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using log4net.Util;
 using Team.Data;
 using Team.Gameplay.GameLevelSystem;
 using Team.Gameplay.GridSystem;
@@ -399,6 +398,7 @@ namespace Team.Tool
             objectiveList.Clear();
 
             DestroyImmediate(root);
+            DestroyImmediate(charactersRoot);
 
             tileSize = Vector2.one;
             levelId = string.Empty;
