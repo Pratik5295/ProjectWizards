@@ -23,6 +23,7 @@ namespace Team.Tool
 
 
         private GameObject tilePrefab = null;
+        private GameObject obstaclePrefab = null;
         private Vector2 tileSize = Vector2.one; // Default to (1,1)
 
         //Characters
@@ -57,6 +58,9 @@ namespace Team.Tool
 
             GUILayout.Label("Set Default Tile Prefab");
             tilePrefab = (GameObject)EditorGUILayout.ObjectField(tilePrefab, typeof(GameObject),false);
+
+            GUILayout.Label("Set Default Obstacle Prefab");
+            obstaclePrefab = (GameObject)EditorGUILayout.ObjectField(obstaclePrefab, typeof(GameObject), false);
 
             GUILayout.Label("Enter tile size");
             tileSize = EditorGUILayout.Vector2Field("Tile Size", tileSize);
@@ -147,6 +151,7 @@ namespace Team.Tool
         {
             tileCreator.SetDefaultTile(tilePrefab);
             tileCreator.SetGridSize(tileSize);
+            tileCreator.SetDefaultObstacle(obstaclePrefab);
         }
 
         /// <summary>

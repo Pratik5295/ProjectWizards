@@ -119,6 +119,11 @@ namespace Team.Gameplay.GridSystem
             _defaultTile = _tile;
         }
 
+        public void SetDefaultObstacle(GameObject _obstacle)
+        {
+            _defaultObstacle = _obstacle;
+        }
+
         public void SetGridSize(Vector2 _size)
         {
             Max_GridSize = _size;
