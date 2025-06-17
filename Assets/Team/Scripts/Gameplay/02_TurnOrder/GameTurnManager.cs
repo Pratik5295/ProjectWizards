@@ -38,6 +38,8 @@ namespace Team.Managers
 
         public bool HasCharacterTurns => turnQueue.Count > 0;
 
+        private bool isQueueLoaded = false;
+
         public Action OnTurnsProcessingEvent;
         public Action OnAllTurnsCompleted;  //TODO: Update this to include the round integer
         public Action OnResetLastTurnCompleted; //TODO: To include which turn count was the round reset to
@@ -85,6 +87,8 @@ namespace Team.Managers
             {
                 turnQueue.Enqueue(unit.GetComponent<GameTurn>());
             }
+
+            isQueueLoaded = true;
 
         }
 
@@ -223,6 +227,8 @@ namespace Team.Managers
             //Notify that undo was completed
             OnResetLastTurnCompleted?.Invoke();
 
+            isQueueLoaded = false;
+
             Debug.Log("Completed reset");
         }
 
@@ -231,7 +237,10 @@ namespace Team.Managers
         {
             OnTurnsProcessingEvent?.Invoke();
 
-            await LoadQueue();
+            if (!isQueueLoaded)
+            {
+                await LoadQueue();
+            }
 
             if (turnQueue.Count > 0)
             {
@@ -241,9 +250,19 @@ namespace Team.Managers
                 {
                     await turn.PerformAsync();
                 }
+                Debug.Log("Current turn has been played");
+
+            }
+            else
+            {
+                Debug.Log("All turns have been played");
+                isQueueLoaded = false;
+
+                OnAllTurnsCompleted?.Invoke();
             }
 
-            OnAllTurnsCompleted?.Invoke();
+           
+           
         }
 
         public void ResetDestroyedEntities()
