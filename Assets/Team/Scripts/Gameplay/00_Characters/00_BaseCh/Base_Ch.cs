@@ -16,7 +16,7 @@ public class PlayerMove
 }
 
 [DefaultExecutionOrder(2)]
-public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbility
+public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbility, IDestroyable
 {
     [Header("Enumerations")]
     [SerializeField] private Enum_CharacterState CharState = Enum_CharacterState.Alive;
@@ -38,8 +38,10 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
 
     [Header("Movement Variables")]
+    [Header("---Tile Variables---")]
     [SerializeField] protected TileID _currentTileID = new TileID(0, 0);
     protected TileID _previousTileID = new TileID(0, 0);
+    [SerializeField] protected TileID _startTileID = new TileID(0, 0);
     public TileID CurrentTileID
     {
         get { return _currentTileID; }
@@ -51,6 +53,10 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     private float smoothingTime = 1f; //Time to reach the target position.
     private float currentTime; //Current elapsed Time for movement lerp.
     private float lerpingDelayTime = 0.001f;
+    [Header("Y Offset and Movement Jump Variables")]
+    [SerializeField]
+    private float ySpawnOffset = 1.5f;
+    [SerializeField]
     private float ydefaultOffset = 1.5f;
 
     [SerializeField] private AnimationCurve _yMovementCurve;
@@ -68,18 +74,26 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     private float maxShakeAmount = 0.3f;
     #endregion
 
+    #region Mesh And Collider
+    private Collider _collider;
+    private MeshRenderer _meshRenderer;
+    #endregion
+
 
     public System.Action OnStateChanged;
 
     public System.Action OnTurnComplete;
 
-    public void InitialiseCharacter(TileID StartingTileID, Enum_GridDirection startingDirection)
+    [ContextMenu("Initialise this Character")]
+    public virtual void InitialiseCharacter(TileID StartingTileID, Enum_GridDirection startingDirection)
     {
         ref_gridManager = GridManager.Instance;
         OffsetValue = ref_gridManager.GridSlot_Offset;
 
         _currentTileID = StartingTileID;
         _previousTileID = _currentTileID;
+        _startTileID = _currentTileID;
+
         currentTile = ref_gridManager.FindTile(_currentTileID);
         currentTile.SetObjectOccupyingTile(this.gameObject);
 
@@ -88,7 +102,10 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         Vector2 v2Dir = baseRotation.dirToV2(baseRotation.DirectionFacing);
         baseRotation.RotateToFaceDir(v2Dir);
 
-        transform.position = new Vector3(currentTile.TilePosition.x, currentTile.TilePosition.y + 1f, currentTile.TilePosition.z);
+        transform.position = new Vector3(currentTile.TilePosition.x, currentTile.TilePosition.y + ySpawnOffset, currentTile.TilePosition.z);
+
+        _collider = GetComponent<Collider>();
+        _meshRenderer = transform.GetChild(0).GetComponent<MeshRenderer>();
     }
 
     void Start()
@@ -143,7 +160,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
             TileID desiredTileID = new TileID(_currentTileID.x + (int)dir.x, _currentTileID.y + (int)dir.y);
             GridTile targetTile = ref_gridManager.FindTile(desiredTileID);
 
-            if (targetTile && !targetTile.ObjectOccupyingTile)
+            if (targetTile && targetTile.IsTileWalkable())
             {
                 Vector3 targetPosition = new Vector3(targetTile.TilePosition.x, desiredLocation.y, targetTile.TilePosition.z);
 
@@ -154,7 +171,6 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
             }
             else
             {
-                Debug.Log("NULL TILE");
                 StartCoroutine(ShakeCharacter(0.25f));
                 alreadyMoving = false;
                 OnTurnComplete?.Invoke();
@@ -224,9 +240,10 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
     protected void UndoMovement()
     {
+        if (_currentTileID == _startTileID) { return; }
         currentTile.SetObjectOccupyingTile(null);
 
-        _currentTileID = _previousTileID;
+        _currentTileID = _startTileID;
         currentTile = ref_gridManager.FindTile(_currentTileID);
 
         currentTile.SetObjectOccupyingTile(this.gameObject);
@@ -235,7 +252,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     }
 
     //Shakes character if path or tile is invalid.
-    private IEnumerator ShakeCharacter(float MaxShakeTime)
+    protected IEnumerator ShakeCharacter(float MaxShakeTime)
     {
         Vector3 defaultPos = transform.localPosition;
 
@@ -261,6 +278,12 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         _currentTileID = currentTile.TileID;
     }
 
+    public void SetCurrentTile(TileID updatedTileID, GridTile updatedGridTile)
+    {
+        _currentTileID = updatedTileID;
+        currentTile = updatedGridTile;
+    }
+
 
 
     public virtual void HitByProjectile(Enum_ProjectileType projectileType)
@@ -269,6 +292,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         {
             case Enum_ProjectileType.Fireball:
                 CharState = Enum_CharacterState.Dead;
+
+                DisableObject();
                 break;
             case Enum_ProjectileType.NonLethalRound:
                 CharState = Enum_CharacterState.Incapacitated;
@@ -283,9 +308,15 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         else return false;
     }
 
-    private void resetCharState()
+    public void resetCharState(bool isResettingTurn = false)
     {
         if (CharState == Enum_CharacterState.Incapacitated)
+        {
+            OnStateChanged?.Invoke();
+            CharState = Enum_CharacterState.Alive;
+        }
+
+        if (CharState == Enum_CharacterState.Dead && isResettingTurn)
         {
             OnStateChanged?.Invoke();
             CharState = Enum_CharacterState.Alive;
@@ -296,7 +327,20 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     public virtual void UseAbility()
     {
         // Debug.LogError($" {gameObject.name} Ability not programmed for character");
-        StartCoroutine(MoveByAmount(2, baseRotation.GetFacingDirection()));
+        StartCoroutine(MoveByAmount(1, baseRotation.GetFacingDirection()));
     }
 
+    #region Enabling and Disabling Character
+    public void EnableObject()
+    {
+        _meshRenderer.enabled = true;
+        _collider.enabled = true;
+    }
+
+    public void DisableObject()
+    {
+        _meshRenderer.enabled = false;
+        _collider.enabled = false;
+    }
+    #endregion
 }

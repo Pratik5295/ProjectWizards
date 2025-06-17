@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Team.Managers
 {
-    [DefaultExecutionOrder(5)]
+    [DefaultExecutionOrder(10)]
     public class UIManager : MonoBehaviour
     {
         public static UIManager Instance = null;
@@ -42,6 +42,8 @@ namespace Team.Managers
             {
                 Debug.LogWarning("Turn Manager was not found",gameObject);
             }
+
+            OnTurnResetCompletedHandler();
         }
 
         private void OnDestroy()

@@ -1,4 +1,5 @@
 using Team.Gameplay.GridSystem;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Team.Gameplay.ObjectiveSystem
@@ -18,7 +19,7 @@ namespace Team.Gameplay.ObjectiveSystem
         [Tooltip("This text will be shown on the UI")]
         public string ObjectiveName;
         [Tooltip("Type the character name from character list of whats the target of this objective")]
-        public string ObjectiveTargetName;
+        public List<string> ObjectiveTargets;
         [Tooltip("What type of objective is this")]
         public ObjectiveType Type;
 
@@ -38,7 +39,7 @@ namespace Team.Gameplay.ObjectiveSystem
         public GameObjectiveData Data => data;
 
         [SerializeField]
-        protected Base_Ch characterRef;
+        protected List<Base_Ch> characterRefList = new List<Base_Ch>();
 
         [SerializeField]
         protected bool isCompleted = false;
@@ -52,9 +53,11 @@ namespace Team.Gameplay.ObjectiveSystem
         }
 
 
-        public void SetCharacterReference(Base_Ch _character)
+        public void AddCharacterReference(Base_Ch _character)
         {
-            characterRef = _character;
+            if (characterRefList.Contains(_character)) return;
+
+            characterRefList.Add(_character);
         }
         /// <summary>
         /// Checks the status of the objective based on type.

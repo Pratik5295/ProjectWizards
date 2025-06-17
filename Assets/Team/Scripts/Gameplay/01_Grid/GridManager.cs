@@ -30,6 +30,10 @@ namespace Team.Gameplay.GridSystem
         private List<GridTile> tiles = new List<GridTile>();
 
         private Dictionary<TileID,GridTile> Grid = new Dictionary<TileID,GridTile>();
+
+        //Obstacles data
+        [Tooltip ("DONT FILL IT")]
+        public List<GameObject> Obstacles = new List<GameObject>();
         
 
         private char[] gridCharArray = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J' };
@@ -65,6 +69,8 @@ namespace Team.Gameplay.GridSystem
             }
 
             InitializeDictionary();
+            FindAllObstacles();
+
         }
 
         [ContextMenu("Print Current Grid")]
@@ -93,6 +99,17 @@ namespace Team.Gameplay.GridSystem
 
             ref_gridHolder = null; //Just to avoid the "missing" feedback in inspector
 
+        }
+
+        private void FindAllObstacles()
+        {
+            foreach(var tile in tiles)
+            {
+                if(tile.tileType == TileType.OCCUPIEDTILE)
+                {
+                    Obstacles.Add(tile.ObjectOccupyingTile);
+                }
+            }
         }
 
         private void InitializeDictionary()

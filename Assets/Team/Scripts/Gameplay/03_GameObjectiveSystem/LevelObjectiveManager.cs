@@ -95,16 +95,18 @@ namespace Team.Gameplay.ObjectiveSystem
             {
                 var objective = ObjectiveFactory.CreateObjective(data);
 
-                var characterObject = characterManager.GetCharacter(data.ObjectiveTargetName);
-                if (characterObject == null)
+                foreach (var objectTarget in data.ObjectiveTargets)
                 {
-                    Debug.LogError($"Could not find character target for objective: {data.ObjectiveName}", gameObject);
-                    continue;
+                    var characterObject = characterManager.GetCharacter(objectTarget);
+                    if (characterObject == null)
+                    {
+                        Debug.LogError($"Could not find character target for objective: {data.ObjectiveName}", gameObject);
+                        continue;
+                    }
+                    objective.AddCharacterReference(characterObject);
                 }
 
-                objective.SetCharacterReference(characterObject);
                 _levelObjectives.Add(objective);
-
                 objectivesHolder.AddObjective(data);
             }
         }

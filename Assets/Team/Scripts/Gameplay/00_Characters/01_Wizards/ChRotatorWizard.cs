@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Team.Gameplay.GridSystem;
 using UnityEngine;
-using Team.MetaConstants;
+using Team.GameConstants;
 
-namespace Team.MetaConstants
+namespace Team.GameConstants
 {
     public static partial class MetaConstants
     {
@@ -39,9 +39,29 @@ public class ChRotatorWizard : Base_Ch
     private GridTile centerTile;
     private List<GridTile> _tilesToMove;
 
+    [Header("Rotation VFX")]
+    [SerializeField] private GameObject _rotationLandingVFX;
+    private float _landingVFXOffset;
+    private VFXManager _landingVFXManager;
+
+    public override void InitialiseCharacter(TileID StartingTileID, Enum_GridDirection startingDirection)
+    {
+        base.InitialiseCharacter(StartingTileID, startingDirection);
+
+        _landingVFXManager = Instantiate(_rotationLandingVFX).GetComponent<VFXManager>();
+        _landingVFXOffset = _landingVFXManager.transform.position.y;
+        _landingVFXManager.transform.position = new Vector3(transform.position.x, _landingVFXOffset, transform.position.z);
+    }
+
     public override void UseAbility()
     {
         GetTilesToRotate();
+        if (!centerTile)
+        {
+            Debug.Log("Cant Execute Ability as no tiles no center tile.");
+            OnTurnComplete();
+            return;
+        }
 
         for (int i = 1; i < _tilesToMove.Count; i++)
         {
@@ -62,6 +82,10 @@ public class ChRotatorWizard : Base_Ch
             _tilesToMove[i].gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.darkSlateGray;
         }
         rotation = MetaConstants.Enum_Rotation.Clockwise;
+
+        PlayerMove move = new PlayerMove(false);
+        HistoryStack.Push(move);
+
         TileDataChanges();
         StartCoroutine(LerpUpDown(true));
     }
@@ -122,11 +146,17 @@ public class ChRotatorWizard : Base_Ch
         Vector2 dirOffsetAndTileID = new Vector2(_currentTileID.x + dirOffset.x, _currentTileID.y + dirOffset.y);
 
         centerTile = ref_gridManager.FindTile(new TileID((int)dirOffsetAndTileID.x, (int)dirOffsetAndTileID.y));
+
+        _landingVFXManager.transform.SetParent(centerTile.transform);
+        _landingVFXManager.transform.localPosition = new Vector3(0, _landingVFXOffset, 0);
+
         if (!centerTile)
         {
             Debug.Log("Cant Execute Ability as no tiles no center tile.");
             return;
         }
+
+
         GridTile forwardTile = ref_gridManager.FindTile(new TileID(centerTile.TileID.x, centerTile.TileID.y + 1));
         GridTile backwardTile = ref_gridManager.FindTile(new TileID(centerTile.TileID.x, centerTile.TileID.y - 1));
         GridTile rightTile = ref_gridManager.FindTile(new TileID(centerTile.TileID.x + 1, centerTile.TileID.y));
@@ -223,19 +253,28 @@ public class ChRotatorWizard : Base_Ch
         _rotatorHolder.transform.DetachChildren();
         Destroy(_rotatorHolder);
 
-        for(int i = 0; i < _tilesToMove.Count; i++)
+        for (int i = 0; i < _tilesToMove.Count; i++)
         {
             _tilesToMove[i].transform.SetParent(ref_gridManager.transform.GetChild(0));
             if (_tilesToMove[i].ObjectOccupyingTile)
             {
-                _tilesToMove[i].ObjectOccupyingTile.GetComponent<Base_Ch>().UpdateCurrentTileID();
+                if (_tilesToMove[i].ObjectOccupyingTile.CompareTag(MetaConstants.CharacterTag))
+                {
+                    _tilesToMove[i].ObjectOccupyingTile.GetComponent<Base_Ch>().UpdateCurrentTileID();
+                }
+                else if (_tilesToMove[i].ObjectOccupyingTile.CompareTag(MetaConstants.EnvironmentTag))
+                {
+                    _tilesToMove[i].ObjectOccupyingTile.GetComponent<ObstacleData>().UpdateObstacleTileData(_tilesToMove[i].TileID, _tilesToMove[i]);
+                    if (_tilesToMove[i].ObjectOccupyingTile.GetComponent<Base_Ch>())
+                    {
+                        _tilesToMove[i].ObjectOccupyingTile.GetComponent<Base_Ch>().UpdateCurrentTileID();
+                    }
+                }
+
                 _tilesToMove[i].UnparentOccupyingObject();
             }
             _tilesToMove[i].gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.white;
         }
-
-        PlayerMove move = new PlayerMove(false);
-        HistoryStack.Push(move);
         OnTurnComplete?.Invoke();
         //_tilesToMove.Clear();
     }
@@ -262,7 +301,15 @@ public class ChRotatorWizard : Base_Ch
             yield return null;
         }
         if (isLerpingUp) { StartCoroutine(RotateLerp()); }
-        if (!isLerpingUp) { CleanUpTiles(); }
+        if (!isLerpingUp)
+        {
+            /*GameObject instance = Instantiate(_rotationLandingVFX, centerTile.transform);
+            instance.transform.localPosition = new Vector3(0, instance.transform.position.y, 0);*/
+            _landingVFXManager.transform.localPosition = new Vector3(0, _landingVFXOffset, 0);
+            _landingVFXManager.EnableParticleEffectChildren();
+
+            CleanUpTiles();
+        }
     }
 
 
