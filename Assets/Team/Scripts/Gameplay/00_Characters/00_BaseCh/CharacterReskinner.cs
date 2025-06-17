@@ -46,6 +46,15 @@ namespace Team.Gameplay.Characters
             HideOutline();
         }
 
+        public void ToolSetCharacterSkin(CharacterReskinData _reskinData)
+        {
+
+            for (int i = 0; i < _bodyMeshes.Length; i++)
+            {
+                _bodyMeshes[i].material = _reskinData.SkinMaterial;
+            }
+        }
+
         public void ShowOutline()
         {
             float thickness = MetaConstants.CharacterOutlineThickness;

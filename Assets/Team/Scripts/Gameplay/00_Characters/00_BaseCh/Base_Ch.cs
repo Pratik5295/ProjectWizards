@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Team.Gameplay.GridSystem;
 using Team.Enum.Character;
 using UnityEngine;
+using Team.GameConstants;
 
 [System.Serializable]
 public class PlayerMove
@@ -40,8 +41,9 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     [Header("Movement Variables")]
     [Header("---Tile Variables---")]
     [SerializeField] protected TileID _currentTileID = new TileID(0, 0);
-    protected TileID _previousTileID = new TileID(0, 0);
+    [SerializeField] protected TileID _previousTileID = new TileID(0, 0);
     [SerializeField] protected TileID _startTileID = new TileID(0, 0);
+    private Enum_GridDirection startingDirection;
     public TileID CurrentTileID
     {
         get { return _currentTileID; }
@@ -56,6 +58,9 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     [Header("Y Offset and Movement Jump Variables")]
     [SerializeField]
     private float ySpawnOffset = 1.5f;
+
+    public float YSpawnOffset => ySpawnOffset;
+
     [SerializeField]
     private float ydefaultOffset = 1.5f;
 
@@ -85,10 +90,10 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     public System.Action OnTurnComplete;
 
     [ContextMenu("Initialise this Character")]
-    public virtual void InitialiseCharacter(TileID StartingTileID, Enum_GridDirection startingDirection)
+    public virtual void InitialiseCharacter(TileID StartingTileID, Enum_GridDirection _startingDirection)
     {
         ref_gridManager = GridManager.Instance;
-        OffsetValue = ref_gridManager.GridSlot_Offset;
+        OffsetValue = MetaConstants.GridSlot_Offset;
 
         _currentTileID = StartingTileID;
         _previousTileID = _currentTileID;
@@ -98,9 +103,10 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         currentTile.SetObjectOccupyingTile(this.gameObject);
 
         baseRotation = GetComponent<Base_Rotation>();
-        baseRotation.changeFacingDirection(startingDirection);
-        Vector2 v2Dir = baseRotation.dirToV2(baseRotation.DirectionFacing);
-        baseRotation.RotateToFaceDir(v2Dir);
+        startingDirection = _startingDirection;
+        ResetRotationToStart();
+
+
 
         transform.position = new Vector3(currentTile.TilePosition.x, currentTile.TilePosition.y + ySpawnOffset, currentTile.TilePosition.z);
 
@@ -111,6 +117,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     void Start()
     {
         //InitialiseCharacter(_currentTileID, Enum_GridDirection.NORTH);
+
+        ref_gridManager = GridManager.Instance;
     }
 
     #region Debugging Movement Button Functions
@@ -238,9 +246,13 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         OnTurnComplete?.Invoke();
     }
 
-    protected void UndoMovement()
+    public void UndoMovement()
     {
-        if (_currentTileID == _startTileID) { return; }
+        if (_currentTileID == _startTileID) 
+        {
+            transform.position = new Vector3(currentTile.TilePosition.x, transform.position.y, currentTile.TilePosition.z);
+            return; 
+        }
         currentTile.SetObjectOccupyingTile(null);
 
         _currentTileID = _startTileID;
@@ -249,6 +261,15 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         currentTile.SetObjectOccupyingTile(this.gameObject);
 
         transform.position = new Vector3(currentTile.TilePosition.x, transform.position.y, currentTile.TilePosition.z);
+
+        ResetRotationToStart();
+    }
+
+    private void ResetRotationToStart()
+    {
+        baseRotation.changeFacingDirection(startingDirection);
+        Vector2 v2Dir = baseRotation.dirToV2(baseRotation.DirectionFacing);
+        baseRotation.RotateToFaceDir(v2Dir);
     }
 
     //Shakes character if path or tile is invalid.
