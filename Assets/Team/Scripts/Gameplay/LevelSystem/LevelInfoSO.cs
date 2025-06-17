@@ -1,3 +1,4 @@
+using Team.Gameplay.GameLevelSystem;
 using UnityEngine;
 using static Team.GameConstants.MetaConstants;
 
@@ -20,6 +21,7 @@ namespace Team.Gameplay.LevelSystem
     [System.Serializable]
     public class LevelInfoData
     {
+        public string LevelName;
         public LevelState State;
         public LevelInfoData Requirements;
         public bool IsCompleted()
@@ -38,6 +40,6 @@ namespace Team.Gameplay.LevelSystem
     public class LevelInfoSO : ScriptableObject
     {
         public LevelInfoData Data;
-        public GameObject GameLevelPrefab;
+        public GameLevel GameLevelPrefab;
     }
 }

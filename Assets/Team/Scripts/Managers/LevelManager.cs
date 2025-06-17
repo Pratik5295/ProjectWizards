@@ -1,4 +1,6 @@
-using Team.Gameplay.GameLevelSystem;
+using System;
+using System.Collections.Generic;
+using Team.Gameplay.LevelSystem;
 using UnityEngine;
 
 namespace Team.Managers
@@ -8,7 +10,11 @@ namespace Team.Managers
     {
         public static LevelManager Instance = null;
 
-        public GameLevel CurrentLevel;
+        public List<LevelInfoSO> LevelMap = new List<LevelInfoSO>();
+
+        public LevelInfoSO CurrentLevelSO;
+
+        public Action<LevelInfoSO> OnCurrentLevelUpdated;
 
         private void Awake()
         {
@@ -22,11 +28,18 @@ namespace Team.Managers
             }
         }
 
-        private void Start()
+        public void SetCurrentLevel(LevelInfoSO _level)
         {
-            if(CurrentLevel != null)
+            CurrentLevelSO = _level;
+            OnCurrentLevelUpdated?.Invoke(CurrentLevelSO);
+        }
+
+        [ContextMenu("Load Current Level")]
+        public void LoadCurrentLevel()
+        {
+            if (CurrentLevelSO != null)
             {
-                var level = Instantiate(CurrentLevel);
+                var level = Instantiate(CurrentLevelSO.GameLevelPrefab);
                 level.LoadLevel();
             }
         }
