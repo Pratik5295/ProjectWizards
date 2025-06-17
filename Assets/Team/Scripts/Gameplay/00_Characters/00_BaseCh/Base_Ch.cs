@@ -104,8 +104,9 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
         baseRotation = GetComponent<Base_Rotation>();
         startingDirection = _startingDirection;
-        baseRotation.changeFacingDirection(startingDirection);
-       
+        ResetRotationToStart();
+
+
 
         transform.position = new Vector3(currentTile.TilePosition.x, currentTile.TilePosition.y + ySpawnOffset, currentTile.TilePosition.z);
 
