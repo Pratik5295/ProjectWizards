@@ -4,15 +4,13 @@ using Team.Gameplay.Characters;
 using Team.Gameplay.GameLevelSystem;
 using Team.Gameplay.GridSystem;
 using Team.Gameplay.ObjectiveSystem;
-using Team.UI.Gameplay;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 namespace Team.Tool
 {
 
-    public class LevelCreatorWindow : EditorWindow
+    public class LevelCreatorTool : EditorWindow
     {
         private GameObject root;
         private GameObject charactersRoot;  //Root game object for visualizing characters
@@ -42,7 +40,7 @@ namespace Team.Tool
         [MenuItem("Tools/Level Creator")]
         public static void ShowWindow()
         {
-            GetWindow<LevelCreatorWindow>("Level Creator").Show();
+            GetWindow<LevelCreatorTool>("Level Creator").Show();
         }
 
         private void OnGUI()
