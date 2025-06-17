@@ -11,7 +11,6 @@ namespace Team.Data
         public GameObject CharacterPrefab;  //Prefab to be loaded
         public TileID StartTileID;
         public Enum_GridDirection FacingDirection;
-        public GameObject UICardPrefab;
 
         //Reskin Details
         public CharacterReskinData CharacterSkin;

@@ -54,7 +54,7 @@ namespace Team.Gameplay.ObjectiveSystem
             //Turn Manager wouldn't have loaded here, need to handle this via the game load data?
             RegisterEvents();
 
-            InitalizeObjectives();
+          
         }
 
         private void OnDestroy()
@@ -85,6 +85,21 @@ namespace Team.Gameplay.ObjectiveSystem
         #endregion
 
         #region Public Methods
+
+        public void LoadObjectivesFromLevelData(List<GameObjectiveData> _objectives)
+        {
+            _objectiveMap.Clear();
+
+            //Load all objectives
+            foreach(var objective in _objectives)
+            {
+                _objectiveMap.Add(objective);
+            }
+
+            //Load the objectives
+            InitalizeObjectives();
+        }
+
         /// <summary>
         /// Initialize the objectives for this level
         /// </summary>

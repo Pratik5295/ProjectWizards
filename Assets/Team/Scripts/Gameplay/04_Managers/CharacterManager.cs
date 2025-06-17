@@ -33,6 +33,9 @@ namespace Team.Managers
         [SerializeField]
         private Transform cardHolder;
 
+        [SerializeField]
+        private GameObject UIGameCardPrefab;
+
 
         #region Unity Methods
         private void Awake()
@@ -50,12 +53,27 @@ namespace Team.Managers
         private void Start()
         {
             LoadCharacterReskinMap();
-            SpawnAllCharacters();
+           
         }
 
         #endregion
 
         #region Public Methods
+
+        public void LoadCharactersFromLeveData(List<CharacterData> _characters)
+        {
+            CharactersMap.Clear();
+
+            //Load all the characters
+            foreach (CharacterData character in _characters)
+            {
+                CharactersMap.Add(character);
+            }
+
+            //Initialize character dictionary & spawn characters
+            SpawnAllCharacters();
+
+        }
 
         public Base_Ch GetCharacter(string _characterName)
         {
@@ -79,6 +97,7 @@ namespace Team.Managers
         {
             //Spawn the character
             var characterObject = Instantiate(data.CharacterPrefab);
+            characterObject.name = $"{data.CharacterID}";
 
             TileID tileID = new TileID((int)data.StartTileID.x, (int)data.StartTileID.y);
 
@@ -104,8 +123,8 @@ namespace Team.Managers
            Destroy(kvp.Value.gameObject);
         }
 
-        [ContextMenu("Reset all characters")]
-        public void ResetAllCharacters()
+        [ContextMenu("Remove all characters")]
+        public void RemoveAllCharacters()
         {
             //Delete all characters
             foreach(var _character in CharactersInLevel)
@@ -122,13 +141,22 @@ namespace Team.Managers
                 Destroy(card.gameObject);
             }
         }
+
+        public void ResetAllCharacters()
+        {
+            foreach (var _character in CharactersInLevel)
+            {
+                _character.Value.UndoMovement();
+            }
+        }
+
         #endregion
 
         #region Private Methods
 
         private void LoadCardUI(Base_Ch _character, CharacterData data)
         {
-            var gameCard = Instantiate(data.UICardPrefab, cardHolder);
+            var gameCard = Instantiate(UIGameCardPrefab, cardHolder);
             var gameTurn = gameCard.GetComponent<GameTurn>();
             gameTurn.SetupGameTurn(_character);
 
