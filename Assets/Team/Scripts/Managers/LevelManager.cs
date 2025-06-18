@@ -58,7 +58,7 @@ namespace Team.Managers
         /// </summary>
         private void StartLevel()
         {
-            selectionScreen.OnHide();   
+            UIManager.Instance.ShowGameUI();
         }
     }
 }

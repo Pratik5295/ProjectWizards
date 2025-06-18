@@ -9,7 +9,7 @@ namespace Team.GameConstants
     {
         public enum GameScreen
         {
-            DEFAULT = 0,
+            EMPTY = 0,
             GAME = 1,
             LEVEL_SELECT = 2,
             POST_GAME = 3

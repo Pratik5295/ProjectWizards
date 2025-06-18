@@ -1,3 +1,4 @@
+using Team.UI;
 using UnityEngine;
 
 namespace Team.Managers
@@ -10,6 +11,9 @@ namespace Team.Managers
         private GameTurnManager _turnManager;
 
         [Header("Components")]
+
+        [SerializeField]
+        private ScreenManager _screenManager;
 
         [SerializeField]
         private GameObject playButton;
@@ -32,6 +36,11 @@ namespace Team.Managers
         private void Start()
         {
             _turnManager = GameTurnManager.Instance;
+            _screenManager = GetComponent<ScreenManager>();
+
+            //Forced to show level selection as the first screen
+            ShowLevelSelectionUI();
+
             if (_turnManager != null)
             {
                 _turnManager.OnTurnsProcessingEvent += OnTurnsBeingPlayedHandler;
@@ -74,5 +83,29 @@ namespace Team.Managers
             playButton.SetActive(false);
             restartButton.SetActive(false);
         }
+
+        #region Screen Manager Sections
+
+        public void ShowEmptyUI()
+        {
+            _screenManager.ShowScreen(GameConstants.MetaConstants.GameScreen.EMPTY);
+        }
+
+        public void ShowGameUI()
+        {
+            _screenManager.ShowScreen(GameConstants.MetaConstants.GameScreen.GAME);
+        }
+
+        public void ShowLevelSelectionUI()
+        {
+            _screenManager.ShowScreen(GameConstants.MetaConstants.GameScreen.LEVEL_SELECT);
+        }
+
+        public void ShowPostGameUI()
+        {
+            _screenManager.ShowScreen(GameConstants.MetaConstants.GameScreen.POST_GAME);
+        }
+
+        #endregion
     }
 }
