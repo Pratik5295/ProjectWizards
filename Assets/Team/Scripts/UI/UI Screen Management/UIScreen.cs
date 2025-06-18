@@ -1,4 +1,5 @@
 using UnityEngine;
+using static Team.GameConstants.MetaConstants;
 
 namespace Team.UI
 {
@@ -8,6 +9,8 @@ namespace Team.UI
         [Header("Components")]
         [SerializeField]
         private CanvasGroup canvasGroup;
+
+        public GameScreen screenType;
 
         public virtual void Start()
         {
