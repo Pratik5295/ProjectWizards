@@ -12,6 +12,12 @@ namespace Team.Gameplay.LevelSystem
         [SerializeField]
         private LevelInfoData levelInfoData;
 
+        [SerializeField]
+        private Color unlockedColor;
+
+        [SerializeField]
+        private Color lockedColor;
+
         public bool IsUnlocked => levelInfoData.State == LevelState.UNLOCKED;
 
         public void PopulateLevelInfo(LevelInfoData _data)
