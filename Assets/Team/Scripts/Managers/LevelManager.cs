@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Team.Gameplay.LevelSystem;
+using Team.UI;
 using UnityEngine;
 
 namespace Team.Managers
@@ -9,6 +10,12 @@ namespace Team.Managers
     public class LevelManager : MonoBehaviour
     {
         public static LevelManager Instance = null;
+
+        [Header("Components")]
+
+        [SerializeField]
+        private UILevelSelectionScreen selectionScreen;
+
 
         public List<LevelInfoSO> LevelMap = new List<LevelInfoSO>();
 
@@ -40,8 +47,18 @@ namespace Team.Managers
             if (CurrentLevelSO != null)
             {
                 var level = Instantiate(CurrentLevelSO.GameLevelPrefab);
-                level.LoadLevel();
+                level.LoadLevel(); //TODO: Turn this awaitable later 
+
+                StartLevel();
             }
+        }
+
+        /// <summary>
+        /// This function runs once the level is completed loaded into the game
+        /// </summary>
+        private void StartLevel()
+        {
+            selectionScreen.OnHide();   
         }
     }
 }

@@ -1,5 +1,7 @@
+using Team.Managers;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using static Team.GameConstants.MetaConstants;
 
 namespace Team.Gameplay.LevelSystem
@@ -10,7 +12,7 @@ namespace Team.Gameplay.LevelSystem
         private TextMeshProUGUI levelNameText;
 
         [SerializeField]
-        private LevelInfoData levelInfoData;
+        private LevelInfoSO levelInfoData;
 
         [SerializeField]
         private Color unlockedColor;
@@ -18,13 +20,46 @@ namespace Team.Gameplay.LevelSystem
         [SerializeField]
         private Color lockedColor;
 
-        public bool IsUnlocked => levelInfoData.State == LevelState.UNLOCKED;
+        [SerializeField]
+        private Image levelImage;
 
-        public void PopulateLevelInfo(LevelInfoData _data)
+        [SerializeField]
+        private Button button;  //Temporary will be removed later
+
+        public bool IsUnlocked => levelInfoData.Data.State == LevelState.UNLOCKED;
+
+        private void Start()
+        {
+           if(levelInfoData != null)
+            {
+                PopulateLevelInfo(levelInfoData);
+            }
+        }
+
+        public void PopulateLevelInfo(LevelInfoSO _data)
         {
             levelInfoData = _data;
 
-            levelNameText.text = levelInfoData.LevelName;
+            levelNameText.text = levelInfoData.Data.LevelName;
+
+            ValidateState();
+        }
+
+        /// <summary>
+        /// This method will listen in future to the changes in the level data
+        /// </summary>
+        private void ValidateState()
+        {
+            if (IsUnlocked)
+            {
+                levelImage.color = unlockedColor;
+                button.interactable = true;
+            }
+            else
+            {
+                levelImage.color = lockedColor;
+                button.interactable = false;
+            }
         }
 
         public void OnLevelSelected()
@@ -32,6 +67,8 @@ namespace Team.Gameplay.LevelSystem
             if (IsUnlocked)
             {
                 //Unlocked, allow to play level
+                LevelManager.Instance.SetCurrentLevel(levelInfoData);
+                LevelManager.Instance.LoadCurrentLevel();
             }
             else
             {

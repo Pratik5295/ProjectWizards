@@ -55,11 +55,10 @@ namespace Team.Gameplay.GridSystem
             {
                 //Load all the tiles
                 LoadTilesFromLevelTiles();
+
+                InitializeDictionary();
+                FindAllObstacles();
             }
-
-            InitializeDictionary();
-            FindAllObstacles();
-
         }
 
         #region Tile Creator Section
