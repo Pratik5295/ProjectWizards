@@ -44,4 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 237d41e8888947e41b9c88aa5b812e3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentLevel: {fileID: 0}
+  selectionScreen: {fileID: 0}
+  createdLevel: {fileID: 0}
+  LevelMap:
+  - {fileID: 11400000, guid: 51d05aab9558c5240a5f6587de98e628, type: 2}
+  - {fileID: 11400000, guid: 0c7b91418f1d352469fa6621eaa75fd3, type: 2}
+  CurrentLevelSO: {fileID: 0}
+  CurrentLevelData:
+    LevelName: 
+    State: 0

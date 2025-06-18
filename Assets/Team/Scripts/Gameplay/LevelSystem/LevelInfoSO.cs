@@ -20,27 +20,23 @@ namespace Team.Gameplay.LevelSystem
     
 
     [System.Serializable]
-    public class LevelInfoData
+    public class LevelData
     {
         public string LevelName;
         public LevelState State;
-        public LevelInfoSO Requirements;
-        public bool IsCompleted()
-        {
-            if(Requirements == null || Requirements.Data == null)
-            {
-                return true;
-            }
 
-            return Requirements.Data.State == LevelState.COMPLETED;
+        public LevelData(string _levelName,  LevelState _state)
+        {
+            LevelName = _levelName;
+            State = _state;
         }
     }
 
 
-    [CreateAssetMenu(fileName = "LevelInfoSO",menuName = "Team/Data/Levels/Create a Level Info File")]
+    [CreateAssetMenu(fileName = "LevelInfoSO",menuName = "Team/Data/Levels/Create a Level Data File")]
     public class LevelInfoSO : ScriptableObject
     {
-        public LevelInfoData Data;
+        public LevelData Data;
         public GameLevel GameLevelPrefab;
     }
 }

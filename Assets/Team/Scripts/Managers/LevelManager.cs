@@ -25,6 +25,8 @@ namespace Team.Managers
 
         public LevelInfoSO CurrentLevelSO;
 
+        public LevelData CurrentLevelData;
+
         public Action<LevelInfoSO> OnCurrentLevelUpdated;
 
         private void Awake()
@@ -42,10 +44,10 @@ namespace Team.Managers
         public void SetCurrentLevel(LevelInfoSO _level)
         {
             CurrentLevelSO = _level;
+          
             OnCurrentLevelUpdated?.Invoke(CurrentLevelSO);
         }
 
-        [ContextMenu("Load Current Level")]
         public void LoadCurrentLevel()
         {
             if (CurrentLevelSO != null)
@@ -54,13 +56,32 @@ namespace Team.Managers
                 {
                     DestroyImmediate(createdLevel.gameObject);
                 }
-
+                CurrentLevelData = new LevelData(CurrentLevelSO.Data.LevelName, CurrentLevelSO.Data.State);
                 createdLevel = Instantiate(CurrentLevelSO.GameLevelPrefab);
                 createdLevel.LoadLevel(); //TODO: Turn this awaitable later 
 
                 StartLevel();
             }
         }
+
+        public void OnCurrentLevelCompleted()
+        {
+            Debug.Log($"Level {CurrentLevelSO.Data.LevelName} has been completed");
+
+            CurrentLevelData.State = GameConstants.MetaConstants.LevelState.COMPLETED;
+
+            int index = LevelMap.IndexOf(CurrentLevelSO);
+            index++;
+
+            var newLevel = LevelMap[index];
+            SetCurrentLevel(newLevel);
+        }
+
+        public void PlayNextLevel()
+        {
+
+        }
+
 
         /// <summary>
         /// This function runs once the level is completed loaded into the game

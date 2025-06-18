@@ -45,6 +45,14 @@ public class ChRotatorWizard : Base_Ch
     private float _landingVFXOffset;
     private VFXManager _landingVFXManager;
 
+    private void OnDestroy()
+    {
+        if(_landingVFXManager != null)
+        {
+            Destroy(_landingVFXManager);
+        }
+    }
+
     public override void InitialiseCharacter(TileID StartingTileID, Enum_GridDirection startingDirection)
     {
         base.InitialiseCharacter(StartingTileID, startingDirection);

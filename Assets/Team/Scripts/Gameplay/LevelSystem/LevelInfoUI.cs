@@ -26,7 +26,7 @@ namespace Team.Gameplay.LevelSystem
         [SerializeField]
         private Button button;  //Temporary will be removed later
 
-        public bool IsUnlocked => levelInfoData.Data.State == LevelState.UNLOCKED;
+        public bool IsUnlocked => levelInfoData.Data.State != LevelState.LOCKED;
 
         private void Start()
         {
@@ -48,7 +48,7 @@ namespace Team.Gameplay.LevelSystem
         /// <summary>
         /// This method will listen in future to the changes in the level data
         /// </summary>
-        private void ValidateState()
+        public void ValidateState()
         {
             if (IsUnlocked)
             {

@@ -183,6 +183,7 @@ namespace Team.Gameplay.ObjectiveSystem
             //Check if actually the level was completed
             if (levelCompleted)
             {
+                LevelManager.Instance.OnCurrentLevelCompleted();
                 UIManager.Instance.ShowEmptyUI();
                 Invoke(nameof(ShowLevelCompletedUI), MetaConstants.ShowPostGameScreenAfter);
                
@@ -191,6 +192,7 @@ namespace Team.Gameplay.ObjectiveSystem
 
         private void ShowLevelCompletedUI()
         {
+          
             UIManager.Instance.ShowPostGameUI();
         }
 
