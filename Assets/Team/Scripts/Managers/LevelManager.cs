@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Team.Gameplay.GameLevelSystem;
 using Team.Gameplay.LevelSystem;
 using Team.UI;
 using UnityEngine;
@@ -15,6 +16,9 @@ namespace Team.Managers
 
         [SerializeField]
         private UILevelSelectionScreen selectionScreen;
+
+        [SerializeField]
+        private GameLevel createdLevel = null;
 
 
         public List<LevelInfoSO> LevelMap = new List<LevelInfoSO>();
@@ -46,8 +50,13 @@ namespace Team.Managers
         {
             if (CurrentLevelSO != null)
             {
-                var level = Instantiate(CurrentLevelSO.GameLevelPrefab);
-                level.LoadLevel(); //TODO: Turn this awaitable later 
+                if(createdLevel != null)
+                {
+                    DestroyImmediate(createdLevel.gameObject);
+                }
+
+                createdLevel = Instantiate(CurrentLevelSO.GameLevelPrefab);
+                createdLevel.LoadLevel(); //TODO: Turn this awaitable later 
 
                 StartLevel();
             }

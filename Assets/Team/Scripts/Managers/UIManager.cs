@@ -75,7 +75,7 @@ namespace Team.Managers
         private void OnTurnResetCompletedHandler()
         {
             playButton.SetActive(true);
-            restartButton.SetActive(true);
+            restartButton.SetActive(false);
         }
 
         private void OnTurnsBeingPlayedHandler()

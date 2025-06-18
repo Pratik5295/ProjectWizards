@@ -97,6 +97,8 @@ namespace Team.Gameplay.ObjectiveSystem
 
         public void LoadObjectivesFromLevelData(List<GameObjectiveData> _objectives)
         {
+            CleanUp();
+
             _objectiveMap.Clear();
 
             //Load all objectives
@@ -133,6 +135,11 @@ namespace Team.Gameplay.ObjectiveSystem
                 _levelObjectives.Add(objective);
                 objectivesHolder.AddObjective(data);
             }
+        }
+
+        public void CleanUp()
+        {
+            objectivesHolder.ClearAllObjectives();
         }
 
         public void ResetAllObjectives()

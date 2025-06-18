@@ -62,6 +62,8 @@ namespace Team.Managers
 
         public void LoadCharactersFromLeveData(List<CharacterData> _characters)
         {
+            CleanUp();
+
             CharactersMap.Clear();
 
             //Load all the characters
@@ -148,6 +150,13 @@ namespace Team.Managers
             {
                 _character.Value.UndoMovement();
             }
+        }
+
+        public void CleanUp()
+        {
+            if (CharactersInLevel.Count == 0) return;
+
+            RemoveAllCharacters();
         }
 
         #endregion

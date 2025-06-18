@@ -89,7 +89,18 @@ namespace Team.Managers
             }
 
             isQueueLoaded = true;
+        }
 
+        public void EmptyQueue()
+        {
+            if (turnQueue != null)
+            {
+                turnQueue.Clear();
+            }
+            originalOrder.Clear();
+            currentTurnOrder.Clear();
+
+            isQueueLoaded = false;
         }
 
         public void ForceRebuildTurns()
@@ -309,6 +320,9 @@ namespace Team.Managers
         public void OnCharactersLoaded()
         {
             turnHolder.InitializeComplete();
+
+            //Notify that undo was completed/Or turns have been loaded
+            OnResetLastTurnCompleted?.Invoke();
         }
 
         #endregion
