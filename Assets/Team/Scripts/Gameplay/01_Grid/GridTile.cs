@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Team.GameConstants;
 using Team.Gameplay.GridSystem;
+using UnityEditor;
 
 
 namespace Team.Gameplay.GridSystem
@@ -102,6 +103,10 @@ namespace Team.Gameplay.GridSystem
             tileType = TileType.EMPTY;
             DestroyImmediate(tileObject);
             tileObject = null;
+
+#if UNITY_EDITOR
+            EditorUtility.SetDirty(gameObject);
+#endif
         }
 
         [ContextMenu("Set Tile to Object")]
@@ -109,6 +114,10 @@ namespace Team.Gameplay.GridSystem
         {
             tileType = TileType.TILE;
             tileObject = SpawnTileObject();
+
+#if UNITY_EDITOR
+            EditorUtility.SetDirty(gameObject);
+#endif
         }
 
         [ContextMenu("Spawn Object Occupying Tile space")]
@@ -150,6 +159,10 @@ namespace Team.Gameplay.GridSystem
                 objectOccupyingTile.GetComponent<Base_Obstacle>().InitialiseObstacleData();
             }
             objectOccupyingTile.tag = GameConstants.MetaConstants.EnvironmentTag;
+
+#if UNITY_EDITOR
+            EditorUtility.SetDirty(gameObject);
+#endif
         }
 
         [ContextMenu("Re-Update Obstacle Data")]
@@ -158,6 +171,10 @@ namespace Team.Gameplay.GridSystem
             if (!objectOccupyingTile) { return; }
             objectOccupyingTile.GetComponent<Base_Obstacle>().UpdateObstacleTileData(TileID, this);
             objectOccupyingTile.GetComponent<Base_Obstacle>().InitialiseObstacleData();
+
+#if UNITY_EDITOR
+            EditorUtility.SetDirty(gameObject);
+#endif
         }
 
 
