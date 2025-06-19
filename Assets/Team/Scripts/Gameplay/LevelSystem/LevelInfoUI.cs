@@ -12,7 +12,7 @@ namespace Team.Gameplay.LevelSystem
         private TextMeshProUGUI levelNameText;
 
         [SerializeField]
-        private LevelInfoSO levelInfoData;
+        private LevelDataSO levelData;
 
         [SerializeField]
         private Color unlockedColor;
@@ -26,21 +26,21 @@ namespace Team.Gameplay.LevelSystem
         [SerializeField]
         private Button button;  //Temporary will be removed later
 
-        public bool IsUnlocked => levelInfoData.Data.State != LevelState.LOCKED;
+        public bool IsUnlocked => levelData.Data.Stats.State != LevelState.LOCKED;
 
         private void Start()
         {
-           if(levelInfoData != null)
+           if(levelData != null)
             {
-                PopulateLevelInfo(levelInfoData);
+                PopulateLevelInfo(levelData);
             }
         }
 
-        public void PopulateLevelInfo(LevelInfoSO _data)
+        public void PopulateLevelInfo(LevelDataSO _data)
         {
-            levelInfoData = _data;
+            levelData = _data;
 
-            levelNameText.text = levelInfoData.Data.LevelName;
+            levelNameText.text = levelData.Data.Stats.LevelName;
 
             ValidateState();
         }
@@ -67,7 +67,7 @@ namespace Team.Gameplay.LevelSystem
             if (IsUnlocked)
             {
                 //Unlocked, allow to play level
-                LevelManager.Instance.SetCurrentLevel(levelInfoData);
+                LevelManager.Instance.SetCurrentLevel(levelData.Data);
                 LevelManager.Instance.LoadCurrentLevel();
             }
             else

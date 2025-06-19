@@ -4,6 +4,8 @@ using Team.Gameplay.GameLevelSystem;
 using Team.Gameplay.LevelSystem;
 using Team.UI;
 using UnityEngine;
+using static Team.GameConstants.LevelConstants;
+using static Team.GameConstants.MetaConstants;
 
 namespace Team.Managers
 {
@@ -21,13 +23,13 @@ namespace Team.Managers
         private GameLevel createdLevel = null;
 
 
-        public List<LevelInfoSO> LevelMap = new List<LevelInfoSO>();
+        public List<LevelDataSO> LevelList = new List<LevelDataSO>();
 
-        public LevelInfoSO CurrentLevelSO;
+        public Dictionary<LevelID, LevelData> LevelMap = new Dictionary<LevelID, LevelData>();
 
-        public LevelData CurrentLevelData;
+        public LevelData CurrentLevel;
 
-        public Action<LevelInfoSO> OnCurrentLevelUpdated;
+        public Action<LevelData> OnCurrentLevelUpdated;
 
         private void Awake()
         {
@@ -41,23 +43,27 @@ namespace Team.Managers
             }
         }
 
-        public void SetCurrentLevel(LevelInfoSO _level)
+        private void Start()
         {
-            CurrentLevelSO = _level;
+            LoadLevelMap();
+        }
+
+        public void SetCurrentLevel(LevelData _level)
+        {
+            CurrentLevel = _level;
           
-            OnCurrentLevelUpdated?.Invoke(CurrentLevelSO);
+            OnCurrentLevelUpdated?.Invoke(CurrentLevel);
         }
 
         public void LoadCurrentLevel()
         {
-            if (CurrentLevelSO != null)
+            if (CurrentLevel != null)
             {
                 if(createdLevel != null)
                 {
                     DestroyImmediate(createdLevel.gameObject);
                 }
-                CurrentLevelData = new LevelData(CurrentLevelSO.Data.LevelName, CurrentLevelSO.Data.State);
-                createdLevel = Instantiate(CurrentLevelSO.GameLevelPrefab);
+                createdLevel = Instantiate(CurrentLevel.GameLevelPrefab);
                 createdLevel.LoadLevel(); //TODO: Turn this awaitable later 
 
                 StartLevel();
@@ -66,15 +72,11 @@ namespace Team.Managers
 
         public void OnCurrentLevelCompleted()
         {
-            Debug.Log($"Level {CurrentLevelSO.Data.LevelName} has been completed");
+            Debug.Log($"Level {CurrentLevel.Stats.LevelName} has been completed");
 
-            CurrentLevelData.State = GameConstants.MetaConstants.LevelState.COMPLETED;
+            CurrentLevel.Stats.State = LevelState.COMPLETED;
 
-            int index = LevelMap.IndexOf(CurrentLevelSO);
-            index++;
-
-            var newLevel = LevelMap[index];
-            SetCurrentLevel(newLevel);
+            SetCurrentLevel(GetNextLevel());
         }
 
         public void PlayNextLevel()
@@ -89,6 +91,29 @@ namespace Team.Managers
         private void StartLevel()
         {
             UIManager.Instance.ShowGameUI();
+        }
+
+        /// <summary>
+        /// Fill out the level map dictionary based on all the levels contained 
+        /// in the list
+        /// </summary>
+        private void LoadLevelMap()
+        {
+            if(LevelList.Count == 0)
+            {
+                Debug.LogError("The level list is empty", gameObject);
+                return;
+            }
+
+            foreach(var level in LevelList)
+            {
+                LevelMap.Add(level.Data.Stats.LevelID, level.Data);
+            }
+        }
+
+        private LevelData GetNextLevel()
+        {
+            return LevelMap[CurrentLevel.Stats.NextLevel];
         }
     }
 }
