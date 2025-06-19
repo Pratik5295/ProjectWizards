@@ -109,8 +109,6 @@ public class ChRotatorWizard : Base_Ch
                 UndoRotate();
             }
         }
-
-        OnTurnComplete?.Invoke();
     }
 
     private void UndoRotate()
