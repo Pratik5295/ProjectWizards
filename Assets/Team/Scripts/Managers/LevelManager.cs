@@ -28,6 +28,7 @@ namespace Team.Managers
         public Dictionary<LevelID, LevelData> LevelMap = new Dictionary<LevelID, LevelData>();
 
         public LevelData CurrentLevel;
+        public LevelID CurrentLevelID;
 
         public Action<LevelData> OnCurrentLevelUpdated;
 
@@ -48,11 +49,16 @@ namespace Team.Managers
             LoadLevelMap();
         }
 
-        public void SetCurrentLevel(LevelData _level)
+        public void SetCurrentLevel(LevelID _level)
         {
-            CurrentLevel = _level;
-          
-            OnCurrentLevelUpdated?.Invoke(CurrentLevel);
+            CurrentLevelID = _level;
+
+            if(CurrentLevelID != LevelID.NONE)
+            {
+                CurrentLevel = LevelMap[_level];
+
+                OnCurrentLevelUpdated?.Invoke(CurrentLevel);
+            }
         }
 
         public void LoadCurrentLevel()
@@ -75,13 +81,19 @@ namespace Team.Managers
             Debug.Log($"Level {CurrentLevel.Stats.LevelName} has been completed");
 
             CurrentLevel.Stats.State = LevelState.COMPLETED;
-
             SetCurrentLevel(GetNextLevel());
         }
 
         public void PlayNextLevel()
         {
-
+            if (CurrentLevelID == LevelID.NONE)
+            {
+                Debug.Log("No next level to play");
+            }
+            else
+            {
+                LoadCurrentLevel();
+            }
         }
 
 
@@ -111,9 +123,9 @@ namespace Team.Managers
             }
         }
 
-        private LevelData GetNextLevel()
+        private LevelID GetNextLevel()
         {
-            return LevelMap[CurrentLevel.Stats.NextLevel];
+            return CurrentLevel.Stats.NextLevel;
         }
     }
 }

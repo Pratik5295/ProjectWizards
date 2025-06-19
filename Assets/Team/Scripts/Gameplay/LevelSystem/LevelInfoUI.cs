@@ -67,7 +67,7 @@ namespace Team.Gameplay.LevelSystem
             if (IsUnlocked)
             {
                 //Unlocked, allow to play level
-                LevelManager.Instance.SetCurrentLevel(levelData.Data);
+                LevelManager.Instance.SetCurrentLevel(levelData.Data.Stats.LevelID);
                 LevelManager.Instance.LoadCurrentLevel();
             }
             else
