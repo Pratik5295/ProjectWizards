@@ -32,6 +32,8 @@ namespace Team.Gameplay.GameLevelSystem
 
         public void LoadLevel()
         {
+            GameTurnManager.Instance.EmptyQueue();
+
             GridManager.Instance.SetCurrentLevelTile(this);
 
             CharacterManager.Instance.LoadCharactersFromLeveData(CharactersMap);
