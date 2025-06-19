@@ -55,7 +55,8 @@ namespace Team.Managers
 
             if(CurrentLevelID != LevelID.NONE)
             {
-                CurrentLevel = LevelMap[_level];
+                var original = LevelMap[_level];
+                CurrentLevel = new LevelData(original); // Deep copy here
 
                 OnCurrentLevelUpdated?.Invoke(CurrentLevel);
             }

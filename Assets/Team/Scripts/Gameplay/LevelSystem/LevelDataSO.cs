@@ -33,6 +33,14 @@ namespace Team.Gameplay.LevelSystem
             State = _state;
             NextLevel = nextLevel;
         }
+
+        public LevelStats(LevelStats other)
+        {
+            LevelID = other.LevelID;
+            State = other.State;
+            NextLevel = other.NextLevel;
+            LevelName = other.LevelName;
+        }
     }
 
     [System.Serializable]
@@ -40,6 +48,12 @@ namespace Team.Gameplay.LevelSystem
     {
         public LevelStats Stats;
         public GameLevel GameLevelPrefab;
+
+        public LevelData(LevelData _data)
+        {
+            Stats = new LevelStats(_data.Stats); // Also a deep copy
+            GameLevelPrefab = _data.GameLevelPrefab;
+        }
     }
 
 
