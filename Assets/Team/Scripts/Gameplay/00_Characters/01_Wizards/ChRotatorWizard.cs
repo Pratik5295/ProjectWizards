@@ -157,17 +157,14 @@ public class ChRotatorWizard : Base_Ch
             return;
         }
 
-
-        GridTile forwardTile = ref_gridManager.FindTile(new TileID(centerTile.TileID.x, centerTile.TileID.y + 1));
-        GridTile backwardTile = ref_gridManager.FindTile(new TileID(centerTile.TileID.x, centerTile.TileID.y - 1));
-        GridTile rightTile = ref_gridManager.FindTile(new TileID(centerTile.TileID.x + 1, centerTile.TileID.y));
-        GridTile leftTile = ref_gridManager.FindTile(new TileID(centerTile.TileID.x - 1, centerTile.TileID.y));
+        GridTile[] NeighbourTiles = centerTile.FindNeighbouringTiles();
 
         _tilesToMove.Add(centerTile);
-        _tilesToMove.Add(forwardTile);
-        _tilesToMove.Add(backwardTile);
-        _tilesToMove.Add(rightTile);
-        _tilesToMove.Add(leftTile);
+
+        for(int i = 1; i < NeighbourTiles.Length; i++)
+        {
+            _tilesToMove.Add(NeighbourTiles[i]);
+        }
     }
 
     private void TileDataChanges()
@@ -265,10 +262,10 @@ public class ChRotatorWizard : Base_Ch
                 }
                 else if (_tilesToMove[i].ObjectOccupyingTile.CompareTag(MetaConstants.EnvironmentTag))
                 {
-                    _tilesToMove[i].ObjectOccupyingTile.GetComponent<ObstacleData>().UpdateObstacleTileData(_tilesToMove[i].TileID, _tilesToMove[i]);
-                    if (_tilesToMove[i].ObjectOccupyingTile.GetComponent<Base_Ch>())
+                    _tilesToMove[i].ObjectOccupyingTile.GetComponent<Base_Obstacle>().UpdateObstacleTileData(_tilesToMove[i].TileID, _tilesToMove[i]);
+                    if (_tilesToMove[i].ObjectOccupyingTile.GetComponent<Base_Obstacle>())
                     {
-                        _tilesToMove[i].ObjectOccupyingTile.GetComponent<Base_Ch>().UpdateCurrentTileID();
+                        _tilesToMove[i].ObjectOccupyingTile.GetComponent<Base_Obstacle>().UpdateCurrentTileID();
                     }
                 }
 
