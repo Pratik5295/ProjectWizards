@@ -38,12 +38,14 @@ namespace Team.Gameplay.GridSystem
         public TileDirection Direction; //Rotation 
 
         [SerializeField]
-        private GridManager gridManager;
+        private LevelTileCreator gridManager;
 
         [SerializeField]
         private GameObject tileObject = null; //The created tile object
 
         [SerializeField] private GameObject _startingObject;
+
+        [SerializeField] private UITile tileUI;
 
         [SerializeField]
         private GameObject objectOccupyingTile;
@@ -55,10 +57,9 @@ namespace Team.Gameplay.GridSystem
         /// <summary>
         /// Initialize the tile
         /// </summary>
-        public bool Init(GridManager _gridManager, TileID _tileId)
+        public bool Init(LevelTileCreator _tileCreator, TileID _tileId)
         {
-            gridManager = _gridManager;
-
+            gridManager = _tileCreator;
             TileID = _tileId;
 
             if (objectOccupyingTile)
@@ -100,7 +101,6 @@ namespace Team.Gameplay.GridSystem
             tileType = TileType.EMPTY;
             DestroyImmediate(tileObject);
             tileObject = null;
-            gridManager?.RemoveTileFromGrid(TileID, this);
         }
 
         [ContextMenu("Set Tile to Object")]
@@ -108,7 +108,6 @@ namespace Team.Gameplay.GridSystem
         {
             tileType = TileType.TILE;
             tileObject = SpawnTileObject();
-            gridManager?.AddTileToGrid(TileID, this);
         }
 
         [ContextMenu("Spawn Object Occupying Tile space")]
@@ -195,18 +194,18 @@ namespace Team.Gameplay.GridSystem
             tileType = typeOfTile;
         }
 
-
-        public GridTile[] FindNeighbouringTiles()
+        public void ShowTileUI()
         {
-            GridTile[] NeighbourTiles = new GridTile[5];
+            tileUI.gameObject.SetActive(true);
 
-            NeighbourTiles[0] = this;
-            NeighbourTiles[1] = gridManager.FindTile(new TileID(TileID.x, TileID.y + 1));
-            NeighbourTiles[2] = gridManager.FindTile(new TileID(TileID.x, TileID.y - 1));
-            NeighbourTiles[3] = gridManager.FindTile(new TileID(TileID.x + 1, TileID.y));
-            NeighbourTiles[4] = gridManager.FindTile(new TileID(TileID.x - 1, TileID.y));
+            string tileID = $"{TileID.x}, {TileID.y}";
 
-            return NeighbourTiles;
+            tileUI.PopulateTileText(tileID);
+        }
+
+        public void HideTileUI()
+        {
+            tileUI.gameObject.SetActive(false); 
         }
     }
 }

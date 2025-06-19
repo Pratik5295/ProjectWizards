@@ -14,9 +14,11 @@ Material:
   m_ValidKeywords:
   - _ALPHAPREMULTIPLY_ON
   - _ALPHATEST_ON
+  - _EMISSION
+  - _RECEIVE_SHADOWS_OFF
   - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords: []
-  m_LightmapFlags: 4
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: 3000
@@ -110,8 +112,8 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueOffset: 0
-    - _ReceiveShadows: 1
-    - _Smoothness: 0.5
+    - _ReceiveShadows: 0
+    - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -121,9 +123,9 @@ Material:
     - _XRMotionVectorsPass: 1
     - _ZWrite: 0
     m_Colors:
-    - _BaseColor: {r: 0.10062885, g: 0.10062885, b: 0.10062885, a: 1}
-    - _Color: {r: 0.10062883, g: 0.10062883, b: 0.10062883, a: 1}
-    - _EmissionColor: {r: 0.13207549, g: 0.13207549, b: 0.13207549, a: 1}
+    - _BaseColor: {r: 1, g: 0.64640605, b: 0, a: 1}
+    - _Color: {r: 1, g: 0.64640605, b: 0, a: 1}
+    - _EmissionColor: {r: 4, g: 1.8117998, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

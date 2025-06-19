@@ -13,6 +13,8 @@ namespace Team.Gameplay.ObjectiveSystem
                 return new EliminateObjective(data);
             else if (data.Type == ObjectiveType.SURVIVAL)
                 return new SurvivalObjective(data);
+            else if(data.Type == ObjectiveType.LOCATION)
+                return new LocationObjective(data);
             else
                 throw new NotSupportedException($"Unsupported objective type: {data.Type}");
         }

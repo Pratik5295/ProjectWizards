@@ -38,6 +38,8 @@ namespace Team.Managers
 
         public bool HasCharacterTurns => turnQueue.Count > 0;
 
+        private bool isQueueLoaded = false;
+
         public Action OnTurnsProcessingEvent;
         public Action OnAllTurnsCompleted;  //TODO: Update this to include the round integer
         public Action OnResetLastTurnCompleted; //TODO: To include which turn count was the round reset to
@@ -85,6 +87,8 @@ namespace Team.Managers
             {
                 turnQueue.Enqueue(unit.GetComponent<GameTurn>());
             }
+
+            isQueueLoaded = true;
 
         }
 
@@ -136,9 +140,9 @@ namespace Team.Managers
 
         private void ResetObstacles()
         {
-            foreach(var obs in Obstacles)
+            foreach (var obs in Obstacles)
             {
-                if(obs.TryGetComponent<ObstacleData>(out var obsData))
+                if (obs.TryGetComponent<ObstacleData>(out var obsData))
                 {
                     obsData.ResetToStart();
                 }
@@ -148,6 +152,7 @@ namespace Team.Managers
         #endregion
 
         #region Context Menu Methods
+
 
         [ContextMenu("Play All Turns")]
         public async void PlayTurns()
@@ -201,14 +206,63 @@ namespace Team.Managers
                 turn.transform.SetSiblingIndex(i);
             }
 
+
+            Invoke(nameof(DelayReset), 2f);
+
+
+        }
+
+        private void DelayReset()
+        {
+
+            ResetDestroyedEntities();
             //Set All Objectives to be incomplete
             LevelObjectiveManager.Instance.ResetAllObjectives();
-            ResetDestroyedEntities();
 
             ResetObstacles();
+
+            //Reset all characters to their saved start position
+            ResetCharactersToStart();
+
             //Notify that undo was completed
             OnResetLastTurnCompleted?.Invoke();
 
+            isQueueLoaded = false;
+
+            Debug.Log("Completed reset");
+        }
+
+        [ContextMenu("Play Next Turn")]
+        public async void PlayNextTurn()
+        {
+            OnTurnsProcessingEvent?.Invoke();
+
+            if (!isQueueLoaded)
+            {
+                await LoadQueue();
+            }
+
+            if (turnQueue.Count > 0)
+            {
+                GameTurn turn = turnQueue.Dequeue();
+
+                if (turn.IsAlive())
+                {
+                    await turn.PerformAsync();
+                }
+                Debug.Log("Current turn has been played");
+
+            }
+            else
+            {
+                Debug.Log("All turns have been played");
+                isQueueLoaded = false;
+
+                OnAllTurnsCompleted?.Invoke();
+            }
+
+           
+           
         }
 
         public void ResetDestroyedEntities()
@@ -229,9 +283,23 @@ namespace Team.Managers
                         //DestroyedObjects[i].GetComponent<MoveableObstacle>().resetCharState(true);
                         DestroyedObjects[i].GetComponent<MoveableObstacle>().UndoAction();
                     }
+                    else
+                    {
+                        DestroyedObjects[i].GetComponent<ObstacleData>().EnableObject();
+                        if (DestroyedObjects[i].GetComponent<Base_Ch>())
+                        {
+                            DestroyedObjects[i].GetComponent<Base_Ch>().resetCharState(true);
+                            DestroyedObjects[i].GetComponent<Base_Ch>().UndoAction();
+                        }
+                    }
                 }
             }
             DestroyedObjects.Clear();
+        }
+
+        private void ResetCharactersToStart()
+        {
+            CharacterManager.Instance.ResetAllCharacters();
         }
 
         #endregion

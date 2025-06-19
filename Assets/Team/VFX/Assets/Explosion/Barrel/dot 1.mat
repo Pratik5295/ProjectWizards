@@ -15,11 +15,12 @@ Material:
   - _ALPHAPREMULTIPLY_ON
   - _ALPHATEST_ON
   - _EMISSION
+  - _RECEIVE_SHADOWS_OFF
   - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords: []
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
+  m_DoubleSidedGI: 1
   m_CustomRenderQueue: 3000
   stringTagMap:
     RenderType: Transparent
@@ -97,8 +98,8 @@ Material:
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
-    - _Cull: 2
-    - _Cutoff: 0.5
+    - _Cull: 0
+    - _Cutoff: 0
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 10
@@ -111,7 +112,7 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueOffset: 0
-    - _ReceiveShadows: 1
+    - _ReceiveShadows: 0
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -124,7 +125,7 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 0.5716053, b: 0.047169685, a: 1}
     - _Color: {r: 1, g: 0.5716053, b: 0.047169663, a: 1}
-    - _EmissionColor: {r: 0.99371064, g: 0.46307477, b: 0, a: 1}
+    - _EmissionColor: {r: 1.9874213, g: 0.92614955, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
