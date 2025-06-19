@@ -24,11 +24,11 @@ public class PushProjectile : Base_Projectile
             Vector2 direction = characterScript.BaseRotation.dirToV2(_projectileDir);
             characterScript.StartCoroutine(characterScript.MoveByAmount((int)_pushAmount, direction, true));
         }
-        else if (other.CompareTag(MetaConstants.EnvironmentTag) && other.GetComponent<Base_Ch>())
+        else if (other.CompareTag(MetaConstants.EnvironmentTag) && other.GetComponent<MoveableObstacle>())
         {
-            Base_Ch characterScript = other.gameObject.GetComponent<Base_Ch>();
-            Vector2 direction = characterScript.BaseRotation.dirToV2(_projectileDir);
-            characterScript.StartCoroutine(characterScript.MoveByAmount((int)_pushAmount, direction, true));
+            MoveableObstacle ObstacleScript = other.gameObject.GetComponent<MoveableObstacle>();
+            Vector2 direction = ObstacleScript.BaseRotation.dirToV2(_projectileDir);
+            ObstacleScript.StartCoroutine(ObstacleScript.MoveByAmount((int)_pushAmount, direction, true));
         }
         base.OnTriggerEnter(other);
     }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Team.GameConstants;
+using Team.Gameplay.GridSystem;
 
 
 namespace Team.Gameplay.GridSystem
@@ -64,7 +65,7 @@ namespace Team.Gameplay.GridSystem
 
             if (objectOccupyingTile)
             {
-                objectOccupyingTile.GetComponent<ObstacleData>().UpdateObstacleTileData(TileID, this);
+                objectOccupyingTile.GetComponent<Base_Obstacle>().UpdateObstacleTileData(TileID, this);
             }
 
             //Check if spawn tile
@@ -127,9 +128,9 @@ namespace Team.Gameplay.GridSystem
                 {
                     InstantiatedObject.AddComponent<BoxCollider>();
                 }
-                if (!InstantiatedObject.GetComponent<ObstacleData>()) 
+                if (!InstantiatedObject.GetComponent<Base_Obstacle>()) 
                 {
-                    ObstacleData obstacleData = InstantiatedObject.AddComponent<ObstacleData>();
+                    Base_Obstacle obstacleData = InstantiatedObject.AddComponent<Base_Obstacle>();
                     obstacleData.UpdateObstacleTileData(TileID, this);
                     obstacleData.InitialiseObstacleData();
                 }
@@ -141,12 +142,12 @@ namespace Team.Gameplay.GridSystem
                 {
                     objectOccupyingTile.AddComponent<BoxCollider>();
                 }
-                if (!objectOccupyingTile.GetComponent<ObstacleData>())
+                if (!objectOccupyingTile.GetComponent<Base_Obstacle>())
                 {
-                    objectOccupyingTile.AddComponent<ObstacleData>();
+                    objectOccupyingTile.AddComponent<Base_Obstacle>();
                 }
-                objectOccupyingTile.GetComponent<ObstacleData>().UpdateObstacleTileData(TileID, this);
-                objectOccupyingTile.GetComponent<ObstacleData>().InitialiseObstacleData();
+                objectOccupyingTile.GetComponent<Base_Obstacle>().UpdateObstacleTileData(TileID, this);
+                objectOccupyingTile.GetComponent<Base_Obstacle>().InitialiseObstacleData();
             }
             objectOccupyingTile.tag = GameConstants.MetaConstants.EnvironmentTag;
         }
@@ -155,8 +156,8 @@ namespace Team.Gameplay.GridSystem
         public void UpdateObstacleData()
         {
             if (!objectOccupyingTile) { return; }
-            objectOccupyingTile.GetComponent<ObstacleData>().UpdateObstacleTileData(TileID, this);
-            objectOccupyingTile.GetComponent<ObstacleData>().InitialiseObstacleData();
+            objectOccupyingTile.GetComponent<Base_Obstacle>().UpdateObstacleTileData(TileID, this);
+            objectOccupyingTile.GetComponent<Base_Obstacle>().InitialiseObstacleData();
         }
 
 
@@ -201,6 +202,20 @@ namespace Team.Gameplay.GridSystem
             string tileID = $"{TileID.x}, {TileID.y}";
 
             tileUI.PopulateTileText(tileID);
+        }
+        public GridTile[] FindNeighbouringTiles()
+        {
+            GridManager gridInstance = GridManager.Instance;
+
+            GridTile[] NeighbourTiles = new GridTile[5];
+
+            NeighbourTiles[0] = this;
+            NeighbourTiles[1] = gridInstance.FindTile(new TileID(TileID.x, TileID.y + 1));
+            NeighbourTiles[2] = gridInstance.FindTile(new TileID(TileID.x, TileID.y - 1));
+            NeighbourTiles[3] = gridInstance.FindTile(new TileID(TileID.x + 1, TileID.y));
+            NeighbourTiles[4] = gridInstance.FindTile(new TileID(TileID.x - 1, TileID.y));
+
+            return NeighbourTiles;
         }
 
         public void HideTileUI()
