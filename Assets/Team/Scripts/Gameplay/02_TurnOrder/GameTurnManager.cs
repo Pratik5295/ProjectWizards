@@ -288,11 +288,11 @@ namespace Team.Managers
                 }
                 else
                 {
-                    DestroyedObjects[i].GetComponent<ObstacleData>().EnableObject();
-                    if (DestroyedObjects[i].GetComponent<Base_Ch>())
+                    DestroyedObjects[i].GetComponent<Base_Obstacle>().EnableObject();
+                    if (DestroyedObjects[i].GetComponent<MoveableObstacle>())
                     {
-                        DestroyedObjects[i].GetComponent<Base_Ch>().resetCharState(true);
-                        DestroyedObjects[i].GetComponent<Base_Ch>().UndoAction();
+                        //DestroyedObjects[i].GetComponent<MoveableObstacle>().resetCharState(true);
+                        DestroyedObjects[i].GetComponent<MoveableObstacle>().UndoAction();
                     }
                     else
                     {
