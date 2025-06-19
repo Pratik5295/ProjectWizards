@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using Team.Gameplay.GridSystem;
+using Team.GameConstants;
 
 public class Base_Obstacle : MonoBehaviour, IDestroyable
 {
@@ -62,7 +63,7 @@ public class Base_Obstacle : MonoBehaviour, IDestroyable
     public virtual void InitialiseObstacle(TileID StartingTileID, Enum_GridDirection startingDirection)
     {
         ref_gridManager = GridManager.Instance;
-        OffsetValue = ref_gridManager.GridSlot_Offset;
+        OffsetValue = MetaConstants.GridSlot_Offset;
 
         _currentTileID = StartingTileID;
         _previousTileID = _currentTileID;
