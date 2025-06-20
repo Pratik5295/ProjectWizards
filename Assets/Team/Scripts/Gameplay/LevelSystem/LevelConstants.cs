@@ -6,10 +6,18 @@ namespace Team.GameConstants
         public enum LevelID
         {
             NONE = -100,
-            TUTORIAL = 0,
-            LEVEL1 = 1,
-            LEVEL2 = 2,
-            LEVEL3 = 3,
+            Ch101 = 0,
+            Ch102 = 1,
+            Ch103 = 2,
+            Ch104 = 3,
+            Ch105 = 4,
+            Ch106 = 5,
+            Ch201 = 6,
+            Ch202 = 7,
+            Ch203 = 8,
+            Ch204 = 9,
+            Ch205 = 10,
+            Ch206 = 11,
         }
     }
 }

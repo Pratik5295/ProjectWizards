@@ -25,7 +25,8 @@ public class ExplosiveObject : MoveableObstacle
 
     protected void Explode()
     {
-        _explosionVFX.EnableParticleEffectChildren();
+        //Cannot find VFX manager.
+  /*      _explosionVFX.EnableParticleEffectChildren();*/
 
         AffectTiles();
     }
