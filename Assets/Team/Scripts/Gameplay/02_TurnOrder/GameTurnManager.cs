@@ -243,14 +243,19 @@ namespace Team.Managers
             Debug.Log("Completed reset");
         }
 
+
+        private int currentTurnIndex = 0;
+        private bool AllTurnsCompleted => currentTurnIndex == currentTurnOrder.Count - 1;
         [ContextMenu("Play Next Turn")]
         public async void PlayNextTurn()
         {
-            OnTurnsProcessingEvent?.Invoke();
+            //OnTurnsProcessingEvent?.Invoke();
 
-            if (!isQueueLoaded)
+            await LoadQueue();
+
+            for(int i = 0; i < currentTurnIndex; i++)
             {
-                await LoadQueue();
+                turnQueue.Dequeue();
             }
 
             if (turnQueue.Count > 0)
@@ -263,6 +268,8 @@ namespace Team.Managers
                 }
                 Debug.Log("Current turn has been played");
 
+                currentTurnIndex++;
+
             }
             else
             {
@@ -271,9 +278,6 @@ namespace Team.Managers
 
                 OnAllTurnsCompleted?.Invoke();
             }
-
-           
-           
         }
 
         public void ResetDestroyedEntities()
