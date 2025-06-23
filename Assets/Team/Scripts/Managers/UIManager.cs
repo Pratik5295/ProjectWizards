@@ -74,14 +74,14 @@ namespace Team.Managers
 
         private void OnTurnResetCompletedHandler()
         {
-            playButton.SetActive(true);
-            restartButton.SetActive(false);
+            playButton.SetActive(false);
+            restartButton.SetActive(true);
         }
 
         private void OnTurnsBeingPlayedHandler()
         {
             playButton.SetActive(false);
-            restartButton.SetActive(false);
+            restartButton.SetActive(true);
         }
 
         #region Screen Manager Sections

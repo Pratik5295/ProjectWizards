@@ -8,6 +8,9 @@ using UnityEngine.UI;
 
 namespace Team.UI.Gameplay
 {
+
+
+
     public class UIGameCard : UIDragHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         [SerializeField]
@@ -27,6 +30,8 @@ namespace Team.UI.Gameplay
 
         [SerializeField]
         private Vector3 selectedScale = new Vector3(1.25f, 1.25f, 1.25f);
+
+        private bool isDone = false;
 
         #region Unity Methods
         protected void Start()
@@ -92,5 +97,33 @@ namespace Team.UI.Gameplay
             //Have base character toggle Ghosting (characterRef)
         }
         #endregion
+
+        public void UseAbility()
+        {
+
+            if (isDone == false)
+            {
+
+                characterRef.UseAbility();
+
+                isDone = true;
+
+                GameObject lockedCards = GameObject.FindGameObjectWithTag("Locked");
+
+                transform.SetParent(lockedCards.transform);
+
+                transform.position = lockedCards.transform.GetChild(0).position;
+
+
+            }
+
+
+
+        }
+
+
+
+
+
     }
 }

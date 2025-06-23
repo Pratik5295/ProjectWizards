@@ -43,7 +43,8 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        originalIndex = transform.GetSiblingIndex();
+/*        originalIndex = transform.GetSiblingIndex();
+
 
         canvasGroup.blocksRaycasts = false;
         layoutElement.ignoreLayout = true;
@@ -60,12 +61,12 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
         transform.SetAsLastSibling();
 
-        _turnHolder.SetSelected(gameObject);
+        _turnHolder.SetSelected(gameObject);*/
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (!GameInputManager.Instance.IsPointerPressed) return;
+/*        if (!GameInputManager.Instance.IsPointerPressed) return;
 
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             originalParent as RectTransform,
@@ -74,13 +75,13 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             out Vector2 localPoint
         );
 
-        rectTransform.anchoredPosition = new Vector2(localPoint.x + offsetX, rectTransform.anchoredPosition.y);
+        rectTransform.anchoredPosition = new Vector2(localPoint.x + offsetX, rectTransform.anchoredPosition.y);*/
 
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        canvasGroup.blocksRaycasts = true;
+/*        canvasGroup.blocksRaycasts = true;
         layoutElement.ignoreLayout = false;
 
         newIndex = _turnHolder.GetIndex(rectTransform.localPosition.x);
@@ -90,7 +91,7 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
         _turnHolder.SetSelected(null);
 
-        StartCoroutine(FinalizeDrag());
+        StartCoroutine(FinalizeDrag());*/
     }
 
     private IEnumerator FinalizeDrag()
