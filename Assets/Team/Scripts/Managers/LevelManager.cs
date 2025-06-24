@@ -103,7 +103,7 @@ namespace Team.Managers
         /// </summary>
         private void StartLevel()
         {
-            UIManager.Instance.ShowGameUI();
+            UIManager.Instance.ShowDialogueUI();
         }
 
         /// <summary>

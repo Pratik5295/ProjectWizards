@@ -91,6 +91,11 @@ namespace Team.Managers
             _screenManager.ShowScreen(GameConstants.MetaConstants.GameScreen.EMPTY);
         }
 
+        public void ShowDialogueUI()
+        {
+            _screenManager.ShowScreen(GameConstants.MetaConstants.GameScreen.DIALOGUE);
+        }
+
         public void ShowGameUI()
         {
             _screenManager.ShowScreen(GameConstants.MetaConstants.GameScreen.GAME);
