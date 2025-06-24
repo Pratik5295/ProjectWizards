@@ -157,6 +157,9 @@ MonoBehaviour:
   _currentTileID:
     x: 0
     y: 0
+  _previousTileID:
+    x: 0
+    y: 0
   _startTileID:
     x: 0
     y: 0
@@ -204,6 +207,7 @@ MonoBehaviour:
     m_PreInfinity: 1
     m_PostInfinity: 2
     m_RotationOrder: 4
+  _ghosting: {fileID: 0}
   _projectilePrefab: {fileID: 0}
   _fireFromPoint: {fileID: 5150221880546262881}
   _projectileRange: -66
