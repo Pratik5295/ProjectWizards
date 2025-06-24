@@ -128,6 +128,7 @@ namespace Team.Gameplay.GridSystem
 
             tileType = TileType.OCCUPIEDTILE;
             Vector3 spawnLocation = new Vector3(tileObject.transform.position.x, 1.5f, tileObject.transform.position.z);
+            Base_Obstacle obstacleData = null;
 
             if (_startingObject)
             {
@@ -139,10 +140,12 @@ namespace Team.Gameplay.GridSystem
                 }
                 if (!InstantiatedObject.GetComponent<Base_Obstacle>()) 
                 {
-                    Base_Obstacle obstacleData = InstantiatedObject.AddComponent<Base_Obstacle>();
-                    obstacleData.UpdateObstacleTileData(TileID, this);
-                    obstacleData.InitialiseObstacleData();
+                    obstacleData = InstantiatedObject.AddComponent<Base_Obstacle>();
                 }
+                else
+                    obstacleData = InstantiatedObject.GetComponent<Base_Obstacle>();
+                obstacleData.UpdateObstacleTileData(TileID, this);
+                obstacleData.InitialiseObstacleData();
             }
             else
             {
