@@ -10,7 +10,7 @@ public class GenericGhosting : MonoBehaviour
     protected GameObject ghostingEffectRef;
 
 
-    private void Awake()
+    protected virtual void Awake()
     {
         ghostingContent = transform.GetChild(0);
         InitialiseGhostingContent();
@@ -20,7 +20,8 @@ public class GenericGhosting : MonoBehaviour
     {
         ghostingEffectRef = Instantiate(_ghostingEffect, ghostingContent);
 
-        toggleGhosting();
+        //toggleGhosting();
+        disableGhosting();
     }
 
     [ContextMenu("Toggle Ghosting Effect")]
@@ -42,6 +43,12 @@ public class GenericGhosting : MonoBehaviour
     {
         ghostingContent?.gameObject.SetActive(false);  
         ghostingIsActive = false;
+    }
+
+    public void SetGhosting(bool _value)
+    {
+        ghostingContent?.gameObject.SetActive(_value);
+        ghostingIsActive = _value;
     }
 
 }

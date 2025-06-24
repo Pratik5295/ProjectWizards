@@ -37,7 +37,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     }
 
 
-
+    [Space(5)]
     [Header("Movement Variables")]
     [Header("---Tile Variables---")]
     [SerializeField] protected TileID _currentTileID = new TileID(0, 0);
@@ -55,6 +55,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     private float smoothingTime = 1f; //Time to reach the target position.
     private float currentTime; //Current elapsed Time for movement lerp.
     private float lerpingDelayTime = 0.001f;
+
+    [Space(5)]
     [Header("Y Offset and Movement Jump Variables")]
     [SerializeField]
     private float ySpawnOffset = 1.5f;
@@ -74,17 +76,31 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
     #region Vars_InvalidMovementShake
 
+    [Space(5)]
+    [Header("Invalid Move Shake")]
     private float shakeTimer = 0f;
 
     private float maxShakeAmount = 0.3f;
     #endregion
 
     #region Mesh And Collider
+
+    [Space(5)]
+    [Header("Colliders and Mesh")]
     private Collider _collider;
     private MeshRenderer _meshRenderer;
     #endregion
 
+    #region Ghosting Section
 
+    [Space(5)]
+    [Header("Ghosting Section")]
+
+    [SerializeField]
+    private GenericGhosting _ghosting;
+
+
+    #endregion
     public System.Action OnStateChanged;
 
     public System.Action OnTurnComplete;
@@ -363,5 +379,23 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         _meshRenderer.enabled = false;
         _collider.enabled = false;
     }
+    #endregion
+
+    #region Character Move Ghosting Section
+
+    public void SetGhosting(bool _value)
+    {
+        if (_ghosting == null) return;
+
+        _ghosting.SetGhosting(_value);
+    }
+
+    public void ToggleGhosting()
+    {
+        if (_ghosting == null) return;
+
+        _ghosting.toggleGhosting();
+    }
+
     #endregion
 }
