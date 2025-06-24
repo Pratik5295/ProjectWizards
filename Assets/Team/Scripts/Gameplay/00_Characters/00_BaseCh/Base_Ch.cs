@@ -48,7 +48,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     {
         get { return _currentTileID; }
     }
-    private GridTile currentTile;
+    private GridTile _currentTile;
+    private GridTile _previousTile;
 
 
     private float OffsetValue;
@@ -115,8 +116,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         _previousTileID = _currentTileID;
         _startTileID = _currentTileID;
 
-        currentTile = ref_gridManager.FindTile(_currentTileID);
-        currentTile.SetObjectOccupyingTile(this.gameObject);
+        _currentTile = ref_gridManager.FindTile(_currentTileID);
+        _currentTile.SetObjectOccupyingTile(this.gameObject);
 
         baseRotation = GetComponent<Base_Rotation>();
         startingDirection = _startingDirection;
@@ -124,7 +125,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
 
 
-        transform.position = new Vector3(currentTile.TilePosition.x, currentTile.TilePosition.y + ySpawnOffset, currentTile.TilePosition.z);
+        transform.position = new Vector3(_currentTile.TilePosition.x, _currentTile.TilePosition.y + ySpawnOffset, _currentTile.TilePosition.z);
 
         _collider = GetComponent<Collider>();
         _meshRenderer = transform.GetChild(0).GetComponent<MeshRenderer>();
@@ -174,7 +175,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     public virtual IEnumerator MoveByAmount(int movementAmount, Vector2 dir, bool wasPushed = false)
     {
         _previousTileID = _currentTileID;
-        currentTile.SetObjectOccupyingTile(null);
+        _previousTile = ref_gridManager.FindTile(_previousTileID);
 
         for (int i = 0; i < movementAmount; i++)
         {
@@ -189,7 +190,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
                 Vector3 targetPosition = new Vector3(targetTile.TilePosition.x, desiredLocation.y, targetTile.TilePosition.z);
 
                 _currentTileID = targetTile.TileID;
-                currentTile = ref_gridManager.FindTile(_currentTileID);
+                _currentTile = ref_gridManager.FindTile(_currentTileID);
 
                 yield return StartCoroutine(LerpingMovement(targetPosition, wasPushed));
             }
@@ -201,7 +202,9 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
                 yield break;
             }
         }
-        currentTile.SetObjectOccupyingTile(this.gameObject);
+        _previousTile.UpdateOccupiedStatus(false);
+
+        _currentTile.UpdateOccupiedStatus(true, gameObject);
 
         PlayerMove playerMove = new PlayerMove(true);
         HistoryStack.Push(playerMove);
@@ -266,17 +269,17 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     {
         if (_currentTileID == _startTileID) 
         {
-            transform.position = new Vector3(currentTile.TilePosition.x, transform.position.y, currentTile.TilePosition.z);
+            transform.position = new Vector3(_currentTile.TilePosition.x, transform.position.y, _currentTile.TilePosition.z);
             return; 
         }
-        currentTile.SetObjectOccupyingTile(null);
+        _currentTile.SetObjectOccupyingTile(null);
 
         _currentTileID = _startTileID;
-        currentTile = ref_gridManager.FindTile(_currentTileID);
+        _currentTile = ref_gridManager.FindTile(_currentTileID);
 
-        currentTile.SetObjectOccupyingTile(this.gameObject);
+        _currentTile.SetObjectOccupyingTile(this.gameObject);
 
-        transform.position = new Vector3(currentTile.TilePosition.x, transform.position.y, currentTile.TilePosition.z);
+        transform.position = new Vector3(_currentTile.TilePosition.x, transform.position.y, _currentTile.TilePosition.z);
 
         ResetRotationToStart();
     }
@@ -312,13 +315,13 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
     public void UpdateCurrentTileID()
     {
-        _currentTileID = currentTile.TileID;
+        _currentTileID = _currentTile.TileID;
     }
 
     public void SetCurrentTile(TileID updatedTileID, GridTile updatedGridTile)
     {
         _currentTileID = updatedTileID;
-        currentTile = updatedGridTile;
+        _currentTile = updatedGridTile;
     }
 
 
