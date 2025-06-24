@@ -119,7 +119,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 320569409086996540}
-  - {fileID: 432562083861414464}
+  - {fileID: 5586282077145838242}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &486736545899926761
@@ -152,7 +152,7 @@ MonoBehaviour:
   _collider: {fileID: 0}
   _meshRenderer: {fileID: 0}
   canBeDestroyed: 1
-  _explosionEffect: {fileID: 446394177893235346}
+  _explosionEffect: {fileID: 2863304481929300537}
 --- !u!114 &933473269899832427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,13 +244,13 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a641ef0d3ff352429c4ff4bf34ff140, type: 3}
---- !u!4 &432562083861414464 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7940712848689178714, guid: 7a641ef0d3ff352429c4ff4bf34ff140, type: 3}
+--- !u!1 &2863304481929300537 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5732889834998816803, guid: 7a641ef0d3ff352429c4ff4bf34ff140, type: 3}
   m_PrefabInstance: {fileID: 7508574457127201306}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &446394177893235346 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7926961567676207240, guid: 7a641ef0d3ff352429c4ff4bf34ff140, type: 3}
+--- !u!4 &5586282077145838242 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2717259766384285880, guid: 7a641ef0d3ff352429c4ff4bf34ff140, type: 3}
   m_PrefabInstance: {fileID: 7508574457127201306}
   m_PrefabAsset: {fileID: 0}

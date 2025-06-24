@@ -195,6 +195,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 2232507263321403995}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &118049130897192873
 GameObject:
@@ -251,6 +252,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 3976254106279980635}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &172060388006447691
 GameObject:
@@ -446,6 +448,105 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.4, y: 1.4, z: 1.4}
   m_Center: {x: 0, y: 0.24, z: 0}
+--- !u!1 &283885635027588531
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3274286908655777529}
+  - component: {fileID: 8383314016503843546}
+  - component: {fileID: 4885905662262172590}
+  - component: {fileID: 7329159060808758307}
+  m_Layer: 0
+  m_Name: Base_MoveableObject(Clone)
+  m_TagString: Environment
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3274286908655777529
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 283885635027588531}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 9104531336861179527}
+  m_Father: {fileID: 4305211967421070804}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8383314016503843546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 283885635027588531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d73e500546fa32e4598e3b481a26e06c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentTileID:
+    x: 4
+    y: 2
+  _previousTileID:
+    x: 0
+    y: 0
+  _startTileID:
+    x: 0
+    y: 0
+  ySpawnOffset: 1.5
+  _startTile: {fileID: 0}
+  _currentGridTile: {fileID: 920542433835201041}
+  _startingDirection: 0
+  ref_gridManager: {fileID: 0}
+  baseRotation: {fileID: 0}
+  _collider: {fileID: 7329159060808758307}
+  _meshRenderer: {fileID: 9078218544855340917}
+  canBeDestroyed: 1
+--- !u!114 &4885905662262172590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 283885635027588531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 859b55ca8e3122a46a28ffdaf00ed647, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dirFacing: 0
+--- !u!65 &7329159060808758307
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 283885635027588531}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.5, y: 0.5, z: 0.5}
+  m_Center: {x: 0, y: 0.25, z: 0}
 --- !u!1 &358189839420918510
 GameObject:
   m_ObjectHideFlags: 0
@@ -727,6 +828,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 5577170337559849440}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &465309281740481049
 GameObject:
@@ -955,6 +1057,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 5121942982060058542}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &580539273099227170
 GameObject:
@@ -1097,6 +1200,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 7135072785473150689}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &644906428117421954
 GameObject:
@@ -1153,6 +1257,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 181192598353309656}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &765278058717932067
 GameObject:
@@ -1372,6 +1477,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 963345186459226452}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &952947698748635415
 GameObject:
@@ -1568,6 +1674,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 8426021206326732750}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &1004868044990951310
 GameObject:
@@ -1624,6 +1731,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 3855820096626350177}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &1063035202196008751
 GameObject:
@@ -1852,6 +1960,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 12965373830626777}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &1139855506379053542
 GameObject:
@@ -1994,6 +2103,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 7960329822113106346}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &1171101378414221665
 GameObject:
@@ -2136,6 +2246,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 2725648344579890206}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &1397749413600589798
 GameObject:
@@ -2418,6 +2529,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 9112152223792830855}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &1495527989450782906
 GameObject:
@@ -2472,7 +2584,6 @@ MonoBehaviour:
       x: 1
       y: 3
     FacingDirection: 2
-    UICardPrefab: {fileID: 6258264882312573246, guid: ca31cde62dbff8f4aa9db4f9596205a6, type: 3}
     CharacterSkin:
       CharacterCode: 0
       SkinMaterial: {fileID: 2100000, guid: 419fe366c67e0c5448ce0f92f5ea0370, type: 2}
@@ -2483,7 +2594,6 @@ MonoBehaviour:
       x: 2
       y: 2
     FacingDirection: 0
-    UICardPrefab: {fileID: 6258264882312573246, guid: ca31cde62dbff8f4aa9db4f9596205a6, type: 3}
     CharacterSkin:
       CharacterCode: 1
       SkinMaterial: {fileID: 2100000, guid: da98eb23e0994874da55d0329b64cc4d, type: 2}
@@ -2494,7 +2604,6 @@ MonoBehaviour:
       x: 5
       y: 3
     FacingDirection: 3
-    UICardPrefab: {fileID: 6258264882312573246, guid: ca31cde62dbff8f4aa9db4f9596205a6, type: 3}
     CharacterSkin:
       CharacterCode: 0
       SkinMaterial: {fileID: 2100000, guid: 419fe366c67e0c5448ce0f92f5ea0370, type: 2}
@@ -2505,7 +2614,6 @@ MonoBehaviour:
       x: 0
       y: 2
     FacingDirection: 1
-    UICardPrefab: {fileID: 6258264882312573246, guid: ca31cde62dbff8f4aa9db4f9596205a6, type: 3}
     CharacterSkin:
       CharacterCode: 1
       SkinMaterial: {fileID: 2100000, guid: 91c0701f2e59aaa4aa8070d3b87243a0, type: 2}
@@ -2516,7 +2624,6 @@ MonoBehaviour:
       x: 4
       y: 7
     FacingDirection: 2
-    UICardPrefab: {fileID: 6258264882312573246, guid: ca31cde62dbff8f4aa9db4f9596205a6, type: 3}
     CharacterSkin:
       CharacterCode: 1
       SkinMaterial: {fileID: 2100000, guid: 91c0701f2e59aaa4aa8070d3b87243a0, type: 2}
@@ -2674,6 +2781,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 6641216012898192951}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &1697649078872027922
 GameObject:
@@ -3236,6 +3344,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 3139297966641371018}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &2232507263321403995
 GameObject:
@@ -3346,6 +3455,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 8610650601984760540}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &2418788648891404852
 GameObject:
@@ -3402,6 +3512,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 7712838643473298016}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &2482045515735862772
 GameObject:
@@ -3458,6 +3569,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 8225623337482746113}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &2559225776707661699
 GameObject:
@@ -3514,6 +3626,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 5781037051708421865}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &2571114162330235673
 GameObject:
@@ -3580,6 +3693,92 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 79abb9fb559ecf543be32e911c40fe76, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &2585589485605719433
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9104531336861179527}
+  - component: {fileID: 8761385480832779474}
+  - component: {fileID: 9078218544855340917}
+  m_Layer: 0
+  m_Name: Body
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9104531336861179527
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2585589485605719433}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3274286908655777529}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &8761385480832779474
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2585589485605719433}
+  m_Mesh: {fileID: 1490014688594724021, guid: addbecb17f6b7504c942abf26635bfe8, type: 3}
+--- !u!23 &9078218544855340917
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2585589485605719433}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: -6538903991835684241, guid: 7821338d8f4cdd145a3896f1077411df, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3742,6 +3941,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 8867803967937636321}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &2701978721151402438
 GameObject:
@@ -3798,6 +3998,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 777528920280813462}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &2717571342157794397
 GameObject:
@@ -4360,6 +4561,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 1827278276764529800}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &2910046862957856492
 GameObject:
@@ -4470,6 +4672,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 6627914348767673641}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &2997609812742920058
 GameObject:
@@ -4526,6 +4729,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 5132146822008189586}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &3005539015728854898
 GameObject:
@@ -4690,6 +4894,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 9070714822133944093}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &3266195852984683293
 GameObject:
@@ -4746,61 +4951,8 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 3005539015728854898}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
---- !u!1 &3267993357439180816
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7054267028980504427}
-  - component: {fileID: 2445944385040152187}
-  m_Layer: 0
-  m_Name: Tile-Default(Clone)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7054267028980504427
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3267993357439180816}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 3221967737933111125}
-  m_Father: {fileID: 6796589232731770306}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &2445944385040152187
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3267993357439180816}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.4, y: 1.4, z: 1.4}
-  m_Center: {x: 0, y: 0.24, z: 0}
 --- !u!1 &3290356699224034559
 GameObject:
   m_ObjectHideFlags: 0
@@ -4910,6 +5062,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 4376926922024606380}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &3379985078283212943
 GameObject:
@@ -5106,6 +5259,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 438650653651382056}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &3593208923622499441
 GameObject:
@@ -5162,6 +5316,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 765278058717932067}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &3605600366478166108
 GameObject:
@@ -5606,6 +5761,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 6926826941871416526}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &3945266090487942220
 GameObject:
@@ -5662,6 +5818,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 1419912291619833049}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &3952314524580293448
 GameObject:
@@ -5718,6 +5875,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 7667937315552900478}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &3964145315785364238
 GameObject:
@@ -5774,6 +5932,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 8448946776251300070}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &3976254106279980635
 GameObject:
@@ -5970,6 +6129,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 4347847255810768685}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 8662615122406058610}
 --- !u!1 &4155765093006491016
 GameObject:
@@ -6220,7 +6380,94 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 7885823807094396450}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
+--- !u!1 &4230203144571433927
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 174208911233694102}
+  - component: {fileID: 8213432554460289303}
+  - component: {fileID: 1608736345015872635}
+  m_Layer: 3
+  m_Name: TileMesh
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &174208911233694102
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4230203144571433927}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4305211967421070804}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &8213432554460289303
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4230203144571433927}
+  m_Mesh: {fileID: -2912966128741427601, guid: 2fa5834a1ea706240ae9b33be5226f4a, type: 3}
+--- !u!23 &1608736345015872635
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4230203144571433927}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 79abb9fb559ecf543be32e911c40fe76, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &4276302238073785513
 GameObject:
   m_ObjectHideFlags: 0
@@ -6276,6 +6523,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 6676043215199810930}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &4319153378264562862
 GameObject:
@@ -6332,6 +6580,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 7527572044453738534}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &4347847255810768685
 GameObject:
@@ -6472,7 +6721,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7054267028980504427}
+  - {fileID: 4305211967421070804}
   m_Father: {fileID: 3062420423031370238}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &920542433835201041
@@ -6491,13 +6740,14 @@ MonoBehaviour:
     x: 4
     y: 2
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  tileType: 1
+  tileType: 2
   Direction:
     TileFacing: 0
   gridManager: {fileID: 5856545672580884406}
-  tileObject: {fileID: 3267993357439180816}
-  _startingObject: {fileID: 0}
-  objectOccupyingTile: {fileID: 0}
+  tileObject: {fileID: 7008620065226722590}
+  _startingObject: {fileID: 5407380294395882597, guid: 08c3bf8a1c59d8b448fabce70e5240c3, type: 3}
+  tileUI: {fileID: 0}
+  objectOccupyingTile: {fileID: 283885635027588531}
 --- !u!1 &4533716057043790566
 GameObject:
   m_ObjectHideFlags: 0
@@ -6779,6 +7029,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 3902231807158175661}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &4632717842280967062
 GameObject:
@@ -6835,6 +7086,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 2783225177376019564}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &4704774021436914932
 GameObject:
@@ -6977,6 +7229,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 4190555578892725913}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &4913007645346270373
 GameObject:
@@ -7205,6 +7458,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 6845995194850631446}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &5121942982060058542
 GameObject:
@@ -7455,6 +7709,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 8825135684153564200}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &5206178433742118055
 GameObject:
@@ -7855,6 +8110,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 2767220458564777387}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &5371016799267570773
 GameObject:
@@ -7997,6 +8253,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 1697649078872027922}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &5539916055829383515
 GameObject:
@@ -8278,92 +8535,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.4, y: 1.4, z: 1.4}
   m_Center: {x: 0, y: 0.24, z: 0}
---- !u!1 &5608242093953689062
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3221967737933111125}
-  - component: {fileID: 3435167616317392185}
-  - component: {fileID: 3746265868098594536}
-  m_Layer: 0
-  m_Name: TileMesh
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3221967737933111125
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5608242093953689062}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7054267028980504427}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &3435167616317392185
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5608242093953689062}
-  m_Mesh: {fileID: -2912966128741427601, guid: 2fa5834a1ea706240ae9b33be5226f4a, type: 3}
---- !u!23 &3746265868098594536
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5608242093953689062}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 79abb9fb559ecf543be32e911c40fe76, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &5641136658001319025
 GameObject:
   m_ObjectHideFlags: 0
@@ -8505,6 +8676,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 767222981272549756}
   _startingObject: {fileID: 5407380294395882597, guid: 08c3bf8a1c59d8b448fabce70e5240c3, type: 3}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 8138430230261420719}
 --- !u!1 &5779870608863999792
 GameObject:
@@ -8561,6 +8733,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 5561228385061259682}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &5781037051708421865
 GameObject:
@@ -8671,6 +8844,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 4592842231347250045}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &5788549808106650677
 GameObject:
@@ -8781,6 +8955,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 7639735083278416253}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &6000578632736277160
 GameObject:
@@ -8837,6 +9012,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 3836578284795263965}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &6000761137498340099
 GameObject:
@@ -9065,6 +9241,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 9011246221440695203}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &6265749325075104984
 GameObject:
@@ -9121,6 +9298,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 3605600366478166108}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &6313016823001473529
 GameObject:
@@ -9177,6 +9355,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 1744033310952110673}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &6401832650115035263
 GameObject:
@@ -9233,6 +9412,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 4157686822401967200}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &6410655248493267501
 GameObject:
@@ -9289,6 +9469,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 7398249899586575845}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &6600826770820782073
 GameObject:
@@ -9431,6 +9612,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 8081176542141140903}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &6627914348767673641
 GameObject:
@@ -10218,6 +10400,61 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &7008620065226722590
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4305211967421070804}
+  - component: {fileID: 985188834561138640}
+  m_Layer: 3
+  m_Name: Tile-Default(Clone)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4305211967421070804
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7008620065226722590}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 174208911233694102}
+  - {fileID: 3274286908655777529}
+  m_Father: {fileID: 6796589232731770306}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &985188834561138640
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7008620065226722590}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.4, y: 1.4, z: 1.4}
+  m_Center: {x: 0, y: 0.24, z: 0}
 --- !u!1 &7017026437316536838
 GameObject:
   m_ObjectHideFlags: 0
@@ -10449,6 +10686,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 9173695936000364959}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &7106883240966546320
 GameObject:
@@ -10645,6 +10883,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 9073289368588617841}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &7334511865117538452
 GameObject:
@@ -10927,6 +11166,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 8929513389196326479}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &7527572044453738534
 GameObject:
@@ -11037,6 +11277,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 3379985078283212943}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &7639735083278416253
 GameObject:
@@ -11535,6 +11776,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 5788549808106650677}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &8074304306688604223
 GameObject:
@@ -11798,6 +12040,7 @@ MonoBehaviour:
     x: 0
     y: 0
   _startTile: {fileID: 0}
+  _startingDirection: 0
   _myGridTile: {fileID: 5971075923091298924}
   _collider: {fileID: 3450683511080220789}
   _meshRenderer: {fileID: 1033222256499818897}
@@ -12050,6 +12293,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 2910046862957856492}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &8448946776251300070
 GameObject:
@@ -12405,6 +12649,7 @@ MonoBehaviour:
     x: 0
     y: 0
   _startTile: {fileID: 0}
+  _startingDirection: 0
   _myGridTile: {fileID: 209898330528301777}
   _collider: {fileID: 1668109837905218211}
   _meshRenderer: {fileID: 3541264183695830797}
@@ -12463,6 +12708,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 3290356699224034559}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &8825135684153564200
 GameObject:
@@ -12627,6 +12873,7 @@ MonoBehaviour:
   gridManager: {fileID: 5856545672580884406}
   tileObject: {fileID: 260029363666378827}
   _startingObject: {fileID: 0}
+  tileUI: {fileID: 0}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &8929513389196326479
 GameObject:
