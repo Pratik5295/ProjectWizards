@@ -87,9 +87,8 @@ namespace Team.UI.Gameplay
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            Debug.Log($"Click detected on: {gameObject.name}, toggle ghosting");
-
             //Have base character toggle Ghosting (characterRef)
+            characterRef.ToggleGhosting();
         }
         #endregion
     }

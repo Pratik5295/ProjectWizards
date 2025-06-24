@@ -385,9 +385,17 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
     public void SetGhosting(bool _value)
     {
+        if (_ghosting == null) return;
+
         _ghosting.SetGhosting(_value);
     }
 
+    public void ToggleGhosting()
+    {
+        if (_ghosting == null) return;
+
+        _ghosting.toggleGhosting();
+    }
 
     #endregion
 }
