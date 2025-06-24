@@ -42,7 +42,7 @@ ParticleSystem:
   serializedVersion: 8
   lengthInSec: 5
   simulationSpeed: 1
-  stopAction: 0
+  stopAction: 1
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
@@ -4917,6 +4917,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5946317564129554638}
+  - component: {fileID: 7767513131073982883}
   m_Layer: 0
   m_Name: Barrel Explosion
   m_TagString: Untagged
@@ -4939,6 +4940,18 @@ Transform:
   - {fileID: 7572423499474892577}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7767513131073982883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2869881261110337719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e68b4d5a503c7c40a7a9e9e86e6bc14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5732889834998816803
 GameObject:
   m_ObjectHideFlags: 0
@@ -9875,7 +9888,7 @@ ParticleSystem:
   serializedVersion: 8
   lengthInSec: 5
   simulationSpeed: 1
-  stopAction: 0
+  stopAction: 1
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}

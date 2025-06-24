@@ -10,7 +10,7 @@ public class Line_Length : MonoBehaviour
     private GameObject outline;
 
     [SerializeField]
-    private float lineLength;
+    public float lineLength;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -24,7 +24,7 @@ public class Line_Length : MonoBehaviour
         
     }
 
-    private void OnValidate()
+    public void ValidateLength()
     {
         Vector3 current_Loc = lineRenderer.GetPosition(1);
         Vector3 target_Loc = new Vector3(current_Loc.x, current_Loc.y, lineLength);
