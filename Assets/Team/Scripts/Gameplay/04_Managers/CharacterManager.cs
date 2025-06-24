@@ -173,6 +173,7 @@ namespace Team.Managers
             foreach (var _character in CharactersInLevel.Values)
             {
                 //Toggle Ghosting here through a bool value
+                _character.SetGhosting(toggleCharactersGhosting);
             }
         }
 
@@ -181,6 +182,7 @@ namespace Team.Managers
             foreach(var character in CharactersInLevel.Values)
             {
                 //Turn Ghosting off here
+                character.SetGhosting(false);
             }
             toggleCharactersGhosting = false;
         }
