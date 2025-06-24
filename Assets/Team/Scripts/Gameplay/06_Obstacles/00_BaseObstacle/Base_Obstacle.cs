@@ -22,6 +22,7 @@ public class Base_Obstacle : MonoBehaviour, IDestroyable
     public TileID CurrentTileID => _currentTileID;
     [SerializeField]
     protected GridTile _currentGridTile;
+    protected GridTile _previousGridTile;
 
     protected float OffsetValue;
 
