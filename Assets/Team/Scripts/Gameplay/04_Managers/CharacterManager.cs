@@ -1,12 +1,11 @@
-using UnityEngine;
 using System.Collections.Generic;
-using System;
-using Team.Data;
-using Team.Gameplay.GridSystem;
 using System.Linq;
+using Team.Data;
+using Team.Gameplay.Characters;
+using Team.Gameplay.GridSystem;
 using Team.Gameplay.TurnSystem;
 using Team.UI.Gameplay;
-using Team.Gameplay.Characters;
+using UnityEngine;
 
 namespace Team.Managers
 {
@@ -35,6 +34,9 @@ namespace Team.Managers
 
         [SerializeField]
         private GameObject UIGameCardPrefab;
+
+        [SerializeField]
+        private bool toggleCharactersGhosting = false;
 
 
         #region Unity Methods
@@ -93,6 +95,8 @@ namespace Team.Managers
             }
 
             GameTurnManager.Instance.OnCharactersLoaded();
+
+            GameTurnManager.Instance.OnTurnsProcessingEvent += TurnGhostingOff;
         }
 
         public void AddCharacter(CharacterData data)
@@ -123,6 +127,9 @@ namespace Team.Managers
            CharactersInLevel.Remove(kvp.Key);
 
            Destroy(kvp.Value.gameObject);
+           
+           GameTurnManager.Instance.OnTurnsProcessingEvent -= TurnGhostingOff;
+
         }
 
         [ContextMenu("Remove all characters")]
@@ -157,6 +164,25 @@ namespace Team.Managers
             if (CharactersInLevel.Count == 0) return;
 
             RemoveAllCharacters();
+        }
+
+        public void ToggleGhosting()
+        {
+            toggleCharactersGhosting = !toggleCharactersGhosting;
+
+            foreach (var _character in CharactersInLevel.Values)
+            {
+                //Toggle Ghosting here through a bool value
+            }
+        }
+
+        public void TurnGhostingOff()
+        {
+            foreach(var character in CharactersInLevel.Values)
+            {
+                //Turn Ghosting off here
+            }
+            toggleCharactersGhosting = false;
         }
 
         #endregion
