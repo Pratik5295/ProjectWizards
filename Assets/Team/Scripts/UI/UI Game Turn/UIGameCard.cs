@@ -13,6 +13,9 @@ namespace Team.UI.Gameplay
 
     public class UIGameCard : UIDragHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
+
+        public static int tracker;
+
         [SerializeField]
         private Image cardImage;
 
@@ -108,11 +111,15 @@ namespace Team.UI.Gameplay
 
                 isDone = true;
 
-                GameObject lockedCards = GameObject.FindGameObjectWithTag("Locked");
+/*                GameObject lockedCards = GameObject.FindGameObjectWithTag("Locked");
 
                 transform.SetParent(lockedCards.transform);
 
-                transform.position = lockedCards.transform.GetChild(0).position;
+                transform.position = lockedCards.transform.GetChild(0).position;*/
+
+                transform.SetSiblingIndex(tracker);
+
+                tracker += 1;
 
 
             }

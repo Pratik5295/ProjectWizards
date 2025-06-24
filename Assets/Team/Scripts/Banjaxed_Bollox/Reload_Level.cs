@@ -1,4 +1,5 @@
 using Team.Managers;
+using Team.UI.Gameplay;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -36,6 +37,13 @@ public class Reload_Level : MonoBehaviour
         LevelManager.Instance.LoadCurrentLevel();
 
 
+
+    }
+
+    public void ResetGameCardTracker()
+    {
+
+        UIGameCard.tracker = 0;
 
     }
 
