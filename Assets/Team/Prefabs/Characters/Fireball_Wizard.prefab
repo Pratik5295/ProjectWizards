@@ -296,6 +296,7 @@ MonoBehaviour:
     m_PreInfinity: 1
     m_PostInfinity: 2
     m_RotationOrder: 4
+  _ghosting: {fileID: 3922369800128576736}
   _projectilePrefab: {fileID: 3625092468094944024, guid: 122d323c62190ee489f082c0d09dbb1c, type: 3}
   _fireFromPoint: {fileID: 5150221880546262881}
   _projectileRange: -100
@@ -412,6 +413,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1996949661786862625, guid: d5d47d27e75253341ad1708a54ea00b9, type: 3}
   m_PrefabInstance: {fileID: 17609229456209626}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3922369800128576736 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3914051444212451898, guid: d5d47d27e75253341ad1708a54ea00b9, type: 3}
+  m_PrefabInstance: {fileID: 17609229456209626}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d17534397bc32014da9fbcefda074191, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1688266704815021383
 PrefabInstance:
   m_ObjectHideFlags: 0

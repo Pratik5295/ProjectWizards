@@ -279,6 +279,7 @@ MonoBehaviour:
     m_PreInfinity: 1
     m_PostInfinity: 2
     m_RotationOrder: 4
+  _ghosting: {fileID: 750667303853506599}
   _abilityStartOffset: 2
   _lerpDuration: 0.25
   _lerpDelay: 0.01
@@ -508,6 +509,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 70bdffb65e4c68549a9dda94fdff4cb5, type: 3}
+--- !u!114 &750667303853506599 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4896799715752823528, guid: 70bdffb65e4c68549a9dda94fdff4cb5, type: 3}
+  m_PrefabInstance: {fileID: 5304688999701285583}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67eaa560d527e2242887fd41593007d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &5920155060263354094 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1996949661786862625, guid: 70bdffb65e4c68549a9dda94fdff4cb5, type: 3}

@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class ProjectileGhosting : GenericGhosting
 {
@@ -7,9 +6,9 @@ public class ProjectileGhosting : GenericGhosting
 
     private Line_Length projectilePath;
 
-    public override void InitialiseGhostingContent()
+    protected override void Awake()
     {
-        base.InitialiseGhostingContent();
+        base.Awake();
 
         projectilePath = ghostingEffectRef.GetComponent<Line_Length>();
     }
