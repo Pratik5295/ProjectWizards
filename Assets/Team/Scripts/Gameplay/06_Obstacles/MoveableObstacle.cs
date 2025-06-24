@@ -29,7 +29,6 @@ public class MoveableObstacle : Base_Obstacle, IMoveable
     public IEnumerator MoveByAmount(int movementAmount, Vector2 dir, bool wasPushed)
     {
         _previousTileID = _currentTileID;
-        _currentGridTile.SetObjectOccupyingTile(null);
 
         for (int i = 0; i < movementAmount; i++)
         {
@@ -55,7 +54,9 @@ public class MoveableObstacle : Base_Obstacle, IMoveable
                 yield break;
             }
         }
-        _currentGridTile.SetObjectOccupyingTile(this.gameObject);
+        _previousGridTile.UpdateOccupiedStatus(false);
+
+        _currentGridTile.UpdateOccupiedStatus(true, gameObject);
 
         PlayerMove playerMove = new PlayerMove(true);
         HistoryStack.Push(playerMove);

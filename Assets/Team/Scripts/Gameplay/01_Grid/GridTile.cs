@@ -36,6 +36,7 @@ namespace Team.Gameplay.GridSystem
         public GameObject tilePrefab;
 
         public TileType tileType;
+        private TileType startingTileType;
 
         public TileDirection Direction; //Rotation 
 
@@ -68,6 +69,8 @@ namespace Team.Gameplay.GridSystem
             {
                 objectOccupyingTile.GetComponent<Base_Obstacle>().UpdateObstacleTileData(TileID, this);
             }
+
+            startingTileType = tileType;
 
             //Check if spawn tile
             if (IsTileWalkable())
@@ -195,6 +198,33 @@ namespace Team.Gameplay.GridSystem
         {
             if (!Object) { objectOccupyingTile = null; }
             objectOccupyingTile = Object;
+            SetTileType(TileType.OCCUPIEDTILE);
+        }
+
+        /// <summary>
+        /// Updates the tiles occupied status.
+        /// </summary>
+        /// <param name="isOccupied"></param>
+        /// <param name="OccupyingObject"></param>
+        public void UpdateOccupiedStatus(bool isOccupied = false, GameObject OccupyingObject = null)
+        {
+            switch (isOccupied)
+            {
+                case true:
+                        if (!OccupyingObject) { return; }
+                        objectOccupyingTile = OccupyingObject;
+                        SetTileType(TileType.OCCUPIEDTILE);
+                    break;
+                case false:
+                    objectOccupyingTile = null;
+                    SetTileType(TileType.TILE);
+                    break;
+            }
+        }
+
+        public void ResetTypeToDefault()
+        {
+            tileType = startingTileType;
         }
 
         public void ParentOccupyingObject()
