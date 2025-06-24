@@ -40,12 +40,26 @@ namespace Team.UI.Gameplay
         protected void Start()
         {
             OnSiblingIndexUpdatedEvent += OnSiblingIndexUpdatedEventHandler;
+
+            characterRef.OnStateChanged += CheckIfDead;
         }
 
         private void OnDestroy()
         {
             OnSiblingIndexUpdatedEvent -= OnSiblingIndexUpdatedEventHandler;
         }
+
+        public void OnEnable()
+        {
+            
+        }
+
+        public void OnDisable()
+        {
+            characterRef.OnStateChanged -= CheckIfDead;
+        }
+
+
         #endregion
 
         #region Event Listeners
@@ -133,7 +147,26 @@ namespace Team.UI.Gameplay
         }
 
 
+        public void CheckIfDead()
+        {
+            Debug.Log("Fired");
 
+            if (characterRef.IsAlive == false)
+            {
+                isDone = true;
+
+                transform.SetSiblingIndex(tracker);
+
+                tracker += 1;
+
+                Image card_Image = GetComponent<Image>();
+
+                cardImage.color = Color.gray;
+
+            }
+
+
+        }
 
 
     }
