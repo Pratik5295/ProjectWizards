@@ -95,8 +95,13 @@ namespace Team.UI.Gameplay
 
         public void OnPointerClick(PointerEventData eventData)
         {
+            if (eventData.button == PointerEventData.InputButton.Right)
+            {
+                characterRef.ToggleGhosting();
+            }
+
             //Have base character toggle Ghosting (characterRef)
-            characterRef.ToggleGhosting();
+            
         }
         #endregion
 
