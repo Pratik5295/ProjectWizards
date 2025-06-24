@@ -1,4 +1,5 @@
 using Team.UI;
+using Team.UI.DialogueSystem;
 using UnityEngine;
 
 namespace Team.Managers
@@ -14,6 +15,9 @@ namespace Team.Managers
 
         [SerializeField]
         private ScreenManager _screenManager;
+
+        [SerializeField]
+        private InkDialogueManager _dialogueManager;
 
         [SerializeField]
         private GameObject playButton;
@@ -109,6 +113,15 @@ namespace Team.Managers
         public void ShowPostGameUI()
         {
             _screenManager.ShowScreen(GameConstants.MetaConstants.GameScreen.POST_GAME);
+        }
+
+        #endregion
+
+        #region Dialogue Manager Handling
+
+        public void SetCurrentDialogue(TextAsset _asset)
+        {
+            _dialogueManager.SetDialogue(_asset);
         }
 
         #endregion

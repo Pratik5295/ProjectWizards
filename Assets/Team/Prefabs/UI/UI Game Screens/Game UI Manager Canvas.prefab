@@ -121,6 +121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _screenManager: {fileID: 0}
+  _dialogueManager: {fileID: 2090159777669670569}
   playButton: {fileID: 8560273047507574398}
   restartButton: {fileID: 6466912586907713977}
 --- !u!114 &3813925186659251298
@@ -248,6 +249,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3d08e7c39fa8234e980d2da748387e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2090159777669670569 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6681399092426347368, guid: c69907763df54884aa7d8d64a96571ae, type: 3}
+  m_PrefabInstance: {fileID: 4735715523197662657}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5dfaab8d9cbdd547bf2877139d35f3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &5765676718773089652 stripped
