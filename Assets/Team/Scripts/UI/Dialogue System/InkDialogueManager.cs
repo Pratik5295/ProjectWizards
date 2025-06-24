@@ -13,6 +13,7 @@ namespace Team.UI.DialogueSystem
         public Image portraitImage;
         private Story story;
 
+        //TODO: Convert these into a character sprite atlas
         public Sprite flameWizard;
         public Sprite pushWizard;
 
@@ -43,25 +44,49 @@ namespace Team.UI.DialogueSystem
                         portraitTag = tag.Substring("portrait:".Length).Trim();
                 }
 
-                nameText.text = speaker;
-
-                // Set portrait image based on tag
-                switch (portraitTag)
+                // Handle speaker name display
+                if (!string.IsNullOrEmpty(speaker))
                 {
-                    case "flame_wizard":
-                        portraitImage.sprite = flameWizard;
-                        break;
-                    case "push_wizard":
-                        portraitImage.sprite = pushWizard;
-                        break;
-                    default:
-                        portraitImage.sprite = null;
-                        break;
+                    nameText.text = speaker;
+                    nameText.gameObject.SetActive(true);
+                }
+                else
+                {
+                    nameText.gameObject.SetActive(false);
+                }
+
+                // Handle portrait image display
+                if (!string.IsNullOrEmpty(portraitTag))
+                {
+                    portraitImage.sprite = GetPortraitByTag(portraitTag);
+                    portraitImage.gameObject.SetActive(portraitImage.sprite != null);
+                }
+                else
+                {
+                    portraitImage.gameObject.SetActive(false);
                 }
             }
             else
             {
                 UIManager.Instance.ShowGameUI();
+
+                nameText.gameObject.SetActive(false);
+                portraitImage.gameObject.SetActive(false);
+            }
+        }
+
+
+        //TODO: Turn this into a separate class or more proper getter system
+        private Sprite GetPortraitByTag(string tag)
+        {
+            switch (tag)
+            {
+                case "flame_wizard":
+                    return flameWizard;
+                case "push_wizard":
+                    return pushWizard;
+                default:
+                    return null;
             }
         }
 
