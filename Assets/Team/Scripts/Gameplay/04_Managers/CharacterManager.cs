@@ -1,12 +1,11 @@
-using UnityEngine;
 using System.Collections.Generic;
-using System;
-using Team.Data;
-using Team.Gameplay.GridSystem;
 using System.Linq;
+using Team.Data;
+using Team.Gameplay.Characters;
+using Team.Gameplay.GridSystem;
 using Team.Gameplay.TurnSystem;
 using Team.UI.Gameplay;
-using Team.Gameplay.Characters;
+using UnityEngine;
 
 namespace Team.Managers
 {
@@ -33,6 +32,12 @@ namespace Team.Managers
         [SerializeField]
         private Transform cardHolder;
 
+        [SerializeField]
+        private GameObject UIGameCardPrefab;
+
+        [SerializeField]
+        private bool toggleCharactersGhosting = false;
+
 
         #region Unity Methods
         private void Awake()
@@ -50,12 +55,29 @@ namespace Team.Managers
         private void Start()
         {
             LoadCharacterReskinMap();
-            SpawnAllCharacters();
+           
         }
 
         #endregion
 
         #region Public Methods
+
+        public void LoadCharactersFromLeveData(List<CharacterData> _characters)
+        {
+            CleanUp();
+
+            CharactersMap.Clear();
+
+            //Load all the characters
+            foreach (CharacterData character in _characters)
+            {
+                CharactersMap.Add(character);
+            }
+
+            //Initialize character dictionary & spawn characters
+            SpawnAllCharacters();
+
+        }
 
         public Base_Ch GetCharacter(string _characterName)
         {
@@ -73,12 +95,15 @@ namespace Team.Managers
             }
 
             GameTurnManager.Instance.OnCharactersLoaded();
+
+            GameTurnManager.Instance.OnTurnsProcessingEvent += TurnGhostingOff;
         }
 
         public void AddCharacter(CharacterData data)
         {
             //Spawn the character
             var characterObject = Instantiate(data.CharacterPrefab);
+            characterObject.name = $"{data.CharacterID}";
 
             TileID tileID = new TileID((int)data.StartTileID.x, (int)data.StartTileID.y);
 
@@ -102,10 +127,13 @@ namespace Team.Managers
            CharactersInLevel.Remove(kvp.Key);
 
            Destroy(kvp.Value.gameObject);
+           
+           GameTurnManager.Instance.OnTurnsProcessingEvent -= TurnGhostingOff;
+
         }
 
-        [ContextMenu("Reset all characters")]
-        public void ResetAllCharacters()
+        [ContextMenu("Remove all characters")]
+        public void RemoveAllCharacters()
         {
             //Delete all characters
             foreach(var _character in CharactersInLevel)
@@ -122,13 +150,48 @@ namespace Team.Managers
                 Destroy(card.gameObject);
             }
         }
+
+        public void ResetAllCharacters()
+        {
+            foreach (var _character in CharactersInLevel)
+            {
+                _character.Value.UndoMovement();
+            }
+        }
+
+        public void CleanUp()
+        {
+            if (CharactersInLevel.Count == 0) return;
+
+            RemoveAllCharacters();
+        }
+
+        public void ToggleGhosting()
+        {
+            toggleCharactersGhosting = !toggleCharactersGhosting;
+
+            foreach (var _character in CharactersInLevel.Values)
+            {
+                //Toggle Ghosting here through a bool value
+            }
+        }
+
+        public void TurnGhostingOff()
+        {
+            foreach(var character in CharactersInLevel.Values)
+            {
+                //Turn Ghosting off here
+            }
+            toggleCharactersGhosting = false;
+        }
+
         #endregion
 
         #region Private Methods
 
         private void LoadCardUI(Base_Ch _character, CharacterData data)
         {
-            var gameCard = Instantiate(data.UICardPrefab, cardHolder);
+            var gameCard = Instantiate(UIGameCardPrefab, cardHolder);
             var gameTurn = gameCard.GetComponent<GameTurn>();
             gameTurn.SetupGameTurn(_character);
 

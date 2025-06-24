@@ -18,6 +18,8 @@ public class ChProjectileWizard : Base_Ch
     private Base_Projectile scProjectile;
     private QuadraticCurve curve;
 
+    private ProjectileGhosting ghostingEffect;
+
     [Header("---Wizard Projectile Stats---")]
     [Range(-1, -300)]
     [SerializeField] private int _projectileRange = -1;
@@ -38,6 +40,12 @@ public class ChProjectileWizard : Base_Ch
         curve.controlPoint = new GameObject("Curve_ControlPoint").transform;
         curve.controlPoint.transform.parent = curve.transform;
         curve.controlPoint.localPosition = new Vector3(_projectileRange/2, 0, 0);
+
+        if (transform.GetComponentInChildren<ProjectileGhosting>())
+        {
+            ghostingEffect = transform.GetComponentInChildren<ProjectileGhosting>();
+            ghostingEffect.SetProjectionValue(_projectileRange);
+        }
     }
 
 

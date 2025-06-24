@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Team.Gameplay.GridSystem;
 using UnityEngine;
 using Team.GameConstants;
+using UnityEditor.Experimental.GraphView;
 
 namespace Team.GameConstants
 {
@@ -44,6 +45,14 @@ public class ChRotatorWizard : Base_Ch
     private float _landingVFXOffset;
     private VFXManager _landingVFXManager;
 
+    private void OnDestroy()
+    {
+        if(_landingVFXManager != null)
+        {
+            Destroy(_landingVFXManager);
+        }
+    }
+
     public override void InitialiseCharacter(TileID StartingTileID, Enum_GridDirection startingDirection)
     {
         base.InitialiseCharacter(StartingTileID, startingDirection);
@@ -70,7 +79,7 @@ public class ChRotatorWizard : Base_Ch
 
         _rotatorHolder = new GameObject("_rotatorHolder");
         _rotatorHolder.transform.position = centerTile.TilePosition;
-        _rotatorHolder.transform.SetParent(ref_gridManager.transform.GetChild(0));
+        _rotatorHolder.transform.SetParent(ref_gridManager.CurrentTileParent.transform);
 
         for (int i = 0; i < _tilesToMove.Count; i++)
         {
@@ -108,8 +117,6 @@ public class ChRotatorWizard : Base_Ch
                 UndoRotate();
             }
         }
-
-        OnTurnComplete?.Invoke();
     }
 
     private void UndoRotate()
@@ -123,7 +130,7 @@ public class ChRotatorWizard : Base_Ch
 
         _rotatorHolder = new GameObject("_rotatorHolder");
         _rotatorHolder.transform.position = centerTile.TilePosition;
-        _rotatorHolder.transform.SetParent(ref_gridManager.transform.GetChild(0));
+        _rotatorHolder.transform.SetParent(ref_gridManager.CurrentTileParent.transform);
 
         for (int i = 0; i < _tilesToMove.Count; i++)
         {
@@ -156,17 +163,14 @@ public class ChRotatorWizard : Base_Ch
             return;
         }
 
-
-        GridTile forwardTile = ref_gridManager.FindTile(new TileID(centerTile.TileID.x, centerTile.TileID.y + 1));
-        GridTile backwardTile = ref_gridManager.FindTile(new TileID(centerTile.TileID.x, centerTile.TileID.y - 1));
-        GridTile rightTile = ref_gridManager.FindTile(new TileID(centerTile.TileID.x + 1, centerTile.TileID.y));
-        GridTile leftTile = ref_gridManager.FindTile(new TileID(centerTile.TileID.x - 1, centerTile.TileID.y));
+        GridTile[] NeighbourTiles = centerTile.FindNeighbouringTiles();
 
         _tilesToMove.Add(centerTile);
-        _tilesToMove.Add(forwardTile);
-        _tilesToMove.Add(backwardTile);
-        _tilesToMove.Add(rightTile);
-        _tilesToMove.Add(leftTile);
+
+        for(int i = 1; i < NeighbourTiles.Length; i++)
+        {
+            _tilesToMove.Add(NeighbourTiles[i]);
+        }
     }
 
     private void TileDataChanges()
@@ -200,19 +204,19 @@ public class ChRotatorWizard : Base_Ch
                     {
                         case 1:
                             _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x + 1, _tilesToMove[i].TileID.y - 1);
-                            _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
+                            _tilesToMove[i].name = MetaConstants.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
                             break;
                         case 2:
                             _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x - 1, _tilesToMove[i].TileID.y + 1);
-                            _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
+                            _tilesToMove[i].name = MetaConstants.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
                             break;
                         case 3:
                             _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x - 1, _tilesToMove[i].TileID.y - 1);
-                            _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
+                            _tilesToMove[i].name = MetaConstants.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
                             break;
                         case 4:
                             _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x + 1, _tilesToMove[i].TileID.y + 1);
-                            _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
+                            _tilesToMove[i].name = MetaConstants.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
                             break;
                     }
                   break;
@@ -221,19 +225,19 @@ public class ChRotatorWizard : Base_Ch
                     {
                         case 1:
                             _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x - 1, _tilesToMove[i].TileID.y - 1);
-                            _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
+                            _tilesToMove[i].name = MetaConstants.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
                             break;
                         case 2:
                             _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x + 1, _tilesToMove[i].TileID.y + 1);
-                            _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
+                            _tilesToMove[i].name = MetaConstants.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
                             break;
                         case 3:
                             _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x - 1, _tilesToMove[i].TileID.y + 1);
-                            _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
+                            _tilesToMove[i].name = MetaConstants.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
                             break;
                         case 4:
                             _tilesToMove[i].TileID = new TileID(_tilesToMove[i].TileID.x + 1, _tilesToMove[i].TileID.y - 1);
-                            _tilesToMove[i].name = ref_gridManager.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
+                            _tilesToMove[i].name = MetaConstants.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
                             break;
                     }
                     break;
@@ -255,7 +259,7 @@ public class ChRotatorWizard : Base_Ch
 
         for (int i = 0; i < _tilesToMove.Count; i++)
         {
-            _tilesToMove[i].transform.SetParent(ref_gridManager.transform.GetChild(0));
+            _tilesToMove[i].transform.SetParent(ref_gridManager.CurrentTileParent.transform);
             if (_tilesToMove[i].ObjectOccupyingTile)
             {
                 if (_tilesToMove[i].ObjectOccupyingTile.CompareTag(MetaConstants.CharacterTag))
@@ -264,10 +268,10 @@ public class ChRotatorWizard : Base_Ch
                 }
                 else if (_tilesToMove[i].ObjectOccupyingTile.CompareTag(MetaConstants.EnvironmentTag))
                 {
-                    _tilesToMove[i].ObjectOccupyingTile.GetComponent<ObstacleData>().UpdateObstacleTileData(_tilesToMove[i].TileID, _tilesToMove[i]);
-                    if (_tilesToMove[i].ObjectOccupyingTile.GetComponent<Base_Ch>())
+                    _tilesToMove[i].ObjectOccupyingTile.GetComponent<Base_Obstacle>().UpdateObstacleTileData(_tilesToMove[i].TileID, _tilesToMove[i]);
+                    if (_tilesToMove[i].ObjectOccupyingTile.GetComponent<Base_Obstacle>())
                     {
-                        _tilesToMove[i].ObjectOccupyingTile.GetComponent<Base_Ch>().UpdateCurrentTileID();
+                        _tilesToMove[i].ObjectOccupyingTile.GetComponent<Base_Obstacle>().UpdateCurrentTileID();
                     }
                 }
 

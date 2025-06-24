@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using Team.GameConstants;
+using Team.Gameplay.GridSystem;
+using UnityEditor;
 
 
 namespace Team.Gameplay.GridSystem
@@ -38,12 +40,14 @@ namespace Team.Gameplay.GridSystem
         public TileDirection Direction; //Rotation 
 
         [SerializeField]
-        private GridManager gridManager;
+        private LevelTileCreator gridManager;
 
         [SerializeField]
         private GameObject tileObject = null; //The created tile object
 
         [SerializeField] private GameObject _startingObject;
+
+        [SerializeField] private UITile tileUI;
 
         [SerializeField]
         private GameObject objectOccupyingTile;
@@ -55,15 +59,14 @@ namespace Team.Gameplay.GridSystem
         /// <summary>
         /// Initialize the tile
         /// </summary>
-        public bool Init(GridManager _gridManager, TileID _tileId)
+        public bool Init(LevelTileCreator _tileCreator, TileID _tileId)
         {
-            gridManager = _gridManager;
-
+            gridManager = _tileCreator;
             TileID = _tileId;
 
             if (objectOccupyingTile)
             {
-                objectOccupyingTile.GetComponent<ObstacleData>().UpdateObstacleTileData(TileID, this);
+                objectOccupyingTile.GetComponent<Base_Obstacle>().UpdateObstacleTileData(TileID, this);
             }
 
             //Check if spawn tile
@@ -100,7 +103,10 @@ namespace Team.Gameplay.GridSystem
             tileType = TileType.EMPTY;
             DestroyImmediate(tileObject);
             tileObject = null;
-            gridManager?.RemoveTileFromGrid(TileID, this);
+
+#if UNITY_EDITOR
+            EditorUtility.SetDirty(gameObject);
+#endif
         }
 
         [ContextMenu("Set Tile to Object")]
@@ -108,7 +114,10 @@ namespace Team.Gameplay.GridSystem
         {
             tileType = TileType.TILE;
             tileObject = SpawnTileObject();
-            gridManager?.AddTileToGrid(TileID, this);
+
+#if UNITY_EDITOR
+            EditorUtility.SetDirty(gameObject);
+#endif
         }
 
         [ContextMenu("Spawn Object Occupying Tile space")]
@@ -128,9 +137,9 @@ namespace Team.Gameplay.GridSystem
                 {
                     InstantiatedObject.AddComponent<BoxCollider>();
                 }
-                if (!InstantiatedObject.GetComponent<ObstacleData>()) 
+                if (!InstantiatedObject.GetComponent<Base_Obstacle>()) 
                 {
-                    ObstacleData obstacleData = InstantiatedObject.AddComponent<ObstacleData>();
+                    Base_Obstacle obstacleData = InstantiatedObject.AddComponent<Base_Obstacle>();
                     obstacleData.UpdateObstacleTileData(TileID, this);
                     obstacleData.InitialiseObstacleData();
                 }
@@ -142,22 +151,30 @@ namespace Team.Gameplay.GridSystem
                 {
                     objectOccupyingTile.AddComponent<BoxCollider>();
                 }
-                if (!objectOccupyingTile.GetComponent<ObstacleData>())
+                if (!objectOccupyingTile.GetComponent<Base_Obstacle>())
                 {
-                    objectOccupyingTile.AddComponent<ObstacleData>();
+                    objectOccupyingTile.AddComponent<Base_Obstacle>();
                 }
-                objectOccupyingTile.GetComponent<ObstacleData>().UpdateObstacleTileData(TileID, this);
-                objectOccupyingTile.GetComponent<ObstacleData>().InitialiseObstacleData();
+                objectOccupyingTile.GetComponent<Base_Obstacle>().UpdateObstacleTileData(TileID, this);
+                objectOccupyingTile.GetComponent<Base_Obstacle>().InitialiseObstacleData();
             }
             objectOccupyingTile.tag = GameConstants.MetaConstants.EnvironmentTag;
+
+#if UNITY_EDITOR
+            EditorUtility.SetDirty(gameObject);
+#endif
         }
 
         [ContextMenu("Re-Update Obstacle Data")]
         public void UpdateObstacleData()
         {
             if (!objectOccupyingTile) { return; }
-            objectOccupyingTile.GetComponent<ObstacleData>().UpdateObstacleTileData(TileID, this);
-            objectOccupyingTile.GetComponent<ObstacleData>().InitialiseObstacleData();
+            objectOccupyingTile.GetComponent<Base_Obstacle>().UpdateObstacleTileData(TileID, this);
+            objectOccupyingTile.GetComponent<Base_Obstacle>().InitialiseObstacleData();
+
+#if UNITY_EDITOR
+            EditorUtility.SetDirty(gameObject);
+#endif
         }
 
 
@@ -193,6 +210,34 @@ namespace Team.Gameplay.GridSystem
         public void SetTileType(TileType typeOfTile)
         {
             tileType = typeOfTile;
+        }
+
+        public void ShowTileUI()
+        {
+            tileUI.gameObject.SetActive(true);
+
+            string tileID = $"{TileID.x}, {TileID.y}";
+
+            tileUI.PopulateTileText(tileID);
+        }
+        public GridTile[] FindNeighbouringTiles()
+        {
+            GridManager gridInstance = GridManager.Instance;
+
+            GridTile[] NeighbourTiles = new GridTile[5];
+
+            NeighbourTiles[0] = this;
+            NeighbourTiles[1] = gridInstance.FindTile(new TileID(TileID.x, TileID.y + 1));
+            NeighbourTiles[2] = gridInstance.FindTile(new TileID(TileID.x, TileID.y - 1));
+            NeighbourTiles[3] = gridInstance.FindTile(new TileID(TileID.x + 1, TileID.y));
+            NeighbourTiles[4] = gridInstance.FindTile(new TileID(TileID.x - 1, TileID.y));
+
+            return NeighbourTiles;
+        }
+
+        public void HideTileUI()
+        {
+            tileUI.gameObject.SetActive(false); 
         }
     }
 }

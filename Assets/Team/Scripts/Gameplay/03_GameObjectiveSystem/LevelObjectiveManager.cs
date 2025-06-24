@@ -1,7 +1,16 @@
 using System.Collections.Generic;
+using Team.GameConstants;
 using Team.Managers;
 using Team.UI;
 using UnityEngine;
+
+namespace Team.GameConstants
+{
+    public static partial class MetaConstants
+    {
+        public const float ShowPostGameScreenAfter = 2f;
+    }
+}
 
 namespace Team.Gameplay.ObjectiveSystem
 {
@@ -54,7 +63,7 @@ namespace Team.Gameplay.ObjectiveSystem
             //Turn Manager wouldn't have loaded here, need to handle this via the game load data?
             RegisterEvents();
 
-            InitalizeObjectives();
+          
         }
 
         private void OnDestroy()
@@ -85,6 +94,23 @@ namespace Team.Gameplay.ObjectiveSystem
         #endregion
 
         #region Public Methods
+
+        public void LoadObjectivesFromLevelData(List<GameObjectiveData> _objectives)
+        {
+            CleanUp();
+
+            _objectiveMap.Clear();
+
+            //Load all objectives
+            foreach(var objective in _objectives)
+            {
+                _objectiveMap.Add(objective);
+            }
+
+            //Load the objectives
+            InitalizeObjectives();
+        }
+
         /// <summary>
         /// Initialize the objectives for this level
         /// </summary>
@@ -111,6 +137,11 @@ namespace Team.Gameplay.ObjectiveSystem
             }
         }
 
+        public void CleanUp()
+        {
+            objectivesHolder.ClearAllObjectives();
+        }
+
         public void ResetAllObjectives()
         {
             foreach(var objective in _levelObjectives)
@@ -132,12 +163,37 @@ namespace Team.Gameplay.ObjectiveSystem
                 return;
             }
 
+            //Init Level Completed as true
+            bool levelCompleted = true;
+
             foreach (var objective in _levelObjectives)
             {
+                //Returns true if completed
                 bool result = objective.CheckObjectiveComplete();
+
+                //If Any objective fails, then level not completed
+                if (!result)
+                {
+                    levelCompleted = false;
+                }
 
                 objectivesHolder.UpdateObjective(objective.Data,result);
             }
+
+            //Check if actually the level was completed
+            if (levelCompleted)
+            {
+                LevelManager.Instance.OnCurrentLevelCompleted();
+                UIManager.Instance.ShowEmptyUI();
+                Invoke(nameof(ShowLevelCompletedUI), MetaConstants.ShowPostGameScreenAfter);
+               
+            }
+        }
+
+        private void ShowLevelCompletedUI()
+        {
+          
+            UIManager.Instance.ShowPostGameUI();
         }
 
         #endregion
