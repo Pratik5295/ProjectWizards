@@ -272,7 +272,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
             transform.position = new Vector3(_currentTile.TilePosition.x, transform.position.y, _currentTile.TilePosition.z);
             return; 
         }
-        _currentTile.SetObjectOccupyingTile(null);
+        _currentTile.UpdateOccupiedStatus();
 
         _currentTileID = _startTileID;
         _currentTile = ref_gridManager.FindTile(_currentTileID);
