@@ -22,7 +22,9 @@ namespace Team.UI
         void Awake()
         {
             tagToLines = new Dictionary<BarkTag, List<string>>();
-            ParseInkText(inkFile.text);
+            //ParseInkText(inkFile.text);
+
+            ParseInkFile(inkFile.text);
         }
 
         private void ParseInkText(string text)
@@ -37,59 +39,77 @@ namespace Team.UI
                     Debug.LogError(msg);
             };
 
-            //InkList newValue = new InkList("colors.red", story.listDefinitions);
-
-            //string[] lines = text.Split('\n');
-            //string tagString = null;
-
-            //foreach (string rawLine in lines)
-            //{
-            //    string line = rawLine.Trim();
-
-            //    // Tag line
-            //    if (line.StartsWith("#"))
-            //    {
-            //        tagString = line.Substring(1).Trim();
-
-            //        var tag = GetTag(tagString);
-
-            //        if (!tagToLines.ContainsKey(tag))
-            //            tagToLines[tag] = new List<string>();
-            //    }
-            //    // Choice line (e.g., {~option1|option2|...})
-            //    else if (line.StartsWith("{~") && tagString != null)
-            //    {
-            //        string optionsBlock = line.Trim('{', '}', '~');
-            //        string[] options = optionsBlock.Split('|');
-
-            //        var tag = GetTag(tagString);
-            //        foreach (string option in options)
-            //        {
-            //            tagToLines[tag].Add(option.Trim());
-            //        }
-            //    }
-            //}
-
-            //foreach(var tag in story.globalTags)
-            //{
-            //    Debug.Log($"{tag} : {tag.Substring("on_click:".Length).Trim()}");
-            //}
+            
             var barkLists = story.listDefinitions.lists;
-            Debug.Log($"Pratik {barkLists.Count} and ");
+            Debug.Log($"Pratik {barkLists.Count} ");
 
+            //Tag: On Click , On Fail, On Fire etc
             foreach(var bark in barkLists)
             {
+                BarkTag tag = GetTag(bark.name);
+                List<string> barkLines = new List<string>();
+                //The contents of each list
                 foreach (var item in bark.items) 
                 {
-                    Debug.Log($"Value: {item.Key.fullName}");
+                    Debug.Log($"Pratik Value: {item.Key.itemName}");
+                    barkLines.Add(item.Key.itemName);
                 }
+
+                tagToLines.Add(tag, barkLines); 
             }
 
-            List<string> barkLines = new List<string>();
+            foreach(var tag in tagToLines)
+            {
+                Debug.Log($"Pratik Tag:{tag.Key} and Values: {tag.Value.Count}");
+            }
 
             
 
             Debug.Log($"Bark loaded successfully. Count: {tagToLines.Count}");
+        }
+
+
+        public Dictionary<string, List<string>> barkTable = new();
+        private void ParseInkFile(string inkText)
+        {
+            string[] lines = inkText.Split('\n');
+            string currentKnot = null;
+
+            foreach (string rawLine in lines)
+            {
+                string line = rawLine.Trim();
+
+                // Start of a knot, like === onClick ===
+                if (line.StartsWith("===") && line.EndsWith("==="))
+                {
+                    currentKnot = line.Trim('=').Trim();
+                    barkTable[currentKnot] = new List<string>();
+                }
+                // If a line starts with {~ and we're in a knot, extract the choices
+                else if (line.StartsWith("{~") && currentKnot != null)
+                {
+                    string content = line.Trim('{', '}', '~');
+                    string[] options = content.Split('|');
+
+                    foreach (var option in options)
+                    {
+                        string trimmed = option.Trim();
+                        if (!string.IsNullOrEmpty(trimmed))
+                        {
+                            barkTable[currentKnot].Add(trimmed);
+                        }
+                    }
+                }
+            }
+
+                foreach (var kvp in barkTable)
+            {
+                Debug.Log($"Knot: {kvp.Key}");
+                foreach (var line in kvp.Value)
+                {
+                    Debug.Log($"  - {line}");
+                }
+            }
         }
 
         public string GetRandomBark(BarkTag tag)
