@@ -1,5 +1,6 @@
-using System.Collections.Generic;
+
 using Ink.Runtime;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Team.UI
@@ -17,111 +18,76 @@ namespace Team.UI
     {
         [SerializeField] private TextAsset inkFile;
 
-        private Dictionary<BarkTag, List<string>> tagToLines;
+        private Story story;
+        public Dictionary<string, List<string>> inkStringLists = new();
 
-        void Awake()
+        void Start()
         {
-            tagToLines = new Dictionary<BarkTag, List<string>>();
-            //ParseInkText(inkFile.text);
+            story = new Story(inkFile.text);
+            ExtractLists(new List<string> { "OnClick", "OnHover" });
 
-            ParseInkFile(inkFile.text);
+            Debug.Log("Type: On Click");
+            PrintList("OnClick");
+
+            Debug.Log("Type: On Hover");
+            PrintList("OnHover");
         }
 
-        private void ParseInkText(string text)
+        void ExtractLists(List<string> keys)
         {
-            Story story = new Story(inkFile.text);
-
-            story.onError += (msg, type) =>
+            foreach (var key in keys)
             {
-                if (type == Ink.ErrorType.Warning)
-                    Debug.LogWarning(msg);
-                else
-                    Debug.LogError(msg);
-            };
-
-            
-            var barkLists = story.listDefinitions.lists;
-            Debug.Log($"Pratik {barkLists.Count} ");
-
-            //Tag: On Click , On Fail, On Fire etc
-            foreach(var bark in barkLists)
-            {
-                BarkTag tag = GetTag(bark.name);
-                List<string> barkLines = new List<string>();
-                //The contents of each list
-                foreach (var item in bark.items) 
+                // Try to jump to a knot named "key"
+                bool pathExists = story.mainContentContainer.namedContent.ContainsKey(key);
+                if (!pathExists)
                 {
-                    Debug.Log($"Pratik Value: {item.Key.itemName}");
-                    barkLines.Add(item.Key.itemName);
+                    Debug.LogWarning($"Knot '{key}' not found in Ink.");
+                    continue;
                 }
 
-                tagToLines.Add(tag, barkLines); 
-            }
+                story.ChoosePathString(key);
+                List<string> values = new();
 
-            foreach(var tag in tagToLines)
-            {
-                Debug.Log($"Pratik Tag:{tag.Key} and Values: {tag.Value.Count}");
-            }
-
-            
-
-            Debug.Log($"Bark loaded successfully. Count: {tagToLines.Count}");
-        }
-
-
-        public Dictionary<string, List<string>> barkTable = new();
-        private void ParseInkFile(string inkText)
-        {
-            string[] lines = inkText.Split('\n');
-            string currentKnot = null;
-
-            foreach (string rawLine in lines)
-            {
-                string line = rawLine.Trim();
-
-                // Start of a knot, like === onClick ===
-                if (line.StartsWith("===") && line.EndsWith("==="))
+                while (story.canContinue)
                 {
-                    currentKnot = line.Trim('=').Trim();
-                    barkTable[currentKnot] = new List<string>();
-                }
-                // If a line starts with {~ and we're in a knot, extract the choices
-                else if (line.StartsWith("{~") && currentKnot != null)
-                {
-                    string content = line.Trim('{', '}', '~');
-                    string[] options = content.Split('|');
-
-                    foreach (var option in options)
+                    string line = story.Continue().Trim();
+                    if (!string.IsNullOrEmpty(line))
                     {
-                        string trimmed = option.Trim();
-                        if (!string.IsNullOrEmpty(trimmed))
-                        {
-                            barkTable[currentKnot].Add(trimmed);
-                        }
+                        if (line.StartsWith("-"))
+                            line = line.Substring(1).Trim();
+                        values.Add(line);
                     }
                 }
-            }
 
-                foreach (var kvp in barkTable)
+                inkStringLists[key] = values;
+            }
+        }
+
+        void PrintList(string key)
+        {
+            if (inkStringLists.TryGetValue(key, out var list))
             {
-                Debug.Log($"Knot: {kvp.Key}");
-                foreach (var line in kvp.Value)
+                foreach (var line in list)
                 {
-                    Debug.Log($"  - {line}");
+                    Debug.Log(line);
                 }
+            }
+            else
+            {
+                Debug.LogWarning($"No list found for key: {key}");
             }
         }
 
         public string GetRandomBark(BarkTag tag)
         {
-            if (tagToLines.ContainsKey(tag))
-            {
-                List<string> lines = tagToLines[tag];
-                if (lines.Count > 0)
-                {
-                    return lines[Random.Range(0, lines.Count)];
-                }
-            }
+            //if (tagToLines.ContainsKey(tag))
+            //{
+            //    List<string> lines = tagToLines[tag];
+            //    if (lines.Count > 0)
+            //    {
+            //        return lines[Random.Range(0, lines.Count)];
+            //    }
+            //}
             return $"[No lines found for tag '{tag}']";
         }
 
