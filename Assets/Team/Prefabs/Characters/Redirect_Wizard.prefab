@@ -157,6 +157,9 @@ MonoBehaviour:
   _currentTileID:
     x: 0
     y: 0
+  _previousTileID:
+    x: 0
+    y: 0
   _startTileID:
     x: 0
     y: 0
@@ -204,6 +207,8 @@ MonoBehaviour:
     m_PreInfinity: 1
     m_PostInfinity: 2
     m_RotationOrder: 4
+  _ghosting: {fileID: 0}
+  _characterBark: {fileID: 263506131393621909}
   _projectilePrefab: {fileID: 0}
   _fireFromPoint: {fileID: 5150221880546262881}
   _projectileRange: -66
@@ -358,6 +363,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Character UI
       objectReference: {fileID: 0}
+    - target: {fileID: 882304171083158014, guid: 4fff5bc7281527846b1f50da9783fef2, type: 3}
+      propertyPath: inkFile
+      value: 
+      objectReference: {fileID: 4900000, guid: f59f6d66d06805640ab0e438e7eea1ca, type: 3}
     - target: {fileID: 2903195935916804519, guid: 4fff5bc7281527846b1f50da9783fef2, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -443,6 +452,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4fff5bc7281527846b1f50da9783fef2, type: 3}
+--- !u!114 &263506131393621909 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 882304171083158014, guid: 4fff5bc7281527846b1f50da9783fef2, type: 3}
+  m_PrefabInstance: {fileID: 1123291410542067307}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f2e435099d62aa4886b3160cecdbff0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &2872314441909057484 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2903195935916804519, guid: 4fff5bc7281527846b1f50da9783fef2, type: 3}

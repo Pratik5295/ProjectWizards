@@ -280,6 +280,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _ghosting: {fileID: 750667303853506599}
+  _characterBark: {fileID: 4470049139440990070}
   _abilityStartOffset: 2
   _lerpDuration: 0.25
   _lerpDelay: 0.01
@@ -351,6 +352,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Character UI
       objectReference: {fileID: 0}
+    - target: {fileID: 882304171083158014, guid: 4fff5bc7281527846b1f50da9783fef2, type: 3}
+      propertyPath: inkFile
+      value: 
+      objectReference: {fileID: 4900000, guid: f59f6d66d06805640ab0e438e7eea1ca, type: 3}
     - target: {fileID: 2903195935916804519, guid: 4fff5bc7281527846b1f50da9783fef2, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -441,6 +446,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2903195935916804519, guid: 4fff5bc7281527846b1f50da9783fef2, type: 3}
   m_PrefabInstance: {fileID: 3618181580552038024}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4470049139440990070 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 882304171083158014, guid: 4fff5bc7281527846b1f50da9783fef2, type: 3}
+  m_PrefabInstance: {fileID: 3618181580552038024}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f2e435099d62aa4886b3160cecdbff0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5032114173345562314 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8639018816859412546, guid: 4fff5bc7281527846b1f50da9783fef2, type: 3}

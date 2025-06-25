@@ -4,6 +4,7 @@ using Team.Gameplay.GridSystem;
 using Team.Enum.Character;
 using UnityEngine;
 using Team.GameConstants;
+using Team.UI;
 
 [System.Serializable]
 public class PlayerMove
@@ -102,6 +103,18 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
 
     #endregion
+
+
+    #region Character Barking Section
+
+    [Space(5)]
+    [Header("Barking Section")]
+
+    [SerializeField]
+    private CharacterBark _characterBark;
+
+    #endregion
+
     public System.Action OnStateChanged;
 
     public System.Action OnTurnComplete;
@@ -398,6 +411,23 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         if (_ghosting == null) return;
 
         _ghosting.toggleGhosting();
+    }
+
+    #endregion
+
+    #region Character Bark System
+
+    public void PrintBark()
+    {
+        if(_characterBark == null)
+        {
+            Debug.LogError("Character is missing character bark",gameObject);
+            return;
+        }
+
+        var bark = _characterBark.GetRandomBark(BarkTag.OnClick);
+
+        Debug.Log($"{gameObject.name}: {bark}");
     }
 
     #endregion
