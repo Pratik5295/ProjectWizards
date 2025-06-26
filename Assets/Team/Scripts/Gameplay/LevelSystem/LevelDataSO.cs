@@ -48,11 +48,13 @@ namespace Team.Gameplay.LevelSystem
     {
         public LevelStats Stats;
         public GameLevel GameLevelPrefab;
+        public TextAsset DialogueAsset = null;
 
         public LevelData(LevelData _data)
         {
             Stats = new LevelStats(_data.Stats); // Also a deep copy
             GameLevelPrefab = _data.GameLevelPrefab;
+            DialogueAsset = _data.DialogueAsset;
         }
     }
 

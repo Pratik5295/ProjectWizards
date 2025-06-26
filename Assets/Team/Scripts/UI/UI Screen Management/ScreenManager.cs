@@ -10,9 +10,10 @@ namespace Team.GameConstants
         public enum GameScreen
         {
             EMPTY = 0,
-            GAME = 1,
-            LEVEL_SELECT = 2,
-            POST_GAME = 3
+            DIALOGUE = 1,
+            GAME = 2,
+            LEVEL_SELECT = 3,
+            POST_GAME = 4
         }
     }
 }

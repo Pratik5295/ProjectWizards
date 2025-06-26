@@ -73,6 +73,10 @@ namespace Team.Managers
                 createdLevel = Instantiate(CurrentLevel.GameLevelPrefab);
                 createdLevel.LoadLevel(); //TODO: Turn this awaitable later 
 
+                //Load the dialogue manager with this
+                if(CurrentLevel.DialogueAsset != null)
+                    UIManager.Instance.SetCurrentDialogue(CurrentLevel.DialogueAsset);  
+
                 StartLevel();
             }
         }
@@ -103,7 +107,14 @@ namespace Team.Managers
         /// </summary>
         private void StartLevel()
         {
-            UIManager.Instance.ShowGameUI();
+            if (CurrentLevel.DialogueAsset == null)
+            {
+                UIManager.Instance.ShowGameUI();
+            }
+            else
+            {
+                UIManager.Instance.ShowDialogueUI();
+            }
         }
 
         /// <summary>
