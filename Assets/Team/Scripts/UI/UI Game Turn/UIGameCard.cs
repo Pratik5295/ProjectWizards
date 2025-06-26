@@ -89,6 +89,9 @@ namespace Team.UI.Gameplay
         {
             //Have base character toggle Ghosting (characterRef)
             characterRef.ToggleGhosting();
+
+            //Fire On Click Bark
+            characterRef.OnClickBark();
         }
         #endregion
     }
