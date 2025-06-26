@@ -2,6 +2,7 @@
 using Team.GameConstants;
 using Team.Gameplay.GridSystem;
 using UnityEditor;
+using UnityEngine.Events;
 
 
 namespace Team.Gameplay.GridSystem
@@ -10,7 +11,10 @@ namespace Team.Gameplay.GridSystem
     {
         EMPTY = 0, //Highlights no tile
         TILE = 1, //Tile has content (not an empty tile)
-        OCCUPIEDTILE = 2 //Tile contains object
+        OCCUPIEDTILE = 2, //Tile contains object
+        DEATHTILE = 3, //Tile that should kill player
+        ICETILE = 4, //Tile should slide player to next tile in their direction of travel.
+        OILTILE = 5 //Tile contains oil which will set fire and start a chain reaction.
     }
 
     public enum TileFacing
@@ -34,8 +38,24 @@ namespace Team.Gameplay.GridSystem
         public Vector3 TilePosition => transform.position;
 
         public GameObject tilePrefab;
+        public GameObject oilTilePrefab;
+        public GameObject deathTilePrefab;
+        public GameObject iceTilePrefab;
 
-        public TileType tileType;
+        [SerializeField]
+        public TileType tileType = TileType.TILE;
+        public TileType myTileType
+        {
+            get => tileType;
+            set
+            {
+                if(tileType != value)
+                {
+                    tileType = value;
+                    SpawnTileType();
+                }
+            }
+        }
         private TileType startingTileType;
 
         public TileDirection Direction; //Rotation 
@@ -90,15 +110,59 @@ namespace Team.Gameplay.GridSystem
             return false;
         }
 
+        /*private void OnValidate()
+        {
+            /* if (OnTileTypeChange != null)
+             {
+                 OnTileTypeChange.Invoke();
+             }
+            if(transform.childCount > 3) { return; }
+            SpawnTileType();
+        }*/
+
+        #region Spawning Tile Types
         private GameObject SpawnTileObject()
         {
             return Instantiate(tilePrefab, transform);
         }
 
+        private GameObject SpawnOilTileObject()
+        {
+            return Instantiate(oilTilePrefab, transform);
+        }
+        private GameObject SpawnDeathTileObject()
+        {
+            return Instantiate(deathTilePrefab, transform);
+        }
+        private GameObject SpawnIceTileObject()
+        {
+            return Instantiate(iceTilePrefab, transform);
+        }
+
+        #endregion
+
+        #region is Tile? Boolean Checks
         public bool IsTileWalkable()
         {
-            return tileType == TileType.TILE;
+            return tileType == TileType.TILE || tileType == TileType.OILTILE || tileType == TileType.DEATHTILE || tileType == TileType.ICETILE;
         }
+
+        public bool IsOilTile()
+        {
+            return tileType == TileType.OILTILE;
+        }
+        public bool IsDeathTile()
+        {
+            return tileType == TileType.DEATHTILE;
+        }
+
+        public bool IsIceTile()
+        {
+            return tileType == TileType.ICETILE;
+        }
+        #endregion
+
+        #region Setting Tile Types
 
         [ContextMenu("Set Tile Empty")]
         public void SetTileEmpty()
@@ -118,6 +182,59 @@ namespace Team.Gameplay.GridSystem
             tileType = TileType.TILE;
             tileObject = SpawnTileObject();
 
+#if UNITY_EDITOR
+            EditorUtility.SetDirty(gameObject);
+#endif
+        }
+        #endregion
+
+        [ExecuteInEditMode]
+        protected void SpawnTileType()
+        {
+            if (tileObject && tileType != TileType.OCCUPIEDTILE) 
+            {
+#if UNITY_EDITOR
+                DestroyImmediate(tileObject);
+#endif
+                if (tileObject)
+                {
+                    Destroy(tileObject);
+                }
+                tileObject = null;
+            }
+            switch (tileType)
+            {
+                case TileType.TILE:
+                   // tileType = TileType.TILE;
+                    tileObject = SpawnTileObject();
+                    break;
+
+                case TileType.EMPTY:
+                   // tileType = TileType.EMPTY;
+                    DestroyImmediate(tileObject);
+                    tileObject = null;
+                    break;
+
+                case TileType.DEATHTILE:
+                    //tileType = TileType.DEATHTILE;
+                    tileObject = SpawnDeathTileObject();
+                    break;
+
+                case TileType.OILTILE:
+                    //tileType = TileType.OILTILE;
+                    tileObject = SpawnOilTileObject();
+                    break;
+
+                case TileType.ICETILE:
+                    //tileType = TileType.ICETILE;
+                    tileObject = SpawnIceTileObject();
+                    break;
+
+                case TileType.OCCUPIEDTILE:
+                    SpawnObjectOnTile();
+                    break;
+            }
+            //tileObject.transform.position = Vector3.zero;
 #if UNITY_EDITOR
             EditorUtility.SetDirty(gameObject);
 #endif
@@ -183,6 +300,11 @@ namespace Team.Gameplay.GridSystem
 #endif
         }
 
+        public Base_Obstacle ObstacleImplementsScript()
+        {
+            return objectOccupyingTile.GetComponent<Base_Obstacle>();
+        }
+
 
         private bool isTileOccupied()
         {
@@ -215,9 +337,10 @@ namespace Team.Gameplay.GridSystem
                         objectOccupyingTile = OccupyingObject;
                         SetTileType(TileType.OCCUPIEDTILE);
                     break;
+
                 case false:
-                    objectOccupyingTile = null;
-                    SetTileType(TileType.TILE);
+                        objectOccupyingTile = null;
+                        SetTileType(TileType.TILE);
                     break;
             }
         }

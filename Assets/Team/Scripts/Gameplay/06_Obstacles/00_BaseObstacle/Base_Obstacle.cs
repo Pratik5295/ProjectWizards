@@ -49,6 +49,11 @@ public class Base_Obstacle : MonoBehaviour, IDestroyable
     [SerializeField]
     private bool canBeDestroyed = true;
 
+    public bool CanBeDestroyed
+    {
+        get { return canBeDestroyed; }
+    }
+
     private void Start()
     {
         _startTileID = _currentTileID;
