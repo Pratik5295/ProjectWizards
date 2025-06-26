@@ -2,38 +2,47 @@
 using Ink.Runtime;
 using System.Collections.Generic;
 using UnityEngine;
+using static Team.GameConstants.MetaConstants;
+
+namespace Team.GameConstants
+{
+    public static partial class MetaConstants
+    {
+        public enum BarkTag
+        {
+            OnClick,
+            OnCast,
+            OnAbsorb,
+            OnFirecast,
+            OnWindcast,
+            OnFailcast
+        }
+    }
+}
+
 
 namespace Team.UI
 {
-    public enum BarkTag
-    {
-        OnClick,
-        OnAbsorb,
-        OnFirecast,
-        OnWindcast,
-        OnFailcast
-    }
-
     public class CharacterBark : MonoBehaviour
     {
         [SerializeField] private TextAsset inkFile;
 
         private Story story;
-        public Dictionary<string, List<string>> inkStringLists = new();
+        public Dictionary<BarkTag, List<string>> barkMap = new();
 
-        void Start()
+        private void Start()
         {
             story = new Story(inkFile.text);
             ExtractLists(new List<string> { "OnClick", "OnHover" });
 
             Debug.Log("Type: On Click");
-            PrintList("OnClick");
+            PrintList(BarkTag.OnClick);
 
             Debug.Log("Type: On Hover");
-            PrintList("OnHover");
+            PrintList(BarkTag.OnFailcast);
         }
 
-        void ExtractLists(List<string> keys)
+        private void ExtractLists(List<string> keys)
         {
             foreach (var key in keys)
             {
@@ -59,13 +68,14 @@ namespace Team.UI
                     }
                 }
 
-                inkStringLists[key] = values;
+                BarkTag tag = GetTag(key);
+                barkMap[tag] = values;
             }
         }
 
-        void PrintList(string key)
+        private void PrintList(BarkTag key)
         {
-            if (inkStringLists.TryGetValue(key, out var list))
+            if (barkMap.TryGetValue(key, out var list))
             {
                 foreach (var line in list)
                 {
@@ -80,14 +90,14 @@ namespace Team.UI
 
         public string GetRandomBark(BarkTag tag)
         {
-            //if (tagToLines.ContainsKey(tag))
-            //{
-            //    List<string> lines = tagToLines[tag];
-            //    if (lines.Count > 0)
-            //    {
-            //        return lines[Random.Range(0, lines.Count)];
-            //    }
-            //}
+            if (barkMap.ContainsKey(tag))
+            {
+                List<string> lines = barkMap[tag];
+                if (lines.Count > 0)
+                {
+                    return lines[Random.Range(0, lines.Count)];
+                }
+            }
             return $"[No lines found for tag '{tag}']";
         }
 

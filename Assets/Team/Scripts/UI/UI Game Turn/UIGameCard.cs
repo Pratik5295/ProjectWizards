@@ -91,7 +91,7 @@ namespace Team.UI.Gameplay
             characterRef.ToggleGhosting();
 
             //Fire On Click Bark
-            characterRef.PrintBark();
+            characterRef.OnClickBark();
         }
         #endregion
     }
