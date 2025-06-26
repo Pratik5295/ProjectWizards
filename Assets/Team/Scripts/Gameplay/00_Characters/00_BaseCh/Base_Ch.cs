@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using Team.Gameplay.GridSystem;
 using Team.Enum.Character;
 using UnityEngine;
+using Team.GameConstants;
+using Team.UI;
+using static Team.GameConstants.MetaConstants;
 
 [System.Serializable]
 public class PlayerMove
@@ -36,26 +39,33 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     }
 
 
-
+    [Space(5)]
     [Header("Movement Variables")]
     [Header("---Tile Variables---")]
     [SerializeField] protected TileID _currentTileID = new TileID(0, 0);
-    protected TileID _previousTileID = new TileID(0, 0);
+    [SerializeField] protected TileID _previousTileID = new TileID(0, 0);
     [SerializeField] protected TileID _startTileID = new TileID(0, 0);
+    private Enum_GridDirection startingDirection;
     public TileID CurrentTileID
     {
         get { return _currentTileID; }
     }
-    private GridTile currentTile;
+    private GridTile _currentTile;
+    private GridTile _previousTile;
 
 
     private float OffsetValue;
     private float smoothingTime = 1f; //Time to reach the target position.
     private float currentTime; //Current elapsed Time for movement lerp.
     private float lerpingDelayTime = 0.001f;
+
+    [Space(5)]
     [Header("Y Offset and Movement Jump Variables")]
     [SerializeField]
     private float ySpawnOffset = 1.5f;
+
+    public float YSpawnOffset => ySpawnOffset;
+
     [SerializeField]
     private float ydefaultOffset = 1.5f;
 
@@ -69,40 +79,68 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
     #region Vars_InvalidMovementShake
 
+    [Space(5)]
+    [Header("Invalid Move Shake")]
     private float shakeTimer = 0f;
 
     private float maxShakeAmount = 0.3f;
     #endregion
 
     #region Mesh And Collider
+
+    [Space(5)]
+    [Header("Colliders and Mesh")]
     private Collider _collider;
     private MeshRenderer _meshRenderer;
     #endregion
 
+    #region Ghosting Section
+
+    [Space(5)]
+    [Header("Ghosting Section")]
+
+    [SerializeField]
+    private GenericGhosting _ghosting;
+
+
+    #endregion
+
+
+    #region Character Barking Section
+
+    [Space(5)]
+    [Header("Barking Section")]
+
+    [SerializeField]
+    protected CharacterBark _characterBark;
+    protected UICharacter _characterUI => _characterBark.GetComponent<UICharacter>();
+
+    #endregion
 
     public System.Action OnStateChanged;
 
     public System.Action OnTurnComplete;
 
     [ContextMenu("Initialise this Character")]
-    public virtual void InitialiseCharacter(TileID StartingTileID, Enum_GridDirection startingDirection)
+    public virtual void InitialiseCharacter(TileID StartingTileID, Enum_GridDirection _startingDirection)
     {
         ref_gridManager = GridManager.Instance;
-        OffsetValue = ref_gridManager.GridSlot_Offset;
+        OffsetValue = MetaConstants.GridSlot_Offset;
 
         _currentTileID = StartingTileID;
         _previousTileID = _currentTileID;
         _startTileID = _currentTileID;
 
-        currentTile = ref_gridManager.FindTile(_currentTileID);
-        currentTile.SetObjectOccupyingTile(this.gameObject);
+        _currentTile = ref_gridManager.FindTile(_currentTileID);
+        _currentTile.SetObjectOccupyingTile(this.gameObject);
 
         baseRotation = GetComponent<Base_Rotation>();
-        baseRotation.changeFacingDirection(startingDirection);
-        Vector2 v2Dir = baseRotation.dirToV2(baseRotation.DirectionFacing);
-        baseRotation.RotateToFaceDir(v2Dir);
+        startingDirection = _startingDirection;
+        ResetRotationToStart();
 
-        transform.position = new Vector3(currentTile.TilePosition.x, currentTile.TilePosition.y + ySpawnOffset, currentTile.TilePosition.z);
+
+
+        transform.position = new Vector3(_currentTile.TilePosition.x, _currentTile.TilePosition.y + ySpawnOffset, _currentTile.TilePosition.z);
 
         _collider = GetComponent<Collider>();
         _meshRenderer = transform.GetChild(0).GetComponent<MeshRenderer>();
@@ -111,6 +149,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     void Start()
     {
         //InitialiseCharacter(_currentTileID, Enum_GridDirection.NORTH);
+
+        ref_gridManager = GridManager.Instance;
     }
 
     #region Debugging Movement Button Functions
@@ -150,7 +190,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     public virtual IEnumerator MoveByAmount(int movementAmount, Vector2 dir, bool wasPushed = false)
     {
         _previousTileID = _currentTileID;
-        currentTile.SetObjectOccupyingTile(null);
+        _previousTile = ref_gridManager.FindTile(_previousTileID);
 
         for (int i = 0; i < movementAmount; i++)
         {
@@ -165,7 +205,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
                 Vector3 targetPosition = new Vector3(targetTile.TilePosition.x, desiredLocation.y, targetTile.TilePosition.z);
 
                 _currentTileID = targetTile.TileID;
-                currentTile = ref_gridManager.FindTile(_currentTileID);
+                _currentTile = ref_gridManager.FindTile(_currentTileID);
 
                 yield return StartCoroutine(LerpingMovement(targetPosition, wasPushed));
             }
@@ -177,7 +217,9 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
                 yield break;
             }
         }
-        currentTile.SetObjectOccupyingTile(this.gameObject);
+        _previousTile.UpdateOccupiedStatus(false);
+
+        _currentTile.UpdateOccupiedStatus(true, gameObject);
 
         PlayerMove playerMove = new PlayerMove(true);
         HistoryStack.Push(playerMove);
@@ -238,17 +280,30 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         OnTurnComplete?.Invoke();
     }
 
-    protected void UndoMovement()
+    public void UndoMovement()
     {
-        if (_currentTileID == _startTileID) { return; }
-        currentTile.SetObjectOccupyingTile(null);
+        if (_currentTileID == _startTileID) 
+        {
+            transform.position = new Vector3(_currentTile.TilePosition.x, transform.position.y, _currentTile.TilePosition.z);
+            return; 
+        }
+        _currentTile.SetObjectOccupyingTile(null);
 
         _currentTileID = _startTileID;
-        currentTile = ref_gridManager.FindTile(_currentTileID);
+        _currentTile = ref_gridManager.FindTile(_currentTileID);
 
-        currentTile.SetObjectOccupyingTile(this.gameObject);
+        _currentTile.SetObjectOccupyingTile(this.gameObject);
 
-        transform.position = new Vector3(currentTile.TilePosition.x, transform.position.y, currentTile.TilePosition.z);
+        transform.position = new Vector3(_currentTile.TilePosition.x, transform.position.y, _currentTile.TilePosition.z);
+
+        ResetRotationToStart();
+    }
+
+    private void ResetRotationToStart()
+    {
+        baseRotation.changeFacingDirection(startingDirection);
+        Vector2 v2Dir = baseRotation.dirToV2(baseRotation.DirectionFacing);
+        baseRotation.RotateToFaceDir(v2Dir);
     }
 
     //Shakes character if path or tile is invalid.
@@ -275,13 +330,13 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
     public void UpdateCurrentTileID()
     {
-        _currentTileID = currentTile.TileID;
+        _currentTileID = _currentTile.TileID;
     }
 
     public void SetCurrentTile(TileID updatedTileID, GridTile updatedGridTile)
     {
         _currentTileID = updatedTileID;
-        currentTile = updatedGridTile;
+        _currentTile = updatedGridTile;
     }
 
 
@@ -342,5 +397,61 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         _meshRenderer.enabled = false;
         _collider.enabled = false;
     }
+    #endregion
+
+    #region Character Move Ghosting Section
+
+    public void SetGhosting(bool _value)
+    {
+        if (_ghosting == null) return;
+
+        _ghosting.SetGhosting(_value);
+    }
+
+    public void ToggleGhosting()
+    {
+        if (_ghosting == null) return;
+
+        _ghosting.toggleGhosting();
+    }
+
+    #endregion
+
+    #region Character Bark System
+
+    protected bool OnValidateBark()
+    {
+        if (_characterBark == null)
+        {
+            Debug.LogError("Character is missing character bark", gameObject);
+            return false;
+        }
+
+        return true;
+    }
+
+    public void OnClickBark()
+    {
+        if (!OnValidateBark()) return;
+
+        var bark = _characterBark.GetRandomBark(BarkTag.OnClick);
+
+        Debug.Log($"{gameObject.name}: {bark}");
+
+        _characterUI.UpdateBark(bark);
+    }
+
+    /// <summary>
+    /// The function would be overridden for Redirect wizard
+    /// </summary>
+    public virtual void OnCastBark()
+    {
+        if (!OnValidateBark()) return;
+
+        var bark = _characterBark.GetRandomBark(BarkTag.OnCast);
+
+        _characterUI.UpdateBark(bark);
+    }
+
     #endregion
 }
