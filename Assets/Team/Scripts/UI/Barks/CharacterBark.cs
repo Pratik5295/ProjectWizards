@@ -30,16 +30,12 @@ namespace Team.UI
         private Story story;
         public Dictionary<BarkTag, List<string>> barkMap = new();
 
+        private List<string> barkKnots = new List<string> { "OnClick", "OnCast", "OnAbsorb", "OnFirecast" , "OnWindcast" , "OnFailcast" };
+
         private void Start()
         {
             story = new Story(inkFile.text);
-            ExtractLists(new List<string> { "OnClick", "OnHover" });
-
-            Debug.Log("Type: On Click");
-            PrintList(BarkTag.OnClick);
-
-            Debug.Log("Type: On Hover");
-            PrintList(BarkTag.OnFailcast);
+            ExtractLists(barkKnots);
         }
 
         private void ExtractLists(List<string> keys)
@@ -105,15 +101,17 @@ namespace Team.UI
         {
             switch (_value)
             {
-                case "on_click":
+                case "OnClick":
                     return BarkTag.OnClick;
-                case "on_absorb":
+                case "OnCast":
+                    return BarkTag.OnCast;
+                case "OnAbsorb":
                     return BarkTag.OnAbsorb;
-                case "on_firecast":
+                case "OnFirecast":
                     return BarkTag.OnFirecast;
-                case "on_windcast":
+                case "OnWindcast":
                     return BarkTag.OnWindcast;
-                case "on_failcast":
+                case "OnFailcast":
                     return BarkTag.OnFailcast;
 
                 default:
