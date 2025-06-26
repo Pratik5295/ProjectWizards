@@ -129,7 +129,7 @@ public class MoveableObstacle : Base_Obstacle, IMoveable
     protected void UndoMovement()
     {
         if (_currentTileID == _startTileID) { return; }
-        _currentGridTile.SetObjectOccupyingTile(null);
+        _currentGridTile.UpdateOccupiedStatus();
 
         _currentTileID = _startTileID;
         _currentGridTile = ref_gridManager.FindTile(_currentTileID);
