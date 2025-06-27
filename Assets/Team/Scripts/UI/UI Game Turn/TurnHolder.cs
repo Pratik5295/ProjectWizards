@@ -77,12 +77,6 @@ namespace Team.Gameplay.TurnSystem
 
                 for (int i = 0; i < cardRanges.Count; i++)
                 {
-                    //if (_positionX >= cardRanges[i].start && _positionX < cardRanges[i].end)
-                    //{
-                    //    index =  i;
-                    //    return index;
-                    //}
-
                     //Check if the only the start is greater
                     if(_positionX >= cardRanges[i].start)
                     {

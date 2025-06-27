@@ -11,7 +11,7 @@ namespace Team.GameConstants
 {
     public static partial class MetaConstants
     {
-        public const float PauseBetweenTurn = 2f;
+        public const float PauseBetweenTurn = 0.5f;
     }
 }
 
@@ -35,6 +35,11 @@ namespace Team.Managers
 
         [SerializeField]
         private TurnHolder turnHolder;
+
+        [SerializeField]
+        private GameBreakpoint breaker; //Reference to the breaker in game turn order
+        [SerializeField]
+        private int breakerIndex = 0;
 
         public bool HasCharacterTurns => turnQueue.Count > 0;
 
@@ -60,10 +65,6 @@ namespace Team.Managers
             }
         }
 
-        private void Start()
-        {
-        }
-
         #endregion
 
         #region Public Methods
@@ -71,6 +72,7 @@ namespace Team.Managers
         public async Task LoadQueue()
         {
             LoadObstacleData();
+            breakerIndex = breaker.transform.GetSiblingIndex();
 
             if (turnQueue == null)
             {
@@ -85,7 +87,10 @@ namespace Team.Managers
             await Task.Yield();
             foreach (var unit in currentTurnOrder)
             {
-                turnQueue.Enqueue(unit.GetComponent<GameTurn>());
+                if(unit.TryGetComponent<GameTurn>(out var gameTurn))
+                {
+                    turnQueue.Enqueue(gameTurn);
+                }
             }
 
             isQueueLoaded = true;
@@ -172,22 +177,27 @@ namespace Team.Managers
 
             await LoadQueue();
 
-            while (turnQueue.Count > 0)
+            //Get the breakpoint index to know where to stop
+            int stopPoint = breakerIndex;
+            //Check if the breakpoint index is at extremes, 0 or last. If yes then ignore it
+            bool playAllTurns = stopPoint == 0 || stopPoint >= turnQueue.Count; //Turn Queue doesnt contain the breaker
+            Debug.Log($"Play Turns is at extreme? {playAllTurns} and turn Queue Count: {turnQueue.Count}");
+
+            if (playAllTurns)
             {
-                GameTurn turn = turnQueue.Dequeue();
-
-                if (turn.IsAlive())
+                while (turnQueue.Count > 0)
                 {
-                    await turn.PerformAsync();
-
-                    await Task.Delay(TimeSpan.FromSeconds(MetaConstants.PauseBetweenTurn));
-
-                    //Turn was performed by the character, update the stack
-                    _historyStack.Push(turn);
+                    await RunNextTurn();
                 }
-                else
+            }
+            else
+            {
+                int currentIndex = 0;
+
+                while(currentIndex < stopPoint)
                 {
-                    Debug.Log($"{turn.name} Move character is dead, turn skipped");
+                    await RunNextTurn();
+                    currentIndex++;
                 }
             }
 
@@ -196,10 +206,30 @@ namespace Team.Managers
             OnAllTurnsCompleted?.Invoke();
         }
 
+        private async Task RunNextTurn()
+        {
+            GameTurn turn = turnQueue.Dequeue();
+
+            if (turn.IsAlive())
+            {
+                await turn.PerformAsync();
+
+                await Task.Delay(TimeSpan.FromSeconds(MetaConstants.PauseBetweenTurn));
+
+                //Turn was performed by the character, update the stack
+                _historyStack.Push(turn);
+            }
+            else
+            {
+                Debug.Log($"{turn.name} Move character is dead, turn skipped");
+            }
+        }
+
         [ContextMenu("Reset Turns")]
         public async void ResetAllTurns()
         {
             OnTurnsProcessingEvent?.Invoke();
+           
 
             //Reset all moves performed by the characters
             while (_historyStack.Count > 0)
@@ -218,6 +248,7 @@ namespace Team.Managers
             }
 
 
+            ResetBreaker();
             Invoke(nameof(DelayReset), 2f);
 
 
@@ -235,10 +266,13 @@ namespace Team.Managers
             //Reset all characters to their saved start position
             ResetCharactersToStart();
 
+
             //Notify that undo was completed
             OnResetLastTurnCompleted?.Invoke();
 
             isQueueLoaded = false;
+
+            
 
             Debug.Log("Completed reset");
         }
@@ -311,6 +345,13 @@ namespace Team.Managers
         private void ResetCharactersToStart()
         {
             CharacterManager.Instance.ResetAllCharacters();
+        }
+
+
+        private void ResetBreaker()
+        {
+            breaker.transform.SetAsFirstSibling();
+            breakerIndex = 0;
         }
 
         #endregion

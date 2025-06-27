@@ -1921,6 +1921,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1698012375117317438, guid: c3dd6a1f9b8b5f34a978b0b129ae3ec0, type: 3}
   m_PrefabInstance: {fileID: 1241612855}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1746952271 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9101060310355045550, guid: 329ab8d882f5c9f4ab11873f22d956f7, type: 3}
+  m_PrefabInstance: {fileID: 2422107491572252979}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff8008af886a3b2449ff8da6c1a92873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1764566242 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3389233924880495750, guid: 6dcd2cc19134d0b43923b357c43e6873, type: 3}
@@ -2632,6 +2643,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 404675116131782996, guid: 329ab8d882f5c9f4ab11873f22d956f7, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 404675116131782996, guid: 329ab8d882f5c9f4ab11873f22d956f7, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 404675116131782996, guid: 329ab8d882f5c9f4ab11873f22d956f7, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 404675116131782996, guid: 329ab8d882f5c9f4ab11873f22d956f7, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 404675116131782996, guid: 329ab8d882f5c9f4ab11873f22d956f7, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 654094173956003650, guid: 329ab8d882f5c9f4ab11873f22d956f7, type: 3}
       propertyPath: _screenManager
       value: 
@@ -2929,6 +2960,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Turn Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 4553810900400166690, guid: ed6f9072faaf15346b0a2406055f4524, type: 3}
+      propertyPath: breaker
+      value: 
+      objectReference: {fileID: 1746952271}
     - target: {fileID: 4553810900400166690, guid: ed6f9072faaf15346b0a2406055f4524, type: 3}
       propertyPath: turnHolder
       value: 

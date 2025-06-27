@@ -143,12 +143,17 @@ namespace Team.Managers
 
             CharactersInLevel.Clear();
 
-            //Delete all Game Cards
-            for(int i = 0; i < cardHolder.childCount; i++)
+            //Delete all Game Cards, do not delete the breaker card
+            for (int i = 0; i < cardHolder.childCount; i++)
             {
                 var card = cardHolder.GetChild(i);
-                Destroy(card.gameObject);
+
+                if(card.gameObject.GetComponent<GameBreakpoint>() == null)
+                {
+                    Destroy(card.gameObject);
+                }
             }
+
         }
 
         public void ResetAllCharacters()
