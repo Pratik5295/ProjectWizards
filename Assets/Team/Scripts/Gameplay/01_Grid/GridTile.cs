@@ -3,6 +3,8 @@ using Team.GameConstants;
 using Team.Gameplay.GridSystem;
 using UnityEditor;
 using UnityEngine.Events;
+using Team.Gameplay.GameLevelSystem;
+using Team.Managers;
 
 
 namespace Team.Gameplay.GridSystem
@@ -80,7 +82,7 @@ namespace Team.Gameplay.GridSystem
         /// <summary>
         /// Initialize the tile
         /// </summary>
-        public bool Init(LevelTileCreator _tileCreator, TileID _tileId)
+        public bool Init(LevelTileCreator _tileCreator, TileID _tileId, bool specificType = false)
         {
             gridManager = _tileCreator;
             TileID = _tileId;
@@ -95,7 +97,10 @@ namespace Team.Gameplay.GridSystem
             //Check if spawn tile
             if (IsTileWalkable())
             {
-                tileObject = SpawnTileObject();
+                if (!specificType)
+                {
+                    tileObject = SpawnTileObject();
+                }
 
                 //Setup each tile to be facing north at start
                 Direction = new TileDirection
@@ -179,7 +184,7 @@ namespace Team.Gameplay.GridSystem
         #endregion
 
         [ExecuteInEditMode]
-        protected void SpawnTileType()
+        protected virtual void SpawnTileType()
         {
             if (tileObject && tileType != TileType.OCCUPIEDTILE) 
             {
@@ -192,6 +197,13 @@ namespace Team.Gameplay.GridSystem
                 }
                 tileObject = null;
             }
+           /* if(tileType == TileType.OILTILE) // Cannot do this as this will execute after tile is set to oil.
+            {
+                LevelManager.Instance.CreatedLevel.LevelTiles.RemoveTile(this);
+                GridTile newTile = LevelManager.Instance.CreatedLevel.LevelTiles.CreateNewTile(this);
+                newTile.SpawnTileType();
+                Destroy(gameObject);
+            }*/
             switch (tileType)
             {
                 case TileType.TILE:
@@ -208,7 +220,9 @@ namespace Team.Gameplay.GridSystem
                     break;
 
                 case TileType.OILTILE:
-                    tileObject = SpawnOilTileObject();
+                    gridManager.CreateNewOilTile(TileID, transform.position.x, transform.position.z);
+                    gridManager.RemoveTile(this);
+                    Destroy(gameObject);
                     break;
 
                 case TileType.ICETILE:

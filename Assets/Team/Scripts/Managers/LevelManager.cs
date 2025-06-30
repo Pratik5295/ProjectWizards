@@ -21,6 +21,10 @@ namespace Team.Managers
 
         [SerializeField]
         private GameLevel createdLevel = null;
+        public GameLevel CreatedLevel
+        {
+            get { return createdLevel; }
+        }
 
 
         public List<LevelDataSO> LevelList = new List<LevelDataSO>();

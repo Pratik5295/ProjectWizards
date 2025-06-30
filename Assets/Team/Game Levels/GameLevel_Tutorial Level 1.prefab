@@ -50,6 +50,9 @@ MonoBehaviour:
     x: 1
     y: 0
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
+  oilTilePrefab: {fileID: 0}
+  deathTilePrefab: {fileID: 0}
+  iceTilePrefab: {fileID: 0}
   tileType: 1
   Direction:
     TileFacing: 0
@@ -108,6 +111,9 @@ MonoBehaviour:
     x: 4
     y: 1
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
+  oilTilePrefab: {fileID: 0}
+  deathTilePrefab: {fileID: 0}
+  iceTilePrefab: {fileID: 0}
   tileType: 1
   Direction:
     TileFacing: 0
@@ -1846,6 +1852,9 @@ MonoBehaviour:
     x: 1
     y: 1
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
+  oilTilePrefab: {fileID: 0}
+  deathTilePrefab: {fileID: 0}
+  iceTilePrefab: {fileID: 0}
   tileType: 1
   Direction:
     TileFacing: 0
@@ -2227,6 +2236,9 @@ MonoBehaviour:
     x: 0
     y: 3
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
+  oilTilePrefab: {fileID: 0}
+  deathTilePrefab: {fileID: 0}
+  iceTilePrefab: {fileID: 0}
   tileType: 1
   Direction:
     TileFacing: 0
@@ -2582,6 +2594,9 @@ MonoBehaviour:
     x: 2
     y: 0
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
+  oilTilePrefab: {fileID: 0}
+  deathTilePrefab: {fileID: 0}
+  iceTilePrefab: {fileID: 0}
   tileType: 1
   Direction:
     TileFacing: 0
@@ -2640,6 +2655,9 @@ MonoBehaviour:
     x: 3
     y: 3
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
+  oilTilePrefab: {fileID: 0}
+  deathTilePrefab: {fileID: 0}
+  iceTilePrefab: {fileID: 0}
   tileType: 1
   Direction:
     TileFacing: 0
@@ -2698,6 +2716,9 @@ MonoBehaviour:
     x: 0
     y: 1
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
+  oilTilePrefab: {fileID: 0}
+  deathTilePrefab: {fileID: 0}
+  iceTilePrefab: {fileID: 0}
   tileType: 1
   Direction:
     TileFacing: 0
@@ -3565,6 +3586,9 @@ MonoBehaviour:
     x: 1
     y: 2
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
+  oilTilePrefab: {fileID: 0}
+  deathTilePrefab: {fileID: 0}
+  iceTilePrefab: {fileID: 0}
   tileType: 1
   Direction:
     TileFacing: 0
@@ -3623,6 +3647,9 @@ MonoBehaviour:
     x: 4
     y: 0
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
+  oilTilePrefab: {fileID: 0}
+  deathTilePrefab: {fileID: 0}
+  iceTilePrefab: {fileID: 0}
   tileType: 1
   Direction:
     TileFacing: 0
@@ -4206,6 +4233,9 @@ MonoBehaviour:
     x: 0
     y: 4
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
+  oilTilePrefab: {fileID: 0}
+  deathTilePrefab: {fileID: 0}
+  iceTilePrefab: {fileID: 0}
   tileType: 1
   Direction:
     TileFacing: 0
@@ -4662,6 +4692,9 @@ MonoBehaviour:
     x: 1
     y: 4
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
+  oilTilePrefab: {fileID: 0}
+  deathTilePrefab: {fileID: 0}
+  iceTilePrefab: {fileID: 0}
   tileType: 1
   Direction:
     TileFacing: 0
@@ -5134,8 +5167,10 @@ MonoBehaviour:
   - {fileID: 1227887442158362534}
   - {fileID: 4201553768219674133}
   - {fileID: 49807240500413089}
+  oilTiles: []
   _defaultObstacle: {fileID: 4204931136641989452, guid: a2393efb786e29a479b32b205aa4ef16, type: 3}
   _defaultTile: {fileID: 2763072502108167865, guid: d095c4a01d523654fb46e94d5f54ba10, type: 3}
+  _oilTile: {fileID: 2763072502108167865, guid: ffca019d4ce254b4a993367370cb2158, type: 3}
 --- !u!1 &4040083140799033199
 GameObject:
   m_ObjectHideFlags: 0
@@ -5552,6 +5587,9 @@ MonoBehaviour:
     x: 3
     y: 1
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
+  oilTilePrefab: {fileID: 0}
+  deathTilePrefab: {fileID: 0}
+  iceTilePrefab: {fileID: 0}
   tileType: 1
   Direction:
     TileFacing: 0
@@ -6036,6 +6074,9 @@ MonoBehaviour:
     x: 4
     y: 3
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
+  oilTilePrefab: {fileID: 0}
+  deathTilePrefab: {fileID: 0}
+  iceTilePrefab: {fileID: 0}
   tileType: 1
   Direction:
     TileFacing: 0
@@ -6441,6 +6482,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  _ghosting: {fileID: 0}
+  _characterBark: {fileID: 0}
   _obstacleData: {fileID: 0}
 --- !u!114 &850382501374005955
 MonoBehaviour:
@@ -7672,6 +7715,9 @@ MonoBehaviour:
     x: 0
     y: 0
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
+  oilTilePrefab: {fileID: 0}
+  deathTilePrefab: {fileID: 0}
+  iceTilePrefab: {fileID: 0}
   tileType: 1
   Direction:
     TileFacing: 0
@@ -8044,6 +8090,9 @@ MonoBehaviour:
     x: 4
     y: 2
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
+  oilTilePrefab: {fileID: 0}
+  deathTilePrefab: {fileID: 0}
+  iceTilePrefab: {fileID: 0}
   tileType: 1
   Direction:
     TileFacing: 0
@@ -8571,6 +8620,9 @@ MonoBehaviour:
     x: 2
     y: 4
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
+  oilTilePrefab: {fileID: 0}
+  deathTilePrefab: {fileID: 0}
+  iceTilePrefab: {fileID: 0}
   tileType: 1
   Direction:
     TileFacing: 0
@@ -8969,6 +9021,9 @@ MonoBehaviour:
     x: 0
     y: 2
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
+  oilTilePrefab: {fileID: 0}
+  deathTilePrefab: {fileID: 0}
+  iceTilePrefab: {fileID: 0}
   tileType: 1
   Direction:
     TileFacing: 0
@@ -9184,6 +9239,9 @@ MonoBehaviour:
     x: 3
     y: 4
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
+  oilTilePrefab: {fileID: 0}
+  deathTilePrefab: {fileID: 0}
+  iceTilePrefab: {fileID: 0}
   tileType: 1
   Direction:
     TileFacing: 0
@@ -9926,6 +9984,9 @@ MonoBehaviour:
     x: 3
     y: 0
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
+  oilTilePrefab: {fileID: 0}
+  deathTilePrefab: {fileID: 0}
+  iceTilePrefab: {fileID: 0}
   tileType: 1
   Direction:
     TileFacing: 0
@@ -10610,6 +10671,9 @@ MonoBehaviour:
     x: 1
     y: 3
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
+  oilTilePrefab: {fileID: 0}
+  deathTilePrefab: {fileID: 0}
+  iceTilePrefab: {fileID: 0}
   tileType: 1
   Direction:
     TileFacing: 0
@@ -11023,6 +11087,9 @@ MonoBehaviour:
     x: 4
     y: 4
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
+  oilTilePrefab: {fileID: 0}
+  deathTilePrefab: {fileID: 0}
+  iceTilePrefab: {fileID: 0}
   tileType: 1
   Direction:
     TileFacing: 0
@@ -11405,6 +11472,9 @@ MonoBehaviour:
     x: 2
     y: 1
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
+  oilTilePrefab: {fileID: 0}
+  deathTilePrefab: {fileID: 0}
+  iceTilePrefab: {fileID: 0}
   tileType: 2
   Direction:
     TileFacing: 0
@@ -11861,6 +11931,9 @@ MonoBehaviour:
     x: 3
     y: 2
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
+  oilTilePrefab: {fileID: 0}
+  deathTilePrefab: {fileID: 0}
+  iceTilePrefab: {fileID: 0}
   tileType: 1
   Direction:
     TileFacing: 0
@@ -12005,6 +12078,9 @@ MonoBehaviour:
     x: 2
     y: 2
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
+  oilTilePrefab: {fileID: 0}
+  deathTilePrefab: {fileID: 0}
+  iceTilePrefab: {fileID: 0}
   tileType: 1
   Direction:
     TileFacing: 0
@@ -12274,6 +12350,9 @@ MonoBehaviour:
     x: 2
     y: 3
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
+  oilTilePrefab: {fileID: 0}
+  deathTilePrefab: {fileID: 0}
+  iceTilePrefab: {fileID: 0}
   tileType: 1
   Direction:
     TileFacing: 0
