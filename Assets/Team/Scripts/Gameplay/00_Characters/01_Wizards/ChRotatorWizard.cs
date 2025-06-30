@@ -64,6 +64,8 @@ public class ChRotatorWizard : Base_Ch
 
     public override void UseAbility()
     {
+        OnCastBark();
+
         GetTilesToRotate();
         if (!centerTile)
         {

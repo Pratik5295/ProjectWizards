@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class ExplosiveObject : MoveableObstacle
 {
+    public FireballProjectile RefFireballProjectile;
 
     [SerializeField] private GameObject _explosionEffect;
     private VFXManager _explosionVFX;
@@ -37,6 +38,14 @@ public class ExplosiveObject : MoveableObstacle
 
         for(int i = 1; i < NeighbourTiles.Length; i++)
         {
+            if (NeighbourTiles[i].IsOilTile())
+            {
+                if (NeighbourTiles[i].GetComponent<OilTile>())
+                {
+                    NeighbourTiles[i].GetComponent<OilTile>().Ignite();
+                }
+            }
+
             if (!NeighbourTiles[i].ObjectOccupyingTile) { continue; }
             GameObject ObjectOccupyingTile = NeighbourTiles[i].ObjectOccupyingTile;
 

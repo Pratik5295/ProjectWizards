@@ -49,6 +49,11 @@ public class Base_Obstacle : MonoBehaviour, IDestroyable
     [SerializeField]
     private bool canBeDestroyed = true;
 
+    public bool CanBeDestroyed
+    {
+        get { return canBeDestroyed; }
+    }
+
     private void Start()
     {
         _startTileID = _currentTileID;
@@ -72,6 +77,8 @@ public class Base_Obstacle : MonoBehaviour, IDestroyable
 
         _currentGridTile = ref_gridManager.FindTile(_currentTileID);
         _currentGridTile.SetObjectOccupyingTile(this.gameObject);
+
+        _previousGridTile = _currentGridTile;
 
         baseRotation = GetComponent<Base_Rotation>();
         baseRotation.changeFacingDirection(startingDirection);
