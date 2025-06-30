@@ -110,16 +110,6 @@ namespace Team.Gameplay.GridSystem
             return false;
         }
 
-        /*private void OnValidate()
-        {
-            /* if (OnTileTypeChange != null)
-             {
-                 OnTileTypeChange.Invoke();
-             }
-            if(transform.childCount > 3) { return; }
-            SpawnTileType();
-        }*/
-
         #region Spawning Tile Types
         private GameObject SpawnTileObject()
         {
@@ -205,28 +195,23 @@ namespace Team.Gameplay.GridSystem
             switch (tileType)
             {
                 case TileType.TILE:
-                   // tileType = TileType.TILE;
                     tileObject = SpawnTileObject();
                     break;
 
                 case TileType.EMPTY:
-                   // tileType = TileType.EMPTY;
                     DestroyImmediate(tileObject);
                     tileObject = null;
                     break;
 
                 case TileType.DEATHTILE:
-                    //tileType = TileType.DEATHTILE;
                     tileObject = SpawnDeathTileObject();
                     break;
 
                 case TileType.OILTILE:
-                    //tileType = TileType.OILTILE;
                     tileObject = SpawnOilTileObject();
                     break;
 
                 case TileType.ICETILE:
-                    //tileType = TileType.ICETILE;
                     tileObject = SpawnIceTileObject();
                     break;
 
@@ -234,7 +219,6 @@ namespace Team.Gameplay.GridSystem
                     SpawnObjectOnTile();
                     break;
             }
-            //tileObject.transform.position = Vector3.zero;
 #if UNITY_EDITOR
             EditorUtility.SetDirty(gameObject);
 #endif

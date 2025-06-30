@@ -25,9 +25,7 @@ public class FireballProjectile : Base_Projectile
             other.gameObject.GetComponent<Base_Obstacle>().DisableObject();
             if (other.gameObject.GetComponent<ExplosiveObject>())
             {
-                GameTurnManager.Instance.AddDestroyedObject(other.gameObject);
-                other.gameObject.GetComponent<ExplosiveObject>().RefFireballProjectile = this;
-                gameObject.GetComponent<MeshRenderer>().enabled = false;
+                HitExplosive(other);
                 return;
             }
         }
@@ -39,5 +37,12 @@ public class FireballProjectile : Base_Projectile
     public override void CleanUp()
     {
         base.CleanUp();
+    }
+
+    private void HitExplosive(Collider other)
+    {
+        GameTurnManager.Instance.AddDestroyedObject(other.gameObject);
+        other.gameObject.GetComponent<ExplosiveObject>().RefFireballProjectile = this;
+        gameObject.GetComponent<MeshRenderer>().enabled = false;
     }
 }

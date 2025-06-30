@@ -192,13 +192,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
             {
                 if (targetTile.IsIceTile())
                 {
-                    if (!_currentTile.IsIceTile())
-                    {
-                        movementAmount = 0; movementAmount += 2;
-                    }
-                    else movementAmount++;
-
-                    smoothingTime = .1f;
+                    movementAmount = IceTileLogic(movementAmount);
                     wasPushed = true;
                 }
                 if (_currentTile.IsIceTile() && !targetTile.IsIceTile())
@@ -267,6 +261,18 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         }
 
         alreadyMoving = false;
+    }
+
+    private int IceTileLogic(int movementAmount)
+    {
+        if (!_currentTile.IsIceTile())
+        {
+            movementAmount = 0; movementAmount += 2;
+        }
+        else movementAmount++;
+
+        smoothingTime = .1f;
+        return movementAmount;
     }
 
     [ContextMenu("Undo Movement")]
