@@ -28,6 +28,18 @@ namespace Team.UI.Gameplay
         [SerializeField]
         private Vector3 selectedScale = new Vector3(1.25f, 1.25f, 1.25f);
 
+        [Space(5)]
+        [Header("Card Components")]
+
+        [SerializeField]
+        private CanvasGroup canvasGroup;
+
+        [SerializeField]
+        private Color interactableColor;
+
+        [SerializeField]
+        private Color unInteractableColor;
+
         #region Unity Methods
         protected void Start()
         {
@@ -52,7 +64,8 @@ namespace Team.UI.Gameplay
         public void PopulateUICardData(CharacterData data, CharacterReskinner _skinner)
         {
             gameObject.name = $"Game-Card: {data.CharacterID}";
-            cardImage.color = data.CharacterSkin.CharacterColor;
+            interactableColor = data.CharacterSkin.CharacterColor;
+            cardImage.color = interactableColor;
 
             nameText.text = data.CharacterID;
 
@@ -62,6 +75,8 @@ namespace Team.UI.Gameplay
 
             var uiCharacter = characterReskinner.UICharacter;
             uiCharacter?.PopulateCharacterUI(data.CharacterID, data.CharacterSkin);
+
+            MakeInteractable();
         }
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -93,6 +108,24 @@ namespace Team.UI.Gameplay
             //Fire On Click Bark
             characterRef.OnClickBark();
         }
+
+        [ContextMenu("Make Interactable")]
+        public void MakeInteractable()
+        {
+            canvasGroup.interactable = true;
+            cardImage.raycastTarget = true;
+            cardImage.color = interactableColor;
+            
+        }
+
+        [ContextMenu("Make Uninteractable")]
+        public void MakeUninteractable()
+        {
+            canvasGroup.interactable = false;
+            cardImage.raycastTarget = false;
+            cardImage.color = unInteractableColor;
+        }
+
         #endregion
     }
 }
