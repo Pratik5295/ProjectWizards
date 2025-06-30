@@ -121,17 +121,18 @@ namespace Team.Gameplay.GridSystem
             return Instantiate(_tile, new Vector3(x, y, z), Quaternion.identity, transform);
         }
 
-        private GameObject SpawnOilTile(GameObject _oilTile, float x, float y, float z)
-        {
-            return Instantiate(_oilTile, new Vector3(x, y, z), Quaternion.identity, transform);
-        }
 
-        public void CreateNewOilTile(TileID previousTileID, float positionX, float positionY)
+        public void CreateNewOilTile(TileID previousTileID, float positionX, float positionZ)
         {
-            var spawnedTile = SpawnTile(_oilTile, positionX, MetaConstants.GridY, positionY);
-            var gridTile = spawnedTile.GetComponent<GridTile>();
+            //Remove old tile from list
+            var tile = GetTile(previousTileID);
+            RemoveTile(tile.GetComponent<GridTile>());
+            DestroyImmediate(tile);
+
+            var spawnedTile = SpawnTile(_oilTile, positionX, MetaConstants.GridY, positionZ);
+            var gridTile = spawnedTile.GetComponent<OilTile>();
             TileID tileID = new TileID(previousTileID.x, previousTileID.y);
-            bool isWalkable = gridTile.Init(this, tileID, true); //Update this to look cleaner and error check
+            gridTile.Init(this, tileID, true); //Update this to look cleaner and error check
 
             spawnedTile.name = $"Tile: {MetaConstants.gridCharArray[previousTileID.x]} {previousTileID.x}, {previousTileID.y}";
             tiles.Add(gridTile);

@@ -40,7 +40,7 @@ namespace Team.Gameplay.GridSystem
         public Vector3 TilePosition => transform.position;
 
         public GameObject tilePrefab;
-        public GameObject oilTilePrefab;
+        
         public GameObject deathTilePrefab;
         public GameObject iceTilePrefab;
 
@@ -58,22 +58,22 @@ namespace Team.Gameplay.GridSystem
                 }
             }
         }
-        private TileType startingTileType;
+        protected TileType startingTileType;
 
         public TileDirection Direction; //Rotation 
 
         [SerializeField]
-        private LevelTileCreator gridManager;
+        protected LevelTileCreator gridManager;
 
         [SerializeField]
-        private GameObject tileObject = null; //The created tile object
+        protected GameObject tileObject = null; //The created tile object
 
         [SerializeField] private GameObject _startingObject;
 
         [SerializeField] private UITile tileUI;
 
         [SerializeField]
-        private GameObject objectOccupyingTile;
+        protected GameObject objectOccupyingTile;
         public GameObject ObjectOccupyingTile
         {
             get { return objectOccupyingTile; }
@@ -82,7 +82,7 @@ namespace Team.Gameplay.GridSystem
         /// <summary>
         /// Initialize the tile
         /// </summary>
-        public bool Init(LevelTileCreator _tileCreator, TileID _tileId, bool specificType = false)
+        public virtual bool Init(LevelTileCreator _tileCreator, TileID _tileId, bool specificType = false)
         {
             gridManager = _tileCreator;
             TileID = _tileId;
@@ -121,10 +121,7 @@ namespace Team.Gameplay.GridSystem
             return Instantiate(tilePrefab, transform);
         }
 
-        private GameObject SpawnOilTileObject()
-        {
-            return Instantiate(oilTilePrefab, transform);
-        }
+        
         private GameObject SpawnDeathTileObject()
         {
             return Instantiate(deathTilePrefab, transform);
@@ -221,8 +218,6 @@ namespace Team.Gameplay.GridSystem
 
                 case TileType.OILTILE:
                     gridManager.CreateNewOilTile(TileID, transform.position.x, transform.position.z);
-                    gridManager.RemoveTile(this);
-                    Destroy(gameObject);
                     break;
 
                 case TileType.ICETILE:
@@ -234,7 +229,7 @@ namespace Team.Gameplay.GridSystem
                     break;
             }
 #if UNITY_EDITOR
-            EditorUtility.SetDirty(gameObject);
+            EditorUtility.SetDirty(transform.parent.gameObject.transform.parent.gameObject);
 #endif
         }
 
