@@ -6,6 +6,7 @@ using Team.Gameplay.TurnSystem;
 using Team.GameConstants;
 using UnityEngine;
 using Team.Gameplay.GridSystem;
+using Team.UI.Gameplay;
 
 namespace Team.GameConstants
 {
@@ -102,6 +103,25 @@ namespace Team.Managers
             foreach (var unit in currentTurnOrder)
             {
                 if (unit.TryGetComponent<GameTurn>(out var gameTurn))
+                {
+                    turnQueue.Enqueue(gameTurn);
+                }
+            }
+
+            isQueueLoaded = true;
+        }
+
+        public async Task LoadQueueFromIndex(int index)
+        {
+            LoadObstacleData();
+
+            turnQueue.Clear();
+
+            await Task.Yield();
+
+            for (int i = index; i < currentTurnOrder.Count; i++)
+            {
+                if (currentTurnOrder[i].TryGetComponent<GameTurn>(out var gameTurn))
                 {
                     turnQueue.Enqueue(gameTurn);
                 }
@@ -236,8 +256,12 @@ namespace Team.Managers
                 else
                 {
                     //3. Last section of the game 
+
                     //Check if it is a breakpoint level
                     int currentIndex = breakerIndex;
+
+                    //Redo the queue based on current order
+                    await LoadQueueFromIndex(currentIndex);
 
                     while (turnQueue.Count > 0)
                     {
@@ -283,6 +307,7 @@ namespace Team.Managers
         private async Task RunNextTurn()
         {
             GameTurn turn = turnQueue.Dequeue();
+           if(turn.TryGetComponent<UIGameCard>(out var gameCard))
 
             if (turn.IsAlive())
             {
@@ -294,10 +319,15 @@ namespace Team.Managers
 
                 //Turn was performed by the character, update the stack
                 _historyStack.Push(turn);
+
+                //Turn is done, make it uninteractable
+                gameCard?.MakeUninteractable();
             }
             else
             {
                 Debug.Log($"{turn.name} Move character is dead, turn skipped");
+
+                gameCard?.MakeUninteractable();
             }
         }
 
@@ -311,6 +341,11 @@ namespace Team.Managers
             while (_historyStack.Count > 0)
             {
                 GameTurn turn = _historyStack.Pop();
+                if (turn.TryGetComponent<UIGameCard>(out var gameCard))
+                {
+                    gameCard?.MakeInteractable();
+                }
+               
                 await turn.Undo();
             }
 
