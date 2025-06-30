@@ -133,27 +133,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d73e500546fa32e4598e3b481a26e06c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _myTileID:
-    x: 0
-    y: 0
-  _startTileID:
-    x: 0
-    y: 0
-  _startTile: {fileID: 0}
-  _myGridTile: {fileID: 0}
-  _startingDirection: 0
-  _collider: {fileID: 0}
-  _meshRenderer: {fileID: 0}
-  canBeDestroyed: 1
-  ref_gridManager: {fileID: 0}
-  baseRotation: {fileID: 0}
-  ySpawnOffset: 1.5
   _currentTileID:
     x: 0
     y: 0
+  _previousTileID:
+    x: 0
+    y: 0
   _startTileID:
     x: 0
     y: 0
+  ySpawnOffset: 1
+  _startTile: {fileID: 0}
+  _currentGridTile: {fileID: 0}
+  _startingDirection: 0
+  ref_gridManager: {fileID: 0}
+  baseRotation: {fileID: 0}
+  _collider: {fileID: 0}
+  _meshRenderer: {fileID: 0}
+  canBeDestroyed: 1
 --- !u!114 &933473269899832427
 MonoBehaviour:
   m_ObjectHideFlags: 0
