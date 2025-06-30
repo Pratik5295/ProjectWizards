@@ -251,6 +251,8 @@ namespace Team.Managers
                         playedTillBreaker = true;
 
                         OnPlayedTillBreakpoint?.Invoke();
+
+                        turnHolder.BreakpointInitiate(currentIndex);
                     }
                 }
                 else
@@ -273,6 +275,8 @@ namespace Team.Managers
                     Debug.Log("Completed the entire breakpoint system loop?");
 
                     OnAllTurnsCompleted?.Invoke();
+
+                    turnHolder.Reset();
                 }
             }
 
