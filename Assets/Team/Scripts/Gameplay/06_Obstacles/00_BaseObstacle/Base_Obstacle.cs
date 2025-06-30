@@ -78,6 +78,8 @@ public class Base_Obstacle : MonoBehaviour, IDestroyable
         _currentGridTile = ref_gridManager.FindTile(_currentTileID);
         _currentGridTile.SetObjectOccupyingTile(this.gameObject);
 
+        _previousGridTile = _currentGridTile;
+
         baseRotation = GetComponent<Base_Rotation>();
         baseRotation.changeFacingDirection(startingDirection);
         Vector2 v2Dir = baseRotation.dirToV2(baseRotation.DirectionFacing);

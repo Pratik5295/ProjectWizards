@@ -119,6 +119,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         _currentTile = ref_gridManager.FindTile(_currentTileID);
         _currentTile.SetObjectOccupyingTile(this.gameObject);
 
+        _previousTile = _currentTile;
+
         baseRotation = GetComponent<Base_Rotation>();
         startingDirection = _startingDirection;
         ResetRotationToStart();
