@@ -4,6 +4,8 @@ using Team.Gameplay.GridSystem;
 using Team.Enum.Character;
 using UnityEngine;
 using Team.GameConstants;
+using Team.UI;
+using static Team.GameConstants.MetaConstants;
 
 [System.Serializable]
 public class PlayerMove
@@ -102,6 +104,19 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
 
     #endregion
+
+
+    #region Character Barking Section
+
+    [Space(5)]
+    [Header("Barking Section")]
+
+    [SerializeField]
+    protected CharacterBark _characterBark;
+    protected UICharacter _characterUI => _characterBark.GetComponent<UICharacter>();
+
+    #endregion
+
     public System.Action OnStateChanged;
 
     public System.Action OnTurnComplete;
@@ -442,6 +457,44 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         if (_ghosting == null) return;
 
         _ghosting.toggleGhosting();
+    }
+
+    #endregion
+
+    #region Character Bark System
+
+    protected bool OnValidateBark()
+    {
+        if (_characterBark == null)
+        {
+            Debug.LogError("Character is missing character bark", gameObject);
+            return false;
+        }
+
+        return true;
+    }
+
+    public void OnClickBark()
+    {
+        if (!OnValidateBark()) return;
+
+        var bark = _characterBark.GetRandomBark(BarkTag.OnClick);
+
+        Debug.Log($"{gameObject.name}: {bark}");
+
+        _characterUI.UpdateBark(bark);
+    }
+
+    /// <summary>
+    /// The function would be overridden for Redirect wizard
+    /// </summary>
+    public virtual void OnCastBark()
+    {
+        if (!OnValidateBark()) return;
+
+        var bark = _characterBark.GetRandomBark(BarkTag.OnCast);
+
+        _characterUI.UpdateBark(bark);
     }
 
     #endregion

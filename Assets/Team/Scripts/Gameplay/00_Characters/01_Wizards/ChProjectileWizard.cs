@@ -65,6 +65,8 @@ public class ChProjectileWizard : Base_Ch
         scProjectile._prefabReference = _projectilePrefab;
         scProjectile._projectileDir = baseRotation.DirectionFacing;
         scProjectile.OnProjectileEnd += endTurn;
+
+        OnCastBark();
     }
 
     private void endTurn()
