@@ -253,6 +253,8 @@ namespace Team.Managers
                         OnPlayedTillBreakpoint?.Invoke();
 
                         turnHolder.BreakpointInitiate(currentIndex);
+
+                        breaker.MakeUnInteractable();
                     }
                 }
                 else
@@ -277,6 +279,8 @@ namespace Team.Managers
                     OnAllTurnsCompleted?.Invoke();
 
                     turnHolder.Reset();
+
+                    breaker.MakeInteractable();
                 }
             }
 
@@ -467,6 +471,8 @@ namespace Team.Managers
         {
             breaker.transform.SetAsFirstSibling();
             breakerIndex = 0;
+
+            breaker.MakeInteractable();
         }
 
         #endregion
