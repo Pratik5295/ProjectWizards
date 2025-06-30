@@ -36,10 +36,17 @@ namespace Team.Managers
         [SerializeField]
         private TurnHolder turnHolder;
 
+        [Space(5)]
+        [Header("Breakpoint System Variables")]
         [SerializeField]
         private GameBreakpoint breaker; //Reference to the breaker in game turn order
         [SerializeField]
         private int breakerIndex = 0;
+        [SerializeField]
+        private bool breakpoint = false;    //Breakpoint will be set at runtime by the level
+        [SerializeField]
+        private bool playedTillBreaker = false;    //Will be set to true after first set till breakpoint is played
+
 
         public bool HasCharacterTurns => turnQueue.Count > 0;
 
@@ -48,7 +55,7 @@ namespace Team.Managers
         public Action OnTurnsProcessingEvent;
         public Action OnAllTurnsCompleted;  //TODO: Update this to include the round integer
         public Action OnResetLastTurnCompleted; //TODO: To include which turn count was the round reset to
-
+        public Action OnPlayedTillBreakpoint;
         #endregion
 
         #region Unity Methods
@@ -69,6 +76,11 @@ namespace Team.Managers
 
         #region Public Methods
 
+        public void HasBreakpoint(bool _hasBreakPoint)
+        {
+            breakpoint = _hasBreakPoint;
+        }
+
         public async Task LoadQueue()
         {
             LoadObstacleData();
@@ -87,7 +99,7 @@ namespace Team.Managers
             await Task.Yield();
             foreach (var unit in currentTurnOrder)
             {
-                if(unit.TryGetComponent<GameTurn>(out var gameTurn))
+                if (unit.TryGetComponent<GameTurn>(out var gameTurn))
                 {
                     turnQueue.Enqueue(gameTurn);
                 }
@@ -165,6 +177,13 @@ namespace Team.Managers
             }
         }
 
+        private void ResetBreakpointSystem()
+        {
+            breakpoint = false;
+            playedTillBreaker = false;
+            breakerIndex = 0;
+        }
+
         #endregion
 
         #region Context Menu Methods
@@ -175,30 +194,83 @@ namespace Team.Managers
         {
             OnTurnsProcessingEvent?.Invoke();
 
-            await LoadQueue();
-
-            //Get the breakpoint index to know where to stop
-            int stopPoint = breakerIndex;
-            //Check if the breakpoint index is at extremes, 0 or last. If yes then ignore it
-            bool playAllTurns = stopPoint == 0 || stopPoint >= turnQueue.Count; //Turn Queue doesnt contain the breaker
-            Debug.Log($"Play Turns is at extreme? {playAllTurns} and turn Queue Count: {turnQueue.Count}");
-
-            if (playAllTurns)
+            if (!breakpoint)
             {
-                while (turnQueue.Count > 0)
-                {
-                    await RunNextTurn();
-                }
+                PlayAllTurns();
             }
             else
             {
-                int currentIndex = 0;
-
-                while(currentIndex < stopPoint)
+                //Load the turn order in queue
+                if (!playedTillBreaker)
                 {
-                    await RunNextTurn();
-                    currentIndex++;
+                    //Load the queue
+                    await LoadQueue();
+
+                    //1. If breaker is at extremes
+                    bool playAllTurns = IsBreakerAtExtremes();
+                    if (playAllTurns)
+                    {
+                        PlayAllTurns();
+                    }
+                    else
+                    {
+                        //2. If first section of the game
+
+                        //Check if it is a breakpoint level
+                        int currentIndex = 0;
+
+                        while (currentIndex < breakerIndex)
+                        {
+                            Debug.Log($"Runner index: {currentIndex}");
+                            await RunNextTurn();
+                            currentIndex++;
+                        }
+
+                        playedTillBreaker = true;
+
+                        OnPlayedTillBreakpoint?.Invoke();
+                    }
                 }
+                else
+                {
+                    //3. Last section of the game 
+                    //Check if it is a breakpoint level
+                    int currentIndex = breakerIndex;
+
+                    while (turnQueue.Count > 0)
+                    {
+                        Debug.Log($"Runner index: {currentIndex}");
+                        await RunNextTurn();
+                        currentIndex++;
+                    }
+
+                    Debug.Log("Completed the entire breakpoint system loop?");
+
+                    OnAllTurnsCompleted?.Invoke();
+                }
+            }
+
+        }
+
+        private bool IsBreakerAtExtremes()
+        {
+            //Check if the breakpoint index is at extremes, 0 or last. If yes then ignore it
+            bool playAllTurns = breakerIndex == 0 || breakerIndex >= turnQueue.Count; //Turn Queue doesnt contain the breaker
+            Debug.Log($"Play Turns is at extreme? {playAllTurns} and turn Queue Count: {turnQueue.Count}");
+
+            return playAllTurns;
+        }
+
+
+
+        private async void PlayAllTurns()
+        {
+            //Loads all turns and plays them
+            await LoadQueue();
+
+            while (turnQueue.Count > 0)
+            {
+                await RunNextTurn();
             }
 
             Debug.Log("All turns completed.");
@@ -216,6 +288,8 @@ namespace Team.Managers
 
                 await Task.Delay(TimeSpan.FromSeconds(MetaConstants.PauseBetweenTurn));
 
+                Debug.Log($"Executing: {turn.name}");
+
                 //Turn was performed by the character, update the stack
                 _historyStack.Push(turn);
             }
@@ -229,7 +303,7 @@ namespace Team.Managers
         public async void ResetAllTurns()
         {
             OnTurnsProcessingEvent?.Invoke();
-           
+
 
             //Reset all moves performed by the characters
             while (_historyStack.Count > 0)
@@ -272,7 +346,7 @@ namespace Team.Managers
 
             isQueueLoaded = false;
 
-            
+
 
             Debug.Log("Completed reset");
         }
@@ -306,8 +380,8 @@ namespace Team.Managers
                 OnAllTurnsCompleted?.Invoke();
             }
 
-           
-           
+
+
         }
 
         public void ResetDestroyedEntities()
