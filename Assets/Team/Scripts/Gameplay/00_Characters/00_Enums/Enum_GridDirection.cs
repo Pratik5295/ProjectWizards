@@ -10,6 +10,9 @@ public enum Enum_GridDirection
     WEST = 3
 }
 
+/// <summary>
+/// Singleton for Direction based utilities: includes returning an Enum based on clockwise or anti clockwise rotation.
+/// </summary>
 public static class DirectionUtilities
 {
     public static Enum_GridDirection RotateClockwise(Enum_GridDirection dir)

@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace Team.UI.Gameplay
 {
-    public class UIGameCard : UIDragHandler, IPointerEnterHandler, IPointerExitHandler
+    public class UIGameCard : UIDragHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         [SerializeField]
         private Image cardImage;
@@ -18,6 +18,9 @@ namespace Team.UI.Gameplay
 
         [SerializeField]
         private CharacterReskinner characterReskinner;
+
+        [SerializeField]
+        private Base_Ch characterRef;
 
         [SerializeField]
         private Vector3 defaultScale = Vector3.one;
@@ -55,6 +58,8 @@ namespace Team.UI.Gameplay
 
             characterReskinner = _skinner;
 
+            characterRef = characterReskinner.gameObject.GetComponent<Base_Ch>();
+
             var uiCharacter = characterReskinner.UICharacter;
             uiCharacter?.PopulateCharacterUI(data.CharacterID, data.CharacterSkin);
         }
@@ -78,6 +83,15 @@ namespace Team.UI.Gameplay
             transform.localScale = defaultScale;
 
             LayoutRebuilder.ForceRebuildLayoutImmediate(originalParent as RectTransform);
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            //Have base character toggle Ghosting (characterRef)
+            characterRef.ToggleGhosting();
+
+            //Fire On Click Bark
+            characterRef.OnClickBark();
         }
         #endregion
     }

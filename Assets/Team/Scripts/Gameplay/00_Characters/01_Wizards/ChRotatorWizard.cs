@@ -55,6 +55,8 @@ public class ChRotatorWizard : Base_Ch
 
     public override void UseAbility()
     {
+        OnCastBark();
+
         GetTilesToRotate();
         if (!centerTile)
         {
@@ -172,10 +174,14 @@ public class ChRotatorWizard : Base_Ch
     private void TileDataChanges()
     {
 
-        for(int i = 1; i < _tilesToMove.Count; i++)
+        for(int i = 0; i < _tilesToMove.Count; i++)
         {
             //Remove Tiles from dictionary.
-            ref_gridManager.RemoveTileFromGrid(_tilesToMove[i].TileID, _tilesToMove[i]);
+            if (i != 0) // Only execute the following code if i is not 0.
+            {
+                ref_gridManager.RemoveTileFromGrid(_tilesToMove[i].TileID, _tilesToMove[i]);
+            }
+
             GameObject characterOnTile = null;
             if (_tilesToMove[i].ObjectOccupyingTile && _tilesToMove[i].ObjectOccupyingTile.CompareTag("Character"))
             {
@@ -193,6 +199,12 @@ public class ChRotatorWizard : Base_Ch
                     charactersRotationSc.changeFacingDirection(DirectionUtilities.RotateClockwise(charactersRotationSc.DirectionFacing));
                 }
             }
+
+            if(i == 0) //Skip to next iteration in the loop if its the center tile.
+            {
+                continue;
+            }
+
             switch (rotation)
             {
                 case MetaConstants.Enum_Rotation.Clockwise:
