@@ -79,6 +79,8 @@ namespace Team.Managers
         public void HasBreakpoint(bool _hasBreakPoint)
         {
             breakpoint = _hasBreakPoint;
+
+            breaker.gameObject.SetActive(breakpoint);
         }
 
         public async Task LoadQueue()
