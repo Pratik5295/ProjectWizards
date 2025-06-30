@@ -134,6 +134,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         _currentTile = ref_gridManager.FindTile(_currentTileID);
         _currentTile.SetObjectOccupyingTile(this.gameObject);
 
+        _previousTile = _currentTile;
+
         baseRotation = GetComponent<Base_Rotation>();
         startingDirection = _startingDirection;
         ResetRotationToStart();
@@ -200,8 +202,19 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
             TileID desiredTileID = new TileID(_currentTileID.x + (int)dir.x, _currentTileID.y + (int)dir.y);
             GridTile targetTile = ref_gridManager.FindTile(desiredTileID);
 
+
             if (targetTile && targetTile.IsTileWalkable())
             {
+                if (targetTile.IsIceTile())
+                {
+                    movementAmount = IceTileLogic(movementAmount);
+                    wasPushed = true;
+                }
+                if (_currentTile.IsIceTile() && !targetTile.IsIceTile())
+                {
+                    smoothingTime = 1f;
+                }
+
                 Vector3 targetPosition = new Vector3(targetTile.TilePosition.x, desiredLocation.y, targetTile.TilePosition.z);
 
                 _currentTileID = targetTile.TileID;
@@ -259,9 +272,22 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
             transform.position = targetPosition;
             startPosition = transform.position;
 
+            CheckTileStatus();
         }
 
         alreadyMoving = false;
+    }
+
+    private int IceTileLogic(int movementAmount)
+    {
+        if (!_currentTile.IsIceTile())
+        {
+            movementAmount = 0; movementAmount += 2;
+        }
+        else movementAmount++;
+
+        smoothingTime = .1f;
+        return movementAmount;
     }
 
     [ContextMenu("Undo Movement")]
@@ -287,7 +313,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
             transform.position = new Vector3(_currentTile.TilePosition.x, transform.position.y, _currentTile.TilePosition.z);
             return; 
         }
-        _currentTile.SetObjectOccupyingTile(null);
+        _currentTile.UpdateOccupiedStatus();
 
         _currentTileID = _startTileID;
         _currentTile = ref_gridManager.FindTile(_currentTileID);
@@ -339,6 +365,18 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         _currentTile = updatedGridTile;
     }
 
+    private void CheckTileStatus()
+    {
+        if (_currentTile.IsDeathTile())
+        {
+            KillCharacter();
+            OnTurnComplete?.Invoke();
+        }
+        if (_currentTile.IsIceTile())
+        {
+
+        }
+    }
 
 
     public virtual void HitByProjectile(Enum_ProjectileType projectileType)
@@ -346,15 +384,21 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         switch (projectileType)
         {
             case Enum_ProjectileType.Fireball:
-                CharState = Enum_CharacterState.Dead;
-
-                DisableObject();
+                KillCharacter();
                 break;
+
             case Enum_ProjectileType.NonLethalRound:
                 CharState = Enum_CharacterState.Incapacitated;
                 break;
         }
         OnStateChanged?.Invoke();
+    }
+
+    private void KillCharacter()
+    {
+        CharState = Enum_CharacterState.Dead;
+
+        DisableObject();
     }
 
     public bool checkIfCharAlive()
