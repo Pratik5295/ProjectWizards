@@ -9,42 +9,44 @@ namespace Team.Managers
 {
     public class GameLoadManager : MonoBehaviour
     {
-        [SerializeField]
-        private InstantiateLevelOperation levelOperation;
+        [SerializeField] private InstantiateLevelOperation levelOperation;
 
-        public async UniTask<GameLevel> LoadGameLevelAsync(GameObject _levelPrefab)
+        public async UniTask<GameLevel> LoadGameLevelAsync(GameObject _levelPrefab, IProgress<float> progress = null)
         {
-            levelOperation.SetLevelPrefab(_levelPrefab);
-
-            GameLevel level = new GameLevel();
-            List<ILoadingOperation> operations = new List<ILoadingOperation>
+            try
             {
-               levelOperation
-            };
+                Debug.Log("GameLoadManager: Starting level instantiation...");
 
-            float totalProgress = 0f;
-            int stepCount = operations.Count;
+                // Step 1: Instantiate the level prefab (30% progress)
+                progress?.Report(0.0f);
+                levelOperation.SetLevelPrefab(_levelPrefab);
 
-            for (int i = 0; i < stepCount; i++)
-            {
-                var operation = operations[i];
-                //loadingScreenUI.SetMessage(operation.Description);
+                var levelGameObject = await levelOperation.LoadAsync(new Progress<float>(p =>
+                    progress?.Report(p * 0.3f)
+                ));
 
-                await operation.LoadAsync(new Progress<float>(p =>
+                var gameLevel = levelGameObject.GetComponent<GameLevel>();
+                if (gameLevel == null)
                 {
-                    float progressPerStep = 1f / stepCount;
-                    float currentStepProgress = p * progressPerStep;
-                    float overallProgress = (i * progressPerStep) + currentStepProgress;
-                    //loadingScreenUI.SetProgress(overallProgress);
-                }));
+                    throw new Exception("GameLevel component not found on instantiated prefab!");
+                }
+
+                // Step 2: Load the level content (70% progress)
+                progress?.Report(0.3f);
+                await gameLevel.LoadLevelAsync(new Progress<float>(p =>
+                    progress?.Report(0.3f + (p * 0.7f))
+                ));
+
+                progress?.Report(1.0f);
+                Debug.Log("GameLoadManager: Level loading completed successfully!");
+
+                return gameLevel;
             }
-
-
-            await UniTask.Delay(500);
-
-            Debug.Log("Loading the level has been completed");
-
-            return level;
+            catch (Exception ex)
+            {
+                Debug.LogError($"GameLoadManager: Failed to load level - {ex.Message}");
+                throw;
+            }
         }
     }
 }

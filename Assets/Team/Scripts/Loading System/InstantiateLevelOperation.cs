@@ -2,30 +2,54 @@ using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class InstantiateLevelOperation : MonoBehaviour, ILoadingOperation
+[System.Serializable]
+public class InstantiateLevelOperation : ILoadingOperation
 {
-    public string Description => throw new NotImplementedException();
+    [SerializeField] private GameObject levelPrefab;
 
-    public GameObject levelPrefab;
+    public string Description => $"Instantiating Level: {(levelPrefab ? levelPrefab.name : "Unknown")}";
 
-    public void SetLevelPrefab(GameObject _levelPrefab)
+    public void SetLevelPrefab(GameObject prefab)
     {
-        levelPrefab = _levelPrefab;
+        levelPrefab = prefab;
     }
 
-    public async UniTask<GameObject> LoadAsync(IProgress<float> progress)
+    public async UniTask<GameObject> LoadAsync(IProgress<float> progress = null)
     {
-        var op = InstantiateAsync(levelPrefab);
-        while (!op.isDone)
+        if (levelPrefab == null)
         {
-            progress.Report(op.progress);
-            await UniTask.Yield();
+            throw new ArgumentNullException(nameof(levelPrefab), "Level prefab is not set!");
         }
-        progress.Report(1f);
 
+        try
+        {
+            progress?.Report(0.0f);
+            Debug.Log($"Instantiating level prefab: {levelPrefab.name}");
 
-        GameObject spawned = op.Result[0];
-        return spawned;
+            // Simulate instantiation time for heavy prefabs
+            await UniTask.Delay(100);
+            progress?.Report(0.5f);
+
+            var instantiatedLevel = UnityEngine.Object.Instantiate(levelPrefab);
+
+            progress?.Report(0.8f);
+            await UniTask.Yield(); // Allow instantiation to complete
+
+            progress?.Report(1.0f);
+            Debug.Log($"Level prefab instantiated successfully: {instantiatedLevel.name}");
+
+            return instantiatedLevel;
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Failed to instantiate level prefab: {ex.Message}");
+            throw;
+        }
     }
 
+    // ILoadingOperation implementation (returns UniTask instead of UniTask<GameObject>)
+    async UniTask ILoadingOperation.LoadAsync(IProgress<float> progress)
+    {
+        await LoadAsync(progress);
+    }
 }

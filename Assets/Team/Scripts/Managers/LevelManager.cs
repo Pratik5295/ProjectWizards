@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using Team.Gameplay.GameLevelSystem;
@@ -35,6 +36,13 @@ namespace Team.Managers
 
         public Action<LevelData> OnCurrentLevelUpdated;
 
+        [Header("Loading State")]
+        // Loading state tracking
+        public bool IsLoading { get; private set; } = false;
+        public Action<float> OnLoadingProgress;
+        public Action OnLoadingStarted;
+        public Action OnLoadingCompleted;
+
         private void Awake()
         {
             if(Instance == null)
@@ -67,26 +75,77 @@ namespace Team.Managers
 
         public void LoadCurrentLevel()
         {
-            if (CurrentLevel != null)
+            LoadCurrentLevelAsync().Forget();
+        }
+
+        // New async method
+        public async UniTask LoadCurrentLevelAsync()
+        {
+            if (CurrentLevel == null)
             {
-                if(createdLevel != null)
+                Debug.LogError("No current level set!");
+                return;
+            }
+
+            if (IsLoading)
+            {
+                Debug.LogWarning("Level is already loading!");
+                return;
+            }
+
+            try
+            {
+                IsLoading = true;
+                OnLoadingStarted?.Invoke();
+
+                Debug.Log($"Starting to load level: {CurrentLevel.Stats.LevelName}");
+
+                // Progress tracking
+                var progressReporter = new Progress<float>(progress =>
+                {
+                    Debug.Log($"Loading Progress: {progress:P1}");
+                    OnLoadingProgress?.Invoke(progress);
+                });
+
+                // Destroy existing level if present
+                if (createdLevel != null)
                 {
                     DestroyImmediate(createdLevel.gameObject);
+                    await UniTask.Yield(); // Allow cleanup to complete
                 }
-                createdLevel = Instantiate(CurrentLevel.GameLevelPrefab);
-                createdLevel.LoadLevel(); //TODO: Turn this awaitable later 
 
-                //Load the dialogue manager with this
-                if(CurrentLevel.DialogueAsset != null)
-                    UIManager.Instance.SetCurrentDialogue(CurrentLevel.DialogueAsset);  
+                // Use GameLoadManager to load the level
+                createdLevel = await gameLoadManager.LoadGameLevelAsync(
+                    CurrentLevel.GameLevelPrefab.gameObject,
+                    progressReporter
+                );
 
-                //Set breaker to turn manager
-                if(GameTurnManager.Instance != null)
+                // Setup dialogue if available
+                if (CurrentLevel.DialogueAsset != null)
+                {
+                    UIManager.Instance.SetCurrentDialogue(CurrentLevel.DialogueAsset);
+                }
+
+                // Setup turn manager breakpoint
+                if (GameTurnManager.Instance != null)
                 {
                     GameTurnManager.Instance.HasBreakpoint(CurrentLevel.HasBreakPoint);
                 }
 
+                // Start the level
                 StartLevel();
+
+                Debug.Log($"Level {CurrentLevel.Stats.LevelName} loaded successfully!");
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"Failed to load level: {ex.Message}");
+                throw;
+            }
+            finally
+            {
+                IsLoading = false;
+                OnLoadingCompleted?.Invoke();
             }
         }
 

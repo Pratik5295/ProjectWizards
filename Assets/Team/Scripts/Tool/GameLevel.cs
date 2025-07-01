@@ -1,3 +1,5 @@
+using Cysharp.Threading.Tasks;
+using System;
 using System.Collections.Generic;
 using Team.Data;
 using Team.Gameplay.GridSystem;
@@ -39,6 +41,47 @@ namespace Team.Gameplay.GameLevelSystem
             CharacterManager.Instance.LoadCharactersFromLeveData(CharactersMap);
 
             LevelObjectiveManager.Instance.LoadObjectivesFromLevelData(_objectiveMap);
+        }
+
+        // New async method
+        public async UniTask LoadLevelAsync(IProgress<float> progress = null)
+        {
+            try
+            {
+                Debug.Log("Starting async level loading...");
+
+                // Step 1: Empty the turn queue (5% progress)
+                progress?.Report(0.05f);
+                GameTurnManager.Instance.EmptyQueue();
+                await UniTask.Yield(); // Allow frame to process
+
+                // Step 2: Set current level tile (15% progress)
+                progress?.Report(0.15f);
+                GridManager.Instance.SetCurrentLevelTile(this);
+                await UniTask.Yield();
+
+                // Step 3: Load characters (50% progress)
+                progress?.Report(0.30f);
+                await CharacterManager.Instance.LoadCharactersFromLevelDataAsync(
+                    CharactersMap,
+                    new Progress<float>(p => progress?.Report(0.30f + (p * 0.50f)))
+                );
+
+                // Step 4: Load objectives (30% progress)
+                progress?.Report(0.80f);
+                await LevelObjectiveManager.Instance.LoadObjectivesFromLevelDataAsync(
+                    _objectiveMap,
+                    new Progress<float>(p => progress?.Report(0.80f + (p * 0.20f)))
+                );
+
+                progress?.Report(1.0f);
+                Debug.Log("Level loading completed successfully!");
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"Error loading level: {ex.Message}");
+                throw;
+            }
         }
 
         #region Tool Helper Section
