@@ -13,7 +13,8 @@ namespace Team.GameConstants
             DIALOGUE = 1,
             GAME = 2,
             LEVEL_SELECT = 3,
-            POST_GAME = 4
+            POST_GAME = 4,
+            LOADING = 5
         }
     }
 }
