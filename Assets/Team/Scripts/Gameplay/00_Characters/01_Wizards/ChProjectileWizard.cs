@@ -1,8 +1,11 @@
 using UnityEngine;
+using FMODUnity;
 
 [DefaultExecutionOrder(2)]
 public class ChProjectileWizard : Base_Ch
 {
+    [SerializeField] private EventReference projectile;
+
     [Header("Projectile Wizard Variables")]
 
     [Header("---Object References---")]
@@ -58,6 +61,7 @@ public class ChProjectileWizard : Base_Ch
             return; 
         }
         ProjectileInstance = Instantiate(_projectilePrefab, _fireFromPoint.transform.position, Quaternion.identity);
+        AudioManager.instance.PlayOneShot(projectile, this.transform.position);
         scProjectile = ProjectileInstance.GetComponent<Base_Projectile>();
 
         scProjectile.curve = curve;
