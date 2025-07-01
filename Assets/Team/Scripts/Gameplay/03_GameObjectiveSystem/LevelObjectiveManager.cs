@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using Team.GameConstants;
 using Team.Managers;
 using Team.UI;
@@ -16,7 +18,7 @@ namespace Team.Gameplay.ObjectiveSystem
 {
     //Make sure it runs after Game Turn Manager
     [DefaultExecutionOrder(3)]
-    public class LevelObjectiveManager : MonoBehaviour
+    public class LevelObjectiveManager : MonoBehaviour,ILoadingOperation
     {
         #region Variables
         public static LevelObjectiveManager Instance = null;
@@ -35,6 +37,8 @@ namespace Team.Gameplay.ObjectiveSystem
 
         [SerializeField]
         private UIObjectivesHolder objectivesHolder;
+
+        public string Description => throw new NotImplementedException();
         #endregion
 
         #region Unity Methods
@@ -194,6 +198,11 @@ namespace Team.Gameplay.ObjectiveSystem
         {
           
             UIManager.Instance.ShowPostGameUI();
+        }
+
+        public UniTask<GameObject> LoadAsync(IProgress<float> progress)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

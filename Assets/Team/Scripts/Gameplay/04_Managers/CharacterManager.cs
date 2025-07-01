@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using Team.Data;
 using Team.Gameplay.Characters;
 using Team.Gameplay.GridSystem;
@@ -10,7 +12,7 @@ using UnityEngine;
 namespace Team.Managers
 {
     [DefaultExecutionOrder(2)]
-    public class CharacterManager : MonoBehaviour
+    public class CharacterManager : MonoBehaviour, ILoadingOperation
     {
         
         public static CharacterManager Instance = null;
@@ -37,6 +39,8 @@ namespace Team.Managers
 
         [SerializeField]
         private bool toggleCharactersGhosting = false;
+
+        public string Description => throw new NotImplementedException();
 
 
         #region Unity Methods
@@ -218,6 +222,11 @@ namespace Team.Managers
                     _characterReskinMap.Add(_characterSkin.CharacterCode, _characterSkin);
                 }
             }
+        }
+
+        public UniTask<GameObject> LoadAsync(IProgress<float> progress)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

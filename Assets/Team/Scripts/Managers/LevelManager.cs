@@ -17,6 +17,9 @@ namespace Team.Managers
         [Header("Components")]
 
         [SerializeField]
+        private GameLoadManager gameLoadManager;
+
+        [SerializeField]
         private UILevelSelectionScreen selectionScreen;
 
         [SerializeField]
