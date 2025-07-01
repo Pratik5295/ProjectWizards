@@ -132,6 +132,9 @@ namespace Team.Managers
 
         public void EmptyQueue()
         {
+            //Clear history stack
+            _historyStack.Clear();
+
             if (turnQueue != null)
             {
                 turnQueue.Clear();

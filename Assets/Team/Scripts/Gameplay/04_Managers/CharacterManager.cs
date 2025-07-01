@@ -55,7 +55,7 @@ namespace Team.Managers
         {
             try
             {
-                Debug.Log("Starting character loading...");
+                Debug.Log("[CharacterManager] Starting character loading...");
 
                 CleanUp();
                 CharactersMap.Clear();
@@ -67,16 +67,17 @@ namespace Team.Managers
                     CharactersMap.Add(character);
                 }
 
-                // Spawn all characters with progress tracking
-                await SpawnAllCharactersAsync(new Progress<float>(p =>
-                    progress?.Report(0.1f + (p * 0.9f))
-                ));
+                // Spawn all characters with progress tracking (90% progress)
+                await SpawnAllCharactersAsync(new Progress<float>(p => {
+                    float currentProgress = 0.1f + (p * 0.9f);
+                    progress?.Report(currentProgress);
+                }));
 
-                Debug.Log("Character loading completed!");
+                Debug.Log("[CharacterManager] Character loading completed!");
             }
             catch (Exception ex)
             {
-                Debug.LogError($"Error loading characters: {ex.Message}");
+                Debug.LogError($"[CharacterManager] Error loading characters: {ex.Message}");
                 throw;
             }
         }
@@ -91,11 +92,12 @@ namespace Team.Managers
         public async UniTask SpawnAllCharactersAsync(IProgress<float> progress = null)
         {
             int totalCharacters = CharactersMap.Count;
+            Debug.Log($"[CharacterManager] Spawning {totalCharacters} characters...");
 
             for (int i = 0; i < totalCharacters; i++)
             {
                 var character = CharactersMap[i];
-                Debug.Log($"Loading character: {character.CharacterID} ({i + 1}/{totalCharacters})");
+                Debug.Log($"[CharacterManager] Loading character: {character.CharacterID} ({i + 1}/{totalCharacters})");
 
                 await AddCharacterAsync(character);
 
@@ -107,8 +109,10 @@ namespace Team.Managers
                 await UniTask.Yield();
             }
 
+            Debug.Log("[CharacterManager] All characters spawned, notifying GameTurnManager...");
             GameTurnManager.Instance.OnCharactersLoaded();
             GameTurnManager.Instance.OnTurnsProcessingEvent += TurnGhostingOff;
+            Debug.Log("[CharacterManager] Character spawning complete!");
         }
 
         // Original synchronous method for backwards compatibility

@@ -66,10 +66,19 @@ namespace Team.Managers
 
             if(CurrentLevelID != LevelID.NONE)
             {
-                var original = LevelMap[_level];
-                CurrentLevel = new LevelData(original); // Deep copy here
+                //Check if the current level exists in the map
+                if (LevelMap.ContainsKey(CurrentLevelID))
+                {
+                    var original = LevelMap[_level];
+                    CurrentLevel = new LevelData(original); // Deep copy here
 
-                OnCurrentLevelUpdated?.Invoke(CurrentLevel);
+                    OnCurrentLevelUpdated?.Invoke(CurrentLevel);
+                }
+                else
+                {
+                    Debug.Log($"New current level:{CurrentLevelID} doesnt exist in the level map.");
+                }
+               
             }
         }
 
@@ -98,27 +107,37 @@ namespace Team.Managers
                 IsLoading = true;
                 OnLoadingStarted?.Invoke();
 
-                Debug.Log($"Starting to load level: {CurrentLevel.Stats.LevelName}");
+                Debug.Log($"[LevelManager] Starting to load level: {CurrentLevel.Stats.LevelName}");
 
-                // Progress tracking
+                // Progress tracking with proper logging
                 var progressReporter = new Progress<float>(progress =>
                 {
-                    Debug.Log($"Loading Progress: {progress:P1}");
+                    Debug.Log($"[LevelManager] Loading Progress: {progress:P1}");
                     OnLoadingProgress?.Invoke(progress);
                 });
 
                 // Destroy existing level if present
                 if (createdLevel != null)
                 {
+                    Debug.Log("[LevelManager] Cleaning up previous level...");
                     DestroyImmediate(createdLevel.gameObject);
                     await UniTask.Yield(); // Allow cleanup to complete
                 }
 
-                // Use GameLoadManager to load the level
+                // Use GameLoadManager to load the level - WAIT for completion
+                Debug.Log("[LevelManager] Starting GameLoadManager...");
                 createdLevel = await gameLoadManager.LoadGameLevelAsync(
                     CurrentLevel.GameLevelPrefab.gameObject,
                     progressReporter
                 );
+
+                // Ensure the level is fully loaded before proceeding
+                if (createdLevel == null)
+                {
+                    throw new Exception("GameLoadManager returned null level!");
+                }
+
+                Debug.Log("[LevelManager] Level instantiation complete, setting up components...");
 
                 // Setup dialogue if available
                 if (CurrentLevel.DialogueAsset != null)
@@ -135,17 +154,21 @@ namespace Team.Managers
                 // Start the level
                 StartLevel();
 
-                Debug.Log($"Level {CurrentLevel.Stats.LevelName} loaded successfully!");
+                // Wait one more frame to ensure everything is properly initialized
+                await UniTask.Yield();
+
+                Debug.Log($"[LevelManager] Level {CurrentLevel.Stats.LevelName} loaded successfully!");
             }
             catch (Exception ex)
             {
-                Debug.LogError($"Failed to load level: {ex.Message}");
+                Debug.LogError($"[LevelManager] Failed to load level: {ex.Message}");
                 throw;
             }
             finally
             {
                 IsLoading = false;
                 OnLoadingCompleted?.Invoke();
+                Debug.Log("[LevelManager] Loading process completed!");
             }
         }
 

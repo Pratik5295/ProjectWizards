@@ -69,7 +69,7 @@ namespace Team.Gameplay.ObjectiveSystem
         {
             try
             {
-                Debug.Log("Starting objectives loading...");
+                Debug.Log("[LevelObjectiveManager] Starting objectives loading...");
 
                 CleanUp();
                 _objectiveMap.Clear();
@@ -81,16 +81,17 @@ namespace Team.Gameplay.ObjectiveSystem
                     _objectiveMap.Add(objective);
                 }
 
-                // Initialize objectives with progress tracking
-                await InitializeObjectivesAsync(new Progress<float>(p =>
-                    progress?.Report(0.2f + (p * 0.8f))
-                ));
+                // Initialize objectives with progress tracking (80% progress)
+                await InitializeObjectivesAsync(new Progress<float>(p => {
+                    float currentProgress = 0.2f + (p * 0.8f);
+                    progress?.Report(currentProgress);
+                }));
 
-                Debug.Log("Objectives loading completed!");
+                Debug.Log("[LevelObjectiveManager] Objectives loading completed!");
             }
             catch (Exception ex)
             {
-                Debug.LogError($"Error loading objectives: {ex.Message}");
+                Debug.LogError($"[LevelObjectiveManager] Error loading objectives: {ex.Message}");
                 throw;
             }
         }
@@ -106,10 +107,13 @@ namespace Team.Gameplay.ObjectiveSystem
         {
             CharacterManager characterManager = CharacterManager.Instance;
             int totalObjectives = _objectiveMap.Count;
+            Debug.Log($"[LevelObjectiveManager] Initializing {totalObjectives} objectives...");
 
             for (int i = 0; i < totalObjectives; i++)
             {
                 var data = _objectiveMap[i];
+                Debug.Log($"[LevelObjectiveManager] Creating objective: {data.ObjectiveName} ({i + 1}/{totalObjectives})");
+
                 var objective = ObjectiveFactory.CreateObjective(data);
 
                 foreach (var objectTarget in data.ObjectiveTargets)
@@ -133,6 +137,8 @@ namespace Team.Gameplay.ObjectiveSystem
                 // Yield control to prevent frame drops
                 await UniTask.Yield();
             }
+
+            Debug.Log("[LevelObjectiveManager] All objectives initialized!");
         }
 
         // ILoadingOperation implementation

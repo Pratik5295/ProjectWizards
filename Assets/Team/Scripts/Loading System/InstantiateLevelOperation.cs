@@ -24,7 +24,7 @@ public class InstantiateLevelOperation : ILoadingOperation
         try
         {
             progress?.Report(0.0f);
-            Debug.Log($"Instantiating level prefab: {levelPrefab.name}");
+            Debug.Log($"[InstantiateLevelOperation] Instantiating level prefab: {levelPrefab.name}");
 
             // Simulate instantiation time for heavy prefabs
             await UniTask.Delay(100);
@@ -36,13 +36,13 @@ public class InstantiateLevelOperation : ILoadingOperation
             await UniTask.Yield(); // Allow instantiation to complete
 
             progress?.Report(1.0f);
-            Debug.Log($"Level prefab instantiated successfully: {instantiatedLevel.name}");
+            Debug.Log($"[InstantiateLevelOperation] Level prefab instantiated successfully: {instantiatedLevel.name}");
 
             return instantiatedLevel;
         }
         catch (Exception ex)
         {
-            Debug.LogError($"Failed to instantiate level prefab: {ex.Message}");
+            Debug.LogError($"[InstantiateLevelOperation] Failed to instantiate level prefab: {ex.Message}");
             throw;
         }
     }
