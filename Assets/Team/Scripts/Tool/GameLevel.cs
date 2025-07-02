@@ -73,6 +73,8 @@ namespace Team.Gameplay.GameLevelSystem
                     })
                 );
 
+                await UniTask.Delay(1000);
+
                 // Step 4: Load objectives (35% progress from 65% to 100%)
                 Debug.Log("[GameLevel] Step 4: Loading objectives...");
                 await LevelObjectiveManager.Instance.LoadObjectivesFromLevelDataAsync(
@@ -85,6 +87,9 @@ namespace Team.Gameplay.GameLevelSystem
                 );
 
                 await UniTask.Yield();
+
+                await UniTask.Delay(1000);
+
                 progress?.Report(1.0f);
                 Debug.Log("[GameLevel] Level loading completed successfully!");
             }
