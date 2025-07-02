@@ -23,8 +23,8 @@ namespace Team.Gameplay.LevelSystem
     {
         public ChapterID ChapterID;
         public string ChapterName;
-        public ChapterState State;
-        public List<LevelDataSO> Levels;
+        public ChapterState InitialState;
+        public List<LevelDataSO> Levels; //Objects will be created out of this
 
         //Update to throw Chapter Description and stuff over here
     }
@@ -32,7 +32,13 @@ namespace Team.Gameplay.LevelSystem
     [CreateAssetMenu(fileName = "ChapterDataSO", menuName = "Team/Data/Levels/Create a Chapter Data File")]
     public class ChapterDataSO : ScriptableObject
     {
+        [Header("Current Chapter Section")]
         public ChapterData Data;
+
+        [Space(5)]
+        [Header("Next Chapter Section")]
+        public ChapterDataSO NextLevel;
+        public int LevelsToCompleteToUnlock;
 
     }
 }

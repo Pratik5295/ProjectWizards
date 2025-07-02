@@ -1,12 +1,14 @@
+using System;
 using Team.Managers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static Team.GameConstants.LevelConstants;
 using static Team.GameConstants.MetaConstants;
 
 namespace Team.Gameplay.LevelSystem
 {
-    public class LevelInfoUI : MonoBehaviour
+    public class Level : MonoBehaviour
     {
         [SerializeField]
         private TextMeshProUGUI levelNameText;
@@ -28,6 +30,10 @@ namespace Team.Gameplay.LevelSystem
 
         public bool IsUnlocked => levelData.Data.Stats.State != LevelState.LOCKED;
 
+        public LevelState Status;
+
+        public Action<LevelID> OnCompletedLevel;
+
         private void Start()
         {
            if(levelData != null)
@@ -39,6 +45,8 @@ namespace Team.Gameplay.LevelSystem
         public void PopulateLevelInfo(LevelDataSO _data)
         {
             levelData = _data;
+
+            Status = levelData.Data.Stats.State;    //Status filled based on initial state from SO
 
             levelNameText.text = levelData.Data.Stats.LevelName;
 
