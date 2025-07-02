@@ -25875,16 +25875,6 @@ MonoBehaviour:
       CharacterCode: 0
       SkinMaterial: {fileID: 1411009148027576344, guid: 29daf79e109a1334db1b3cc191357059, type: 3}
       CharacterColor: {r: 0.21176471, g: 0.8117647, b: 0, a: 1}
-  - CharacterID: Redirect Wizard 2
-    CharacterPrefab: {fileID: 5407380294395882597, guid: 5ecfadebda0155d4695ab480153decc0, type: 3}
-    StartTileID:
-      x: 4
-      y: 4
-    FacingDirection: 0
-    CharacterSkin:
-      CharacterCode: 0
-      SkinMaterial: {fileID: 2100000, guid: da98eb23e0994874da55d0329b64cc4d, type: 2}
-      CharacterColor: {r: 0, g: 0.2784314, b: 1, a: 1}
   - CharacterID: Push Wizard 2
     CharacterPrefab: {fileID: 5407380294395882597, guid: 13d5d07571039354bb2e9285b85bf4b7, type: 3}
     StartTileID:
@@ -25895,6 +25885,36 @@ MonoBehaviour:
       CharacterCode: 0
       SkinMaterial: {fileID: 2100000, guid: 0b29132a849f60d4faf5579ef0e889d0, type: 2}
       CharacterColor: {r: 1, g: 0.88235295, b: 0, a: 1}
+  - CharacterID: Push Wizard 2
+    CharacterPrefab: {fileID: 5407380294395882597, guid: 13d5d07571039354bb2e9285b85bf4b7, type: 3}
+    StartTileID:
+      x: 7
+      y: 2
+    FacingDirection: 2
+    CharacterSkin:
+      CharacterCode: 0
+      SkinMaterial: {fileID: 2100000, guid: 0b29132a849f60d4faf5579ef0e889d0, type: 2}
+      CharacterColor: {r: 1, g: 0.88235295, b: 0, a: 1}
+  - CharacterID: Redirect Wizard 2
+    CharacterPrefab: {fileID: 5407380294395882597, guid: 5ecfadebda0155d4695ab480153decc0, type: 3}
+    StartTileID:
+      x: 4
+      y: 4
+    FacingDirection: 0
+    CharacterSkin:
+      CharacterCode: 0
+      SkinMaterial: {fileID: 2100000, guid: da98eb23e0994874da55d0329b64cc4d, type: 2}
+      CharacterColor: {r: 0, g: 0.2784314, b: 1, a: 1}
+  - CharacterID: Redirect Wizard 2
+    CharacterPrefab: {fileID: 5407380294395882597, guid: 5ecfadebda0155d4695ab480153decc0, type: 3}
+    StartTileID:
+      x: 6
+      y: 3
+    FacingDirection: 0
+    CharacterSkin:
+      CharacterCode: 0
+      SkinMaterial: {fileID: 2100000, guid: da98eb23e0994874da55d0329b64cc4d, type: 2}
+      CharacterColor: {r: 0, g: 0.2784314, b: 1, a: 1}
   _objectiveMap:
   - ObjectiveName: Defeat Fireball Wizard 1
     ObjectiveTargets:
