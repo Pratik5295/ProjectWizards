@@ -24,11 +24,15 @@ namespace Team.UI
             base.Start();
 
             gameLoadManager.OnLoadPercentChangedEvent += OnLoadPercentChangedEventHandler;
+            gameLoadManager.OnLoadingStartedEvent += OnLoadingStartedHandler;
+            gameLoadManager.OnLoadingFinishedEvent += OnLoadingFinishedHandler;
         }
 
         private void OnDestroy()
         {
             gameLoadManager.OnLoadPercentChangedEvent -= OnLoadPercentChangedEventHandler;
+            gameLoadManager.OnLoadingStartedEvent -= OnLoadingStartedHandler;
+            gameLoadManager.OnLoadingFinishedEvent -= OnLoadingFinishedHandler;
         }
 
         private void OnLoadPercentChangedEventHandler(float percent,string _message)
@@ -38,6 +42,16 @@ namespace Team.UI
             percentSlider.value = percent;
 
             loadingStatusText.text = _message;
+        }
+
+        private void OnLoadingStartedHandler()
+        {
+            UIManager.Instance.ShowLoadingScreen();
+        }
+
+        private void OnLoadingFinishedHandler()
+        {
+            LevelManager.Instance.StartLevel();
         }
     }
 }

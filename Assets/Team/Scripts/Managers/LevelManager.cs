@@ -151,9 +151,6 @@ namespace Team.Managers
                     GameTurnManager.Instance.HasBreakpoint(CurrentLevel.HasBreakPoint);
                 }
 
-                // Start the level
-                StartLevel();
-
                 // Wait one more frame to ensure everything is properly initialized
                 await UniTask.Yield();
 
@@ -196,7 +193,7 @@ namespace Team.Managers
         /// <summary>
         /// This function runs once the level is completed loaded into the game
         /// </summary>
-        private void StartLevel()
+        public void StartLevel()
         {
             if (CurrentLevel.DialogueAsset == null)
             {

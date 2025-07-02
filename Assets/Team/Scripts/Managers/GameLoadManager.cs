@@ -11,6 +11,8 @@ namespace Team.Managers
         [SerializeField] private InstantiateLevelOperation levelOperation;
         private IProgress<float> mainProgress;
 
+        public Action OnLoadingStartedEvent;
+        public Action OnLoadingFinishedEvent;
         public Action<float,string> OnLoadPercentChangedEvent;
 
         public async UniTask<GameLevel> LoadGameLevelAsync(GameObject _levelPrefab, IProgress<float> progress = null)
@@ -19,6 +21,7 @@ namespace Team.Managers
 
             try
             {
+                OnLoadingStartedEvent?.Invoke();
                 Debug.Log("[GameLoadManager] Starting level instantiation...");
 
                 // Step 1: Instantiate the level prefab (30% progress)
@@ -40,6 +43,9 @@ namespace Team.Managers
 
                 progress?.Report(1.0f);
                 Debug.Log("[GameLoadManager] Level loading completed successfully!");
+
+                OnLoadingFinishedEvent?.Invoke();
+
                 return gameLevel;
             }
             catch (Exception ex)
