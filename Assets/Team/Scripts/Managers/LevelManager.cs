@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using Team.Gameplay.GameLevelSystem;
@@ -17,6 +18,9 @@ namespace Team.Managers
         [Header("Components")]
 
         [SerializeField]
+        private GameLoadManager gameLoadManager;
+
+        [SerializeField]
         private UILevelSelectionScreen selectionScreen;
 
         [SerializeField]
@@ -31,6 +35,13 @@ namespace Team.Managers
         public LevelID CurrentLevelID;
 
         public Action<LevelData> OnCurrentLevelUpdated;
+
+        [Header("Loading State")]
+        // Loading state tracking
+        public bool IsLoading { get; private set; } = false;
+        public Action<float> OnLoadingProgress;
+        public Action OnLoadingStarted;
+        public Action OnLoadingCompleted;
 
         private void Awake()
         {
@@ -55,35 +66,106 @@ namespace Team.Managers
 
             if(CurrentLevelID != LevelID.NONE)
             {
-                var original = LevelMap[_level];
-                CurrentLevel = new LevelData(original); // Deep copy here
+                //Check if the current level exists in the map
+                if (LevelMap.ContainsKey(CurrentLevelID))
+                {
+                    var original = LevelMap[_level];
+                    CurrentLevel = new LevelData(original); // Deep copy here
 
-                OnCurrentLevelUpdated?.Invoke(CurrentLevel);
+                    OnCurrentLevelUpdated?.Invoke(CurrentLevel);
+                }
+                else
+                {
+                    Debug.Log($"New current level:{CurrentLevelID} doesnt exist in the level map.");
+                }
+               
             }
         }
 
         public void LoadCurrentLevel()
         {
-            if (CurrentLevel != null)
+            LoadCurrentLevelAsync().Forget();
+        }
+
+        // New async method
+        public async UniTask LoadCurrentLevelAsync()
+        {
+            if (CurrentLevel == null)
             {
-                if(createdLevel != null)
+                Debug.LogError("No current level set!");
+                return;
+            }
+
+            if (IsLoading)
+            {
+                Debug.LogWarning("Level is already loading!");
+                return;
+            }
+
+            try
+            {
+                IsLoading = true;
+                OnLoadingStarted?.Invoke();
+
+                Debug.Log($"[LevelManager] Starting to load level: {CurrentLevel.Stats.LevelName}");
+
+                // Progress tracking with proper logging
+                var progressReporter = new Progress<float>(progress =>
                 {
+                    Debug.Log($"[LevelManager] Loading Progress: {progress:P1}");
+                    OnLoadingProgress?.Invoke(progress);
+                });
+
+                // Destroy existing level if present
+                if (createdLevel != null)
+                {
+                    Debug.Log("[LevelManager] Cleaning up previous level...");
                     DestroyImmediate(createdLevel.gameObject);
+                    await UniTask.Yield(); // Allow cleanup to complete
                 }
-                createdLevel = Instantiate(CurrentLevel.GameLevelPrefab);
-                createdLevel.LoadLevel(); //TODO: Turn this awaitable later 
 
-                //Load the dialogue manager with this
-                if(CurrentLevel.DialogueAsset != null)
-                    UIManager.Instance.SetCurrentDialogue(CurrentLevel.DialogueAsset);  
+                // Use GameLoadManager to load the level - WAIT for completion
+                Debug.Log("[LevelManager] Starting GameLoadManager...");
+                createdLevel = await gameLoadManager.LoadGameLevelAsync(
+                    CurrentLevel.GameLevelPrefab.gameObject,
+                    progressReporter
+                );
 
-                //Set breaker to turn manager
-                if(GameTurnManager.Instance != null)
+                // Ensure the level is fully loaded before proceeding
+                if (createdLevel == null)
+                {
+                    throw new Exception("GameLoadManager returned null level!");
+                }
+
+                Debug.Log("[LevelManager] Level instantiation complete, setting up components...");
+
+                // Setup dialogue if available
+                if (CurrentLevel.DialogueAsset != null)
+                {
+                    UIManager.Instance.SetCurrentDialogue(CurrentLevel.DialogueAsset);
+                }
+
+                // Setup turn manager breakpoint
+                if (GameTurnManager.Instance != null)
                 {
                     GameTurnManager.Instance.HasBreakpoint(CurrentLevel.HasBreakPoint);
                 }
 
-                StartLevel();
+                // Wait one more frame to ensure everything is properly initialized
+                await UniTask.Yield();
+
+                Debug.Log($"[LevelManager] Level {CurrentLevel.Stats.LevelName} loaded successfully!");
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[LevelManager] Failed to load level: {ex.Message}");
+                throw;
+            }
+            finally
+            {
+                IsLoading = false;
+                OnLoadingCompleted?.Invoke();
+                Debug.Log("[LevelManager] Loading process completed!");
             }
         }
 
@@ -111,7 +193,7 @@ namespace Team.Managers
         /// <summary>
         /// This function runs once the level is completed loaded into the game
         /// </summary>
-        private void StartLevel()
+        public void StartLevel()
         {
             if (CurrentLevel.DialogueAsset == null)
             {

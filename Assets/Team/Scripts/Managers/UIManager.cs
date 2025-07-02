@@ -123,6 +123,11 @@ namespace Team.Managers
             _screenManager.ShowScreen(GameConstants.MetaConstants.GameScreen.POST_GAME);
         }
 
+        public void ShowLoadingScreen()
+        {
+            _screenManager.ShowScreen(GameConstants.MetaConstants.GameScreen.LOADING);
+        }
+
         #endregion
 
         #region Dialogue Manager Handling
