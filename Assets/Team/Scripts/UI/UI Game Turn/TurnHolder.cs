@@ -35,6 +35,11 @@ namespace Team.Gameplay.TurnSystem
 
         public bool HasSelected => selected != null;
 
+        [Header("Breakpoint Variable System")]
+
+        [SerializeField]
+        private int minIndex = 0;
+
         [ContextMenu("Get Starting Position")]
         public void CalculateExtremePositions()
         {
@@ -66,7 +71,7 @@ namespace Team.Gameplay.TurnSystem
 
             if (_positionX <= startingPosX)
             {
-                index = 0;
+                index = minIndex;
             }
             else if (_positionX >= endingPosX)
             {
@@ -77,12 +82,6 @@ namespace Team.Gameplay.TurnSystem
 
                 for (int i = 0; i < cardRanges.Count; i++)
                 {
-                    //if (_positionX >= cardRanges[i].start && _positionX < cardRanges[i].end)
-                    //{
-                    //    index =  i;
-                    //    return index;
-                    //}
-
                     //Check if the only the start is greater
                     if(_positionX >= cardRanges[i].start)
                     {
@@ -104,7 +103,7 @@ namespace Team.Gameplay.TurnSystem
 
             if(index == -1)
             {
-                index = 0;
+                index = minIndex;
             }
 
             return index;
@@ -123,9 +122,30 @@ namespace Team.Gameplay.TurnSystem
             }
         }
 
+        public void RemoveCardRanges(int _count)
+        {
+            cardRanges.RemoveRange(0,_count);
+        }
+
         public void SetSelected(GameObject _selected)
         {
             selected = _selected;
+        }
+
+        public void Reset()
+        {
+            minIndex = 0;
+
+            CalculateExtremePositions();
+            GenerateCardRanges();
+
+        }
+
+        public void BreakpointInitiate(int _breakpointIndex)
+        {
+            minIndex = _breakpointIndex + 1;
+
+            startingPosX = transform.GetChild(minIndex).GetComponent<RectTransform>().localPosition.x + (spacing * 2);
         }
     }
 }

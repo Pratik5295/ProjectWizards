@@ -77,6 +77,12 @@ namespace Team.Managers
                 if(CurrentLevel.DialogueAsset != null)
                     UIManager.Instance.SetCurrentDialogue(CurrentLevel.DialogueAsset);  
 
+                //Set breaker to turn manager
+                if(GameTurnManager.Instance != null)
+                {
+                    GameTurnManager.Instance.HasBreakpoint(CurrentLevel.HasBreakPoint);
+                }
+
                 StartLevel();
             }
         }

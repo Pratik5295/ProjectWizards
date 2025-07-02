@@ -50,11 +50,14 @@ namespace Team.Gameplay.LevelSystem
         public GameLevel GameLevelPrefab;
         public TextAsset DialogueAsset = null;
 
+        public bool HasBreakPoint = false;  //No breaker by default
+
         public LevelData(LevelData _data)
         {
             Stats = new LevelStats(_data.Stats); // Also a deep copy
             GameLevelPrefab = _data.GameLevelPrefab;
             DialogueAsset = _data.DialogueAsset;
+            HasBreakPoint = _data.HasBreakPoint;
         }
     }
 
