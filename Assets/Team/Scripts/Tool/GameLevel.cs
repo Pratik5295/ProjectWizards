@@ -99,7 +99,6 @@ namespace Team.Gameplay.GameLevelSystem
                 throw;
             }
         }
-
         #region Tool Helper Section
         public void LoadChaacterMap(List<CharacterData> _data)
         {

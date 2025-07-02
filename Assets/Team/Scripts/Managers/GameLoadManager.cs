@@ -11,7 +11,7 @@ namespace Team.Managers
         [SerializeField] private InstantiateLevelOperation levelOperation;
         private IProgress<float> mainProgress;
 
-        public Action<float> OnLoadPercentChangedEvent;
+        public Action<float,string> OnLoadPercentChangedEvent;
 
         public async UniTask<GameLevel> LoadGameLevelAsync(GameObject _levelPrefab, IProgress<float> progress = null)
         {
@@ -67,7 +67,8 @@ namespace Team.Managers
         {
             float overallProgress = instantiationProgress * 0.3f; // 0% to 30%
             Debug.Log($"[GameLoadManager] Instantiation progress: {instantiationProgress:P1} (Overall: {overallProgress:P1})");
-            OnLoadPercentChangedEvent?.Invoke(overallProgress);
+            string message = $"Instantiation progress: {instantiationProgress:P1} (Overall: {overallProgress:P1})";
+            OnLoadPercentChangedEvent?.Invoke(overallProgress, message);
             mainProgress?.Report(overallProgress);
         }
 
@@ -75,7 +76,8 @@ namespace Team.Managers
         {
             float overallProgress = 0.3f + (contentProgress * 0.7f); // 30% to 100%
             Debug.Log($"[GameLoadManager] Content loading progress: {contentProgress:P1} (Overall: {overallProgress:P1})");
-            OnLoadPercentChangedEvent?.Invoke(overallProgress);
+            string message = $"Content loading progress: {contentProgress:P1} (Overall: {overallProgress:P1})";
+            OnLoadPercentChangedEvent?.Invoke(overallProgress, message);
             mainProgress?.Report(overallProgress);
         }
     }
