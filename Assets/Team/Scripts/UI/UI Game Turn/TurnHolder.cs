@@ -1,0 +1,151 @@
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace Team.Gameplay.TurnSystem
+{
+    [System.Serializable]
+    public struct CardRange
+    {
+        public float start;
+        public float end;
+    }
+
+    [DefaultExecutionOrder(5)]
+    public class TurnHolder : MonoBehaviour
+    {
+        private int numberOfChildren;
+
+        [SerializeField]
+        private float cardSize = 200f;
+
+        [SerializeField]
+        private float spacing;
+
+        [SerializeField]
+        private float startingPosX;
+
+        [SerializeField] private float endingPosX;
+
+        [SerializeField]
+        private List<CardRange> cardRanges = new List<CardRange>();
+
+        [SerializeField]
+        private GameObject selected = null;
+
+        public bool HasSelected => selected != null;
+
+        [Header("Breakpoint Variable System")]
+
+        [SerializeField]
+        private int minIndex = 0;
+
+        [ContextMenu("Get Starting Position")]
+        public void CalculateExtremePositions()
+        {
+            startingPosX = transform.GetChild(0).GetComponent<RectTransform>().localPosition.x;
+            endingPosX = startingPosX + numberOfChildren * (cardSize + spacing);
+
+        }
+
+        public void InitializeComplete()
+        {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(transform as RectTransform);
+
+            numberOfChildren = transform.childCount;
+
+            var horizontalLayout = GetComponent<HorizontalLayoutGroup>();
+
+            spacing = horizontalLayout.spacing;
+
+            CalculateExtremePositions();
+
+            GenerateCardRanges();
+
+            Debug.Log($"Max Position: {endingPosX}");
+        }
+
+        public int GetIndex(float _positionX)
+        {
+            int index = numberOfChildren - 1;   //By default it will go to the last element
+
+            if (_positionX <= startingPosX)
+            {
+                index = minIndex;
+            }
+            else if (_positionX >= endingPosX)
+            {
+                index = numberOfChildren - 1;
+            }
+            else
+            {
+
+                for (int i = 0; i < cardRanges.Count; i++)
+                {
+                    //Check if the only the start is greater
+                    if(_positionX >= cardRanges[i].start)
+                    {
+                        index = i;
+
+                        //Check if it goes beyond that ranges' end
+                        if(_positionX <= cardRanges[i].end)
+                        {
+                            return index;
+                        }
+                        else
+                        {
+                            index++;
+                            continue;
+                        }
+                    }
+                }
+            }
+
+            if(index == -1)
+            {
+                index = minIndex;
+            }
+
+            return index;
+        }
+
+        private void GenerateCardRanges()
+        {
+            cardRanges.Clear();
+
+            for (int i = 0; i < numberOfChildren; i++)
+            {
+                float start = startingPosX + i * (cardSize + spacing);
+                float end = start + (cardSize/2);
+
+                cardRanges.Add(new CardRange { start = start, end = end });
+            }
+        }
+
+        public void RemoveCardRanges(int _count)
+        {
+            cardRanges.RemoveRange(0,_count);
+        }
+
+        public void SetSelected(GameObject _selected)
+        {
+            selected = _selected;
+        }
+
+        public void Reset()
+        {
+            minIndex = 0;
+
+            CalculateExtremePositions();
+            GenerateCardRanges();
+
+        }
+
+        public void BreakpointInitiate(int _breakpointIndex)
+        {
+            minIndex = _breakpointIndex + 1;
+
+            startingPosX = transform.GetChild(minIndex).GetComponent<RectTransform>().localPosition.x + (spacing * 2);
+        }
+    }
+}

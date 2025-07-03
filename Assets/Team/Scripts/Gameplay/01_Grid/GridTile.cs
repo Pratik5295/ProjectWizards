@@ -1,11 +1,20 @@
 ﻿using UnityEngine;
+using Team.GameConstants;
+using Team.Gameplay.GridSystem;
+using UnityEditor;
+using UnityEngine.Events;
+
 
 namespace Team.Gameplay.GridSystem
 {
     public enum TileType
     {
         EMPTY = 0, //Highlights no tile
-        TILE = 1 //Tile has content (not an empty tile)
+        TILE = 1, //Tile has content (not an empty tile)
+        OCCUPIEDTILE = 2, //Tile contains object
+        DEATHTILE = 3, //Tile that should kill player
+        ICETILE = 4, //Tile should slide player to next tile in their direction of travel.
+        OILTILE = 5 //Tile contains oil which will set fire and start a chain reaction.
     }
 
     public enum TileFacing
@@ -29,18 +38,40 @@ namespace Team.Gameplay.GridSystem
         public Vector3 TilePosition => transform.position;
 
         public GameObject tilePrefab;
+        public GameObject oilTilePrefab;
+        public GameObject deathTilePrefab;
+        public GameObject iceTilePrefab;
 
-        public TileType tileType;
+        [SerializeField]
+        public TileType tileType = TileType.TILE;
+        public TileType myTileType
+        {
+            get => tileType;
+            set
+            {
+                if(tileType != value)
+                {
+                    tileType = value;
+                    SpawnTileType();
+                }
+            }
+        }
+        private TileType startingTileType;
 
         public TileDirection Direction; //Rotation 
 
         [SerializeField]
-        private GridManager gridManager;
+        private LevelTileCreator gridManager;
 
         [SerializeField]
         private GameObject tileObject = null; //The created tile object
 
-        [SerializeField] private GameObject objectOccupyingTile;
+        [SerializeField] private GameObject _startingObject;
+
+        [SerializeField] private UITile tileUI;
+
+        [SerializeField]
+        private GameObject objectOccupyingTile;
         public GameObject ObjectOccupyingTile
         {
             get { return objectOccupyingTile; }
@@ -49,11 +80,17 @@ namespace Team.Gameplay.GridSystem
         /// <summary>
         /// Initialize the tile
         /// </summary>
-        public bool Init(GridManager _gridManager, TileID _tileId)
+        public bool Init(LevelTileCreator _tileCreator, TileID _tileId)
         {
-            gridManager = _gridManager;
-
+            gridManager = _tileCreator;
             TileID = _tileId;
+
+            if (objectOccupyingTile)
+            {
+                objectOccupyingTile.GetComponent<Base_Obstacle>().UpdateObstacleTileData(TileID, this);
+            }
+
+            startingTileType = tileType;
 
             //Check if spawn tile
             if (IsTileWalkable())
@@ -73,15 +110,49 @@ namespace Team.Gameplay.GridSystem
             return false;
         }
 
+        #region Spawning Tile Types
         private GameObject SpawnTileObject()
         {
             return Instantiate(tilePrefab, transform);
         }
 
+        private GameObject SpawnOilTileObject()
+        {
+            return Instantiate(oilTilePrefab, transform);
+        }
+        private GameObject SpawnDeathTileObject()
+        {
+            return Instantiate(deathTilePrefab, transform);
+        }
+        private GameObject SpawnIceTileObject()
+        {
+            return Instantiate(iceTilePrefab, transform);
+        }
+
+        #endregion
+
+        #region is Tile? Boolean Checks
         public bool IsTileWalkable()
         {
-            return tileType == TileType.TILE;
+            return tileType == TileType.TILE || tileType == TileType.OILTILE || tileType == TileType.DEATHTILE || tileType == TileType.ICETILE;
         }
+
+        public bool IsOilTile()
+        {
+            return tileType == TileType.OILTILE;
+        }
+        public bool IsDeathTile()
+        {
+            return tileType == TileType.DEATHTILE;
+        }
+
+        public bool IsIceTile()
+        {
+            return tileType == TileType.ICETILE;
+        }
+        #endregion
+
+        #region Setting Tile Types
 
         [ContextMenu("Set Tile Empty")]
         public void SetTileEmpty()
@@ -89,7 +160,10 @@ namespace Team.Gameplay.GridSystem
             tileType = TileType.EMPTY;
             DestroyImmediate(tileObject);
             tileObject = null;
-            gridManager?.RemoveTileFromGrid(TileID, this);
+
+#if UNITY_EDITOR
+            EditorUtility.SetDirty(gameObject);
+#endif
         }
 
         [ContextMenu("Set Tile to Object")]
@@ -97,14 +171,167 @@ namespace Team.Gameplay.GridSystem
         {
             tileType = TileType.TILE;
             tileObject = SpawnTileObject();
-            gridManager?.AddTileToGrid(TileID, this);
+
+#if UNITY_EDITOR
+            EditorUtility.SetDirty(gameObject);
+#endif
+        }
+        #endregion
+
+        [ExecuteInEditMode]
+        protected void SpawnTileType()
+        {
+            if (tileObject && tileType != TileType.OCCUPIEDTILE) 
+            {
+#if UNITY_EDITOR
+                DestroyImmediate(tileObject);
+#endif
+                if (tileObject)
+                {
+                    Destroy(tileObject);
+                }
+                tileObject = null;
+            }
+            switch (tileType)
+            {
+                case TileType.TILE:
+                    tileObject = SpawnTileObject();
+                    break;
+
+                case TileType.EMPTY:
+                    DestroyImmediate(tileObject);
+                    tileObject = null;
+                    break;
+
+                case TileType.DEATHTILE:
+                    tileObject = SpawnDeathTileObject();
+                    break;
+
+                case TileType.OILTILE:
+                    tileObject = SpawnOilTileObject();
+                    break;
+
+                case TileType.ICETILE:
+                    tileObject = SpawnIceTileObject();
+                    break;
+
+                case TileType.OCCUPIEDTILE:
+                    SpawnObjectOnTile();
+                    break;
+            }
+#if UNITY_EDITOR
+            EditorUtility.SetDirty(gameObject);
+#endif
         }
 
-        [ContextMenu("Set Object Occupying Tile space")]
+        [ContextMenu("Spawn Object Occupying Tile space")]
+        public void SpawnObjectOnTile()
+        {
+            if (!tileObject) { SetTileObject(); }
+            if (isTileOccupied() || canSpawnAnyObject()) { return; }
+
+            tileType = TileType.OCCUPIEDTILE;
+            Vector3 spawnLocation = new Vector3(tileObject.transform.position.x, 1.5f, tileObject.transform.position.z);
+            Base_Obstacle obstacleData = null;
+
+            if (_startingObject)
+            {
+                GameObject InstantiatedObject = Instantiate(_startingObject, spawnLocation, Quaternion.identity, tileObject.transform);
+                objectOccupyingTile = InstantiatedObject;
+                if (!InstantiatedObject.GetComponent<Collider>())
+                {
+                    InstantiatedObject.AddComponent<BoxCollider>();
+                }
+                if (!InstantiatedObject.GetComponent<Base_Obstacle>()) 
+                {
+                    obstacleData = InstantiatedObject.AddComponent<Base_Obstacle>();
+                }
+                else
+                    obstacleData = InstantiatedObject.GetComponent<Base_Obstacle>();
+                obstacleData.UpdateObstacleTileData(TileID, this);
+                obstacleData.InitialiseObstacleData();
+            }
+            else
+            {
+                objectOccupyingTile = Instantiate(gridManager.DefaultObstacle, spawnLocation, Quaternion.identity, tileObject.transform);
+                if (!objectOccupyingTile.GetComponent<Collider>())
+                {
+                    objectOccupyingTile.AddComponent<BoxCollider>();
+                }
+                if (!objectOccupyingTile.GetComponent<Base_Obstacle>())
+                {
+                    objectOccupyingTile.AddComponent<Base_Obstacle>();
+                }
+                objectOccupyingTile.GetComponent<Base_Obstacle>().UpdateObstacleTileData(TileID, this);
+                objectOccupyingTile.GetComponent<Base_Obstacle>().InitialiseObstacleData();
+            }
+            objectOccupyingTile.tag = GameConstants.MetaConstants.EnvironmentTag;
+
+#if UNITY_EDITOR
+            EditorUtility.SetDirty(gameObject);
+#endif
+        }
+
+        [ContextMenu("Re-Update Obstacle Data")]
+        public void UpdateObstacleData()
+        {
+            if (!objectOccupyingTile) { return; }
+            objectOccupyingTile.GetComponent<Base_Obstacle>().UpdateObstacleTileData(TileID, this);
+            objectOccupyingTile.GetComponent<Base_Obstacle>().InitialiseObstacleData();
+
+#if UNITY_EDITOR
+            EditorUtility.SetDirty(gameObject);
+#endif
+        }
+
+        public Base_Obstacle ObstacleImplementsScript()
+        {
+            return objectOccupyingTile.GetComponent<Base_Obstacle>();
+        }
+
+
+        private bool isTileOccupied()
+        {
+            return objectOccupyingTile && tileObject.transform.childCount > 0;
+        }
+
+        private bool canSpawnAnyObject()
+        {
+            return !gridManager.DefaultObstacle && !_startingObject;
+        }
+
         public void SetObjectOccupyingTile(GameObject Object)
         {
             if (!Object) { objectOccupyingTile = null; }
             objectOccupyingTile = Object;
+            SetTileType(TileType.OCCUPIEDTILE);
+        }
+
+        /// <summary>
+        /// Updates the tiles occupied status.
+        /// </summary>
+        /// <param name="isOccupied"></param>
+        /// <param name="OccupyingObject"></param>
+        public void UpdateOccupiedStatus(bool isOccupied = false, GameObject OccupyingObject = null)
+        {
+            switch (isOccupied)
+            {
+                case true:
+                        if (!OccupyingObject) { return; }
+                        objectOccupyingTile = OccupyingObject;
+                        SetTileType(TileType.OCCUPIEDTILE);
+                    break;
+
+                case false:
+                        objectOccupyingTile = null;
+                        SetTileType(TileType.TILE);
+                    break;
+            }
+        }
+
+        public void ResetTypeToDefault()
+        {
+            tileType = startingTileType;
         }
 
         public void ParentOccupyingObject()
@@ -118,6 +345,39 @@ namespace Team.Gameplay.GridSystem
         {
             if (!objectOccupyingTile.CompareTag("Character")) { return; }
             objectOccupyingTile.transform.SetParent(null);
+        }
+
+        public void SetTileType(TileType typeOfTile)
+        {
+            tileType = typeOfTile;
+        }
+
+        public void ShowTileUI()
+        {
+            tileUI.gameObject.SetActive(true);
+
+            string tileID = $"{TileID.x}, {TileID.y}";
+
+            tileUI.PopulateTileText(tileID);
+        }
+        public GridTile[] FindNeighbouringTiles()
+        {
+            GridManager gridInstance = GridManager.Instance;
+
+            GridTile[] NeighbourTiles = new GridTile[5];
+
+            NeighbourTiles[0] = this;
+            NeighbourTiles[1] = gridInstance.FindTile(new TileID(TileID.x, TileID.y + 1));
+            NeighbourTiles[2] = gridInstance.FindTile(new TileID(TileID.x, TileID.y - 1));
+            NeighbourTiles[3] = gridInstance.FindTile(new TileID(TileID.x + 1, TileID.y));
+            NeighbourTiles[4] = gridInstance.FindTile(new TileID(TileID.x - 1, TileID.y));
+
+            return NeighbourTiles;
+        }
+
+        public void HideTileUI()
+        {
+            tileUI.gameObject.SetActive(false); 
         }
     }
 }

@@ -1,3 +1,7 @@
+using System.Diagnostics;
+using System.Linq;
+using UnityEngine;
+
 namespace Team.Gameplay.ObjectiveSystem
 {
 
@@ -7,7 +11,7 @@ namespace Team.Gameplay.ObjectiveSystem
 
         public override bool CheckObjectiveComplete()
         {
-            return isCompleted = characterRef.IsAlive;
+            return isCompleted = characterRefList.All(character => character.IsAlive);
         }
     }
 }

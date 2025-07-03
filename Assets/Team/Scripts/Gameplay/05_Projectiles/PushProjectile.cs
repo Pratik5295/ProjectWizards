@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using Team.Gameplay.GridSystem;
-using Team.MetaConstants;
+using Team.GameConstants;
 
 public class PushProjectile : Base_Projectile
 {
@@ -12,12 +12,23 @@ public class PushProjectile : Base_Projectile
     public override void OnTriggerEnter(Collider other)
     {
         if (other.gameObject == CastingWizard || other.gameObject.layer == 3) { return; } //Check that the collision isnt with the wizard that casted the projectile.
+        if (other.GetComponent<ChRedirectWizard>())
+        {
+            base.OnTriggerEnter(other);
+            return;
+        }
 
         if (other.CompareTag(MetaConstants.CharacterTag))
         {
             Base_Ch characterScript = other.gameObject.GetComponent<Base_Ch>();
             Vector2 direction = characterScript.BaseRotation.dirToV2(_projectileDir);
-            StartCoroutine(characterScript.MoveByAmount((int)_pushAmount, direction, true));
+            characterScript.StartCoroutine(characterScript.MoveByAmount((int)_pushAmount, direction, true));
+        }
+        else if (other.CompareTag(MetaConstants.EnvironmentTag) && other.GetComponent<MoveableObstacle>())
+        {
+            MoveableObstacle ObstacleScript = other.gameObject.GetComponent<MoveableObstacle>();
+            Vector2 direction = ObstacleScript.BaseRotation.dirToV2(_projectileDir);
+            ObstacleScript.StartCoroutine(ObstacleScript.MoveByAmount((int)_pushAmount, direction, true));
         }
         base.OnTriggerEnter(other);
     }

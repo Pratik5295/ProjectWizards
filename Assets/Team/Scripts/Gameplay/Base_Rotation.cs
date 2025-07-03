@@ -86,7 +86,7 @@ public class Base_Rotation : MonoBehaviour
     {
         Vector2 v2Direction;
 
-        if (!_rotationDictionary.TryGetValue(dirFacing, out v2Direction))
+        if (!_rotationDictionary.TryGetValue(direction, out v2Direction))
         {
             Debug.LogError($"{gameObject.name} Base Rotation script couldn't output correct direction!");
             return new Vector2(0, 0);
