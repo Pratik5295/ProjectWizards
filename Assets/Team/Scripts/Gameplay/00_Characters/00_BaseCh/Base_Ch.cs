@@ -385,6 +385,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         {
             case Enum_ProjectileType.Fireball:
                 KillCharacter();
+                AudioManager.instance.PlayOneShot(FMODEvents.instance.s_death, this.transform.position);
                 break;
 
             case Enum_ProjectileType.NonLethalRound:

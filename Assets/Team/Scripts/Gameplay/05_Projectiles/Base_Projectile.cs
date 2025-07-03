@@ -1,6 +1,7 @@
 using UnityEngine;
 using Team.Enum.Character;
 using Team.GameConstants;
+using FMODUnity;
 
 
 public class Base_Projectile : MonoBehaviour
@@ -29,6 +30,12 @@ public class Base_Projectile : MonoBehaviour
     void Start()
     {
         time = 0f;
+        FiredSound();
+    }
+
+    public virtual void FiredSound()
+    {
+
     }
 
 

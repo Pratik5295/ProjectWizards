@@ -69,6 +69,7 @@ namespace Team.Gameplay.LevelSystem
                 //Unlocked, allow to play level
                 LevelManager.Instance.SetCurrentLevel(levelData.Data.Stats.LevelID);
                 LevelManager.Instance.LoadCurrentLevel();
+                AudioManager.instance.PlayOneShot(FMODEvents.instance.s_level_select, this.transform.position);
             }
             else
             {
