@@ -16,6 +16,8 @@ namespace Team.Gameplay.LevelSystem
         [SerializeField]
         private LevelDataSO levelData;
 
+        public LevelDataSO Info => levelData;
+
         [SerializeField]
         private Color unlockedColor;
 

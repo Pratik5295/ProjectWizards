@@ -27,7 +27,7 @@ namespace Team.Managers
         private GameLevel createdLevel = null;
 
 
-        public List<LevelDataSO> LevelList = new List<LevelDataSO>();
+        public List<Level> LevelList = new List<Level>();
 
         public Dictionary<LevelID, LevelData> LevelMap = new Dictionary<LevelID, LevelData>();
 
@@ -57,7 +57,7 @@ namespace Team.Managers
 
         private void Start()
         {
-            LoadLevelMap();
+            //LoadLevelMap();
         }
 
         public void SetCurrentLevel(LevelID _level)
@@ -205,11 +205,16 @@ namespace Team.Managers
             }
         }
 
+        public void AddLevelToMap(Level _level)
+        {
+            LevelList.Add(_level);
+        }
+
         /// <summary>
         /// Fill out the level map dictionary based on all the levels contained 
         /// in the list
         /// </summary>
-        private void LoadLevelMap()
+        public void LoadLevelMap()
         {
             if(LevelList.Count == 0)
             {
@@ -219,7 +224,7 @@ namespace Team.Managers
 
             foreach(var level in LevelList)
             {
-                LevelMap.Add(level.Data.Stats.LevelID, level.Data);
+                LevelMap.Add(level.Info.Data.Stats.LevelID, level.Info.Data);
             }
         }
 

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Team.Managers;
 using TMPro;
 using UnityEngine;
 using static Team.GameConstants.LevelConstants;
@@ -31,14 +32,7 @@ namespace Team.Gameplay.LevelSystem
 
         private void Start()
         {
-            //Sets the initial state
-            Status = chapterData.Data.InitialState;
-
-            //Populate self name
-            chapterTitleText.text = chapterData.Data.ChapterName;
-
-            //Generate all level objects
-            CreateLevelUI();
+           
         }
 
         private void OnDestroy()
@@ -101,12 +95,30 @@ namespace Team.Gameplay.LevelSystem
         #endregion
 
         #region UI Handling Section
+        public void Initialize()
+        {
+            //Sets the initial state
+            Status = chapterData.Data.InitialState;
+
+            //Populate self name
+            chapterTitleText.text = chapterData.Data.ChapterName;
+
+            //Generate all level objects
+            CreateLevelUI();
+        }
+
         public void CreateLevelUI()
         {
             foreach(var levelSO in chapterData.Data.Levels)
             {
                 var level = Instantiate(uiLevelPrefab, chapterHolderTransform).GetComponent<Level>();
                 level.PopulateLevelInfo(levelSO);
+
+                //Populate Level Manager with Level
+                LevelManager.Instance.AddLevelToMap(level);
+
+                //Add local listener to the chapter
+                AddLevel(level);
             }
         }
         #endregion

@@ -1,9 +1,11 @@
 using System.Collections.Generic;
+using Team.Managers;
 using UnityEngine;
 using static Team.GameConstants.LevelConstants;
 
 namespace Team.Gameplay.LevelSystem
 {
+    [DefaultExecutionOrder(-15)]
     public class ChapterManager : MonoBehaviour
     {
         public static ChapterManager Instance = null;
@@ -34,7 +36,12 @@ namespace Team.Gameplay.LevelSystem
             foreach (var chapter in Chapters)
             {
                 ChaptersMap.Add(chapter.chapterData.Data.ChapterID, chapter);
+                chapter.Initialize();
             }
+
+            Debug.Log("Loading all chapters complete...");
+
+            LevelManager.Instance.LoadLevelMap();
         }
 
         [ContextMenu("Get All Chapter Details")]

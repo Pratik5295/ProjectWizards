@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 106401103784372685}
+  - component: {fileID: 4621446946394595445}
   - component: {fileID: 5093189887769397741}
   m_Layer: 0
-  m_Name: Level Manager
+  m_Name: Chapter + Level Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,6 +33,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4621446946394595445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6137631365258773850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11a36424a4bbfee47a18413060927660, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Chapters: []
 --- !u!114 &5093189887769397741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44,12 +58,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 237d41e8888947e41b9c88aa5b812e3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameLoadManager: {fileID: 0}
   selectionScreen: {fileID: 0}
   createdLevel: {fileID: 0}
-  LevelMap:
-  - {fileID: 11400000, guid: 51d05aab9558c5240a5f6587de98e628, type: 2}
-  - {fileID: 11400000, guid: 0c7b91418f1d352469fa6621eaa75fd3, type: 2}
-  CurrentLevelSO: {fileID: 0}
-  CurrentLevelData:
-    LevelName: 
-    State: 0
+  LevelList: []
+  CurrentLevel:
+    Stats:
+      LevelID: 0
+      LevelName: 
+      State: 0
+      NextLevel: 0
+    GameLevelPrefab: {fileID: 0}
+    DialogueAsset: {fileID: 0}
+    HasBreakPoint: 0
+  CurrentLevelID: 0
