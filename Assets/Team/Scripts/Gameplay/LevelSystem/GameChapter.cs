@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using static Team.GameConstants.LevelConstants;
 using static Team.GameConstants.MetaConstants;
@@ -17,7 +18,28 @@ namespace Team.Gameplay.LevelSystem
 
         public int LevelsCompleted => CompletedLevels.Count;
 
+        [Space(5)]
+        [Header("UI Variables/Components")]
+        [SerializeField]
+        private GameObject uiLevelPrefab;
+        [SerializeField]
+        private TextMeshProUGUI chapterTitleText;
+        [SerializeField]
+        private Transform chapterHolderTransform;
+
         #region Unity Methods
+
+        private void Start()
+        {
+            //Sets the initial state
+            Status = chapterData.Data.InitialState;
+
+            //Populate self name
+            chapterTitleText.text = chapterData.Data.ChapterName;
+
+            //Generate all level objects
+            CreateLevelUI();
+        }
 
         private void OnDestroy()
         {
@@ -76,6 +98,17 @@ namespace Team.Gameplay.LevelSystem
             AddCompletedLevel(_levelID);
         }
 
+        #endregion
+
+        #region UI Handling Section
+        public void CreateLevelUI()
+        {
+            foreach(var levelSO in chapterData.Data.Levels)
+            {
+                var level = Instantiate(uiLevelPrefab, chapterHolderTransform).GetComponent<Level>();
+                level.PopulateLevelInfo(levelSO);
+            }
+        }
         #endregion
     }
 }

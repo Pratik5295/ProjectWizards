@@ -36,5 +36,14 @@ namespace Team.Gameplay.LevelSystem
                 ChaptersMap.Add(chapter.chapterData.Data.ChapterID, chapter);
             }
         }
+
+        [ContextMenu("Get All Chapter Details")]
+        public void GetAllDetails()
+        {
+            foreach(var chapter in ChaptersMap)
+            {
+                Debug.Log($"Chapter: {chapter.Key}, State: {chapter.Value.Status}");
+            }
+        }
     }
 }

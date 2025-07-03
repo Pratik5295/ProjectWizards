@@ -28,7 +28,7 @@ namespace Team.Gameplay.LevelSystem
         [SerializeField]
         private Button button;  //Temporary will be removed later
 
-        public bool IsUnlocked => levelData.Data.Stats.State != LevelState.LOCKED;
+        public bool IsUnlocked => Status != LevelState.LOCKED;
 
         public LevelState Status;
 
@@ -36,10 +36,10 @@ namespace Team.Gameplay.LevelSystem
 
         private void Start()
         {
-           if(levelData != null)
-            {
-                PopulateLevelInfo(levelData);
-            }
+           //if(levelData != null)
+           // {
+           //     PopulateLevelInfo(levelData);
+           // }
         }
 
         public void PopulateLevelInfo(LevelDataSO _data)
