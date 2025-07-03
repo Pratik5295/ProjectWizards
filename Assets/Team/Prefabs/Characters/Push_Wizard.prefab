@@ -119,6 +119,7 @@ Transform:
   m_Children:
   - {fileID: 5923444834090015879}
   - {fileID: 4911489645460872682}
+  - {fileID: 4644383946274677019}
   m_Father: {fileID: 3236205127488731490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2963982558421388748
@@ -188,7 +189,7 @@ GameObject:
   - component: {fileID: 4891894288717994594}
   m_Layer: 0
   m_Name: DirectionCube
-  m_TagString: Untagged
+  m_TagString: Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -312,7 +313,6 @@ Transform:
   - {fileID: 1811442762805766320}
   - {fileID: 1268118871830865288}
   - {fileID: 1860867754235895387}
-  - {fileID: 4644383946274677019}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7676447528062884871
@@ -602,7 +602,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2903195935916804519, guid: 4fff5bc7281527846b1f50da9783fef2, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2903195935916804519, guid: 4fff5bc7281527846b1f50da9783fef2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -615,6 +615,10 @@ PrefabInstance:
     - target: {fileID: 2903195935916804519, guid: 4fff5bc7281527846b1f50da9783fef2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5778842484626295287, guid: 4fff5bc7281527846b1f50da9783fef2, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -654,7 +658,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 3236205127488731490}
+    m_TransformParent: {fileID: 1811442762805766320}
     m_Modifications:
     - target: {fileID: 3920858195153102672, guid: ffeccccfa4b54c6429b64177d1b3a85e, type: 3}
       propertyPath: m_LocalScale.x
@@ -690,7 +694,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4541387285806129613, guid: ffeccccfa4b54c6429b64177d1b3a85e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.026
+      value: -0.274
       objectReference: {fileID: 0}
     - target: {fileID: 4541387285806129613, guid: ffeccccfa4b54c6429b64177d1b3a85e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -759,6 +763,10 @@ PrefabInstance:
     - target: {fileID: 6635252152520037137, guid: ffeccccfa4b54c6429b64177d1b3a85e, type: 3}
       propertyPath: m_Name
       value: Wind ball
+      objectReference: {fileID: 0}
+    - target: {fileID: 6635252152520037137, guid: ffeccccfa4b54c6429b64177d1b3a85e, type: 3}
+      propertyPath: m_TagString
+      value: Character
       objectReference: {fileID: 0}
     - target: {fileID: 6811717125168309933, guid: ffeccccfa4b54c6429b64177d1b3a85e, type: 3}
       propertyPath: m_LocalScale.x

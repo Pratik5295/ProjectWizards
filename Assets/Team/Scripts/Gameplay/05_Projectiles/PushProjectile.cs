@@ -14,6 +14,7 @@ public class PushProjectile : Base_Projectile
         if (other.gameObject == CastingWizard || other.gameObject.layer == 3) { return; } //Check that the collision isnt with the wizard that casted the projectile.
         if (other.GetComponent<ChRedirectWizard>())
         {
+            
             base.OnTriggerEnter(other);
             return;
         }
