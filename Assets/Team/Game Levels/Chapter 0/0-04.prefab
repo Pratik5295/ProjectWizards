@@ -30934,16 +30934,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelTiles: {fileID: 3651314102345363368}
   CharactersMap:
-  - CharacterID: Absorb Wizard 1
-    CharacterPrefab: {fileID: 5407380294395882597, guid: 5ecfadebda0155d4695ab480153decc0, type: 3}
-    StartTileID:
-      x: 3
-      y: 5
-    FacingDirection: 2
-    CharacterSkin:
-      CharacterCode: 0
-      SkinMaterial: {fileID: 2100000, guid: da98eb23e0994874da55d0329b64cc4d, type: 2}
-      CharacterColor: {r: 0, g: 0.23921585, b: 1, a: 1}
   - CharacterID: Push Wizard 1
     CharacterPrefab: {fileID: 5407380294395882597, guid: 13d5d07571039354bb2e9285b85bf4b7, type: 3}
     StartTileID:
@@ -30954,6 +30944,16 @@ MonoBehaviour:
       CharacterCode: 0
       SkinMaterial: {fileID: 2100000, guid: 91c0701f2e59aaa4aa8070d3b87243a0, type: 2}
       CharacterColor: {r: 1, g: 0.9696857, b: 0, a: 1}
+  - CharacterID: Absorb Wizard 1
+    CharacterPrefab: {fileID: 5407380294395882597, guid: 5ecfadebda0155d4695ab480153decc0, type: 3}
+    StartTileID:
+      x: 3
+      y: 5
+    FacingDirection: 2
+    CharacterSkin:
+      CharacterCode: 0
+      SkinMaterial: {fileID: 2100000, guid: da98eb23e0994874da55d0329b64cc4d, type: 2}
+      CharacterColor: {r: 0, g: 0.23921585, b: 1, a: 1}
   _objectiveMap:
   - ObjectiveName: Get Push Wizard 1 to the Location
     ObjectiveTargets:
