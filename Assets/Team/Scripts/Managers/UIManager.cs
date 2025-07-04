@@ -50,6 +50,7 @@ namespace Team.Managers
                 _turnManager.OnTurnsProcessingEvent += OnTurnsBeingPlayedHandler;
                 _turnManager.OnAllTurnsCompleted += OnRoundTurnsCompletedHandler;
                 _turnManager.OnResetLastTurnCompleted += OnTurnResetCompletedHandler;
+                _turnManager.OnPlayedTillBreakpoint += OnReachedBreakpointHandler;
             }
             else
             {
@@ -66,6 +67,7 @@ namespace Team.Managers
                 _turnManager.OnTurnsProcessingEvent -= OnTurnsBeingPlayedHandler;
                 _turnManager.OnAllTurnsCompleted -= OnRoundTurnsCompletedHandler;
                 _turnManager.OnResetLastTurnCompleted -= OnTurnResetCompletedHandler;
+                _turnManager.OnPlayedTillBreakpoint -= OnReachedBreakpointHandler;
             }
         }
 
@@ -86,6 +88,12 @@ namespace Team.Managers
         {
             playButton.SetActive(false);
             restartButton.SetActive(false);
+        }
+
+        private void OnReachedBreakpointHandler()
+        {
+            playButton.SetActive(true);
+            restartButton.SetActive(true);
         }
 
         #region Screen Manager Sections
@@ -113,6 +121,11 @@ namespace Team.Managers
         public void ShowPostGameUI()
         {
             _screenManager.ShowScreen(GameConstants.MetaConstants.GameScreen.POST_GAME);
+        }
+
+        public void ShowLoadingScreen()
+        {
+            _screenManager.ShowScreen(GameConstants.MetaConstants.GameScreen.LOADING);
         }
 
         #endregion

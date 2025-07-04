@@ -126,7 +126,8 @@ public class Base_Obstacle : MonoBehaviour, IDestroyable
         if (!canBeDestroyed) { return; }
         _collider.enabled = true;
         _meshRenderer.enabled = true;
-        MakeTileWalkable();
+        _currentGridTile.SetObjectOccupyingTile(this.gameObject);
+        MakeTileUnwalkable();
     }
 
     public virtual void DisableObject()
@@ -135,7 +136,8 @@ public class Base_Obstacle : MonoBehaviour, IDestroyable
 
         _collider.enabled = false;
         _meshRenderer.enabled = false;
-        MakeTileUnwalkable();
+        _currentGridTile.SetObjectOccupyingTile(null);
+        MakeTileWalkable();
     }
 
     public void ResetToStart()

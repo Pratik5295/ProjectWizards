@@ -6,12 +6,13 @@ using Team.Gameplay.TurnSystem;
 using Team.GameConstants;
 using UnityEngine;
 using Team.Gameplay.GridSystem;
+using Team.UI.Gameplay;
 
 namespace Team.GameConstants
 {
     public static partial class MetaConstants
     {
-        public const float PauseBetweenTurn = 2f;
+        public const float PauseBetweenTurn = 0.5f;
     }
 }
 
@@ -38,6 +39,18 @@ namespace Team.Managers
         [SerializeField]
         private TurnHolder turnHolder;
 
+        [Space(5)]
+        [Header("Breakpoint System Variables")]
+        [SerializeField]
+        private GameBreakpoint breaker; //Reference to the breaker in game turn order
+        [SerializeField]
+        private int breakerIndex = 0;
+        [SerializeField]
+        private bool breakpoint = false;    //Breakpoint will be set at runtime by the level
+        [SerializeField]
+        private bool playedTillBreaker = false;    //Will be set to true after first set till breakpoint is played
+
+
         public bool HasCharacterTurns => turnQueue.Count > 0;
 
         private bool isQueueLoaded = false;
@@ -45,7 +58,7 @@ namespace Team.Managers
         public Action OnTurnsProcessingEvent;
         public Action OnAllTurnsCompleted;  //TODO: Update this to include the round integer
         public Action OnResetLastTurnCompleted; //TODO: To include which turn count was the round reset to
-
+        public Action OnPlayedTillBreakpoint;
         #endregion
 
         #region Unity Methods
@@ -62,17 +75,21 @@ namespace Team.Managers
             }
         }
 
-        private void Start()
-        {
-        }
-
         #endregion
 
         #region Public Methods
 
+        public void HasBreakpoint(bool _hasBreakPoint)
+        {
+            breakpoint = _hasBreakPoint;
+
+            breaker.gameObject.SetActive(breakpoint);
+        }
+
         public async Task LoadQueue()
         {
             LoadObstacleData();
+            breakerIndex = breaker.transform.GetSiblingIndex();
 
             if (turnQueue == null)
             {
@@ -87,7 +104,29 @@ namespace Team.Managers
             await Task.Yield();
             foreach (var unit in currentTurnOrder)
             {
-                turnQueue.Enqueue(unit.GetComponent<GameTurn>());
+                if (unit.TryGetComponent<GameTurn>(out var gameTurn))
+                {
+                    turnQueue.Enqueue(gameTurn);
+                }
+            }
+
+            isQueueLoaded = true;
+        }
+
+        public async Task LoadQueueFromIndex(int index)
+        {
+            LoadObstacleData();
+
+            turnQueue.Clear();
+
+            await Task.Yield();
+
+            for (int i = index; i < currentTurnOrder.Count; i++)
+            {
+                if (currentTurnOrder[i].TryGetComponent<GameTurn>(out var gameTurn))
+                {
+                    turnQueue.Enqueue(gameTurn);
+                }
             }
 
             isQueueLoaded = true;
@@ -95,6 +134,9 @@ namespace Team.Managers
 
         public void EmptyQueue()
         {
+            //Clear history stack
+            _historyStack.Clear();
+
             if (turnQueue != null)
             {
                 turnQueue.Clear();
@@ -166,10 +208,16 @@ namespace Team.Managers
                 }
             }
         }
-
         private void ResetTileData()
         {
             FireSpread.Instance.ResetOilTiles();
+        }
+
+        private void ResetBreakpointSystem()
+        {
+            breakpoint = false;
+            playedTillBreaker = false;
+            breakerIndex = 0;
         }
 
         #endregion
@@ -182,25 +230,95 @@ namespace Team.Managers
         {
             OnTurnsProcessingEvent?.Invoke();
 
+            if (!breakpoint)
+            {
+                PlayAllTurns();
+            }
+            else
+            {
+                //Load the turn order in queue
+                if (!playedTillBreaker)
+                {
+                    //Load the queue
+                    await LoadQueue();
+
+                    //1. If breaker is at extremes
+                    bool playAllTurns = IsBreakerAtExtremes();
+                    if (playAllTurns)
+                    {
+                        PlayAllTurns();
+                    }
+                    else
+                    {
+                        //2. If first section of the game
+
+                        //Check if it is a breakpoint level
+                        int currentIndex = 0;
+
+                        while (currentIndex < breakerIndex)
+                        {
+                            Debug.Log($"Runner index: {currentIndex}");
+                            await RunNextTurn();
+                            currentIndex++;
+                        }
+
+                        playedTillBreaker = true;
+
+                        OnPlayedTillBreakpoint?.Invoke();
+
+                        turnHolder.BreakpointInitiate(currentIndex);
+
+                        breaker.MakeUnInteractable();
+                    }
+                }
+                else
+                {
+                    //3. Last section of the game 
+
+                    //Check if it is a breakpoint level
+                    int currentIndex = breakerIndex;
+
+                    //Redo the queue based on current order
+                    await LoadQueueFromIndex(currentIndex);
+
+                    while (turnQueue.Count > 0)
+                    {
+                        Debug.Log($"Runner index: {currentIndex}");
+                        await RunNextTurn();
+                        currentIndex++;
+                    }
+
+                    Debug.Log("Completed the entire breakpoint system loop?");
+
+                    OnAllTurnsCompleted?.Invoke();
+
+                    turnHolder.Reset();
+
+                    breaker.MakeInteractable();
+                }
+            }
+
+        }
+
+        private bool IsBreakerAtExtremes()
+        {
+            //Check if the breakpoint index is at extremes, 0 or last. If yes then ignore it
+            bool playAllTurns = breakerIndex == 0 || breakerIndex >= turnQueue.Count; //Turn Queue doesnt contain the breaker
+            Debug.Log($"Play Turns is at extreme? {playAllTurns} and turn Queue Count: {turnQueue.Count}");
+
+            return playAllTurns;
+        }
+
+
+
+        private async void PlayAllTurns()
+        {
+            //Loads all turns and plays them
             await LoadQueue();
 
             while (turnQueue.Count > 0)
             {
-                GameTurn turn = turnQueue.Dequeue();
-
-                if (turn.IsAlive())
-                {
-                    await turn.PerformAsync();
-
-                    await Task.Delay(TimeSpan.FromSeconds(MetaConstants.PauseBetweenTurn));
-
-                    //Turn was performed by the character, update the stack
-                    _historyStack.Push(turn);
-                }
-                else
-                {
-                    Debug.Log($"{turn.name} Move character is dead, turn skipped");
-                }
+                await RunNextTurn();
             }
 
             Debug.Log("All turns completed.");
@@ -208,15 +326,48 @@ namespace Team.Managers
             OnAllTurnsCompleted?.Invoke();
         }
 
+        private async Task RunNextTurn()
+        {
+            GameTurn turn = turnQueue.Dequeue();
+           if(turn.TryGetComponent<UIGameCard>(out var gameCard))
+
+            if (turn.IsAlive())
+            {
+                await turn.PerformAsync();
+
+                await Task.Delay(TimeSpan.FromSeconds(MetaConstants.PauseBetweenTurn));
+
+                Debug.Log($"Executing: {turn.name}");
+
+                //Turn was performed by the character, update the stack
+                _historyStack.Push(turn);
+
+                //Turn is done, make it uninteractable
+                gameCard?.MakeUninteractable();
+            }
+            else
+            {
+                Debug.Log($"{turn.name} Move character is dead, turn skipped");
+
+                gameCard?.MakeUninteractable();
+            }
+        }
+
         [ContextMenu("Reset Turns")]
         public async void ResetAllTurns()
         {
             OnTurnsProcessingEvent?.Invoke();
 
+
             //Reset all moves performed by the characters
             while (_historyStack.Count > 0)
             {
                 GameTurn turn = _historyStack.Pop();
+                if (turn.TryGetComponent<UIGameCard>(out var gameCard))
+                {
+                    gameCard?.MakeInteractable();
+                }
+               
                 await turn.Undo();
             }
 
@@ -230,6 +381,7 @@ namespace Team.Managers
             }
 
 
+            ResetBreaker();
             Invoke(nameof(DelayReset), 2f);
 
 
@@ -257,6 +409,8 @@ namespace Team.Managers
             OnResetLastTurnCompleted?.Invoke();
 
             isQueueLoaded = false;
+
+
 
             Debug.Log("Completed reset");
         }
@@ -290,8 +444,8 @@ namespace Team.Managers
                 OnAllTurnsCompleted?.Invoke();
             }
 
-           
-           
+
+
         }
 
         public void ResetDestroyedEntities()
@@ -338,6 +492,15 @@ namespace Team.Managers
         private void ResetCharactersToStart()
         {
             CharacterManager.Instance.ResetAllCharacters();
+        }
+
+
+        private void ResetBreaker()
+        {
+            breaker.transform.SetAsFirstSibling();
+            breakerIndex = 0;
+
+            breaker.MakeInteractable();
         }
 
         #endregion
