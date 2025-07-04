@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 65eddf9d43702b94ea64ee323770b3e9, type: 3}
-  m_Name: Chapter-Test
+  m_Name: Chapter-Test-2
   m_EditorClassIdentifier: 
   Data:
-    ChapterID: 0
-    ChapterName: Chapter Test
-    InitialState: 1
+    ChapterID: 1
+    ChapterName: Chapter-Test-2
+    InitialState: 0
     Levels:
-    - {fileID: 11400000, guid: 7267ee6cbdf0ab545b6f42ae832a4245, type: 2}
-    - {fileID: 11400000, guid: a1b6bdd4d3a43a541b007bce54071ddd, type: 2}
-  NextLevel: {fileID: 11400000, guid: 9be11dbeeabbd6e4396cae09b117046f, type: 2}
-  LevelsToCompleteToUnlock: 1
+    - {fileID: 11400000, guid: 89e4224ec6581b44db3c3d780c412b16, type: 2}
+    - {fileID: 11400000, guid: 01839f181506ec5419f10e4839fd479a, type: 2}
+    - {fileID: 11400000, guid: 022c082ba9442334cb0bf073a68d71e2, type: 2}
+  NextLevel: {fileID: 0}
+  LevelsToCompleteToUnlock: 0

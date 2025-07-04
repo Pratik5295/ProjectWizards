@@ -27,6 +27,8 @@ namespace Team.Gameplay.LevelSystem
         private TextMeshProUGUI chapterTitleText;
         [SerializeField]
         private Transform chapterHolderTransform;
+        [SerializeField]
+        private CanvasGroup chapterCanvasGroup;
 
         #region Unity Methods
 
@@ -105,6 +107,16 @@ namespace Team.Gameplay.LevelSystem
 
             //Generate all level objects
             CreateLevelUI();
+
+            //Update canvas group to interactable/uninteractable
+            if(Status == ChapterState.LOCKED)
+            {
+                MakeUnInteractable();
+            }
+            else
+            {
+                MakeInteractable();
+            }
         }
 
         public void CreateLevelUI()
@@ -121,6 +133,17 @@ namespace Team.Gameplay.LevelSystem
                 AddLevel(level);
             }
         }
+
+        private void MakeInteractable()
+        {
+            chapterCanvasGroup.interactable = true;
+        }
+
+        private void MakeUnInteractable()
+        {
+            chapterCanvasGroup.interactable = false;
+        }
+
         #endregion
     }
 }
