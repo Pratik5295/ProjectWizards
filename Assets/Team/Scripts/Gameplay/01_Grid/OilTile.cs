@@ -1,5 +1,7 @@
+using System.Collections;
 using Team.Enum.Character;
 using Team.GameConstants;
+using Team.Gameplay.GameLevelSystem;
 using Team.Gameplay.GridSystem;
 using Team.Managers;
 using UnityEngine;
@@ -9,9 +11,13 @@ public class OilTile : GridTile
     public GameObject oilTilePrefab;
     [SerializeField] private GameObject _fireVFXPrefab;
 
-    private VFXManager _fireVFXRef;
+    private GameObject _fireVFXRef;
 
-    private bool isOnFire = false;
+    [SerializeField]
+    private GameObject _oilSpillMesh;
+
+    public bool isOnFire = false;
+    public bool visited = false;
 
     public override bool Init(LevelTileCreator _tileCreator, TileID _tileId, bool specificType = false)
     {
@@ -36,6 +42,7 @@ public class OilTile : GridTile
                 TileFacing = TileFacing.NORTH
             };
 
+            _oilSpillMesh = tileObject.transform.GetChild(1).gameObject;
             //Assuming all oil tiles are walkable?
             return true;
         }
@@ -45,6 +52,14 @@ public class OilTile : GridTile
         return false;
     }
 
+    private void Awake()
+    {
+        if (!_oilSpillMesh)
+        {
+            _oilSpillMesh = tileObject.transform.GetChild(1).gameObject;
+        }
+    }
+
     private GameObject SpawnOilTileObject()
     {
         return Instantiate(oilTilePrefab, transform);
@@ -52,31 +67,65 @@ public class OilTile : GridTile
 
     public void Ignite()
     {
-        _fireVFXRef = Instantiate(_fireVFXPrefab, transform).GetComponent<VFXManager>();
-        _fireVFXRef.EnableParticleEffectChildren();
+        _fireVFXRef = Instantiate(_fireVFXPrefab, transform);
+        //_fireVFXRef.EnableParticleEffectChildren();
 
         isOnFire = true;
-
-        if (ObjectOccupyingTile.CompareTag(MetaConstants.CharacterTag))
+        if (ObjectOccupyingTile)
         {
-            ObjectOccupyingTile.GetComponent<Base_Ch>().HitByProjectile(Enum_ProjectileType.Fireball);
-            GameTurnManager.Instance.AddDestroyedObject(ObjectOccupyingTile);
-        }
-        if (ObstacleImplementsScript())
-        {
-            Base_Obstacle baseObstacle = ObstacleImplementsScript();
-            if (baseObstacle.CanBeDestroyed) 
+            if (ObjectOccupyingTile.CompareTag(MetaConstants.CharacterTag))
             {
-                baseObstacle.DisableObject();
-                GameTurnManager.Instance.AddDestroyedObject(ObjectOccupyingTile);
+                KillWizardOnTile();
             }
-
+            if (ObstacleImplementsScript())
+            {
+                DestroyObjectOnTile();
+            }
         }
     }
 
     private void KillWizardOnTile()
     {
-
+        ObjectOccupyingTile.GetComponent<Base_Ch>().HitByProjectile(Enum_ProjectileType.Fireball);
+        GameTurnManager.Instance.AddDestroyedObject(ObjectOccupyingTile);
     }
+
+    private void DestroyObjectOnTile()
+    {
+        Base_Obstacle baseObstacle = ObstacleImplementsScript();
+        if (baseObstacle.CanBeDestroyed)
+        {
+            baseObstacle.DisableObject();
+            GameTurnManager.Instance.AddDestroyedObject(ObjectOccupyingTile);
+        }
+    }
+
+    public void Extinguish()
+    {
+        isOnFire = false;
+
+        if (_oilSpillMesh)
+        {
+            _oilSpillMesh.SetActive(false);
+        }
+        tileObject.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.grey;
+        Destroy(_fireVFXRef);
+    }
+
+    public void ResetOilStatus()
+    {
+        isOnFire = false;
+        visited = false;
+
+        if (_oilSpillMesh)
+        {
+            _oilSpillMesh.SetActive(true);
+        }
+        tileObject.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.white;
+
+        Destroy(_fireVFXRef);
+    }
+
+
 
 }

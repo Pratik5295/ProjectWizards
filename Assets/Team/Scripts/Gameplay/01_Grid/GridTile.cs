@@ -54,10 +54,18 @@ namespace Team.Gameplay.GridSystem
                 if(tileType != value)
                 {
                     tileType = value;
+#if UNITY_EDITOR
+                    EditorSpawnTileType();
+
+#else
                     SpawnTileType();
+#endif
+
                 }
             }
         }
+
+        [SerializeField]
         protected TileType startingTileType;
 
         public TileDirection Direction; //Rotation 
@@ -178,29 +186,63 @@ namespace Team.Gameplay.GridSystem
             EditorUtility.SetDirty(gameObject);
 #endif
         }
+
+        [ContextMenu("Set starting tile type")]
+        public void SetStartingTileType()
+        {
+            startingTileType = tileType;
+#if UNITY_EDITOR
+            EditorUtility.SetDirty(gameObject);
+#endif
+        }
         #endregion
 
-        [ExecuteInEditMode]
-        protected virtual void SpawnTileType()
+        public virtual void SpawnTileType()
         {
             if (tileObject && tileType != TileType.OCCUPIEDTILE) 
+            {
+                Destroy(tileObject);
+                tileObject = null;
+            }
+
+            /* if(tileType == TileType.OILTILE) // Cannot do this as this will execute after tile is set to oil.
+             {
+                 LevelManager.Instance.CreatedLevel.LevelTiles.RemoveTile(this);
+                 GridTile newTile = LevelManager.Instance.CreatedLevel.LevelTiles.CreateNewTile(this);
+                 newTile.SpawnTileType();
+                 Destroy(gameObject);
+             }*/
+
+            HandleTileSpawn();
+        }
+
+        [ExecuteInEditMode]
+        protected virtual void EditorSpawnTileType()
+        {
+            if (tileObject && tileType != TileType.OCCUPIEDTILE)
             {
 #if UNITY_EDITOR
                 DestroyImmediate(tileObject);
 #endif
-                if (tileObject)
-                {
-                    Destroy(tileObject);
-                }
                 tileObject = null;
             }
-           /* if(tileType == TileType.OILTILE) // Cannot do this as this will execute after tile is set to oil.
+            /* if(tileType == TileType.OILTILE) // Cannot do this as this will execute after tile is set to oil.
+             {
+                 LevelManager.Instance.CreatedLevel.LevelTiles.RemoveTile(this);
+                 GridTile newTile = LevelManager.Instance.CreatedLevel.LevelTiles.CreateNewTile(this);
+                 newTile.SpawnTileType();
+                 Destroy(gameObject);
+             }*/
+
+            HandleTileSpawn();
+            if (tileType != TileType.OILTILE)
             {
-                LevelManager.Instance.CreatedLevel.LevelTiles.RemoveTile(this);
-                GridTile newTile = LevelManager.Instance.CreatedLevel.LevelTiles.CreateNewTile(this);
-                newTile.SpawnTileType();
-                Destroy(gameObject);
-            }*/
+                gridManager.DirtySaveTileChanges();
+            }
+        }
+
+        private void HandleTileSpawn()
+        {
             switch (tileType)
             {
                 case TileType.TILE:
@@ -228,10 +270,9 @@ namespace Team.Gameplay.GridSystem
                     SpawnObjectOnTile();
                     break;
             }
-#if UNITY_EDITOR
-            EditorUtility.SetDirty(transform.parent.gameObject.transform.parent.gameObject);
-#endif
         }
+
+
 
         [ContextMenu("Spawn Object Occupying Tile space")]
         public void SpawnObjectOnTile()
@@ -340,7 +381,11 @@ namespace Team.Gameplay.GridSystem
 
         public void ResetTypeToDefault()
         {
+            if(tileType == startingTileType) { return; }
+
             tileType = startingTileType;
+            Destroy(tileObject);
+            HandleTileSpawn();
         }
 
         public void ParentOccupyingObject()

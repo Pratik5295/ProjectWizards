@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Team.GameConstants;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -45,8 +46,8 @@ namespace Team.Gameplay.GridSystem
         public List<GridTile> Tiles => tiles;
 
         [SerializeField]
-        private List<GridTile> oilTiles = new List<GridTile>();
-        public List<GridTile> OilTiles => oilTiles;
+        private List<OilTile> oilTiles = new List<OilTile>();
+        public List<OilTile> OilTiles => oilTiles;
 
 
         [SerializeField]
@@ -62,7 +63,6 @@ namespace Team.Gameplay.GridSystem
 
         [SerializeField]
         private GameObject _oilTile;
-       
 
         [ContextMenu("Clear Grid")]
         public void ClearGrid()
@@ -122,6 +122,7 @@ namespace Team.Gameplay.GridSystem
         }
 
 
+        #region Creating and removing tiles
         public void CreateNewOilTile(TileID previousTileID, float positionX, float positionZ)
         {
             //Remove old tile from list
@@ -137,14 +138,15 @@ namespace Team.Gameplay.GridSystem
             spawnedTile.name = $"Tile: {MetaConstants.gridCharArray[previousTileID.x]} {previousTileID.x}, {previousTileID.y}";
             tiles.Add(gridTile);
             oilTiles.Add(gridTile);
+            DirtySaveTileChanges();
         }
-        
+
         public void RemoveTile(GridTile currentTile)
         {
             tiles.Remove(currentTile);
             if (currentTile.gameObject.GetComponent<OilTile>())
             {
-                oilTiles.Remove(currentTile);
+                oilTiles.Remove(currentTile.gameObject.GetComponent<OilTile>());
             }
         }
 
@@ -161,6 +163,13 @@ namespace Team.Gameplay.GridSystem
             spawnedTile.name = $"Tile: {MetaConstants.gridCharArray[tileID.x]} {tileID.x}, {tileID.y}";
             tiles.Add(gridTile);
             return gridTile;
+        }
+        #endregion
+        public void DirtySaveTileChanges()
+        {
+#if UNITY_EDITOR
+            EditorUtility.SetDirty(gameObject);
+#endif
         }
 
         public void SetDefaultTile(GameObject _tile)
