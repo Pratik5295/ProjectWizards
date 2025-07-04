@@ -1,6 +1,6 @@
 using UnityEngine;
 using Team.Enum.Character;
-using Team.GameConstants;
+using Team.Managers;
 
 
 public class Base_Projectile : MonoBehaviour
@@ -32,6 +32,7 @@ public class Base_Projectile : MonoBehaviour
 
     void Start()
     {
+        ProjectileManager.Instance.RegisterSceneProjectile(this);
         time = 0f;
         _VFX = transform.GetChild(0).gameObject;
     }
@@ -75,12 +76,12 @@ public class Base_Projectile : MonoBehaviour
 
         if (_collisionEffect) { _collisionEffect.Play(); }
 
-        OnProjectileEnd();
-        Destroy(this.gameObject);
+        CleanUp();
     }
 
     public virtual void CleanUp()
     {
+        ProjectileManager.Instance.UnregisterSceneProjectile(this);
         OnProjectileEnd();
         Destroy(gameObject);
     }
