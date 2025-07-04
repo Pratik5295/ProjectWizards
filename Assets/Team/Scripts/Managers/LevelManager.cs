@@ -173,6 +173,9 @@ namespace Team.Managers
         {
             Debug.Log($"Level {CurrentLevel.Info.Data.Stats.LevelName} has been completed");
 
+            //Notify level its completed
+            CurrentLevel.OnLevelCompleted();
+
             CurrentLevel.Info.Data.Stats.State = LevelState.COMPLETED;
             SetCurrentLevel(GetNextLevel());
         }

@@ -14,6 +14,8 @@ namespace Team.Gameplay.LevelSystem
 
         public Dictionary<ChapterID,GameChapter> ChaptersMap = new Dictionary<ChapterID, GameChapter>();
 
+        
+
         private void Awake()
         {
             if (Instance == null)
@@ -51,6 +53,11 @@ namespace Team.Gameplay.LevelSystem
             {
                 Debug.Log($"Chapter: {chapter.Key}, State: {chapter.Value.Status}");
             }
+        }
+
+        public void OnChapterCompleted(GameChapter _chapter)
+        {
+
         }
     }
 }

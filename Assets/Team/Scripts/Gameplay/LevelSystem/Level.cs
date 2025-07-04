@@ -85,5 +85,10 @@ namespace Team.Gameplay.LevelSystem
                 //Locked
             }
         }
+
+        public void OnLevelCompleted()
+        {
+            OnCompletedLevel?.Invoke(Info.Data.Stats.LevelID);
+        }
     }
 }

@@ -11,6 +11,9 @@ namespace Team.Gameplay.LevelSystem
     {
         public ChapterState Status;
 
+        [SerializeField]
+        private int levelToCompleteRequirement;
+
         public ChapterDataSO chapterData;
 
         public List<LevelID> CompletedLevels = new List<LevelID>();
@@ -55,6 +58,14 @@ namespace Team.Gameplay.LevelSystem
             }
 
             CompletedLevels.Add(levelID);
+
+            Debug.Log("Game chapter level has been completed");
+
+            //Validation if chapter is completed
+            if(LevelsCompleted >= levelToCompleteRequirement)
+            {
+                Debug.Log($"Chapter: {chapterData.Data.ChapterName} has been completed");
+            }
         }
 
         public bool IsLevelCompleted(LevelID _levelID)
@@ -101,6 +112,9 @@ namespace Team.Gameplay.LevelSystem
         {
             //Sets the initial state
             Status = chapterData.Data.InitialState;
+
+            //Setting local requirement count
+            levelToCompleteRequirement = chapterData.LevelsToCompleteToUnlock;
 
             //Populate self name
             chapterTitleText.text = chapterData.Data.ChapterName;
