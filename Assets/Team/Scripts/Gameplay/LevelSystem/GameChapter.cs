@@ -22,6 +22,8 @@ namespace Team.Gameplay.LevelSystem
 
         public int LevelsCompleted => CompletedLevels.Count;
 
+        public ChapterID NextChapterID => chapterData.NextLevel;
+
         [Space(5)]
         [Header("UI Variables/Components")]
         [SerializeField]
@@ -64,7 +66,7 @@ namespace Team.Gameplay.LevelSystem
             //Validation if chapter is completed
             if(LevelsCompleted >= levelToCompleteRequirement)
             {
-                Debug.Log($"Chapter: {chapterData.Data.ChapterName} has been completed");
+                ChapterManager.Instance.OnChapterCompleted(this);
             }
         }
 
@@ -106,6 +108,7 @@ namespace Team.Gameplay.LevelSystem
         }
 
         #endregion
+
 
         #region UI Handling Section
         public void Initialize()
@@ -156,6 +159,17 @@ namespace Team.Gameplay.LevelSystem
         private void MakeUnInteractable()
         {
             chapterCanvasGroup.interactable = false;
+        }
+
+        #endregion
+
+        #region Chapter Update Section
+
+        public void UnlockChapter()
+        {
+            Status = ChapterState.UNLOCKED;
+
+            MakeInteractable();
         }
 
         #endregion
