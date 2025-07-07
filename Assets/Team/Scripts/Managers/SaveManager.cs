@@ -12,14 +12,23 @@ namespace Team.Managers
         public List<LevelID> CompletedLevels;
     }
 
+    [System.Serializable]
+    public class SaveHolder
+    {
+        public List<SavePacket> dataPackets;
+
+        public SaveHolder()
+        {
+            dataPackets = new List<SavePacket>();
+        }
+    }
+
     public class SaveManager : MonoBehaviour
     {
         public static SaveManager Instance { get; private set; }
 
-        public List<LevelID> CompletedLevels = new List<LevelID>();
-
         [SerializeField]
-        private SavePacket localSaveData;
+        private SaveHolder localSaveData;
 
         private string SavePath => Path.Combine(Application.persistentDataPath, "save.json");
 
@@ -42,7 +51,7 @@ namespace Team.Managers
 
         private void InitializeData()
         {
-            localSaveData = new SavePacket();
+            localSaveData = new SaveHolder();
             Load();
         }
 
@@ -51,10 +60,10 @@ namespace Team.Managers
         [ContextMenu("Save Completed Levels")]
         public void Save()
         {
-            localSaveData.CompletedLevels = CompletedLevels = new List<LevelID>(CompletedLevels);
+            //localSaveData.dataPackets.CompletedLevels = CompletedLevels = new List<LevelID>(CompletedLevels);
 
-            string json = JsonUtility.ToJson(localSaveData, true);
-            File.WriteAllText(SavePath, json);
+            //string json = JsonUtility.ToJson(localSaveData, true);
+            //File.WriteAllText(SavePath, json);
             Debug.Log("Game saved.");
         }
 
@@ -65,13 +74,11 @@ namespace Team.Managers
             {
                 string json = File.ReadAllText(SavePath);
                 SavePacket data = JsonUtility.FromJson<SavePacket>(json);
-                CompletedLevels = data.CompletedLevels ?? new List<LevelID>();
                 Debug.Log("Game loaded.");
             }
             else
             {
                 Debug.Log("No save file found. Starting fresh.");
-                CompletedLevels = new List<LevelID>();
             }
         }
 
@@ -82,7 +89,17 @@ namespace Team.Managers
                 File.Delete(SavePath);
                 Debug.Log("Save file deleted.");
             }
-            CompletedLevels.Clear();
+        }
+
+        #endregion
+
+        #region Save Packet Handling Section
+
+        public void UpdateLevelCompletedOnChapter(ChapterID _chapterID, LevelID _levelID)
+        {
+            //Completed level id updated on the local cache
+
+            //Check the 
         }
 
         #endregion

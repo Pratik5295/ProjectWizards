@@ -22,6 +22,8 @@ namespace Team.Gameplay.LevelSystem
 
         public int LevelsCompleted => CompletedLevels.Count;
 
+        public ChapterID CurrentChapterID => chapterData.Data.ChapterID;
+
         public ChapterID NextChapterID => chapterData.NextLevel;
 
         [Space(5)]
@@ -148,6 +150,9 @@ namespace Team.Gameplay.LevelSystem
 
                 //Add local listener to the chapter
                 AddLevel(level);
+
+                //Load the level with its relevant chapter id
+                level.ChapterID = CurrentChapterID;
             }
         }
 

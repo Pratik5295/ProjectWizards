@@ -13,10 +13,14 @@ namespace Team.Gameplay.LevelSystem
         [SerializeField]
         private TextMeshProUGUI levelNameText;
 
+        public ChapterID ChapterID;
+
         [SerializeField]
         private LevelDataSO levelData;
 
         public LevelDataSO Info => levelData;
+
+        public LevelID LevelID => Info.Data.Stats.LevelID;
 
         [SerializeField]
         private Color unlockedColor;
@@ -86,6 +90,13 @@ namespace Team.Gameplay.LevelSystem
             OnCompletedLevel?.Invoke(Info.Data.Stats.LevelID);
 
             ValidateState();
+
+            //Entry point for the Save Manager
+            if(SaveManager.Instance != null)
+            {
+                //Stuff can be sent
+                SaveManager.Instance.UpdateLevelCompletedOnChapter(ChapterID, LevelID);
+            }
         }
     }
 }
