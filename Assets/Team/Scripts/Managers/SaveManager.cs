@@ -110,12 +110,19 @@ namespace Team.Managers
             }
         }
 
+        [ContextMenu("Delete Save Data")]
         public void Delete()
         {
             if (File.Exists(SavePath))
             {
                 File.Delete(SavePath);
                 Debug.Log("Save file deleted.");
+            }
+
+            if (localSaveData != null)
+            {
+                localSaveData = null;
+                InitializeData();
             }
         }
 
