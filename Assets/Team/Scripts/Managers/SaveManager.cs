@@ -3,6 +3,7 @@ using UnityEngine;
 using System.IO;
 using static Team.GameConstants.LevelConstants;
 using System.Linq;
+using Team.Gameplay.LevelSystem;
 
 namespace Team.Managers
 {
@@ -103,6 +104,7 @@ namespace Team.Managers
                 Debug.Log("Game loaded.");
 
                 //Update chapter manager and related features to handle load system
+                ChapterManager.Instance?.LoadSaveData(localSaveData.dataPackets);
             }
             else
             {

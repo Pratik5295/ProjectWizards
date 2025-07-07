@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Team.Managers;
 using TMPro;
 using UnityEngine;
@@ -175,6 +176,19 @@ namespace Team.Gameplay.LevelSystem
             Status = ChapterState.UNLOCKED;
 
             MakeInteractable();
+        }
+
+        #endregion
+
+        #region Load System Handling Section
+
+        public void OnChapterCompletedLevels(List<LevelID> levelIds)
+        {
+            foreach (var id in levelIds)
+            {
+                var level = LevelObjects.FirstOrDefault(x => x.LevelID == id);
+                level.OnLevelCompleted(true);
+            }
         }
 
         #endregion

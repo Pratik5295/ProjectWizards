@@ -66,5 +66,20 @@ namespace Team.Gameplay.LevelSystem
 
             nextChapter.UnlockChapter();
         }
+
+        #region Load Game Section
+
+        public void LoadSaveData(List<SavePacket> _dataPackets)
+        {
+            foreach(var packet in _dataPackets)
+            {
+                //Find the relevant Game chapter via id
+                var chapter = ChaptersMap[packet.ChapterID];
+                chapter.OnChapterCompletedLevels(packet.CompletedLevels);
+
+            }
+        }
+
+        #endregion
     }
 }

@@ -74,18 +74,21 @@ namespace Team.Gameplay.LevelSystem
             LevelManager.Instance.LoadCurrentLevel();
         }
 
-        public void OnLevelCompleted()
+        public void OnLevelCompleted(bool isLoaded = false)
         {
             Status = LevelState.COMPLETED;
             OnCompletedLevel?.Invoke(Info.Data.Stats.LevelID);
 
             ValidateState();
 
-            //Entry point for the Save Manager
-            if(SaveManager.Instance != null)
+            if (!isLoaded)
             {
-                //Stuff can be sent
-                SaveManager.Instance.UpdateLevelCompletedOnChapter(ChapterID, LevelID);
+                //Entry point for the Save Manager
+                if (SaveManager.Instance != null)
+                {
+                    //Stuff can be sent
+                    SaveManager.Instance.UpdateLevelCompletedOnChapter(ChapterID, LevelID);
+                }
             }
         }
     }
