@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using Team.Gameplay.GameLevelSystem;
+using Team.Gameplay.GridSystem;
 using Team.Gameplay.LevelSystem;
 using Team.UI;
 using UnityEngine;
@@ -139,7 +140,12 @@ namespace Team.Managers
                 if (createdLevel == null)
                 {
                     throw new Exception("GameLoadManager returned null level!");
+                    Debug.Log("RETURNED NULL LEVEL!");
                 }
+                else Debug.Log("CREATED LEVEL!");
+
+                //Spawn Gameplay Managers.
+                GridManager.Instance.SpawnGameplayManagers();
 
                 Debug.Log("[LevelManager] Level instantiation complete, setting up components...");
 

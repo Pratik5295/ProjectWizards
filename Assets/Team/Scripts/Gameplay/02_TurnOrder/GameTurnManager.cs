@@ -202,7 +202,7 @@ namespace Team.Managers
         {
             foreach (var obs in Obstacles)
             {
-                if (obs.TryGetComponent<ObstacleData>(out var obsData))
+                if (obs.TryGetComponent<Base_Obstacle>(out var obsData))
                 {
                     obsData.ResetToStart();
                 }
