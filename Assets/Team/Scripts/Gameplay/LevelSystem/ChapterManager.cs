@@ -35,6 +35,7 @@ namespace Team.Gameplay.LevelSystem
 
         private void LoadChaptersMap()
         {
+            //TODO: Put this in UNitask async at start in the future, so the chapter data is never empty
             foreach (var chapter in Chapters)
             {
                 ChaptersMap.Add(chapter.chapterData.Data.ChapterID, chapter);

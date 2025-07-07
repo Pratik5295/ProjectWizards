@@ -90,7 +90,7 @@ namespace Team.Managers
         {
             string json = JsonUtility.ToJson(localSaveData, true);
             File.WriteAllText(SavePath, json);
-            Debug.Log("Game saved.");
+            Debug.Log("Game saved at: " + SavePath);
         }
 
         [ContextMenu("Load Completed Levels")]
@@ -101,6 +101,8 @@ namespace Team.Managers
                 string json = File.ReadAllText(SavePath);
                 localSaveData = JsonUtility.FromJson<SaveHolder>(json);
                 Debug.Log("Game loaded.");
+
+                //Update chapter manager and related features to handle load system
             }
             else
             {
@@ -133,6 +135,9 @@ namespace Team.Managers
             }
 
             localSaveData.AddOrUpdateCompletedLevelList(savePacket,_levelID);
+
+            //Saving the data to the file
+            Save();
         }
 
         #endregion
