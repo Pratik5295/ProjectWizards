@@ -20,7 +20,8 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     protected TurnHolder _turnHolder;
 
     public Transform originalParent;
-    private CanvasGroup canvasGroup;
+    [SerializeField]
+    protected CanvasGroup canvasGroup;
     private RectTransform rectTransform;
     private LayoutElement layoutElement;
     private int originalIndex;

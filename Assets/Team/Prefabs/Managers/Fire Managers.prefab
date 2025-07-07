@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1606656436228397847
+--- !u!1 &1054791360482602096
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,46 +8,40 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5532810879233961201}
-  - component: {fileID: 8342445441163876641}
+  - component: {fileID: 9201479693926823313}
+  - component: {fileID: 6705614944489427298}
   m_Layer: 0
-  m_Name: Grid Manager
+  m_Name: Fire Managers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5532810879233961201
+--- !u!4 &9201479693926823313
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1606656436228397847}
+  m_GameObject: {fileID: 1054791360482602096}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8342445441163876641
+--- !u!114 &6705614944489427298
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1606656436228397847}
+  m_GameObject: {fileID: 1054791360482602096}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d17d4a56c48169f408cd57793e033bd2, type: 3}
+  m_Script: {fileID: 11500000, guid: 124920d915b3c054a9be9675f558b978, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameLevel: {fileID: 0}
-  tiles: []
-  Obstacles: []
-  ref_gridHolder: {fileID: 0}
-  _defaultObstacle: {fileID: 0}
-  _fireManager: {fileID: 1054791360482602096, guid: f0d773e0173add74990ab90513a4d11e, type: 3}
-  _projectileManager: {fileID: 3745882378335238389, guid: daf43a3d017277f4b97943dd94404b28, type: 3}
+  _levelTileCreator: {fileID: 0}

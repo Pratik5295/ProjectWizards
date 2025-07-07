@@ -32,6 +32,8 @@ namespace Team.Managers
         public List<GameObject> DestroyedObjects = new List<GameObject>();
         public List<GameObject> Obstacles = new List<GameObject>();
 
+        public List<GridTile> ChangedTiles = new List<GridTile>();
+
         public List<GameObject> originalOrder = new List<GameObject>();
         public List<GameObject> currentTurnOrder = new List<GameObject>(); //This will be used to reset the Queue
 
@@ -175,6 +177,11 @@ namespace Team.Managers
             DestroyedObjects.Add(_destroyedObject);
         }
 
+        public void AddChangedTile(GridTile _changedTile)
+        {
+            ChangedTiles.Add(_changedTile);
+        }
+
         #endregion
 
         #region Private Methods
@@ -196,11 +203,15 @@ namespace Team.Managers
         {
             foreach (var obs in Obstacles)
             {
-                if (obs.TryGetComponent<ObstacleData>(out var obsData))
+                if (obs.TryGetComponent<Base_Obstacle>(out var obsData))
                 {
                     obsData.ResetToStart();
                 }
             }
+        }
+        private void ResetTileData()
+        {
+            FireSpread.Instance.ResetOilTiles();
         }
 
         private void ResetBreakpointSystem()
@@ -393,6 +404,11 @@ namespace Team.Managers
             //Reset all characters to their saved start position
             ResetCharactersToStart();
 
+            //Reset tile data.
+            ResetTileData();
+
+            //Reset tiles that have been changed.
+            ResetChangedTiles();
 
             //Notify that undo was completed
             OnResetLastTurnCompleted?.Invoke();
@@ -467,6 +483,15 @@ namespace Team.Managers
                 }
             }
             DestroyedObjects.Clear();
+        }
+
+        public void ResetChangedTiles()
+        {
+            for (int i = 0; i < ChangedTiles.Count; i++)
+            {
+                ChangedTiles[i].ResetTypeToDefault();
+            }
+            ChangedTiles.Clear();
         }
 
         private void ResetCharactersToStart()

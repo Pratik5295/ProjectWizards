@@ -2,8 +2,8 @@ using UnityEngine;
 using UnityEditor;
 using Team.Gameplay.GridSystem;
 
-[CustomEditor(typeof(GridTile))]
-public class GridTile_CustomInspector : Editor
+[CustomEditor(typeof(OilTile))]
+public class OilTile_CustomInspector : Editor
 {
     TileType newTileType = TileType.TILE;
 

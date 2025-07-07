@@ -3517,7 +3517,7 @@ PrefabInstance:
       objectReference: {fileID: 4204931136641989452, guid: a2393efb786e29a479b32b205aa4ef16, type: 3}
     - target: {fileID: 8342445441163876641, guid: e0d53c5105d6a49459acc70b1f1978b4, type: 3}
       propertyPath: tiles.Array.size
-      value: 64
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8342445441163876641, guid: e0d53c5105d6a49459acc70b1f1978b4, type: 3}
       propertyPath: 'Grid.Array.data[0]'
@@ -3563,6 +3563,10 @@ PrefabInstance:
       propertyPath: TileMap.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8342445441163876641, guid: e0d53c5105d6a49459acc70b1f1978b4, type: 3}
+      propertyPath: _projectileManager
+      value: 
+      objectReference: {fileID: 3745882378335238389, guid: daf43a3d017277f4b97943dd94404b28, type: 3}
     - target: {fileID: 8342445441163876641, guid: e0d53c5105d6a49459acc70b1f1978b4, type: 3}
       propertyPath: 'Grid.Array.data[10]'
       value: 
