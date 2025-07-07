@@ -190,7 +190,7 @@ namespace Team.Gameplay.ObjectiveSystem
             foreach (var objective in _levelObjectives)
             {
                 bool result = objective.CheckObjectiveComplete();
-                if (!result)
+                if (!result && objective.Data.Priority == ObjectivePriority.PRIMARY)   //Primary Objectives failing would result in level failure
                 {
                     levelCompleted = false;
                 }

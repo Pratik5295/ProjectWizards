@@ -13,6 +13,12 @@ namespace Team.Gameplay.ObjectiveSystem
         TURN_LIMIT = 4
     }
 
+    public enum ObjectivePriority
+    {
+        PRIMARY = 0,
+        SECONDARY = 1
+    }
+
     [System.Serializable]
     public class GameObjectiveData
     {
@@ -22,6 +28,8 @@ namespace Team.Gameplay.ObjectiveSystem
         public List<string> ObjectiveTargets;
         [Tooltip("What type of objective is this")]
         public ObjectiveType Type;
+        [Tooltip("Priority of the objective")]
+        public ObjectivePriority Priority;
 
         //For Location
         [Tooltip("Fill only for LOCATION Objective")]

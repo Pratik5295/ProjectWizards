@@ -7,6 +7,7 @@ using Team.GameConstants;
 using UnityEngine;
 using Team.Gameplay.GridSystem;
 using Team.UI.Gameplay;
+using UnityEngine.Rendering;
 
 namespace Team.GameConstants
 {
@@ -383,8 +384,12 @@ namespace Team.Managers
 
             ResetBreaker();
             Invoke(nameof(DelayReset), 2f);
+        }
 
-
+        public void RestartASAP()
+        {
+            Debug.Log("Firing restart ASAP");
+           
         }
 
         private void DelayReset()

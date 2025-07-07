@@ -7,7 +7,6 @@ using Team.Gameplay.LevelSystem;
 using Team.UI;
 using UnityEngine;
 using static Team.GameConstants.LevelConstants;
-using static Team.GameConstants.MetaConstants;
 
 namespace Team.Managers
 {
@@ -32,11 +31,11 @@ namespace Team.Managers
         }
 
 
-        public List<LevelDataSO> LevelList = new List<LevelDataSO>();
+        public List<Level> LevelList = new List<Level>();
 
-        public Dictionary<LevelID, LevelData> LevelMap = new Dictionary<LevelID, LevelData>();
+        public Dictionary<LevelID, Level> LevelMap = new Dictionary<LevelID, Level>();
 
-        public LevelData CurrentLevel;
+        public Level CurrentLevel;
         public LevelID CurrentLevelID;
 
         public Action<LevelData> OnCurrentLevelUpdated;
@@ -62,7 +61,7 @@ namespace Team.Managers
 
         private void Start()
         {
-            LoadLevelMap();
+            //LoadLevelMap();
         }
 
         public void SetCurrentLevel(LevelID _level)
@@ -75,9 +74,9 @@ namespace Team.Managers
                 if (LevelMap.ContainsKey(CurrentLevelID))
                 {
                     var original = LevelMap[_level];
-                    CurrentLevel = new LevelData(original); // Deep copy here
+                    CurrentLevel = original; 
 
-                    OnCurrentLevelUpdated?.Invoke(CurrentLevel);
+                    OnCurrentLevelUpdated?.Invoke(CurrentLevel.Info.Data);
                 }
                 else
                 {
@@ -112,7 +111,7 @@ namespace Team.Managers
                 IsLoading = true;
                 OnLoadingStarted?.Invoke();
 
-                Debug.Log($"[LevelManager] Starting to load level: {CurrentLevel.Stats.LevelName}");
+                Debug.Log($"[LevelManager] Starting to load level: {CurrentLevel.Info.Data.Stats.LevelName}");
 
                 // Progress tracking with proper logging
                 var progressReporter = new Progress<float>(progress =>
@@ -132,7 +131,7 @@ namespace Team.Managers
                 // Use GameLoadManager to load the level - WAIT for completion
                 Debug.Log("[LevelManager] Starting GameLoadManager...");
                 createdLevel = await gameLoadManager.LoadGameLevelAsync(
-                    CurrentLevel.GameLevelPrefab.gameObject,
+                    CurrentLevel.Info.Data.GameLevelPrefab.gameObject,
                     progressReporter
                 );
 
@@ -150,21 +149,21 @@ namespace Team.Managers
                 Debug.Log("[LevelManager] Level instantiation complete, setting up components...");
 
                 // Setup dialogue if available
-                if (CurrentLevel.DialogueAsset != null)
+                if (CurrentLevel.Info.Data.DialogueAsset != null)
                 {
-                    UIManager.Instance.SetCurrentDialogue(CurrentLevel.DialogueAsset);
+                    UIManager.Instance.SetCurrentDialogue(CurrentLevel.Info.Data.DialogueAsset);
                 }
 
                 // Setup turn manager breakpoint
                 if (GameTurnManager.Instance != null)
                 {
-                    GameTurnManager.Instance.HasBreakpoint(CurrentLevel.HasBreakPoint);
+                    GameTurnManager.Instance.HasBreakpoint(CurrentLevel.Info.Data.HasBreakPoint);
                 }
 
                 // Wait one more frame to ensure everything is properly initialized
                 await UniTask.Yield();
 
-                Debug.Log($"[LevelManager] Level {CurrentLevel.Stats.LevelName} loaded successfully!");
+                Debug.Log($"[LevelManager] Level {CurrentLevel.Info.Data.Stats.LevelName} loaded successfully!");
             }
             catch (Exception ex)
             {
@@ -181,9 +180,12 @@ namespace Team.Managers
 
         public void OnCurrentLevelCompleted()
         {
-            Debug.Log($"Level {CurrentLevel.Stats.LevelName} has been completed");
+            Debug.Log($"Level {CurrentLevel.Info.Data.Stats.LevelName} has been completed");
 
-            CurrentLevel.Stats.State = LevelState.COMPLETED;
+            //Notify level its completed
+            CurrentLevel.OnLevelCompleted();
+
+            //CurrentLevel.Info.Data.Stats.State = LevelState.COMPLETED;
             SetCurrentLevel(GetNextLevel());
         }
 
@@ -205,7 +207,7 @@ namespace Team.Managers
         /// </summary>
         public void StartLevel()
         {
-            if (CurrentLevel.DialogueAsset == null)
+            if (CurrentLevel.Info.Data.DialogueAsset == null)
             {
                 UIManager.Instance.ShowGameUI();
             }
@@ -215,11 +217,16 @@ namespace Team.Managers
             }
         }
 
+        public void AddLevelToMap(Level _level)
+        {
+            LevelList.Add(_level);
+        }
+
         /// <summary>
         /// Fill out the level map dictionary based on all the levels contained 
         /// in the list
         /// </summary>
-        private void LoadLevelMap()
+        public void LoadLevelMap()
         {
             if(LevelList.Count == 0)
             {
@@ -229,13 +236,13 @@ namespace Team.Managers
 
             foreach(var level in LevelList)
             {
-                LevelMap.Add(level.Data.Stats.LevelID, level.Data);
+                LevelMap.Add(level.Info.Data.Stats.LevelID, level);
             }
         }
 
         private LevelID GetNextLevel()
         {
-            return CurrentLevel.Stats.NextLevel;
+            return CurrentLevel.Info.Data.Stats.NextLevel;
         }
     }
 }

@@ -19,5 +19,13 @@ namespace Team.GameConstants
             Ch205 = 10,
             Ch206 = 11,
         }
+
+        public enum ChapterID
+        {
+            NONE = -100,
+            CH1 = 0,
+            CH2 = 1, 
+            CH3 = 2,
+        }
     }
 }
