@@ -29,6 +29,10 @@ public class FireSpread : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
         Initialise();
     }
 

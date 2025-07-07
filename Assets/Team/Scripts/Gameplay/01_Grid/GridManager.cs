@@ -1,4 +1,6 @@
+using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Team.Gameplay.GameLevelSystem;
 using UnityEngine;
 
@@ -62,7 +64,7 @@ namespace Team.Gameplay.GridSystem
                 LoadTilesFromLevelTiles();
 
                 InitializeDictionary();
-                FindAllObstacles();
+
             }
         }
 
@@ -78,7 +80,8 @@ namespace Team.Gameplay.GridSystem
             //Initialize Dictionary
             InitializeDictionary();
 
-            SpawnGameplayManagers();
+            //Find all the obstacles in the level.
+            FindAllObstacles();
         }
 
         private void LoadTilesFromLevelTiles()
@@ -153,9 +156,10 @@ namespace Team.Gameplay.GridSystem
         }
         #endregion
 
-        private void SpawnGameplayManagers()
+        public void SpawnGameplayManagers()
         {
-            Instantiate(_fireManager, Vector3.zero, Quaternion.identity);
+            Instantiate(_fireManager, Vector3.zero, Quaternion.identity, transform.parent);
+            Instantiate(_projectileManager, Vector3.zero, Quaternion.identity, transform.parent);
         }
     }
 }

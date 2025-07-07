@@ -32,9 +32,6 @@ namespace Team.UI.Gameplay
         [Header("Card Components")]
 
         [SerializeField]
-        private CanvasGroup canvasGroup;
-
-        [SerializeField]
         private Color interactableColor;
 
         [SerializeField]

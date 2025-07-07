@@ -2,6 +2,8 @@ using System;
 using UnityEngine;
 using Team.Gameplay.GridSystem;
 using Team.GameConstants;
+using System.Collections;
+using Team.Managers;
 
 public class Base_Obstacle : MonoBehaviour, IDestroyable
 {
@@ -45,6 +47,8 @@ public class Base_Obstacle : MonoBehaviour, IDestroyable
     [SerializeField]
     protected MeshRenderer _meshRenderer;
 
+    private bool isInitialised = false;
+
     [Header("Functionality Variables")]
     [SerializeField]
     protected bool canBeDestroyed = true;
@@ -62,6 +66,15 @@ public class Base_Obstacle : MonoBehaviour, IDestroyable
         if (gameObject.TryGetComponent<Base_Rotation>(out var ch))
         {
             _startingDirection = ch.DirectionFacing;
+        }
+        StartCoroutine(InitailisationCheck());
+    }
+
+    public IEnumerator InitailisationCheck()
+    {
+        while (!LevelManager.Instance.CreatedLevel && !isInitialised)
+        {
+            yield return new WaitForSeconds(0.2f);
         }
         InitialiseObstacle(CurrentTileID, Enum_GridDirection.NORTH);
     }
@@ -86,6 +99,8 @@ public class Base_Obstacle : MonoBehaviour, IDestroyable
         baseRotation.RotateToFaceDir(v2Dir);
 
         transform.position = new Vector3(_currentGridTile.TilePosition.x, _currentGridTile.TilePosition.y + ySpawnOffset, _currentGridTile.TilePosition.z);
+        isInitialised = true;
+
         InitialiseObstacleData();
     }
 
@@ -144,6 +159,7 @@ public class Base_Obstacle : MonoBehaviour, IDestroyable
     {
         //Make my curent tile to tile walkable
         MakeTileWalkable();
+        _currentGridTile.UpdateOccupiedStatus(false, null);
 
         UpdateObstacleTileData(_startTileID, _startTile);
 
@@ -155,8 +171,6 @@ public class Base_Obstacle : MonoBehaviour, IDestroyable
 
         if (gameObject.TryGetComponent<Base_Ch>(out var obstacle))
         {
-            //obstacle.SetCurrentTile(_startTileID, _startTile);
-
             obstacle.InitialiseCharacter(_startTileID, _startingDirection);
         }
     }
