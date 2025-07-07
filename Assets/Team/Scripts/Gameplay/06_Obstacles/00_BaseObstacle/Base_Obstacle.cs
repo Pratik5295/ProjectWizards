@@ -41,13 +41,13 @@ public class Base_Obstacle : MonoBehaviour, IDestroyable
 
     [Header("Personal References")]
     [SerializeField]
-    private Collider _collider;
+    protected Collider _collider;
     [SerializeField]
-    private MeshRenderer _meshRenderer;
+    protected MeshRenderer _meshRenderer;
 
     [Header("Functionality Variables")]
     [SerializeField]
-    private bool canBeDestroyed = true;
+    protected bool canBeDestroyed = true;
 
     public bool CanBeDestroyed
     {

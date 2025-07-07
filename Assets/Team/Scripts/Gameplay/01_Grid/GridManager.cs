@@ -36,6 +36,11 @@ namespace Team.Gameplay.GridSystem
             get { return _defaultObstacle; }
         }
 
+        [Space(5)]
+        [Header("Gameplay Managers")]
+        [SerializeField] private GameObject _fireManager;
+        [SerializeField] private GameObject _projectileManager;
+
         private void Awake()
         {
             if(Instance == null)
@@ -72,6 +77,8 @@ namespace Team.Gameplay.GridSystem
 
             //Initialize Dictionary
             InitializeDictionary();
+
+            SpawnGameplayManagers();
         }
 
         private void LoadTilesFromLevelTiles()
@@ -145,6 +152,10 @@ namespace Team.Gameplay.GridSystem
             }
         }
         #endregion
-        
+
+        private void SpawnGameplayManagers()
+        {
+            Instantiate(_fireManager, Vector3.zero, Quaternion.identity);
+        }
     }
 }
