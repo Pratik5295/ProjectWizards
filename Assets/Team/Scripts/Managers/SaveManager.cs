@@ -6,8 +6,9 @@ using static Team.GameConstants.LevelConstants;
 namespace Team.Managers
 {
     [System.Serializable]
-    public class SaveData
+    public class SavePacket
     {
+        public ChapterID ChapterID;
         public List<LevelID> CompletedLevels;
     }
 
@@ -18,7 +19,7 @@ namespace Team.Managers
         public List<LevelID> CompletedLevels = new List<LevelID>();
 
         [SerializeField]
-        private SaveData localSaveData;
+        private SavePacket localSaveData;
 
         private string SavePath => Path.Combine(Application.persistentDataPath, "save.json");
 
@@ -31,10 +32,21 @@ namespace Team.Managers
             }
 
             Instance = this;
-            localSaveData = new SaveData();
-            DontDestroyOnLoad(gameObject);
+            
+        }
+
+        private void Start()
+        {
+            InitializeData();
+        }
+
+        private void InitializeData()
+        {
+            localSaveData = new SavePacket();
             Load();
         }
+
+        #region Main Functions Section
 
         [ContextMenu("Save Completed Levels")]
         public void Save()
@@ -52,7 +64,7 @@ namespace Team.Managers
             if (File.Exists(SavePath))
             {
                 string json = File.ReadAllText(SavePath);
-                SaveData data = JsonUtility.FromJson<SaveData>(json);
+                SavePacket data = JsonUtility.FromJson<SavePacket>(json);
                 CompletedLevels = data.CompletedLevels ?? new List<LevelID>();
                 Debug.Log("Game loaded.");
             }
@@ -72,5 +84,9 @@ namespace Team.Managers
             }
             CompletedLevels.Clear();
         }
+
+        #endregion
+
+
     }
 }
