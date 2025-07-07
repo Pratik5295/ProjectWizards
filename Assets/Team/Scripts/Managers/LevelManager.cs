@@ -6,7 +6,6 @@ using Team.Gameplay.LevelSystem;
 using Team.UI;
 using UnityEngine;
 using static Team.GameConstants.LevelConstants;
-using static Team.GameConstants.MetaConstants;
 
 namespace Team.Managers
 {
@@ -176,7 +175,7 @@ namespace Team.Managers
             //Notify level its completed
             CurrentLevel.OnLevelCompleted();
 
-            CurrentLevel.Info.Data.Stats.State = LevelState.COMPLETED;
+            //CurrentLevel.Info.Data.Stats.State = LevelState.COMPLETED;
             SetCurrentLevel(GetNextLevel());
         }
 

@@ -22,7 +22,7 @@ namespace Team.Gameplay.LevelSystem
         private Color unlockedColor;
 
         [SerializeField]
-        private Color lockedColor;
+        private Color completedColor;
 
         [SerializeField]
         private Image levelImage;
@@ -30,19 +30,12 @@ namespace Team.Gameplay.LevelSystem
         [SerializeField]
         private Button button;  //Temporary will be removed later
 
-        public bool IsUnlocked => Status != LevelState.LOCKED;
+        public bool IsCompleted => Status == LevelState.COMPLETED;
 
         public LevelState Status;
 
         public Action<LevelID> OnCompletedLevel;
 
-        private void Start()
-        {
-           //if(levelData != null)
-           // {
-           //     PopulateLevelInfo(levelData);
-           // }
-        }
 
         public void PopulateLevelInfo(LevelDataSO _data)
         {
@@ -60,35 +53,39 @@ namespace Team.Gameplay.LevelSystem
         /// </summary>
         public void ValidateState()
         {
-            if (IsUnlocked)
+            if (IsCompleted)
             {
-                levelImage.color = unlockedColor;
-                button.interactable = true;
+                levelImage.color = completedColor;
             }
             else
             {
-                levelImage.color = lockedColor;
-                button.interactable = false;
+                levelImage.color = unlockedColor;
             }
         }
 
         public void OnLevelSelected()
         {
-            if (IsUnlocked)
+            if (IsCompleted)
             {
                 //Unlocked, allow to play level
-                LevelManager.Instance.SetCurrentLevel(levelData.Data.Stats.LevelID);
-                LevelManager.Instance.LoadCurrentLevel();
+                
             }
             else
             {
                 //Locked
             }
+
+            //All levels playable, the locking part happens through chapters
+            LevelManager.Instance.SetCurrentLevel(levelData.Data.Stats.LevelID);
+            LevelManager.Instance.LoadCurrentLevel();
         }
 
         public void OnLevelCompleted()
         {
+            Status = LevelState.COMPLETED;
             OnCompletedLevel?.Invoke(Info.Data.Stats.LevelID);
+
+            ValidateState();
         }
     }
 }
