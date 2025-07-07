@@ -69,16 +69,6 @@ namespace Team.Gameplay.LevelSystem
 
         public void OnLevelSelected()
         {
-            if (IsCompleted)
-            {
-                //Unlocked, allow to play level
-                
-            }
-            else
-            {
-                //Locked
-            }
-
             //All levels playable, the locking part happens through chapters
             LevelManager.Instance.SetCurrentLevel(levelData.Data.Stats.LevelID);
             LevelManager.Instance.LoadCurrentLevel();
