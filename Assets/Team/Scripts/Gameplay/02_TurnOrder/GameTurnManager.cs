@@ -386,9 +386,15 @@ namespace Team.Managers
             Invoke(nameof(DelayReset), 2f);
         }
 
-        public void RestartASAP()
+        [ContextMenu("Insta Reset")]
+        public void InstaRestart()
         {
             Debug.Log("Firing restart ASAP");
+
+            //Stop execution of turn for each character
+
+            //Reset all turns and their orders, undo whereever necessary
+            ResetAllTurns();
            
         }
 
