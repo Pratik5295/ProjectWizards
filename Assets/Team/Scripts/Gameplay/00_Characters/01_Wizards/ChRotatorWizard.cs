@@ -72,7 +72,7 @@ public class ChRotatorWizard : Base_Ch
         if (!centerTile)
         {
             Debug.Log("Cant Execute Ability as no tiles no center tile.");
-            OnTurnComplete();
+            OnTurnComplete?.Invoke();
             return;
         }
 

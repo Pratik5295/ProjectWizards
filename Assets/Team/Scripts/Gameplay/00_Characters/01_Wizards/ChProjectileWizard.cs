@@ -78,6 +78,6 @@ public class ChProjectileWizard : Base_Ch
         ProjectileInstance = null;
         scProjectile = null;
 
-        OnTurnComplete();
+        OnTurnComplete?.Invoke();
     }
 }

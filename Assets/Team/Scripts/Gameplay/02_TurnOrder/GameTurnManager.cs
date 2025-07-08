@@ -393,6 +393,7 @@ namespace Team.Managers
             while (_historyStack.Count > 0)
             {
                 GameTurn turn = _historyStack.Pop();
+                Debug.Log($"Pratik emptying stack for: {turn.name}");
                 if (turn.TryGetComponent<UIGameCard>(out var gameCard))
                 {
                     gameCard?.MakeInteractable();
@@ -410,7 +411,7 @@ namespace Team.Managers
                 turn.transform.SetSiblingIndex(i);
             }
 
-
+            Debug.Log("Pratik Firing Restart");
             ResetBreaker();
             Invoke(nameof(DelayReset), 2f);
         }
@@ -451,6 +452,8 @@ namespace Team.Managers
             LevelObjectiveManager.Instance.ResetAllObjectives();
 
             ResetObstacles();
+
+            Debug.Log("Pratik Characters set back to OG");
 
             //Reset all characters to their saved start position
             ResetCharactersToStart();
