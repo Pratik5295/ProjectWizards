@@ -429,7 +429,7 @@ namespace Team.Managers
             }
 
             //Reset all turns and their orders, undo whereever necessary
-            ResetAllTurns();
+           // ResetAllTurns();
            
         }
 
