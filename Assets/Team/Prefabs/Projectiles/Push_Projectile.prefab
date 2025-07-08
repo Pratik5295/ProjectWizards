@@ -32,7 +32,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4996523508135657529}
+  - {fileID: 6471065324819066305}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &2281852738733362449
@@ -99,6 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _projectileType: 1
   _projectileDir: 0
+  _VFX: {fileID: 0}
   CastingWizard: {fileID: 0}
   _prefabReference: {fileID: 0}
   curve: {fileID: 0}
@@ -106,7 +107,7 @@ MonoBehaviour:
   _lifespan: 2
   _collisionEffect: {fileID: 0}
   _pushAmount: 1
---- !u!1001 &8813834762161725940
+--- !u!1001 &7407269152018336780
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -163,8 +164,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ffeccccfa4b54c6429b64177d1b3a85e, type: 3}
---- !u!4 &4996523508135657529 stripped
+--- !u!4 &6471065324819066305 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4541387285806129613, guid: ffeccccfa4b54c6429b64177d1b3a85e, type: 3}
-  m_PrefabInstance: {fileID: 8813834762161725940}
+  m_PrefabInstance: {fileID: 7407269152018336780}
   m_PrefabAsset: {fileID: 0}

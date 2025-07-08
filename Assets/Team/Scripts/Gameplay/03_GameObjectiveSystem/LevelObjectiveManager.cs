@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using Team.GameConstants;
 using Team.Managers;
 using Team.UI;
@@ -16,32 +18,22 @@ namespace Team.Gameplay.ObjectiveSystem
 {
     //Make sure it runs after Game Turn Manager
     [DefaultExecutionOrder(3)]
-    public class LevelObjectiveManager : MonoBehaviour
+    public class LevelObjectiveManager : MonoBehaviour, ILoadingOperation
     {
-        #region Variables
         public static LevelObjectiveManager Instance = null;
 
-        [SerializeField]
-        private List<GameObjectiveData> _objectiveMap = new List<GameObjectiveData>();
-
+        [SerializeField] private List<GameObjectiveData> _objectiveMap = new List<GameObjectiveData>();
         [Header("Private Local cache, dont fill")]
-        [SerializeField]
-        private List<GenericObjective> _levelObjectives = new List<GenericObjective>();
-
-
+        [SerializeField] private List<GenericObjective> _levelObjectives = new List<GenericObjective>();
         [Header("Components")]
-        [SerializeField]
-        private GameTurnManager turnManager;
+        [SerializeField] private GameTurnManager turnManager;
+        [SerializeField] private UIObjectivesHolder objectivesHolder;
 
-        [SerializeField]
-        private UIObjectivesHolder objectivesHolder;
-        #endregion
-
-        #region Unity Methods
+        public string Description => "Loading Objectives...";
 
         private void Awake()
         {
-            if(Instance == null)
+            if (Instance == null)
             {
                 Instance = this;
             }
@@ -54,16 +46,11 @@ namespace Team.Gameplay.ObjectiveSystem
         private void Start()
         {
             turnManager = GameTurnManager.Instance;
-
-            if(turnManager == null)
+            if (turnManager == null)
             {
                 Debug.LogWarning("Game Turn Manager not found");
             }
-
-            //Turn Manager wouldn't have loaded here, need to handle this via the game load data?
             RegisterEvents();
-
-          
         }
 
         private void OnDestroy()
@@ -71,54 +58,62 @@ namespace Team.Gameplay.ObjectiveSystem
             UnregisterEvents();
         }
 
-        #endregion
-
-        #region Event Listeners and Handlers
-
-        private void RegisterEvents()
-        {
-            if(turnManager != null)
-            {
-                turnManager.OnAllTurnsCompleted += OnRoundTurnsCompletedHandler;
-            }
-        }
-
-        private void UnregisterEvents()
-        {
-            if (turnManager != null)
-            {
-                turnManager.OnAllTurnsCompleted -= OnRoundTurnsCompletedHandler;
-            }
-        }
-
-        #endregion
-
-        #region Public Methods
-
+        // Original synchronous method for backwards compatibility
         public void LoadObjectivesFromLevelData(List<GameObjectiveData> _objectives)
         {
-            CleanUp();
-
-            _objectiveMap.Clear();
-
-            //Load all objectives
-            foreach(var objective in _objectives)
-            {
-                _objectiveMap.Add(objective);
-            }
-
-            //Load the objectives
-            InitalizeObjectives();
+            LoadObjectivesFromLevelDataAsync(_objectives).Forget();
         }
 
-        /// <summary>
-        /// Initialize the objectives for this level
-        /// </summary>
+        // New async method
+        public async UniTask LoadObjectivesFromLevelDataAsync(List<GameObjectiveData> _objectives, IProgress<float> progress = null)
+        {
+            try
+            {
+                Debug.Log("[LevelObjectiveManager] Starting objectives loading...");
+
+                CleanUp();
+                _objectiveMap.Clear();
+
+                // Copy objective data (20% progress)
+                progress?.Report(0.2f);
+                foreach (var objective in _objectives)
+                {
+                    _objectiveMap.Add(objective);
+                }
+
+                // Initialize objectives with progress tracking (80% progress)
+                await InitializeObjectivesAsync(new Progress<float>(p => {
+                    float currentProgress = 0.2f + (p * 0.8f);
+                    progress?.Report(currentProgress);
+                }));
+
+                Debug.Log("[LevelObjectiveManager] Objectives loading completed!");
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[LevelObjectiveManager] Error loading objectives: {ex.Message}");
+                throw;
+            }
+        }
+
+        // Original synchronous method for backwards compatibility
         public void InitalizeObjectives()
         {
+            InitializeObjectivesAsync().Forget();
+        }
+
+        // New async method
+        public async UniTask InitializeObjectivesAsync(IProgress<float> progress = null)
+        {
             CharacterManager characterManager = CharacterManager.Instance;
-            foreach (var data in _objectiveMap)
+            int totalObjectives = _objectiveMap.Count;
+            Debug.Log($"[LevelObjectiveManager] Initializing {totalObjectives} objectives...");
+
+            for (int i = 0; i < totalObjectives; i++)
             {
+                var data = _objectiveMap[i];
+                Debug.Log($"[LevelObjectiveManager] Creating objective: {data.ObjectiveName} ({i + 1}/{totalObjectives})");
+
                 var objective = ObjectiveFactory.CreateObjective(data);
 
                 foreach (var objectTarget in data.ObjectiveTargets)
@@ -134,7 +129,22 @@ namespace Team.Gameplay.ObjectiveSystem
 
                 _levelObjectives.Add(objective);
                 objectivesHolder.AddObjective(data);
+
+                // Report progress
+                float objectiveProgress = (float)(i + 1) / totalObjectives;
+                progress?.Report(objectiveProgress);
+
+                // Yield control to prevent frame drops
+                await UniTask.Yield();
             }
+
+            Debug.Log("[LevelObjectiveManager] All objectives initialized!");
+        }
+
+        // ILoadingOperation implementation
+        public async UniTask LoadAsync(IProgress<float> progress = null)
+        {
+            await LoadObjectivesFromLevelDataAsync(_objectiveMap, progress);
         }
 
         public void CleanUp()
@@ -144,16 +154,28 @@ namespace Team.Gameplay.ObjectiveSystem
 
         public void ResetAllObjectives()
         {
-            foreach(var objective in _levelObjectives)
+            foreach (var objective in _levelObjectives)
             {
                 objective.ResetObjective();
                 objectivesHolder.UpdateObjective(objective.Data, false);
             }
         }
 
-        #endregion
+        private void RegisterEvents()
+        {
+            if (turnManager != null)
+            {
+                turnManager.OnAllTurnsCompleted += OnRoundTurnsCompletedHandler;
+            }
+        }
 
-        #region Private Methods
+        private void UnregisterEvents()
+        {
+            if (turnManager != null)
+            {
+                turnManager.OnAllTurnsCompleted -= OnRoundTurnsCompletedHandler;
+            }
+        }
 
         private void OnRoundTurnsCompletedHandler()
         {
@@ -163,39 +185,29 @@ namespace Team.Gameplay.ObjectiveSystem
                 return;
             }
 
-            //Init Level Completed as true
             bool levelCompleted = true;
 
             foreach (var objective in _levelObjectives)
             {
-                //Returns true if completed
                 bool result = objective.CheckObjectiveComplete();
-
-                //If Any objective fails, then level not completed
-                if (!result)
+                if (!result && objective.Data.Priority == ObjectivePriority.PRIMARY)   //Primary Objectives failing would result in level failure
                 {
                     levelCompleted = false;
                 }
-
-                objectivesHolder.UpdateObjective(objective.Data,result);
+                objectivesHolder.UpdateObjective(objective.Data, result);
             }
 
-            //Check if actually the level was completed
             if (levelCompleted)
             {
                 LevelManager.Instance.OnCurrentLevelCompleted();
                 UIManager.Instance.ShowEmptyUI();
                 Invoke(nameof(ShowLevelCompletedUI), MetaConstants.ShowPostGameScreenAfter);
-               
             }
         }
 
         private void ShowLevelCompletedUI()
         {
-          
             UIManager.Instance.ShowPostGameUI();
         }
-
-        #endregion
     }
 }

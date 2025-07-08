@@ -1,12 +1,14 @@
 using UnityEngine;
 using Team.Enum.Character;
-using Team.GameConstants;
+using Team.Managers;
 
 
 public class Base_Projectile : MonoBehaviour
 {
     [SerializeField] protected Enum_ProjectileType _projectileType;
     [SerializeField] public Enum_GridDirection _projectileDir;
+
+    [SerializeField] protected GameObject _VFX;
 
     public GameObject CastingWizard;
     public GameObject _prefabReference;
@@ -21,6 +23,8 @@ public class Base_Projectile : MonoBehaviour
 
     float t = 0f;
 
+    protected bool canMove = true;
+
     [Header("Particle Effects")]
     [SerializeField] protected ParticleSystem _collisionEffect;
 
@@ -28,38 +32,43 @@ public class Base_Projectile : MonoBehaviour
 
     void Start()
     {
+        ProjectileManager.Instance.RegisterSceneProjectile(this);
         time = 0f;
+        _VFX = transform.GetChild(0).gameObject;
     }
 
 
     void Update()
     {
-        time += Time.deltaTime * _speed;
-        t = Mathf.Clamp01(time / _lifespan);
-
-        Vector3 currentPosition = transform.position;
-        Vector3 nextPosition = curve.evaluate(t);
-
-        Vector3 evaluatedPosition = curve.evaluate(Mathf.Clamp01(t + 0.001f));
-        Vector3 direction = evaluatedPosition - currentPosition;
-
-        transform.position = nextPosition;
-
-        //Orient the projectile, if the direction is valid.
-        if (direction != Vector3.zero) 
+        if (canMove)
         {
-            transform.forward = direction.normalized;
-        }
+            time += Time.deltaTime * _speed;
+            t = Mathf.Clamp01(time / _lifespan);
 
-        if(t >= 1f || time >= _lifespan)
-        {
-            CleanUp();
+            Vector3 currentPosition = transform.position;
+            Vector3 nextPosition = curve.evaluate(t);
+
+            Vector3 evaluatedPosition = curve.evaluate(Mathf.Clamp01(t + 0.001f));
+            Vector3 direction = evaluatedPosition - currentPosition;
+
+            transform.position = nextPosition;
+
+            //Orient the projectile, if the direction is valid.
+            if (direction != Vector3.zero)
+            {
+                transform.forward = direction.normalized;
+            }
+
+            if (t >= 1f || time >= _lifespan)
+            {
+                CleanUp();
+            }
         }
     }
 
     public virtual void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == CastingWizard || other.gameObject.layer == 3) { return; } //Check that the collision isnt with the wizard that casted the projectile.
+
         if (other.GetComponent<ChRedirectWizard>())
         {
             other.GetComponent<ChRedirectWizard>().TryAbsorbProjectile(_projectileType, _prefabReference, _projectileDir, 1);
@@ -67,13 +76,13 @@ public class Base_Projectile : MonoBehaviour
 
         if (_collisionEffect) { _collisionEffect.Play(); }
 
-        OnProjectileEnd?.Invoke();
-        Destroy(this.gameObject);
+        CleanUp();
     }
 
     public virtual void CleanUp()
     {
-        OnProjectileEnd?.Invoke();
+        ProjectileManager.Instance.UnregisterSceneProjectile(this);
+        OnProjectileEnd();
         Destroy(gameObject);
     }
 }

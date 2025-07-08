@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Team.GameConstants;
 using UnityEngine;
 using static Team.GameConstants.MetaConstants;
 
@@ -13,7 +12,8 @@ namespace Team.GameConstants
             DIALOGUE = 1,
             GAME = 2,
             LEVEL_SELECT = 3,
-            POST_GAME = 4
+            POST_GAME = 4,
+            LOADING = 5
         }
     }
 }

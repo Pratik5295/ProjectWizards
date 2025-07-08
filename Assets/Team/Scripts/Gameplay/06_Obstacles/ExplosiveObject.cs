@@ -1,3 +1,4 @@
+using System.Collections;
 using Team.Enum.Character;
 using Team.GameConstants;
 using Team.Gameplay.GridSystem;
@@ -11,6 +12,8 @@ public class ExplosiveObject : MoveableObstacle
     [SerializeField] private GameObject _explosionEffect;
     private VFXManager _explosionVFX;
 
+    [SerializeField] private float ExplosionDelayTime = 1f;
+
     public override void InitialiseObstacle(TileID StartingTileID, Enum_GridDirection startingDirection)
     {
         base.InitialiseObstacle(StartingTileID, startingDirection);
@@ -20,13 +23,20 @@ public class ExplosiveObject : MoveableObstacle
 
     public override void DisableObject()
     {
-        base.DisableObject();
-        Explode();
+        if (!canBeDestroyed) { return; }
+
+        MakeTileUnwalkable();
+        StartCoroutine(Explode());
     }
 
-    protected void Explode()
+    protected IEnumerator Explode()
     {
-        //Cannot find VFX manager.
+        //Start Animation Here!
+        yield return new WaitForSeconds(ExplosionDelayTime);
+
+        _collider.enabled = false;
+        _meshRenderer.enabled = false;
+
         _explosionVFX.EnableParticleEffectChildren();
 
         AffectTiles();
@@ -38,26 +48,37 @@ public class ExplosiveObject : MoveableObstacle
 
         for(int i = 1; i < NeighbourTiles.Length; i++)
         {
-            if (NeighbourTiles[i].IsOilTile())
+            if (NeighbourTiles[i])
             {
-                if (NeighbourTiles[i].GetComponent<OilTile>())
+                if (NeighbourTiles[i].IsOilTile())
                 {
-                    NeighbourTiles[i].GetComponent<OilTile>().Ignite();
+                    if (!NeighbourTiles[i].GetComponent<OilTile>().isOnFire)
+                    {
+                        NeighbourTiles[i].GetComponent<OilTile>().Ignite();
+                        FireSpread.Instance.FireballRef = RefFireballProjectile;
+                        FireSpread.Instance.StartFire();
+                    }
                 }
-            }
+                if (NeighbourTiles[i].IsIceTile())
+                {
+                    NeighbourTiles[i].tileType = TileType.TILE;
+                    NeighbourTiles[i].SpawnTileType();
+                    GameTurnManager.Instance.AddChangedTile(NeighbourTiles[i]);
+                }
 
-            if (!NeighbourTiles[i].ObjectOccupyingTile) { continue; }
-            GameObject ObjectOccupyingTile = NeighbourTiles[i].ObjectOccupyingTile;
+                if (!NeighbourTiles[i].ObjectOccupyingTile) { continue; }
+                GameObject ObjectOccupyingTile = NeighbourTiles[i].ObjectOccupyingTile;
 
-            if (ObjectOccupyingTile.CompareTag(MetaConstants.CharacterTag))
-            {
-                ObjectOccupyingTile.GetComponent<Base_Ch>().HitByProjectile(Enum_ProjectileType.Fireball);
+                if (ObjectOccupyingTile.CompareTag(MetaConstants.CharacterTag))
+                {
+                    ObjectOccupyingTile.GetComponent<Base_Ch>().HitByProjectile(Enum_ProjectileType.Fireball);
+                }
+                if (ObjectOccupyingTile.CompareTag(MetaConstants.EnvironmentTag))
+                {
+                    ObjectOccupyingTile.GetComponent<Base_Obstacle>().DisableObject();
+                }
+                GameTurnManager.Instance.AddDestroyedObject(ObjectOccupyingTile);
             }
-            if (ObjectOccupyingTile.CompareTag(MetaConstants.EnvironmentTag))
-            {
-                ObjectOccupyingTile.GetComponent<Base_Obstacle>().DisableObject();
-            }
-            GameTurnManager.Instance.AddDestroyedObject(ObjectOccupyingTile);
         }
     }
 
