@@ -45,7 +45,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     [SerializeField] protected TileID _currentTileID = new TileID(0, 0);
     [SerializeField] protected TileID _previousTileID = new TileID(0, 0);
     [SerializeField] protected TileID _startTileID = new TileID(0, 0);
-    private Enum_GridDirection startingDirection;
+    [SerializeField] private Enum_GridDirection startingDirection;
     public TileID CurrentTileID
     {
         get { return _currentTileID; }

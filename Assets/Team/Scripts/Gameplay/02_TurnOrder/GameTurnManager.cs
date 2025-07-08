@@ -420,6 +420,16 @@ namespace Team.Managers
         {
             _cancellationToken?.Cancel();
 
+            if(ProjectileManager.Instance != null)
+            {
+                ProjectileManager.Instance.ImmediateCleanUp();
+            }
+
+            if(FireSpread.Instance != null)
+            {
+                FireSpread.Instance.ForceInstantRestart();
+            }
+
             Debug.Log("Firing restart ASAP");
 
             //Stop execution of turn for each character

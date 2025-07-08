@@ -19,6 +19,8 @@ public class FireSpread : MonoBehaviour
 
     int iteration = 0;
 
+    private Coroutine activeCoroutine = null;
+
     private void Awake()
     {
         if (Instance == null)
@@ -46,7 +48,7 @@ public class FireSpread : MonoBehaviour
     [ContextMenu("Start A Fire!")]
     public void StartFire()
     {
-        StartCoroutine(SpreadFire());
+        activeCoroutine = StartCoroutine(SpreadFire());
     }
 
     public IEnumerator SpreadFire()
@@ -103,8 +105,13 @@ public class FireSpread : MonoBehaviour
         }
         iteration = 0;
 
-        FireballRef.CleanUp();
-        FireballRef = null;
+        if (FireballRef != null)
+        {
+            FireballRef.CleanUp();
+            FireballRef = null;
+        }
+
+        activeCoroutine = null;
     }
 
     public void ResetOilTiles()
@@ -114,5 +121,16 @@ public class FireSpread : MonoBehaviour
             _levelTileCreator.OilTiles[i].ResetOilStatus();
         }
         iteration = 0;
+    }
+
+    public void ForceInstantRestart()
+    {
+        if(activeCoroutine != null)
+        {
+            StopCoroutine(activeCoroutine);
+            ExtinguishFire();
+            ResetOilTiles();
+
+        }
     }
 }
