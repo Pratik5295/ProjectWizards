@@ -69,7 +69,8 @@ public class ChRotatorWizard : Base_Ch
         OnCastBark();
 
         GetTilesToRotate();
-        if (!centerTile)
+
+        if (!centerTile || _tilesToMove.Count != 5)
         {
             Debug.Log("Cant Execute Ability as no tiles no center tile.");
             OnTurnComplete?.Invoke();
@@ -106,11 +107,13 @@ public class ChRotatorWizard : Base_Ch
     [ContextMenu("Undo Rotation")]
     public override void UndoAction()
     {
-        Debug.Log($"Moves count: {HistoryStack.Count}");
+        Debug.Log($"{gameObject.name} Moves count: {HistoryStack.Count}");
 
         while (HistoryStack.Count > 0)
         {
             var move = HistoryStack.Pop();
+
+            Debug.Log($"{gameObject.name} Move was: {move.wasMoved}");
 
             if (move.wasMoved)
             {
@@ -121,11 +124,25 @@ public class ChRotatorWizard : Base_Ch
                 UndoRotate();
             }
         }
+
+        if (HistoryStack.Count == 0)
+        {
+            Debug.Log("No move to undo");
+            OnTurnComplete?.Invoke();
+            return;
+        }
     }
 
     private void UndoRotate()
     {
         GetTilesToRotate();
+
+        if (!centerTile || _tilesToMove.Count != 5)
+        {
+            Debug.Log("Cant Execute Ability as no tiles no center tile.");
+            OnTurnComplete?.Invoke();
+            return;
+        }
 
         for (int i = 1; i < _tilesToMove.Count; i++)
         {
@@ -173,7 +190,10 @@ public class ChRotatorWizard : Base_Ch
 
         for(int i = 1; i < NeighbourTiles.Length; i++)
         {
-            _tilesToMove.Add(NeighbourTiles[i]);
+            if(NeighbourTiles[i] != null)
+            {
+                _tilesToMove.Add(NeighbourTiles[i]);
+            }
         }
     }
 

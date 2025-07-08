@@ -310,11 +310,11 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
     public void UndoMovement()
     {
-        if (_currentTileID == _startTileID) 
-        {
-            transform.position = new Vector3(_currentTile.TilePosition.x, transform.position.y, _currentTile.TilePosition.z);
-            return; 
-        }
+        //if (_currentTileID == _startTileID) 
+        //{
+        //    transform.position = new Vector3(_currentTile.TilePosition.x, transform.position.y, _currentTile.TilePosition.z);
+        //    //return; 
+        //}
         _currentTile.UpdateOccupiedStatus();
 
         _currentTileID = _startTileID;
