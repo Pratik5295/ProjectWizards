@@ -7,6 +7,8 @@ namespace Team.GameConstants
         public const string EnvironmentTag = "Environment";
 
         public const float turnDelayTime = 2f;
+
+        public const int clickablesLayer = 6;
     }
 }
 

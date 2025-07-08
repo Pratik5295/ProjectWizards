@@ -290,6 +290,7 @@ GameObject:
   - component: {fileID: 933473269899832427}
   - component: {fileID: 2803533931978526133}
   - component: {fileID: 7593502549452530651}
+  - component: {fileID: 8463217217815917781}
   m_Layer: 0
   m_Name: Push_Wizard
   m_TagString: Character
@@ -439,6 +440,21 @@ MonoBehaviour:
   - {fileID: 6828354755517443064}
   outlineMat: {fileID: 2100000, guid: 40dc7e7a8d152e44ea3f8985978d3896, type: 2}
   materialArray: []
+--- !u!114 &8463217217815917781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5407380294395882597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2354517d8444e6a4599dc65b7688ab19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickedOn:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &8340474836053233325
 GameObject:
   m_ObjectHideFlags: 0
