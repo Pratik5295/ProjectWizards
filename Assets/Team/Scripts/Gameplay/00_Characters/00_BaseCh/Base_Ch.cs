@@ -500,4 +500,14 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     }
 
     #endregion
+
+    #region Instant Restart Section
+
+    public virtual void ForceInstantRestart()
+    {
+        Debug.Log($"Stopping coroutine for: {gameObject.name}");
+        StopAllCoroutines();
+    }
+
+    #endregion
 }

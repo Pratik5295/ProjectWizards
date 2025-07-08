@@ -23,7 +23,7 @@ namespace Team.Gameplay.GridSystem
     {
         NORTH = 0,
         SOUTH = 1,
-        EAST = 2,   
+        EAST = 2,
         WEST = 3
     }
 
@@ -40,7 +40,7 @@ namespace Team.Gameplay.GridSystem
         public Vector3 TilePosition => transform.position;
 
         public GameObject tilePrefab;
-        
+
         public GameObject deathTilePrefab;
         public GameObject iceTilePrefab;
 
@@ -51,7 +51,7 @@ namespace Team.Gameplay.GridSystem
             get => tileType;
             set
             {
-                if(tileType != value)
+                if (tileType != value)
                 {
                     tileType = value;
 #if UNITY_EDITOR
@@ -129,7 +129,7 @@ namespace Team.Gameplay.GridSystem
             return Instantiate(tilePrefab, transform);
         }
 
-        
+
         private GameObject SpawnDeathTileObject()
         {
             return Instantiate(deathTilePrefab, transform);
@@ -199,7 +199,7 @@ namespace Team.Gameplay.GridSystem
 
         public virtual void SpawnTileType()
         {
-            if (tileObject && tileType != TileType.OCCUPIEDTILE) 
+            if (tileObject && tileType != TileType.OCCUPIEDTILE)
             {
                 Destroy(tileObject);
                 tileObject = null;
@@ -292,7 +292,7 @@ namespace Team.Gameplay.GridSystem
                 {
                     InstantiatedObject.AddComponent<BoxCollider>();
                 }
-                if (!InstantiatedObject.GetComponent<Base_Obstacle>()) 
+                if (!InstantiatedObject.GetComponent<Base_Obstacle>())
                 {
                     obstacleData = InstantiatedObject.AddComponent<Base_Obstacle>();
                 }
@@ -367,21 +367,21 @@ namespace Team.Gameplay.GridSystem
             switch (isOccupied)
             {
                 case true:
-                        if (!OccupyingObject) { return; }
-                        objectOccupyingTile = OccupyingObject;
-                        SetTileType(TileType.OCCUPIEDTILE);
+                    if (!OccupyingObject) { return; }
+                    objectOccupyingTile = OccupyingObject;
+                    SetTileType(TileType.OCCUPIEDTILE);
                     break;
 
                 case false:
-                        objectOccupyingTile = null;
-                        SetTileType(TileType.TILE);
+                    objectOccupyingTile = null;
+                    SetTileType(TileType.TILE);
                     break;
             }
         }
 
         public void ResetTypeToDefault()
         {
-            if(tileType == startingTileType) { return; }
+            if (tileType == startingTileType) { return; }
 
             tileType = startingTileType;
             Destroy(tileObject);
@@ -431,7 +431,18 @@ namespace Team.Gameplay.GridSystem
 
         public void HideTileUI()
         {
-            tileUI.gameObject.SetActive(false); 
+            tileUI.gameObject.SetActive(false);
+        }
+
+        private void Update()
+        {
+            if (tileUI != null)
+            {
+
+                string tileID = $"{TileID.x}, {TileID.y}";
+
+                tileUI.PopulateTileText(tileID);
+            }
         }
     }
 }

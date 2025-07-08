@@ -74,9 +74,7 @@ namespace Team.Gameplay.TurnSystem
 
         public void ForceStopTurn()
         {
-            characterObject.StopAllCoroutines();
-
-            Debug.Log($"Stopping coroutine for: {characterObject.name}");
+            characterObject.ForceInstantRestart();
         }
 
         /// <summary>

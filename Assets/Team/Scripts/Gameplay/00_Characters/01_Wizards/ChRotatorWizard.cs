@@ -45,6 +45,8 @@ public class ChRotatorWizard : Base_Ch
     private float _landingVFXOffset;
     private VFXManager _landingVFXManager;
 
+    private Coroutine activeCoroutine = null;
+
     private void OnDestroy()
     {
         if(_landingVFXManager != null)
@@ -98,7 +100,7 @@ public class ChRotatorWizard : Base_Ch
         HistoryStack.Push(move);
 
         TileDataChanges();
-        StartCoroutine(LerpUpDown(true));
+        activeCoroutine = StartCoroutine(LerpUpDown(true));
     }
 
     [ContextMenu("Undo Rotation")]
@@ -145,7 +147,7 @@ public class ChRotatorWizard : Base_Ch
         }
         rotation = MetaConstants.Enum_Rotation.AntiClockwise;
         TileDataChanges();
-        StartCoroutine(LerpUpDown(true));
+        activeCoroutine = StartCoroutine(LerpUpDown(true));
     }
 
     private void GetTilesToRotate()
@@ -293,6 +295,8 @@ public class ChRotatorWizard : Base_Ch
         }
         OnTurnComplete?.Invoke();
         //_tilesToMove.Clear();
+
+        activeCoroutine = null;
     }
 
     private IEnumerator LerpUpDown(bool isLerpingUp)
@@ -316,7 +320,7 @@ public class ChRotatorWizard : Base_Ch
 
             yield return null;
         }
-        if (isLerpingUp) { StartCoroutine(RotateLerp()); }
+        if (isLerpingUp) { activeCoroutine =  StartCoroutine(RotateLerp()); }
         if (!isLerpingUp)
         {
             /*GameObject instance = Instantiate(_rotationLandingVFX, centerTile.transform);
@@ -351,7 +355,7 @@ public class ChRotatorWizard : Base_Ch
         }
 
         _rotatorHolder.transform.rotation = targetRotation;
-        StartCoroutine(LerpUpDown(false));
+        activeCoroutine =  StartCoroutine(LerpUpDown(false));
     }
 
     private float GetRotationValue(MetaConstants.Enum_Rotation Rotation)
@@ -366,4 +370,42 @@ public class ChRotatorWizard : Base_Ch
         Debug.LogWarning($"{gameObject}: Get Rotation Value: Wasnt able to be determined whether it was clockwise or Anti-Clockwise.");
         return 90f;
     }
+
+    #region Instant Restart Section
+
+    public override void ForceInstantRestart()
+    {
+        if(activeCoroutine != null)
+        {
+            //Wait for it to finish
+            StopCoroutine(activeCoroutine);
+            activeCoroutine = null;
+
+            // Instantly apply final positions to avoid stuck visuals
+            _rotatorHolder.transform.position = new Vector3(
+                _rotatorHolder.transform.position.x,
+                _tilesToMove[0].TilePosition.y * MetaConstants.lerpUpAmount,
+                _rotatorHolder.transform.position.z
+            );
+
+            float rotationValue = GetRotationValue(rotation);
+            _rotatorHolder.transform.rotation = Quaternion.Euler(0, rotationValue, 0);
+
+            // Trigger VFX if needed
+            if (_landingVFXManager != null)
+            {
+                _landingVFXManager.transform.localPosition = new Vector3(0, _landingVFXOffset, 0);
+                _landingVFXManager.EnableParticleEffectChildren();
+            }
+
+            // Immediately clean up and finalize state
+            CleanUpTiles();
+        }
+        else
+        {
+            base.ForceInstantRestart();
+        }
+    }
+
+    #endregion
 }
