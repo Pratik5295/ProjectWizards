@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
+using Team.GameConstants;
+using Team.Gameplay.GridSystem;
 using Team.Gameplay.ObjectiveSystem;
 using Team.Gameplay.TurnSystem;
-using Team.GameConstants;
-using UnityEngine;
-using Team.Gameplay.GridSystem;
 using Team.UI.Gameplay;
-using UnityEngine.Rendering;
+using UnityEngine;
 
 namespace Team.GameConstants
 {
@@ -39,6 +39,8 @@ namespace Team.Managers
 
         [SerializeField]
         private TurnHolder turnHolder;
+
+        private CancellationTokenSource _cancellationToken;  //Used to fire cancellation token that will stop the execution of current async turns
 
         [Space(5)]
         [Header("Breakpoint System Variables")]
@@ -231,9 +233,18 @@ namespace Team.Managers
         {
             OnTurnsProcessingEvent?.Invoke();
 
+            _cancellationToken = new CancellationTokenSource();
+
             if (!breakpoint)
             {
-                PlayAllTurns();
+                try
+                {
+                    await PlayAllTurns(_cancellationToken.Token);
+                }
+                catch (OperationCanceledException)
+                {
+                    Debug.Log("Turn execution was cancelled.");
+                }
             }
             else
             {
@@ -247,7 +258,14 @@ namespace Team.Managers
                     bool playAllTurns = IsBreakerAtExtremes();
                     if (playAllTurns)
                     {
-                        PlayAllTurns();
+                        try
+                        {
+                            await PlayAllTurns(_cancellationToken.Token);
+                        }
+                        catch (OperationCanceledException)
+                        {
+                            Debug.Log("Turn execution was cancelled.");
+                        }
                     }
                     else
                     {
@@ -259,7 +277,7 @@ namespace Team.Managers
                         while (currentIndex < breakerIndex)
                         {
                             Debug.Log($"Runner index: {currentIndex}");
-                            await RunNextTurn();
+                            await RunNextTurn(_cancellationToken.Token);
                             currentIndex++;
                         }
 
@@ -285,7 +303,7 @@ namespace Team.Managers
                     while (turnQueue.Count > 0)
                     {
                         Debug.Log($"Runner index: {currentIndex}");
-                        await RunNextTurn();
+                        await RunNextTurn(_cancellationToken.Token);
                         currentIndex++;
                     }
 
@@ -312,14 +330,20 @@ namespace Team.Managers
 
 
 
-        private async void PlayAllTurns()
+        private async Task PlayAllTurns(CancellationToken cancellationToken)
         {
             //Loads all turns and plays them
             await LoadQueue();
 
             while (turnQueue.Count > 0)
             {
-                await RunNextTurn();
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    Debug.Log("Turn execution cancelled.");
+                    return;
+                }
+
+                await RunNextTurn(cancellationToken);
             }
 
             Debug.Log("All turns completed.");
@@ -327,16 +351,21 @@ namespace Team.Managers
             OnAllTurnsCompleted?.Invoke();
         }
 
-        private async Task RunNextTurn()
+        private async Task RunNextTurn(CancellationToken cancellationToken)
         {
             GameTurn turn = turnQueue.Dequeue();
            if(turn.TryGetComponent<UIGameCard>(out var gameCard))
 
             if (turn.IsAlive())
             {
-                await turn.PerformAsync();
+                    if (cancellationToken.IsCancellationRequested) return;
 
-                await Task.Delay(TimeSpan.FromSeconds(MetaConstants.PauseBetweenTurn));
+                    await turn.PerformAsync();
+
+                    if (cancellationToken.IsCancellationRequested) return;
+
+
+                    await Task.Delay(TimeSpan.FromSeconds(MetaConstants.PauseBetweenTurn),cancellationToken);
 
                 Debug.Log($"Executing: {turn.name}");
 
@@ -389,9 +418,15 @@ namespace Team.Managers
         [ContextMenu("Insta Reset")]
         public void InstaRestart()
         {
+            _cancellationToken?.Cancel();
+
             Debug.Log("Firing restart ASAP");
 
             //Stop execution of turn for each character
+            foreach(var turn in turnQueue)
+            {
+                turn.ForceStopTurn();
+            }
 
             //Reset all turns and their orders, undo whereever necessary
             ResetAllTurns();

@@ -77,6 +77,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
     private bool alreadyMoving;
 
+    public Coroutine abilityCoroutine = null;
+
     #region Vars_InvalidMovementShake
 
     [Space(5)]

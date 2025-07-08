@@ -72,6 +72,13 @@ namespace Team.Gameplay.TurnSystem
 
         }
 
+        public void ForceStopTurn()
+        {
+            characterObject.StopAllCoroutines();
+
+            Debug.Log($"Stopping coroutine for: {characterObject.name}");
+        }
+
         /// <summary>
         /// Call this when the turn is done (e.g. after animations or player input).
         /// </summary>
