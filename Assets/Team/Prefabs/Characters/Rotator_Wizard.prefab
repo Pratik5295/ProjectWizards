@@ -297,7 +297,8 @@ GameObject:
   - component: {fileID: 933473269899832427}
   - component: {fileID: 3136886351939346752}
   - component: {fileID: 6142953301238890639}
-  m_Layer: 0
+  - component: {fileID: 8005485794937069453}
+  m_Layer: 6
   m_Name: Rotator_Wizard
   m_TagString: Character
   m_Icon: {fileID: 0}
@@ -428,8 +429,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0.3, z: 0.07}
+  m_Size: {x: 1, y: 1.3258215, z: 1}
+  m_Center: {x: 0, y: 0.13708931, z: 0.06999999}
 --- !u!114 &6142953301238890639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -447,6 +448,21 @@ MonoBehaviour:
   - {fileID: 8404958254488607872}
   outlineMat: {fileID: 2100000, guid: 40dc7e7a8d152e44ea3f8985978d3896, type: 2}
   materialArray: []
+--- !u!114 &8005485794937069453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5407380294395882597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2354517d8444e6a4599dc65b7688ab19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickedOn:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &3618181580552038024
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -205,7 +205,8 @@ GameObject:
   - component: {fileID: 933473269899832427}
   - component: {fileID: 2803533931978526133}
   - component: {fileID: 2226334389984098907}
-  m_Layer: 0
+  - component: {fileID: 9042292581444207771}
+  m_Layer: 6
   m_Name: Fireball_Wizard
   m_TagString: Character
   m_Icon: {fileID: 0}
@@ -302,7 +303,7 @@ MonoBehaviour:
   _characterBark: {fileID: 1969057544728972473}
   _projectilePrefab: {fileID: 3625092468094944024, guid: 122d323c62190ee489f082c0d09dbb1c, type: 3}
   _fireFromPoint: {fileID: 5150221880546262881}
-  _projectileRange: -100
+  _projectileRange: -105
 --- !u!114 &933473269899832427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -335,8 +336,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0.3, z: -0.06}
+  m_Size: {x: 1, y: 1.3851509, z: 1}
+  m_Center: {x: 0, y: 0.10742462, z: -0.060000002}
 --- !u!114 &2226334389984098907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -354,6 +355,21 @@ MonoBehaviour:
   - {fileID: 1873998357246849830}
   outlineMat: {fileID: 2100000, guid: 40dc7e7a8d152e44ea3f8985978d3896, type: 2}
   materialArray: []
+--- !u!114 &9042292581444207771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5407380294395882597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2354517d8444e6a4599dc65b7688ab19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickedOn:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5943259596805188545
 GameObject:
   m_ObjectHideFlags: 0
