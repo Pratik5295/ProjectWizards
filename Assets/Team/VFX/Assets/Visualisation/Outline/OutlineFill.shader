@@ -1,92 +1,73 @@
-Shader "Custom/OutlineFill"
-{
-    Properties
-    {
-        _OutlineColor ("Outline Color", Color) = (0,0,0,1)
-        _OutlineWidth ("Outline Width", Range(0, 20)) = 5
+Shader "Custom/Outline Fill" {
+    Properties {
+        _OutlineColor("Outline Color", Color) = (0, 0, 0, 0)
+        _OutlineWidth("Outline Width", Range(0, 20)) = 10
     }
-
-    SubShader
-    {
-        Tags { 
-            "Queue" = "Transparent+100"
+    SubShader {
+        Tags {
+            "Queue" = "Transparent+110"
             "RenderType" = "Transparent"
-            "ForceNoShadowCasting" = "True"
-            "DisableBatching" = "True"  // 禁用批处理确保轮廓稳定
+            "DisableBatching" = "True"
         }
-        
-        Pass
-        {
-            Name "OUTLINE"
-            Cull Front
+
+        Pass {
+            Name "Fill"
+            Cull Off
+            ZTest Always
             ZWrite Off
-            ZTest LEqual
             Blend SrcAlpha OneMinusSrcAlpha
-            
+            ColorMask RGB
+
             Stencil {
                 Ref 1
                 Comp NotEqual
-                Pass Keep
             }
-            
+
             CGPROGRAM
+            #include "UnityCG.cginc"
+
             #pragma vertex vert
             #pragma fragment frag
-            #pragma multi_compile_instancing
-            #include "UnityCG.cginc"
-            
-            struct appdata
-            {
+
+            struct appdata {
                 float4 vertex : POSITION;
                 float3 normal : NORMAL;
-                float3 smoothNormal : TEXCOORD3;  
+                float3 smoothNormal : TEXCOORD3;
                 UNITY_VERTEX_INPUT_INSTANCE_ID
             };
-            
-            struct v2f
-            {
-                float4 pos : SV_POSITION;
+
+            struct v2f {
+                float4 position : SV_POSITION;
+                fixed4 color : COLOR;
                 UNITY_VERTEX_OUTPUT_STEREO
             };
-            
-            UNITY_INSTANCING_BUFFER_START(Props)
-                UNITY_DEFINE_INSTANCED_PROP(float, _OutlineWidth)
-                UNITY_DEFINE_INSTANCED_PROP(fixed4, _OutlineColor)
-            UNITY_INSTANCING_BUFFER_END(Props)
-            
-            v2f vert (appdata v)
-            {
-                v2f o;
-                UNITY_SETUP_INSTANCE_ID(v);
-                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
-                
-                float outlineWidth = UNITY_ACCESS_INSTANCED_PROP(Props, _OutlineWidth);
-                fixed4 outlineColor = UNITY_ACCESS_INSTANCED_PROP(Props, _OutlineColor);
-                
-                
-                float3 normal = length(v.smoothNormal) > 0 ? v.smoothNormal : v.normal;
-                
-                
+
+            uniform fixed4 _OutlineColor;
+            uniform float _OutlineWidth;
+
+            v2f vert(appdata input) {
+                v2f output;
+
+                UNITY_SETUP_INSTANCE_ID(input);
+                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
+
+                float3 normal = any(input.smoothNormal) ? input.smoothNormal : input.normal;
+                float3 viewPosition = UnityObjectToViewPos(input.vertex);
                 float3 viewNormal = normalize(mul((float3x3)UNITY_MATRIX_IT_MV, normal));
+               
+               
+
+                output.position = UnityViewToClipPos(viewPosition + viewNormal * -viewPosition.z * _OutlineWidth / 1000.0);
                 
-                
-                float4 pos = UnityObjectToClipPos(v.vertex);
-                float2 offset = TransformViewToProjection(viewNormal.xy);
-                
-                
-                float perspectiveScale = 1.0 / max(1.0, pos.w);
-                pos.xy += offset * outlineWidth * 0.001 * perspectiveScale;
-                
-                o.pos = pos;
-                return o;
+                output.color = _OutlineColor;
+
+                return output;
             }
-            
-            fixed4 frag (v2f i) : SV_Target
-            {
-                return UNITY_ACCESS_INSTANCED_PROP(Props, _OutlineColor);
+
+            fixed4 frag(v2f input) : SV_Target {
+                return input.color;
             }
             ENDCG
         }
     }
-    Fallback Off
 }
