@@ -53,6 +53,13 @@ public class Base_Obstacle : MonoBehaviour, IDestroyable
     [SerializeField]
     protected bool canBeDestroyed = true;
 
+
+    [Header("Ghosting/Visualisation")]
+    [SerializeField]
+    public GenericGhosting _ghosting;
+
+    public bool IsGhosting = false;
+
     public bool CanBeDestroyed
     {
         get { return canBeDestroyed; }
@@ -173,6 +180,14 @@ public class Base_Obstacle : MonoBehaviour, IDestroyable
         {
             obstacle.InitialiseCharacter(_startTileID, _startingDirection);
         }
+    }
+
+    public virtual void ToggleVisualisation()
+    {
+        if (_ghosting == null) return;
+
+        IsGhosting = !IsGhosting;
+        _ghosting.toggleGhosting();
     }
 
     #region Tile data change functions

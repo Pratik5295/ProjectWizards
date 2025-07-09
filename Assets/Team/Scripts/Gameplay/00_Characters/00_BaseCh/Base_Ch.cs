@@ -100,7 +100,9 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     [Header("Ghosting Section")]
 
     [SerializeField]
-    private GenericGhosting _ghosting;
+    public GenericGhosting _ghosting;
+
+    public bool IsGhosting = false;
 
 
     #endregion
@@ -456,6 +458,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     {
         if (_ghosting == null) return;
 
+        IsGhosting = !IsGhosting;
         _ghosting.toggleGhosting();
     }
 

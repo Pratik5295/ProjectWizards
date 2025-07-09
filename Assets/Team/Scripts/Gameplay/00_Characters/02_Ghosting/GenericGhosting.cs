@@ -4,7 +4,7 @@ public class GenericGhosting : MonoBehaviour
 {
     protected Transform ghostingContent;
 
-    protected bool ghostingIsActive;
+    public bool ghostingIsActive;
 
     [SerializeField] private GameObject _ghostingEffect;
     protected GameObject ghostingEffectRef;

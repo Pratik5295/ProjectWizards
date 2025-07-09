@@ -18,7 +18,7 @@ public class ChProjectileWizard : Base_Ch
     private Base_Projectile scProjectile;
     private QuadraticCurve curve;
 
-    private ProjectileGhosting ghostingEffect;
+    public ProjectileGhosting ghostingEffect;
 
     [Header("---Wizard Projectile Stats---")]
     [Range(-1, -300)]
