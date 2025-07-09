@@ -526,6 +526,8 @@ namespace Team.Managers
             ResetBreakpointSystem();
         }
 
+        
+
         public void ResetDestroyedEntities()
         {
             for (int i = DestroyedObjects.Count - 1; i >= 0; i--)
@@ -590,6 +592,9 @@ namespace Team.Managers
                 gridTile?.ResetTileToType(tile.Value);
             }
             ChangedTiles.Clear();
+
+            //Safety tile reset handling
+            GridManager.Instance.ResetAllTilesToDefault();
         }
 
         private void ResetCharactersToStart()

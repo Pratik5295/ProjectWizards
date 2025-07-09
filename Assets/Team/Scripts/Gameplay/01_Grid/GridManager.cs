@@ -161,5 +161,13 @@ namespace Team.Gameplay.GridSystem
             Instantiate(_fireManager, Vector3.zero, Quaternion.identity, transform.parent);
             Instantiate(_projectileManager, Vector3.zero, Quaternion.identity, transform.parent);
         }
+
+        public void ResetAllTilesToDefault()
+        {
+            foreach(var tile in Grid.Values)
+            {
+                tile.ResetTypeToDefault();
+            }
+        }
     }
 }

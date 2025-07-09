@@ -129,92 +129,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileText: {fileID: 5374484382027765966}
---- !u!1 &43924205850686262
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1657695144990039499}
-  - component: {fileID: 8619627293326086236}
-  - component: {fileID: 6876370155828097818}
-  m_Layer: 0
-  m_Name: cube
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1657695144990039499
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 43924205850686262}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2889772921210284671}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &8619627293326086236
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 43924205850686262}
-  m_Mesh: {fileID: 7808128827207187423, guid: 459e803c36e99884bb20c0c74b5375b8, type: 3}
---- !u!23 &6876370155828097818
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 43924205850686262}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: f2ec1dbeca0a9054bbaea9e73c69289e, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &47910712731158994
 GameObject:
   m_ObjectHideFlags: 0
@@ -5793,6 +5707,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -11107,6 +11022,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -11766,6 +11682,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -11956,6 +11873,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -12228,6 +12146,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -12392,6 +12311,40 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!1 &599124822993422762
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1855995452380789223}
+  m_Layer: 0
+  m_Name: slime prefab(Clone)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1855995452380789223
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 599124822993422762}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 0.8, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6393079950235428902}
+  - {fileID: 234009037727660616}
+  - {fileID: 3324665524922376407}
+  m_Father: {fileID: 8690552739980643596}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &599665171938404270
 GameObject:
   m_ObjectHideFlags: 0
@@ -12500,6 +12453,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -12690,6 +12644,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -18101,6 +18056,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 5
   startingTileType: 5
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -18253,6 +18209,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -18471,6 +18428,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -19934,6 +19892,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -19995,6 +19954,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 5
   startingTileType: 5
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -20233,6 +20193,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -26489,7 +26450,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &2153250869808402316
+--- !u!1 &2147495298462109930
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -26497,46 +26458,46 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 834436429777750876}
-  - component: {fileID: 1940299264819554392}
-  - component: {fileID: 1919217270653850451}
+  - component: {fileID: 3324665524922376407}
+  - component: {fileID: 8051167156730118210}
+  - component: {fileID: 8542382430148661073}
   m_Layer: 0
-  m_Name: bubbles
+  m_Name: for unity slimebase 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &834436429777750876
+--- !u!4 &3324665524922376407
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2153250869808402316}
+  m_GameObject: {fileID: 2147495298462109930}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.067, y: 0.388, z: -0.086}
-  m_LocalScale: {x: 1.0972, y: 1.0972, z: 1.0972}
+  m_LocalRotation: {x: -0.000000037748947, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.844, z: 0}
+  m_LocalScale: {x: 1.467163, y: 1.2098317, z: 1.3339604}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2889772921210284671}
+  m_Father: {fileID: 1855995452380789223}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &1940299264819554392
+--- !u!33 &8051167156730118210
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2153250869808402316}
-  m_Mesh: {fileID: 5599486930339138000, guid: d391a5d1a78f7144a9caad207edd069f, type: 3}
---- !u!23 &1919217270653850451
+  m_GameObject: {fileID: 2147495298462109930}
+  m_Mesh: {fileID: -4632119884450784534, guid: 959c5b293327c27478dadf5c7ec0b771, type: 3}
+--- !u!23 &8542382430148661073
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2153250869808402316}
+  m_GameObject: {fileID: 2147495298462109930}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -26553,7 +26514,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a7b5213facd3691478a01fc2fc569e22, type: 2}
+  - {fileID: 2100000, guid: 7fa5bc295a87b8e4e9208be108424bb8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -26943,6 +26904,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -27544,6 +27506,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -33822,6 +33785,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -44196,6 +44160,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -44311,6 +44276,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -49810,6 +49776,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 4
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -50028,6 +49995,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -50218,6 +50186,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -61244,6 +61213,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -67389,6 +67359,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -67450,6 +67421,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -67565,6 +67537,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -67626,6 +67599,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -67687,6 +67661,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -68045,6 +68020,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -73381,6 +73357,92 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileText: {fileID: 1007329378482732275}
+--- !u!1 &4109995954525349814
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 234009037727660616}
+  - component: {fileID: 3106656668001428997}
+  - component: {fileID: 7384681386376769701}
+  m_Layer: 0
+  m_Name: cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &234009037727660616
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4109995954525349814}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1855995452380789223}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &3106656668001428997
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4109995954525349814}
+  m_Mesh: {fileID: 7808128827207187423, guid: 459e803c36e99884bb20c0c74b5375b8, type: 3}
+--- !u!23 &7384681386376769701
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4109995954525349814}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: f2ec1dbeca0a9054bbaea9e73c69289e, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &4153533309552893354
 GameObject:
   m_ObjectHideFlags: 0
@@ -73489,6 +73551,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -73550,6 +73613,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -73611,6 +73675,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -74197,6 +74262,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -74469,6 +74535,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -74530,6 +74597,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -74940,7 +75008,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3446278274598026520}
-  - {fileID: 2889772921210284671}
+  - {fileID: 1855995452380789223}
   m_Father: {fileID: 208408957309780832}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5541882841035729596
@@ -74962,11 +75030,12 @@ MonoBehaviour:
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 4
-  startingTileType: 1
+  startingTileType: 4
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
-  tileObject: {fileID: 6521421998298609215}
+  tileObject: {fileID: 599124822993422762}
   _startingObject: {fileID: 0}
   tileUI: {fileID: 8357779666946037031}
   objectOccupyingTile: {fileID: 0}
@@ -75024,6 +75093,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -75279,6 +75349,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -75340,6 +75411,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 2
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -81379,6 +81451,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -86818,6 +86891,92 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileText: {fileID: 9173102293446532018}
+--- !u!1 &5160986728176970325
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6393079950235428902}
+  - component: {fileID: 414571785788335352}
+  - component: {fileID: 2861116057469112429}
+  m_Layer: 0
+  m_Name: bubbles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6393079950235428902
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5160986728176970325}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.067, y: 0.388, z: -0.086}
+  m_LocalScale: {x: 1.0972, y: 1.0972, z: 1.0972}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1855995452380789223}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &414571785788335352
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5160986728176970325}
+  m_Mesh: {fileID: 5599486930339138000, guid: d391a5d1a78f7144a9caad207edd069f, type: 3}
+--- !u!23 &2861116057469112429
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5160986728176970325}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a7b5213facd3691478a01fc2fc569e22, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &5169359806764161927
 GameObject:
   m_ObjectHideFlags: 0
@@ -87029,6 +87188,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -87376,6 +87536,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -89132,6 +89293,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -89490,6 +89652,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -89981,6 +90144,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -90199,6 +90363,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -90486,6 +90651,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -90547,6 +90713,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -91522,6 +91689,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -91583,6 +91751,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -92080,40 +92249,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.4, y: 1.4, z: 1.4}
   m_Center: {x: 0, y: 0.24, z: 0}
---- !u!1 &6521421998298609215
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2889772921210284671}
-  m_Layer: 0
-  m_Name: slime prefab(Clone)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2889772921210284671
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6521421998298609215}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.8, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 834436429777750876}
-  - {fileID: 1657695144990039499}
-  - {fileID: 3084599732230088381}
-  m_Father: {fileID: 8690552739980643596}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6541459567011999390
 GameObject:
   m_ObjectHideFlags: 0
@@ -93317,6 +93452,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -93754,6 +93890,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -93869,6 +94006,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -99194,6 +99332,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -104731,6 +104870,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -106732,6 +106872,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -106793,6 +106934,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -106800,92 +106942,6 @@ MonoBehaviour:
   _startingObject: {fileID: 0}
   tileUI: {fileID: 3532123020132149446}
   objectOccupyingTile: {fileID: 0}
---- !u!1 &7863825660456985166
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3084599732230088381}
-  - component: {fileID: 8343833766816312639}
-  - component: {fileID: 2916061543276877371}
-  m_Layer: 0
-  m_Name: for unity slimebase 1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3084599732230088381
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7863825660456985166}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0.000000037748947, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.844, z: 0}
-  m_LocalScale: {x: 1.467163, y: 1.2098317, z: 1.3339604}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2889772921210284671}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &8343833766816312639
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7863825660456985166}
-  m_Mesh: {fileID: -4632119884450784534, guid: 959c5b293327c27478dadf5c7ec0b771, type: 3}
---- !u!23 &2916061543276877371
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7863825660456985166}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 7fa5bc295a87b8e4e9208be108424bb8, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &7921047668102525206
 GameObject:
   m_ObjectHideFlags: 0
@@ -117676,6 +117732,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -118537,6 +118594,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -118598,6 +118656,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -118788,6 +118847,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 4
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -119150,6 +119210,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 4
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -119340,6 +119401,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -119741,6 +119803,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}
@@ -120346,6 +120409,7 @@ MonoBehaviour:
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
   startingTileType: 1
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 2837332572323065832}

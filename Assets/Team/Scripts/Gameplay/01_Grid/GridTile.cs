@@ -89,6 +89,11 @@ namespace Team.Gameplay.GridSystem
             get { return objectOccupyingTile; }
         }
 
+        private void Start()
+        {
+            startingTileType = tileType;
+        }
+
         /// <summary>
         /// Initialize the tile
         /// </summary>
@@ -258,18 +263,22 @@ namespace Team.Gameplay.GridSystem
 
                 case TileType.DEATHTILE:
                     tileObject = SpawnDeathTileObject();
+                    startingTileType = TileType.DEATHTILE;
                     break;
 
                 case TileType.OILTILE:
                     gridManager.CreateNewOilTile(TileID, transform.position.x, transform.position.z);
+                    startingTileType = TileType.OILTILE;
                     break;
 
                 case TileType.ICETILE:
                     tileObject = SpawnIceTileObject();
+                    startingTileType = TileType.ICETILE;
                     break;
 
                 case TileType.OCCUPIEDTILE:
                     SpawnObjectOnTile();
+                    startingTileType = TileType.OCCUPIEDTILE;
                     break;
             }
         }
