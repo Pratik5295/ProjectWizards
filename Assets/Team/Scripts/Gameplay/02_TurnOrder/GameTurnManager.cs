@@ -51,6 +51,7 @@ namespace Team.Managers
 
         public bool HasCharacterTurns => turnQueue.Count > 0;
         public bool IsResetting => isResetting;
+        public bool isPlaying = false; //Bool flag to show that its playing
 
         // Events
         public Action OnTurnsProcessingEvent;
@@ -238,6 +239,8 @@ namespace Team.Managers
         {
             if (isResetting) return;
 
+            isPlaying = true;
+
             OnTurnsProcessingEvent?.Invoke();
             _cancellationToken?.Cancel();
             _cancellationToken = new CancellationTokenSource();
@@ -261,6 +264,8 @@ namespace Team.Managers
             {
                 Debug.LogError($"Error during turn execution: {ex.Message}");
             }
+
+            isPlaying = false;
         }
 
         private async Task HandleBreakpointTurns(CancellationToken cancellationToken)
@@ -394,15 +399,21 @@ namespace Team.Managers
         [ContextMenu("Reset Turns")]
         public async void ResetAllTurns()
         {
-            await PerformReset(false);
+            if (isPlaying)
+            {
+                await PerformReset(true);
+            }
+            else
+            {
+                await PerformReset(false);
+            }
         }
 
-        [ContextMenu("Instant Reset")]
-        public async void InstaRestart()
-        {
-            await PerformReset(true);
-        }
-
+        /// <summary>
+        /// Perform reset
+        /// </summary>
+        /// <param name="isInstant">Bool flag set to true for instant restart</param>
+        /// <returns></returns>
         private async Task PerformReset(bool isInstant)
         {
             if (isResetting) return;

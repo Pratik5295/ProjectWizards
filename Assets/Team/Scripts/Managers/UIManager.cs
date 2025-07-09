@@ -81,19 +81,19 @@ namespace Team.Managers
         private void OnTurnResetCompletedHandler()
         {
             playButton.SetActive(true);
-            restartButton.SetActive(false);
+            //restartButton.SetActive(false);
         }
 
         private void OnTurnsBeingPlayedHandler()
         {
             playButton.SetActive(false);
-            restartButton.SetActive(false);
+            //restartButton.SetActive(false);
         }
 
         private void OnReachedBreakpointHandler()
         {
             playButton.SetActive(true);
-            restartButton.SetActive(true);
+            //restartButton.SetActive(true);
         }
 
         #region Screen Manager Sections
