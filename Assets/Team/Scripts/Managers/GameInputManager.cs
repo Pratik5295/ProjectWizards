@@ -43,6 +43,11 @@ public class GameInputManager : MonoBehaviour
         HandleClickAndDrag();
     }
 
+    private void LateUpdate()
+    {
+        IsClick = false;
+    }
+
     private void HandleClickAndDrag()
     {
         bool isPressed = IsPointerPressed;

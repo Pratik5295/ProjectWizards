@@ -17,8 +17,7 @@ public class ObjectClickable : MonoBehaviour
         get { return isToggled; }
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Awake()
+    void Start()
     {
         if (GetComponent<Base_Ch>())
         {
@@ -29,7 +28,7 @@ public class ObjectClickable : MonoBehaviour
         {
             obstacle = GetComponent<Base_Obstacle>();
         }
-
+        Debug.Log($"has initiailised character");
     }
 
     public void ClickedObject()
