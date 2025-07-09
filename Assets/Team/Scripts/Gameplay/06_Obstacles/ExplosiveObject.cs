@@ -63,7 +63,7 @@ public class ExplosiveObject : MoveableObstacle
                 {
                     NeighbourTiles[i].tileType = TileType.TILE;
                     NeighbourTiles[i].SpawnTileType();
-                    GameTurnManager.Instance.AddChangedTile(NeighbourTiles[i]);
+                    GameTurnManager.Instance.AddChangedTile(NeighbourTiles[i],TileType.ICETILE);
                 }
 
                 if (!NeighbourTiles[i].ObjectOccupyingTile) { continue; }

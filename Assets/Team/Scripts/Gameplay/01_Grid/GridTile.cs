@@ -388,6 +388,15 @@ namespace Team.Gameplay.GridSystem
             HandleTileSpawn();
         }
 
+        public void ResetTileToType(TileType _originalType)
+        {
+            if (tileType == _originalType) { return; }
+
+            tileType = _originalType;
+            Destroy(tileObject);
+            HandleTileSpawn();
+        }
+
         public void ParentOccupyingObject()
         {
             if (!objectOccupyingTile.CompareTag("Character")) { return; }

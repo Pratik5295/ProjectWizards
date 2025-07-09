@@ -32,7 +32,7 @@ namespace Team.Managers
 
         public List<GameObject> DestroyedObjects = new List<GameObject>();
         public List<GameObject> Obstacles = new List<GameObject>();
-        public List<GridTile> ChangedTiles = new List<GridTile>();
+        public Dictionary<TileID,TileType> ChangedTiles = new Dictionary<TileID, TileType>();
 
         public List<GameObject> originalOrder = new List<GameObject>();
         public List<GameObject> currentTurnOrder = new List<GameObject>();
@@ -184,11 +184,11 @@ namespace Team.Managers
             }
         }
 
-        public void AddChangedTile(GridTile _changedTile)
+        public void AddChangedTile(GridTile _changedTile,TileType _originalType)
         {
-            if (!ChangedTiles.Contains(_changedTile))
+            if (!ChangedTiles.ContainsKey(_changedTile.TileID))
             {
-                ChangedTiles.Add(_changedTile);
+                ChangedTiles.Add(_changedTile.TileID, _originalType);
             }
         }
         #endregion
@@ -574,7 +574,9 @@ namespace Team.Managers
         {
             foreach (var tile in ChangedTiles)
             {
-                tile?.ResetTypeToDefault();
+                var gridTile = GridManager.Instance.FindTile(tile.Key);
+                Debug.Log($"Changed tile found: {gridTile} with id: {tile.Key}");
+                gridTile?.ResetTileToType(tile.Value);
             }
             ChangedTiles.Clear();
         }
