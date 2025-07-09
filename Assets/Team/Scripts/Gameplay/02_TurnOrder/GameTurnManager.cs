@@ -13,7 +13,7 @@ namespace Team.GameConstants
 {
     public static partial class MetaConstants
     {
-        public const float PauseBetweenTurn = 0.5f;
+        public const float PauseBetweenTurn = 2f;
     }
 }
 

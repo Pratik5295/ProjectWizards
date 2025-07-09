@@ -68,6 +68,8 @@ namespace Team.Gameplay.GridSystem
         [SerializeField]
         protected TileType startingTileType;
 
+        public bool hasChangedType = false;
+
         public TileDirection Direction; //Rotation 
 
         [SerializeField]
@@ -373,8 +375,11 @@ namespace Team.Gameplay.GridSystem
                     break;
 
                 case false:
+
                     objectOccupyingTile = null;
                     SetTileType(TileType.TILE);
+                    SetTileType(startingTileType);
+
                     break;
             }
         }
@@ -384,6 +389,7 @@ namespace Team.Gameplay.GridSystem
             if (tileType == startingTileType) { return; }
 
             tileType = startingTileType;
+            hasChangedType = false;
             Destroy(tileObject);
             HandleTileSpawn();
         }
