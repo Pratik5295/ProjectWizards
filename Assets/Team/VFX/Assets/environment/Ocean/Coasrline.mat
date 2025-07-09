@@ -56,7 +56,7 @@ Material:
     - _Depth: 0.4
     - _Edge: 2.5
     - _FoamDissolveStrength: 10
-    - _FoamSpeed: 0.16
+    - _FoamSpeed: 0
     - _NoiseScale: 20
     - _NoiseSpeed: 0.2
     - _QueueControl: 0
@@ -66,7 +66,8 @@ Material:
     - _WaveDissolveSpeed_2: 0.5
     - _WaveDissolveStrength_1: 25
     - _WaveDissolveStrength_2: 10
-    - _WaveIntensity: 0.1
+    - _WaveIntensity: 0.06
+    - _WaveNoise: 10
     - _WaveSpeed: 1
     - _WaveTexPower_1: 1
     - _WaveTexPower_2: 1
@@ -77,8 +78,8 @@ Material:
     - _CoastSpeed: {r: 0.1, g: 0.2, b: 0, a: 0}
     - _FoamColor: {r: 1, g: 1, b: 1, a: 1}
     - _WaterColor: {r: 0, g: 0.19445896, b: 1, a: 1}
-    - _WaveColor_1: {r: 0.04899136, g: 0.00085038366, b: 0.27044016, a: 1}
-    - _WaveColor_2: {r: 0.08751623, g: 0.09642444, b: 0.15723258, a: 1}
+    - _WaveColor_1: {r: 0, g: 0.23982787, b: 0.7735849, a: 1}
+    - _WaveColor_2: {r: 0, g: 0.24528301, b: 0.067744434, a: 1}
     - _WaveSpeen_1: {r: 0.15, g: 0.15, b: 0, a: 0}
     - _WaveSpeen_2: {r: 0.1, g: 0.4, b: 0, a: 0}
     - _WaveTilling_1: {r: 1, g: 1, b: 0, a: 0}
