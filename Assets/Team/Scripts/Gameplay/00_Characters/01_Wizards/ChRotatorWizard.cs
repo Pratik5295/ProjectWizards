@@ -24,7 +24,6 @@ namespace Team.GameConstants
 
 public class ChRotatorWizard : Base_Ch
 {
-
     [Header("Rotator Wizard Variables")]
     private MetaConstants.Enum_Rotation rotation = MetaConstants.Enum_Rotation.Clockwise;
     [SerializeField]
@@ -99,6 +98,8 @@ public class ChRotatorWizard : Base_Ch
 
         TileDataChanges();
         StartCoroutine(LerpUpDown(true));
+
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.s_rotate, this.transform.position);
     }
 
     [ContextMenu("Undo Rotation")]
