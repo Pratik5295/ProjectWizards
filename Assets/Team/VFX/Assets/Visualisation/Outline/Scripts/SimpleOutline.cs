@@ -9,6 +9,7 @@ public class SimpleOutline : MonoBehaviour
 {
     private static HashSet<Mesh> registeredMeshes = new HashSet<Mesh>();
 
+      
     public Color OutlineColor
     {
         get { return outlineColor; }
@@ -29,8 +30,10 @@ public class SimpleOutline : MonoBehaviour
         }
     }
 
-    [SerializeField] private Color outlineColor = Color.black;
-    [SerializeField, Range(0f, 20f)] private float outlineWidth = 10f;
+    [SerializeField, ColorUsage(true, true)] 
+    private Color outlineColor = Color.black;
+    [SerializeField, Range(0f, 20f)] 
+    private float outlineWidth = 10f;
 
     private Renderer[] renderers;
     private Material outlineMaskMaterial;
@@ -168,7 +171,7 @@ public class SimpleOutline : MonoBehaviour
 
     private void UpdateMaterialProperties()
     {
-        outlineFillMaterial.SetColor("_OutlineColor", outlineColor);
+        outlineFillMaterial.SetColor("_OutlineColor", outlineColor.linear);
         outlineFillMaterial.SetFloat("_OutlineWidth", outlineWidth);
     }
 }
