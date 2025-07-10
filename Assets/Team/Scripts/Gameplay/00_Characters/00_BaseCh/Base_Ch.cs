@@ -152,8 +152,6 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
     void Start()
     {
-        //InitialiseCharacter(_currentTileID, Enum_GridDirection.NORTH);
-
         ref_gridManager = GridManager.Instance;
     }
 
@@ -263,7 +261,6 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
             }
 
             transform.position = new Vector3(Mathf.Lerp(transform.position.x, targetPosition.x, lerpAmount), positionYLerped, Mathf.Lerp(transform.position.z, targetPosition.z, lerpAmount));
-            //transform.position = Vector3.Lerp(positionYLerped, targetPosition, lerpAmount);
 
             yield return null;
         }
