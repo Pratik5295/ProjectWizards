@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Outline
-  m_Shader: {fileID: -6465566751694194690, guid: 04da2a0d62105774881076aa614a28d9, type: 3}
+  m_Name: ArrowTex 1
+  m_Shader: {fileID: -6465566751694194690, guid: fdaf940033ae4c340a381daddf541ede, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -24,6 +24,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _Texture2D:
+        m_Texture: {fileID: 2800000, guid: c256ec82a7d4f9648918c9be3b938b87, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -38,15 +42,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Fade_Distance: 75
-    - _Outline_Thickness: 0
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - _Outline_Colour: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 5.6499805, g: 2.7510376, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &6754521872303959796
+--- !u!114 &8381788907765169584
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
