@@ -10,12 +10,8 @@ public class ObjectClickable : MonoBehaviour
     Base_Obstacle obstacle;
     Base_Ch base_Ch;
 
-    bool isToggled = false;
-    bool isHovered = false;
-    public bool IsToggled
-    {
-        get { return isToggled; }
-    }
+    public bool isToggled = false;
+    public bool isHovered = false;
 
     void Start()
     {
@@ -27,13 +23,37 @@ public class ObjectClickable : MonoBehaviour
         else if (GetComponent<Base_Obstacle>())
         {
             obstacle = GetComponent<Base_Obstacle>();
+            clickedOn.AddListener(obstacle.ToggleVisualisation);
         }
         Debug.Log($"has initiailised character");
     }
 
+    public void HoveredObject()
+    {
+        isHovered = true;
+        clickedOn.Invoke();
+    }
+    public void UnhoveredObject()
+    {
+        isHovered = false;
+        clickedOn.Invoke();
+    }
+
     public void ClickedObject()
     {
-        isToggled = !isToggled;
         clickedOn.Invoke();
+    }
+
+    public bool ToggleValidity()
+    {
+        if (base_Ch)
+        {
+            return base_Ch._ghosting.ghostingIsActive;
+        }
+        else if (obstacle)
+        {
+            return obstacle._ghosting.ghostingIsActive;
+        }
+        return false;
     }
 }

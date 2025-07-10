@@ -14,6 +14,8 @@ public class ExplosiveObject : MoveableObstacle
 
     [SerializeField] private float ExplosionDelayTime = 1f;
 
+    bool hasFireStarted = false;
+
     public override void InitialiseObstacle(TileID StartingTileID, Enum_GridDirection startingDirection)
     {
         base.InitialiseObstacle(StartingTileID, startingDirection);
@@ -27,6 +29,13 @@ public class ExplosiveObject : MoveableObstacle
 
         MakeTileUnwalkable();
         StartCoroutine(Explode());
+    }
+
+    public override void ResetToStart()
+    {
+        base.ResetToStart();
+
+        hasFireStarted = false;
     }
 
     protected IEnumerator Explode()
@@ -55,8 +64,8 @@ public class ExplosiveObject : MoveableObstacle
                     if (!NeighbourTiles[i].GetComponent<OilTile>().isOnFire)
                     {
                         NeighbourTiles[i].GetComponent<OilTile>().Ignite();
-                        FireSpread.Instance.FireballRef = RefFireballProjectile;
-                        FireSpread.Instance.StartFire();
+                        NeighbourTiles[i].GetComponent<OilTile>().visited = true;
+                        hasFireStarted = true;
                     }
                 }
                 if (NeighbourTiles[i].IsIceTile())
@@ -80,6 +89,12 @@ public class ExplosiveObject : MoveableObstacle
                 }
                 GameTurnManager.Instance.AddDestroyedObject(ObjectOccupyingTile);
             }
+        }
+
+        if (hasFireStarted)
+        {
+            FireSpread.Instance.FireballRef = RefFireballProjectile;
+            FireSpread.Instance.StartFire();
         }
     }
 
