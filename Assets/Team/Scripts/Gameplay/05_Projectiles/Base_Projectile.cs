@@ -35,8 +35,13 @@ public class Base_Projectile : MonoBehaviour
         ProjectileManager.Instance.RegisterSceneProjectile(this);
         time = 0f;
         _VFX = transform.GetChild(0).gameObject;
+        FiredSound();
     }
 
+    public virtual void FiredSound()
+    {
+
+    }
 
     void Update()
     {
@@ -82,7 +87,7 @@ public class Base_Projectile : MonoBehaviour
     public virtual void CleanUp()
     {
         ProjectileManager.Instance.UnregisterSceneProjectile(this);
-        OnProjectileEnd();
+        OnProjectileEnd?.Invoke();
         Destroy(gameObject);
     }
 }
