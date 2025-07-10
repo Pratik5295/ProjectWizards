@@ -82,7 +82,7 @@ public class Base_Projectile : MonoBehaviour
     public virtual void CleanUp()
     {
         ProjectileManager.Instance.UnregisterSceneProjectile(this);
-        OnProjectileEnd();
+        OnProjectileEnd?.Invoke();
         Destroy(gameObject);
     }
 }

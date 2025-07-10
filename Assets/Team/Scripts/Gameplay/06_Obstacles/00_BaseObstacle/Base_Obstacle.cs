@@ -162,7 +162,7 @@ public class Base_Obstacle : MonoBehaviour, IDestroyable
         MakeTileWalkable();
     }
 
-    public void ResetToStart()
+    public virtual void ResetToStart()
     {
         //Make my curent tile to tile walkable
         MakeTileWalkable();
