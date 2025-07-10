@@ -96,8 +96,12 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
     #region Ghosting Section
 
-    [Space(5)]
     [Header("Ghosting Section")]
+
+    public ObjectClickable GhostManager
+    {
+        get; private set;
+    }
 
     [SerializeField]
     public GenericGhosting _ghosting;
@@ -142,6 +146,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         startingDirection = _startingDirection;
         ResetRotationToStart();
 
+        GhostManager = GetComponent<ObjectClickable>();
 
 
         transform.position = new Vector3(_currentTile.TilePosition.x, _currentTile.TilePosition.y + ySpawnOffset, _currentTile.TilePosition.z);
@@ -448,6 +453,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     {
         if (_ghosting == null) return;
 
+        //GhostManager.isToggled = _value;
         _ghosting.SetGhosting(_value);
     }
 
@@ -456,6 +462,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         if (_ghosting == null) return;
 
         IsGhosting = !IsGhosting;
+        //GhostManager.isToggled = IsGhosting;
         _ghosting.toggleGhosting();
     }
 

@@ -85,7 +85,6 @@ public class ObjectClickerManager : MonoBehaviour
             objClickable.ClickedObject();
         } // This repeating line exists to ensure this doesnt toggle the effect off.
 
-        objClickable.isToggled = !objClickable.isToggled;
         objClickable.ClickedObject();
     }
 }
