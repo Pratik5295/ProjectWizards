@@ -1,0 +1,95 @@
+using System;
+using Team.Managers;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+using static Team.GameConstants.LevelConstants;
+using static Team.GameConstants.MetaConstants;
+
+namespace Team.Gameplay.LevelSystem
+{
+    public class Level : MonoBehaviour
+    {
+        [SerializeField]
+        private TextMeshProUGUI levelNameText;
+
+        public ChapterID ChapterID;
+
+        [SerializeField]
+        private LevelDataSO levelData;
+
+        public LevelDataSO Info => levelData;
+
+        public LevelID LevelID => Info.Data.Stats.LevelID;
+
+        [SerializeField]
+        private Color unlockedColor;
+
+        [SerializeField]
+        private Color completedColor;
+
+        [SerializeField]
+        private Image levelImage;
+
+        [SerializeField]
+        private Button button;  //Temporary will be removed later
+
+        public bool IsCompleted => Status == LevelState.COMPLETED;
+
+        public LevelState Status;
+
+        public Action<LevelID> OnCompletedLevel;
+
+
+        public void PopulateLevelInfo(LevelDataSO _data)
+        {
+            levelData = _data;
+
+            Status = levelData.Data.Stats.State;    //Status filled based on initial state from SO
+
+            levelNameText.text = levelData.Data.Stats.LevelName;
+
+            ValidateState();
+        }
+
+        /// <summary>
+        /// This method will listen in future to the changes in the level data
+        /// </summary>
+        public void ValidateState()
+        {
+            if (IsCompleted)
+            {
+                levelImage.color = completedColor;
+            }
+            else
+            {
+                levelImage.color = unlockedColor;
+            }
+        }
+
+        public void OnLevelSelected()
+        {
+            //All levels playable, the locking part happens through chapters
+            LevelManager.Instance.SetCurrentLevel(levelData.Data.Stats.LevelID);
+            LevelManager.Instance.LoadCurrentLevel();
+        }
+
+        public void OnLevelCompleted(bool isLoaded = false)
+        {
+            Status = LevelState.COMPLETED;
+            OnCompletedLevel?.Invoke(Info.Data.Stats.LevelID);
+
+            ValidateState();
+
+            if (!isLoaded)
+            {
+                //Entry point for the Save Manager
+                if (SaveManager.Instance != null)
+                {
+                    //Stuff can be sent
+                    SaveManager.Instance.UpdateLevelCompletedOnChapter(ChapterID, LevelID);
+                }
+            }
+        }
+    }
+}

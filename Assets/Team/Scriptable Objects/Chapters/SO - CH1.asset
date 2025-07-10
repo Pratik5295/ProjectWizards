@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65eddf9d43702b94ea64ee323770b3e9, type: 3}
+  m_Name: SO - CH1
+  m_EditorClassIdentifier: 
+  Data:
+    ChapterID: 1
+    ChapterName: Chapter 1
+    InitialState: 0
+    Levels:
+    - {fileID: 11400000, guid: 7267ee6cbdf0ab545b6f42ae832a4245, type: 2}
+    - {fileID: 11400000, guid: a1b6bdd4d3a43a541b007bce54071ddd, type: 2}
+    - {fileID: 11400000, guid: 7e45cf2d521ac7140bf83dc860d1bcf3, type: 2}
+    - {fileID: 11400000, guid: 89e4224ec6581b44db3c3d780c412b16, type: 2}
+    - {fileID: 11400000, guid: 01839f181506ec5419f10e4839fd479a, type: 2}
+    - {fileID: 11400000, guid: 022c082ba9442334cb0bf073a68d71e2, type: 2}
+  NextLevel: 2
+  LevelsToCompleteToUnlock: 1

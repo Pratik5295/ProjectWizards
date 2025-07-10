@@ -14,7 +14,7 @@ public class FireballProjectile : Base_Projectile
 
     public override void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject == CastingWizard || other.gameObject.layer == 3) { return; } //Check that the collision isnt with the wizard that casted the projectile.
+        if (other.gameObject == CastingWizard || other.gameObject.layer == 3) { return; } //Check that the collision isnt with the wizard that casted the projectile.
         if (other.GetComponent<ChRedirectWizard>())
         {
             base.OnTriggerEnter(other);
@@ -31,6 +31,9 @@ public class FireballProjectile : Base_Projectile
             if (other.gameObject.GetComponent<ExplosiveObject>())
             {
                 HitExplosive(other);
+                canMove = false;
+                _VFX.SetActive(false);
+                GameTurnManager.Instance.AddDestroyedObject(other.gameObject);
                 return;
             }
         }

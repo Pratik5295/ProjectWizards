@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class GameInputManager : MonoBehaviour
@@ -40,6 +41,11 @@ public class GameInputManager : MonoBehaviour
     private void Update()
     {
         HandleClickAndDrag();
+    }
+
+    private void LateUpdate()
+    {
+        IsClick = false;
     }
 
     private void HandleClickAndDrag()

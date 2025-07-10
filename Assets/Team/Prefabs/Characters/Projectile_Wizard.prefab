@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 5150221880546262881}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -0.1, z: 0.4}
+  m_LocalPosition: {x: 0, y: -0.1, z: 0.732}
   m_LocalScale: {x: 0.10000002, y: 0.1, z: 0.10000002}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -49,7 +49,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5150221880546262881}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -206,6 +206,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _ghosting: {fileID: 0}
+  _characterBark: {fileID: 0}
   _projectilePrefab: {fileID: 3625092468094944024, guid: 3d4d34703d5b66249bca19cbcc3a194f, type: 3}
   _fireFromPoint: {fileID: 5150221880546262881}
   _projectileRange: -66

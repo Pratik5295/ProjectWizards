@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Team.GameConstants;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Team.GameConstants
 {
@@ -43,6 +45,10 @@ namespace Team.Gameplay.GridSystem
 
         public List<GridTile> Tiles => tiles;
 
+        [SerializeField]
+        private List<OilTile> oilTiles = new List<OilTile>();
+        public List<OilTile> OilTiles => oilTiles;
+
 
         [SerializeField]
         private GameObject _defaultObstacle;
@@ -54,7 +60,9 @@ namespace Team.Gameplay.GridSystem
 
         [SerializeField]
         private GameObject _defaultTile;
-       
+
+        [SerializeField]
+        private GameObject _oilTile;
 
         [ContextMenu("Clear Grid")]
         public void ClearGrid()
@@ -113,6 +121,56 @@ namespace Team.Gameplay.GridSystem
             return Instantiate(_tile, new Vector3(x, y, z), Quaternion.identity, transform);
         }
 
+
+        #region Creating and removing tiles
+        public void CreateNewOilTile(TileID previousTileID, float positionX, float positionZ)
+        {
+            //Remove old tile from list
+            var tile = GetTile(previousTileID);
+            RemoveTile(tile.GetComponent<GridTile>());
+            DestroyImmediate(tile);
+
+            var spawnedTile = SpawnTile(_oilTile, positionX, MetaConstants.GridY, positionZ);
+            var gridTile = spawnedTile.GetComponent<OilTile>();
+            TileID tileID = new TileID(previousTileID.x, previousTileID.y);
+            gridTile.Init(this, tileID, true); //Update this to look cleaner and error check
+
+            spawnedTile.name = $"Tile: {MetaConstants.gridCharArray[previousTileID.x]} {previousTileID.x}, {previousTileID.y}";
+            tiles.Add(gridTile);
+            oilTiles.Add(gridTile);
+            DirtySaveTileChanges();
+        }
+
+        public void RemoveTile(GridTile currentTile)
+        {
+            tiles.Remove(currentTile);
+            if (currentTile.gameObject.GetComponent<OilTile>())
+            {
+                oilTiles.Remove(currentTile.gameObject.GetComponent<OilTile>());
+            }
+        }
+
+        public GridTile CreateNewTile(GridTile currentTile)
+        {
+            float positionX = currentTile.TileID.x;
+            float positionY = currentTile.TileID.y;
+
+            var spawnedTile = SpawnTile(_defaultTile, positionX, MetaConstants.GridY, positionY);
+            var gridTile = spawnedTile.GetComponent<GridTile>();
+            TileID tileID = currentTile.TileID;
+            bool isWalkable = gridTile.Init(this, tileID); //Update this to look cleaner and error check
+
+            spawnedTile.name = $"Tile: {MetaConstants.gridCharArray[tileID.x]} {tileID.x}, {tileID.y}";
+            tiles.Add(gridTile);
+            return gridTile;
+        }
+        #endregion
+        public void DirtySaveTileChanges()
+        {
+#if UNITY_EDITOR
+            EditorUtility.SetDirty(gameObject);
+#endif
+        }
 
         public void SetDefaultTile(GameObject _tile)
         {
