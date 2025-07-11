@@ -9,6 +9,11 @@ public class PushProjectile : Base_Projectile
     [Tooltip("Amount of tiles the character should be pushed, from the projectiles collision position.")]
     [SerializeField] private float _pushAmount = 1f;
 
+    public override void FiredSound()
+    {
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.s_push, this.transform.position);
+    }
+
     public override void OnTriggerEnter(Collider other)
     {
         if (other.gameObject == CastingWizard || other.gameObject.layer == 3) { return; } //Check that the collision isnt with the wizard that casted the projectile.

@@ -70,16 +70,17 @@ public class FireSpread : MonoBehaviour
                 {
                     OilTile neighbouringOilTile = neighbours[i].GetComponent<OilTile>();                
 
-                    if(!neighbouringOilTile.visited && !neighbouringOilTile.isOnFire && neighbours[0].GetComponent<OilTile>().isOnFire)
+                    if(!neighbouringOilTile.visited && !neighbouringOilTile.isOnFire)
                     {
                         yield return new WaitForSeconds(0.2f);
-                        neighbouringOilTile.GetComponent<OilTile>().Ignite();
+                        neighbouringOilTile.Ignite();
+                        fireQueue.Enqueue(neighbouringOilTile);
+                        neighbouringOilTile.visited = true;
                     }
                     if (neighbouringOilTile.visited && neighbouringOilTile.isOnFire)
                     {
                         continue;
                     }
-                    neighbouringOilTile.visited = true;
                 }
             }
         }
@@ -103,7 +104,7 @@ public class FireSpread : MonoBehaviour
         }
         iteration = 0;
 
-        FireballRef.CleanUp();
+        FireballRef?.CleanUp();
         FireballRef = null;
     }
 

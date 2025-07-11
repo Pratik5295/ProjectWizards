@@ -40,6 +40,16 @@ public class MoveableObstacle : Base_Obstacle, IMoveable
 
             if (targetTile && targetTile.IsTileWalkable())
             {
+                if (targetTile.IsIceTile())
+                {
+                    movementAmount = IceTileLogic(movementAmount);
+                    wasPushed = true;
+                }
+                if (_currentGridTile.IsIceTile() && !targetTile.IsIceTile())
+                {
+                    smoothingTime = 1f;
+                }
+
                 Vector3 targetPosition = new Vector3(targetTile.TilePosition.x, desiredLocation.y, targetTile.TilePosition.z);
 
                 _currentTileID = targetTile.TileID;
@@ -87,6 +97,18 @@ public class MoveableObstacle : Base_Obstacle, IMoveable
         }
 
         alreadyMoving = false;
+    }
+
+    private int IceTileLogic(int movementAmount)
+    {
+        if (!_currentGridTile.IsIceTile())
+        {
+            movementAmount = 0; movementAmount += 2;
+        }
+        else movementAmount++;
+
+        smoothingTime = .1f;
+        return movementAmount;
     }
 
     //Shakes character if path or tile is invalid.
