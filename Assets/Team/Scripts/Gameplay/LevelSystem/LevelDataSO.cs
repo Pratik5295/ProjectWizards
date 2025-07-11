@@ -1,7 +1,9 @@
 using Team.Gameplay.GameLevelSystem;
 using UnityEngine;
+using System.Collections.Generic;
 using static Team.GameConstants.LevelConstants;
 using static Team.GameConstants.MetaConstants;
+using Team.Gameplay.Tutorial;
 
 namespace Team.GameConstants
 {
@@ -52,12 +54,24 @@ namespace Team.Gameplay.LevelSystem
 
         public bool HasBreakPoint = false;  //No breaker by default
 
+        //Place to add tutorial data
+        public List<TutorialData> TutorialSteps = new List<TutorialData>();
+
+        public bool HasTutorial => TutorialSteps.Count > 0;
+
         public LevelData(LevelData _data)
         {
-            Stats = new LevelStats(_data.Stats); // Also a deep copy
+            Stats = new LevelStats(_data.Stats); 
             GameLevelPrefab = _data.GameLevelPrefab;
             DialogueAsset = _data.DialogueAsset;
             HasBreakPoint = _data.HasBreakPoint;
+
+            TutorialSteps = new List<TutorialData>();
+            foreach (var step in _data.TutorialSteps)
+            {
+                TutorialSteps.Add(new TutorialData(step)); 
+            }
+
         }
     }
 

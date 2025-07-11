@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Team.Gameplay.Tutorial;
 using UnityEngine;
+using static Team.GameConstants.MetaConstants;
 
 namespace Team.Managers
 {
@@ -9,9 +10,15 @@ namespace Team.Managers
     {
         public static TutorialManager Instance = null;
 
-        public List<TutorialStep> tutorialSteps = new List<TutorialStep> ();
+        public List<TutorialData> tutorialSteps; //The tutorial steps to be loaded
 
-        private void Awake()
+        public List<TutorialStep> uiTutorialList = new List<TutorialStep>();
+
+        public Dictionary<TutUIElement, TutorialStep> tutorialsUIMap = new Dictionary<TutUIElement, TutorialStep>();
+
+        private int currentIndex = 0;
+
+        public TutorialManager InitializeTutorialsUI()
         {
             if (Instance == null)
             {
@@ -21,6 +28,32 @@ namespace Team.Managers
             {
                 Destroy(gameObject);
             }
+
+            tutorialsUIMap.Clear();
+            foreach (var uiElement in uiTutorialList)
+            {
+                tutorialsUIMap.Add(uiElement.ElementID, uiElement);
+            }
+
+            Debug.Log($"[TutMan] Initialize Complete with Element Count: {tutorialsUIMap.Count}");
+            return Instance;
         }
+
+        public void LoadTutorialSteps(List<TutorialData> _steps)
+        {
+            if (tutorialSteps != null)
+            {
+                tutorialSteps.Clear();
+            }
+
+            tutorialSteps = new List<TutorialData>(_steps);
+        }
+
+        public void GoToNextStep()
+        {
+
+        }
+
+        
     }
 }

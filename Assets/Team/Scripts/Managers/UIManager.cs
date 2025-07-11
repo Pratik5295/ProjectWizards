@@ -20,6 +20,10 @@ namespace Team.Managers
         private InkDialogueManager _dialogueManager;
 
         [SerializeField]
+        private TutorialManager _tutorialManager;
+
+        [Space(5)]
+        [SerializeField]
         private GameObject playButton;
 
         [SerializeField]
@@ -58,6 +62,9 @@ namespace Team.Managers
             }
 
             OnTurnResetCompletedHandler();
+
+            //Initialize Tutorial Manager
+            _tutorialManager = _tutorialManager.InitializeTutorialsUI(); //Updates itself with the newer instance
         }
 
         private void OnDestroy()
