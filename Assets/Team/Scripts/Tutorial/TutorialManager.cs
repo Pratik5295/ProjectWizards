@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Team.Gameplay.Tutorial;
 using UnityEngine;
@@ -17,6 +16,8 @@ namespace Team.Managers
         public Dictionary<TutUIElement, TutorialStep> tutorialsUIMap = new Dictionary<TutUIElement, TutorialStep>();
 
         private int currentIndex = 0;
+
+        private TutorialStep currentStep = null;
 
         public TutorialManager InitializeTutorialsUI()
         {
@@ -41,19 +42,52 @@ namespace Team.Managers
 
         public void LoadTutorialSteps(List<TutorialData> _steps)
         {
-            if (tutorialSteps != null)
-            {
-                tutorialSteps.Clear();
-            }
+            ClearTutorialSteps();
 
             tutorialSteps = new List<TutorialData>(_steps);
         }
 
-        public void GoToNextStep()
+        public void ClearTutorialSteps()
         {
-
+            if (tutorialSteps != null)
+            {
+                tutorialSteps.Clear();
+            }
         }
 
+        public void StartTutorial()
+        {
+            currentIndex = 0;
+            var step = tutorialSteps[0];
+
+            currentStep = GetElementByType(step.uiElement);
+
+            currentStep.gameObject.SetActive(true);
+        }
+
+        public void GoToNextStep()
+        {
+            currentStep.gameObject.SetActive(false);
+            currentIndex++;
+
+            if (currentIndex >= tutorialSteps.Count)
+            {
+                Debug.Log("Tutorial has ended");
+            }
+            else
+            {
+                var step = tutorialSteps[currentIndex];
+
+                currentStep = GetElementByType(step.uiElement);
+
+                currentStep.gameObject.SetActive(true);
+            }
+        }
+
+        private TutorialStep GetElementByType(TutUIElement _type)
+        {
+            return tutorialsUIMap[_type];
+        }
         
     }
 }

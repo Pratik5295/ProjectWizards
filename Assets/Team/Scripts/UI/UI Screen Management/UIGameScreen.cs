@@ -1,3 +1,4 @@
+using Team.Managers;
 using UnityEngine;
 
 namespace Team.UI
@@ -10,6 +11,8 @@ namespace Team.UI
         public void ShowTutorialUI()
         {
             tutorialUI.SetActive(true);
+
+            TutorialManager.Instance.StartTutorial();
         }
 
         public void HideTutorialUI()

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Team.Gameplay.Tutorial;
 using Team.UI;
 using Team.UI.DialogueSystem;
 using UnityEngine;
@@ -28,6 +30,9 @@ namespace Team.Managers
 
         [SerializeField]
         private GameObject restartButton;
+
+        [SerializeField]
+        private bool hasTutorial = false;
 
         private void Awake()
         {
@@ -118,7 +123,19 @@ namespace Team.Managers
         public void ShowGameUI()
         {
             _screenManager.ShowScreen(GameConstants.MetaConstants.GameScreen.GAME);
+
+            if (hasTutorial)
+            {
+                Debug.Log("Pratik Showing Tut");
+                _screenManager.GameScreen.ShowTutorialUI();
+            }
+            else
+            {
+                Debug.Log("Pratik No Tut");
+                _screenManager.GameScreen.HideTutorialUI();
+            }
         }
+
 
         public void ShowLevelSelectionUI()
         {
@@ -142,6 +159,26 @@ namespace Team.Managers
         public void SetCurrentDialogue(TextAsset _asset)
         {
             _dialogueManager.SetDialogue(_asset);
+        }
+
+        #endregion
+
+        #region Tutorial Handling Section
+
+        public void InitializeTutorial(List<TutorialData> _tutorialList)
+        {
+            Debug.Log($"Yes there are tutorials: {_tutorialList.Count}");
+            _tutorialManager.LoadTutorialSteps( _tutorialList);
+
+            hasTutorial = true;
+        }
+
+        public void ResetNoTutorial()
+        {
+            Debug.Log("No tutorial for this level");
+
+            _tutorialManager.ClearTutorialSteps();
+            hasTutorial = false;
         }
 
         #endregion

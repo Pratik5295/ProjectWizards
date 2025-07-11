@@ -33,6 +33,11 @@ namespace Team.UI
 
         private Dictionary<GameScreen, UIScreen> screenMap = new();
 
+        [SerializeField]
+        private UIGameScreen gameScreen;
+
+        public UIGameScreen GameScreen => gameScreen;
+
         private void Awake()
         {
             foreach (var screen in screens)

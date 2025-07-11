@@ -74,7 +74,19 @@ namespace Team.Managers
                 if (LevelMap.ContainsKey(CurrentLevelID))
                 {
                     var original = LevelMap[_level];
-                    CurrentLevel = original; 
+                    CurrentLevel = original;
+
+
+                    //Check if the level has tutorials
+                    if (CurrentLevel.Info.Data.HasTutorial)
+                    {
+                        UIManager.Instance.InitializeTutorial(CurrentLevel.Info.Data.TutorialSteps);
+                    }
+                    else
+                    {
+                        UIManager.Instance.ResetNoTutorial();
+                    }
+
 
                     OnCurrentLevelUpdated?.Invoke(CurrentLevel.Info.Data);
                 }
@@ -139,7 +151,6 @@ namespace Team.Managers
                 if (createdLevel == null)
                 {
                     throw new Exception("GameLoadManager returned null level!");
-                    Debug.Log("RETURNED NULL LEVEL!");
                 }
                 else Debug.Log("CREATED LEVEL!");
 

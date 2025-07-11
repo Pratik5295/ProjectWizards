@@ -1,3 +1,4 @@
+using Team.Managers;
 using UnityEngine;
 using static Team.GameConstants.MetaConstants;
 
@@ -44,6 +45,7 @@ namespace Team.Gameplay.Tutorial
         {
             //Update the tutorial manager
             Debug.Log($"Clicked on: {gameObject.name}");
+            TutorialManager.Instance.GoToNextStep();
         }
     }
 }
