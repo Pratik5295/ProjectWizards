@@ -73,6 +73,9 @@ namespace Team.Managers
             if (currentIndex >= tutorialSteps.Count)
             {
                 Debug.Log("Tutorial has ended");
+                UIManager.Instance.OnTutorialCompleted();
+
+                ClearTutorialSteps();
             }
             else
             {

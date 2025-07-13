@@ -126,12 +126,10 @@ namespace Team.Managers
 
             if (hasTutorial)
             {
-                Debug.Log("Pratik Showing Tut");
                 _screenManager.GameScreen.ShowTutorialUI();
             }
             else
             {
-                Debug.Log("Pratik No Tut");
                 _screenManager.GameScreen.HideTutorialUI();
             }
         }
@@ -150,6 +148,11 @@ namespace Team.Managers
         public void ShowLoadingScreen()
         {
             _screenManager.ShowScreen(GameConstants.MetaConstants.GameScreen.LOADING);
+        }
+
+        public void OnTutorialCompleted()
+        {
+            _screenManager.GameScreen.HideTutorialUI();
         }
 
         #endregion
