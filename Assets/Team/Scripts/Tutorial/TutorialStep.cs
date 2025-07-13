@@ -1,4 +1,5 @@
 using Team.Managers;
+using TMPro;
 using UnityEngine;
 using static Team.GameConstants.MetaConstants;
 
@@ -40,6 +41,14 @@ namespace Team.Gameplay.Tutorial
         private TutUIElement elementID; //The id that will be used to identify which UI element this is
 
         public TutUIElement ElementID => elementID;
+
+        [SerializeField]
+        private TextMeshProUGUI _tutorialText;
+
+        public void PopulateTutorialBox(string _message)
+        {
+            _tutorialText.text = _message;  
+        }
 
         public void OnTutorialBoxClicked()
         {
