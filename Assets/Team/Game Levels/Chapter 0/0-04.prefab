@@ -480,10 +480,11 @@ MonoBehaviour:
     x: 3
     y: 2
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -541,10 +542,11 @@ MonoBehaviour:
     x: 6
     y: 7
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -742,10 +744,11 @@ MonoBehaviour:
     x: 5
     y: 3
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -1153,8 +1156,10 @@ MonoBehaviour:
   - {fileID: 4326621470192829894}
   - {fileID: 1863290407235024804}
   - {fileID: 7299441724963576327}
+  oilTiles: []
   _defaultObstacle: {fileID: 5407380294395882597, guid: 08c3bf8a1c59d8b448fabce70e5240c3, type: 3}
   _defaultTile: {fileID: 2763072502108167865, guid: d095c4a01d523654fb46e94d5f54ba10, type: 3}
+  _oilTile: {fileID: 0}
 --- !u!1 &537015167652957917
 GameObject:
   m_ObjectHideFlags: 0
@@ -1291,10 +1296,11 @@ MonoBehaviour:
     x: 2
     y: 2
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -1481,10 +1487,11 @@ MonoBehaviour:
     x: 4
     y: 7
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -1785,10 +1792,11 @@ MonoBehaviour:
     x: 6
     y: 3
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -1846,10 +1854,11 @@ MonoBehaviour:
     x: 5
     y: 2
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -2090,10 +2099,11 @@ MonoBehaviour:
     x: 3
     y: 4
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -3171,10 +3181,11 @@ MonoBehaviour:
     x: 3
     y: 0
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -3232,10 +3243,11 @@ MonoBehaviour:
     x: 0
     y: 6
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -5165,10 +5177,11 @@ MonoBehaviour:
     x: 4
     y: 2
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -5226,10 +5239,11 @@ MonoBehaviour:
     x: 4
     y: 3
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -5498,10 +5512,11 @@ MonoBehaviour:
     x: 2
     y: 6
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -5559,10 +5574,11 @@ MonoBehaviour:
     x: 2
     y: 3
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -5831,10 +5847,11 @@ MonoBehaviour:
     x: 6
     y: 2
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -6232,10 +6249,11 @@ MonoBehaviour:
     x: 7
     y: 3
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -7033,10 +7051,11 @@ MonoBehaviour:
     x: 6
     y: 1
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -7094,10 +7113,11 @@ MonoBehaviour:
     x: 4
     y: 1
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -7435,10 +7455,11 @@ MonoBehaviour:
     x: 7
     y: 0
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -8256,10 +8277,11 @@ MonoBehaviour:
     x: 1
     y: 6
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -8317,10 +8339,11 @@ MonoBehaviour:
     x: 6
     y: 0
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -8378,10 +8401,11 @@ MonoBehaviour:
     x: 5
     y: 6
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -8925,10 +8949,11 @@ MonoBehaviour:
     x: 0
     y: 2
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -9309,10 +9334,11 @@ MonoBehaviour:
     x: 2
     y: 5
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -9370,10 +9396,11 @@ MonoBehaviour:
     x: 0
     y: 3
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -9846,10 +9873,11 @@ MonoBehaviour:
     x: 4
     y: 5
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -10305,10 +10333,11 @@ MonoBehaviour:
     x: 4
     y: 0
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -10814,10 +10843,11 @@ MonoBehaviour:
     x: 3
     y: 5
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -11602,10 +11632,11 @@ MonoBehaviour:
     x: 6
     y: 6
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -11663,10 +11694,11 @@ MonoBehaviour:
     x: 0
     y: 4
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -12139,10 +12171,11 @@ MonoBehaviour:
     x: 7
     y: 4
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -12583,10 +12616,11 @@ MonoBehaviour:
     x: 7
     y: 2
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -13124,10 +13158,11 @@ MonoBehaviour:
     x: 0
     y: 1
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -13934,10 +13969,11 @@ MonoBehaviour:
     x: 4
     y: 4
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -14318,10 +14354,11 @@ MonoBehaviour:
     x: 0
     y: 0
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -15485,10 +15522,11 @@ MonoBehaviour:
     x: 7
     y: 5
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -16615,10 +16653,11 @@ MonoBehaviour:
     x: 3
     y: 6
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -16816,10 +16855,11 @@ MonoBehaviour:
     x: 4
     y: 6
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -17346,10 +17386,11 @@ MonoBehaviour:
     x: 1
     y: 0
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -18493,10 +18534,11 @@ MonoBehaviour:
     x: 6
     y: 4
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -18554,10 +18596,11 @@ MonoBehaviour:
     x: 0
     y: 5
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -18884,10 +18927,11 @@ MonoBehaviour:
     x: 5
     y: 5
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -19694,10 +19738,11 @@ MonoBehaviour:
     x: 2
     y: 4
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -19841,10 +19886,11 @@ MonoBehaviour:
     x: 2
     y: 1
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -19902,10 +19948,11 @@ MonoBehaviour:
     x: 1
     y: 7
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -19963,10 +20010,11 @@ MonoBehaviour:
     x: 7
     y: 1
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -20521,10 +20569,11 @@ MonoBehaviour:
     x: 2
     y: 0
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -21677,10 +21726,11 @@ MonoBehaviour:
     x: 5
     y: 0
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -21738,10 +21788,11 @@ MonoBehaviour:
     x: 1
     y: 4
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -21853,10 +21904,11 @@ MonoBehaviour:
     x: 0
     y: 7
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -22798,10 +22850,11 @@ MonoBehaviour:
     x: 7
     y: 6
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -22945,10 +22998,11 @@ MonoBehaviour:
     x: 1
     y: 5
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -23400,10 +23454,11 @@ MonoBehaviour:
     x: 1
     y: 3
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -23990,10 +24045,11 @@ MonoBehaviour:
     x: 7
     y: 7
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -25443,10 +25499,11 @@ MonoBehaviour:
     x: 5
     y: 4
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -25687,10 +25744,11 @@ MonoBehaviour:
     x: 3
     y: 1
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -26292,10 +26350,11 @@ MonoBehaviour:
     x: 1
     y: 2
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -26439,10 +26498,11 @@ MonoBehaviour:
     x: 2
     y: 7
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -27266,10 +27326,11 @@ MonoBehaviour:
     x: 5
     y: 7
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -28695,10 +28756,11 @@ MonoBehaviour:
     x: 5
     y: 1
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -29096,10 +29158,11 @@ MonoBehaviour:
     x: 3
     y: 7
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -29798,10 +29861,11 @@ MonoBehaviour:
     x: 1
     y: 1
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -29945,10 +30009,11 @@ MonoBehaviour:
     x: 3
     y: 3
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -30006,10 +30071,11 @@ MonoBehaviour:
     x: 6
     y: 5
   tilePrefab: {fileID: 6502575709125376950, guid: 3edba1e1d649c9041a7b9e32710d5410, type: 3}
-  oilTilePrefab: {fileID: 5517943695708471668, guid: 66d065280a49ecc47af8b43555ea04b9, type: 3}
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 1
+  startingTileType: 0
+  hasChangedType: 0
   Direction:
     TileFacing: 0
   gridManager: {fileID: 3651314102345363368}
@@ -30934,16 +31000,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelTiles: {fileID: 3651314102345363368}
   CharactersMap:
-  - CharacterID: Push Wizard 1
-    CharacterPrefab: {fileID: 5407380294395882597, guid: 13d5d07571039354bb2e9285b85bf4b7, type: 3}
-    StartTileID:
-      x: 3
-      y: 2
-    FacingDirection: 0
-    CharacterSkin:
-      CharacterCode: 0
-      SkinMaterial: {fileID: 2100000, guid: 91c0701f2e59aaa4aa8070d3b87243a0, type: 2}
-      CharacterColor: {r: 1, g: 0.9696857, b: 0, a: 1}
   - CharacterID: Absorb Wizard 1
     CharacterPrefab: {fileID: 5407380294395882597, guid: 5ecfadebda0155d4695ab480153decc0, type: 3}
     StartTileID:
@@ -30954,11 +31010,22 @@ MonoBehaviour:
       CharacterCode: 0
       SkinMaterial: {fileID: 2100000, guid: da98eb23e0994874da55d0329b64cc4d, type: 2}
       CharacterColor: {r: 0, g: 0.23921585, b: 1, a: 1}
+  - CharacterID: Push Wizard 1
+    CharacterPrefab: {fileID: 5407380294395882597, guid: 13d5d07571039354bb2e9285b85bf4b7, type: 3}
+    StartTileID:
+      x: 3
+      y: 2
+    FacingDirection: 0
+    CharacterSkin:
+      CharacterCode: 0
+      SkinMaterial: {fileID: 2100000, guid: 91c0701f2e59aaa4aa8070d3b87243a0, type: 2}
+      CharacterColor: {r: 1, g: 0.9696857, b: 0, a: 1}
   _objectiveMap:
   - ObjectiveName: Get Push Wizard 1 to the Location
     ObjectiveTargets:
     - Push Wizard 1
     Type: 3
+    Priority: 0
     LocationTileID:
       x: 3
       y: 1
