@@ -1,58 +1,93 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
 
 public class ObjectClickable : MonoBehaviour
 {
 
-    public UnityEvent clickedOn;
+    public UnityEvent onHovered;
+    public UnityEvent OnEnableClick;
+    public UnityEvent OnDisableClick;
 
-    Base_Obstacle obstacle;
-    Base_Ch base_Ch;
-
-    public bool isToggled = false;
+    private Base_Ch baseCh;
+    private Base_Obstacle baseObstacle;
+    
+    GenericGhosting _ghosting;
     public bool isHovered = false;
 
     void Start()
     {
-        if (GetComponent<Base_Ch>())
+        if (GetComponentInChildren<GenericGhosting>())
         {
-            base_Ch = GetComponent<Base_Ch>();
-            clickedOn.AddListener(base_Ch.ToggleGhosting);
-        }
-        else if (GetComponent<Base_Obstacle>())
-        {
-            obstacle = GetComponent<Base_Obstacle>();
-            clickedOn.AddListener(obstacle.ToggleVisualisation);
+            _ghosting = GetComponentInChildren<GenericGhosting>();
+            
+            onHovered.AddListener(_ghosting.toggleGhosting);
+            OnEnableClick.AddListener(_ghosting.enableGhosting);
+            OnDisableClick.AddListener(_ghosting.disableGhosting);
+
+            if (GetComponent<Base_Ch>())
+            {
+                baseCh = GetComponent<Base_Ch>();
+                onHovered.AddListener(baseCh.ShowHideOutline);
+            }
+
+            if (GetComponent<Base_Obstacle>())
+            {
+                baseObstacle = GetComponent<Base_Obstacle>();
+            }
         }
         Debug.Log($"has initiailised character");
     }
 
     public void HoveredObject()
     {
+        if (_ghosting.ghostingIsActive)
+        {
+            return;
+        }
         isHovered = true;
-        clickedOn.Invoke();
+        _ghosting.isHovered = true;
+        onHovered.Invoke();
     }
     public void UnhoveredObject()
     {
+        if (_ghosting.ghostingIsActive && !isHovered){ return;}
         isHovered = false;
-        clickedOn.Invoke();
+        _ghosting.isHovered = false;
+        onHovered.Invoke();
     }
 
     public void ClickedObject()
     {
-        clickedOn.Invoke();
+        switch (_ghosting.ghostingIsActive)
+        {
+            case true:
+                if (_ghosting.isHovered)
+                {
+                    _ghosting.ghostingIsActive = false;
+                    return;
+                }
+
+                OnDisableClick.Invoke();
+                break;
+            
+            case false:
+                if (_ghosting.isHovered)
+                {
+                    _ghosting.ghostingIsActive = true;
+                    return;
+                }
+                OnEnableClick.Invoke();
+                break;
+        }
+
     }
 
     public bool ToggleValidity()
     {
-        if (base_Ch)
+        if (_ghosting)
         {
-            return base_Ch._ghosting.ghostingIsActive;
-        }
-        else if (obstacle)
-        {
-            return obstacle._ghosting.ghostingIsActive;
+            return _ghosting.ghostingIsActive;
         }
         return false;
     }

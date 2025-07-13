@@ -25,6 +25,8 @@ namespace Team.Gameplay.Characters
 
         [SerializeField]
         private Material outlineMat;
+        
+        public bool isOutlined {get; private set;}
 
         private Material outlineInstMat;
 
@@ -58,12 +60,16 @@ namespace Team.Gameplay.Characters
 
         public void ShowOutline()
         {
+            isOutlined = true;
+            
             float thickness = MetaConstants.CharacterOutlineThickness;
             outlineInstMat.SetFloat("_Outline_Thickness", thickness);
         }
 
         public void HideOutline()
         {
+            isOutlined = false;
+            
             outlineInstMat.SetFloat("_Outline_Thickness", 0f);
         }
     }

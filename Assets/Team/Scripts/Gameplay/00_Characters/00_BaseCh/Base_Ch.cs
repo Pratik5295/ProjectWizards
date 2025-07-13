@@ -4,6 +4,7 @@ using Team.Gameplay.GridSystem;
 using Team.Enum.Character;
 using UnityEngine;
 using Team.GameConstants;
+using Team.Gameplay.Characters;
 using Team.UI;
 using static Team.GameConstants.MetaConstants;
 
@@ -37,6 +38,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     {
         get { return baseRotation; }
     }
+
+    public CharacterReskinner CharacterReskinner;
 
 
     [Space(5)]
@@ -148,6 +151,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
         GhostManager = GetComponent<ObjectClickable>();
 
+        CharacterReskinner = GetComponent<CharacterReskinner>();
 
         transform.position = new Vector3(_currentTile.TilePosition.x, _currentTile.TilePosition.y + ySpawnOffset, _currentTile.TilePosition.z);
 
@@ -465,6 +469,15 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         IsGhosting = !IsGhosting;
         //GhostManager.isToggled = IsGhosting;
         _ghosting.toggleGhosting();
+    }
+
+    public void ShowHideOutline()
+    {
+        if (!CharacterReskinner.isOutlined)
+        {
+            CharacterReskinner.ShowOutline();
+        }
+        else CharacterReskinner.HideOutline();
     }
 
     #endregion

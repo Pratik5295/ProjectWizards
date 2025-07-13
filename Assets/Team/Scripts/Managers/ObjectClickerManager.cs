@@ -30,9 +30,8 @@ public class ObjectClickerManager : MonoBehaviour
             if (hit.collider.GetComponent<ObjectClickable>())
             {
                 ObjectClickable objClickable = hit.collider.gameObject.GetComponent<ObjectClickable>();
-                if (objClickable.ToggleValidity() && !objClickable.isHovered && !objClickable.isToggled) { return; }
 
-                if (!objClickable.isHovered && !objClickable.isToggled)
+                if (!objClickable.isHovered)
                 {
                     HoverClickable(true, hit);
                     //Hover Object.
@@ -58,7 +57,7 @@ public class ObjectClickerManager : MonoBehaviour
         if (!PreviouslyHovered) { return false; }
         ObjectClickable PreviousObjClickable = PreviouslyHovered.GetComponent<ObjectClickable>();
 
-        return PreviouslyHovered && PreviousObjClickable.isHovered && !PreviousObjClickable.isToggled;
+        return PreviouslyHovered && PreviousObjClickable.isHovered;
     }
 
     private void HoverClickable(bool shouldHover, RaycastHit hit)
@@ -79,12 +78,6 @@ public class ObjectClickerManager : MonoBehaviour
 
     public void LockGhostingVisual(RaycastHit hit, ObjectClickable objClickable)
     {
-        if (objClickable.isHovered) 
-        {
-            objClickable.isHovered = false;
-            objClickable.ClickedObject();
-        } // This repeating line exists to ensure this doesnt toggle the effect off.
-
         objClickable.ClickedObject();
     }
 }

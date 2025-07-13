@@ -6,6 +6,8 @@ public class GenericGhosting : MonoBehaviour
 
     public bool ghostingIsActive;
 
+    public bool isHovered = false;
+
     [SerializeField] private GameObject _ghostingEffect;
     protected GameObject ghostingEffectRef;
 
