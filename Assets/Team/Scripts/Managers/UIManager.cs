@@ -153,6 +153,7 @@ namespace Team.Managers
         public void OnTutorialCompleted()
         {
             _screenManager.GameScreen.HideTutorialUI();
+            hasTutorial = false;
         }
 
         #endregion

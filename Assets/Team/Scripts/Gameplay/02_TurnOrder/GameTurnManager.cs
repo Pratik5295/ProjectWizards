@@ -287,7 +287,6 @@ namespace Team.Managers
 
         private void ResetBreakpointSystem()
         {
-            breakpoint = false;
             playedTillBreaker = false;
             breakerIndex = 0;
         }
@@ -581,64 +580,35 @@ namespace Team.Managers
 
         private async Task CompleteResetAsync()
         {
-            await Task.Run(() =>
-            {
-                ResetDestroyedEntities();
-                ResetObstacles();
-                ResetTileData();
-                ResetChangedTiles();
-            });
+            // All Unity operations must stay on main thread
+            ResetDestroyedEntities();
 
-            // Reset objectives on main thread
+            // Reset objectives
             LevelObjectiveManager.Instance?.ResetAllObjectives();
 
-            // Reset characters on main thread
+            ResetObstacles();
+
+            // Reset characters
             ResetCharactersToStart();
+
+            // Reset tile data
+            ResetTileData();
+
+            // Reset changed tiles
+            ResetChangedTiles();
+
+            //Reset breakpoint system
+            ResetBreakpointSystem();
 
             OnResetLastTurnCompleted?.Invoke();
             isQueueLoaded = false;
 
             Debug.Log("Completed reset");
+
+            // Add a small delay to ensure all operations complete
+            await Task.Yield();
         }
 
-        public async Task RestartGameAsync()
-        {
-            Debug.Log("Firing restart ASAP");
-
-            if (_isResetting) return;
-
-            _isResetting = true;
-            CancelCurrentOperations();
-
-            try
-            {
-                // Complete immediate reset
-                await ResetAllTurnsAsync();
-
-                // Reset breakpoint system
-                ResetBreakpointSystem();
-
-                // Clear all collections
-                lock (_lockObject)
-                {
-                    DestroyedObjects.Clear();
-                    Obstacles.Clear();
-                    ChangedTiles.Clear();
-                    originalOrder.Clear();
-                    currentTurnOrder.Clear();
-                    turnQueue?.Clear();
-                    _historyStack?.Clear();
-                }
-
-                isQueueLoaded = false;
-
-                Debug.Log("Game restart completed");
-            }
-            finally
-            {
-                _isResetting = false;
-            }
-        }
 
         private void ResetDestroyedEntities()
         {
