@@ -238,6 +238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82398066b905c2f41bb5e5404aec45a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterData: {fileID: 11400000, guid: 149f5ad9cf600b44683e47095765c738, type: 2}
   CharState: 0
   ref_gridManager: {fileID: 0}
   baseRotation: {fileID: 0}
@@ -295,9 +296,11 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _ghosting: {fileID: 0}
+  IsGhosting: 0
   _characterBark: {fileID: 263506131393621909}
   _projectilePrefab: {fileID: 0}
   _fireFromPoint: {fileID: 5150221880546262881}
+  ghostingEffect: {fileID: 0}
   _projectileRange: -105
 --- !u!114 &933473269899832427
 MonoBehaviour:
@@ -365,6 +368,8 @@ MonoBehaviour:
   clickedOn:
     m_PersistentCalls:
       m_Calls: []
+  isToggled: 0
+  isHovered: 0
 --- !u!1 &5928820443840699460
 GameObject:
   m_ObjectHideFlags: 0

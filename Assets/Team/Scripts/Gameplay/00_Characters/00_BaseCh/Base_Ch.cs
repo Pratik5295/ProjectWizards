@@ -471,7 +471,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         //GhostManager.isToggled = IsGhosting;
         _ghosting.toggleGhosting();
 
-        if (IsGhosting)
+        if (_ghosting.ghostingIsActive)
         {
             //Populate it on ghosting is true
             UIManager.Instance.UpdateInfoPanel(characterData.Data);
