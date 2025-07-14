@@ -37,13 +37,13 @@ namespace Team.UI
         // Optional: Open/Close manually
         public void OpenPanel()
         {
-            leftPanel.DOAnchorPosX(openX, duration).SetEase(Ease.InOutQuad);
+            //leftPanel.DOAnchorPosX(openX, duration).SetEase(Ease.InOutQuad);
             isOpen = true;
         }
 
         public void ClosePanel()
         {
-            leftPanel.DOAnchorPosX(closedX, duration).SetEase(Ease.InOutQuad);
+            //leftPanel.DOAnchorPosX(closedX, duration).SetEase(Ease.InOutQuad);
             isOpen = false;
         }
     }
