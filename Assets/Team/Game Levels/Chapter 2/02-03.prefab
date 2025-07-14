@@ -40218,7 +40218,7 @@ MonoBehaviour:
       SkinMaterial: {fileID: 1411009148027576344, guid: 29daf79e109a1334db1b3cc191357059, type: 3}
       CharacterColor: {r: 0, g: 0.6132076, b: 0.14686733, a: 1}
   _objectiveMap:
-  - ObjectiveName: Defeat Rotator Wizard 1
+  - ObjectiveName: Defeat the highlighted mage.
     ObjectiveTargets:
     - Rotator Wizard 1
     Type: 1
@@ -55906,6 +55906,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67eaa560d527e2242887fd41593007d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ghostingIsActive: 0
   _ghostingEffect: {fileID: 7949390671188095896, guid: 586426da435d96e438e4fbc6cc4b6700, type: 3}
 --- !u!1 &4455924149550052261
 GameObject:
@@ -56095,6 +56096,7 @@ MonoBehaviour:
   _meshRenderer: {fileID: 1802168221768822348}
   canBeDestroyed: 1
   _ghosting: {fileID: 1748792340374780487}
+  IsGhosting: 0
   RefFireballProjectile: {fileID: 0}
   _explosionEffect: {fileID: 1344227288852612994}
   ExplosionDelayTime: 1
@@ -56147,6 +56149,8 @@ MonoBehaviour:
   clickedOn:
     m_PersistentCalls:
       m_Calls: []
+  isToggled: 0
+  isHovered: 0
 --- !u!1 &4505393327954978426
 GameObject:
   m_ObjectHideFlags: 0
