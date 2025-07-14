@@ -125,6 +125,7 @@ MonoBehaviour:
   _screenManager: {fileID: 3813925186659251298}
   _dialogueManager: {fileID: 2090159777669670569}
   _tutorialManager: {fileID: 8683071621568238653}
+  gameScreen: {fileID: 0}
   playButton: {fileID: 8560273047507574398}
   restartButton: {fileID: 6466912586907713977}
   hasTutorial: 0
@@ -700,6 +701,30 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6080582347598572701, guid: 67591832cba7f0e4f92673463a1cdfdd, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6080582347598572701, guid: 67591832cba7f0e4f92673463a1cdfdd, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6080582347598572701, guid: 67591832cba7f0e4f92673463a1cdfdd, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6080582347598572701, guid: 67591832cba7f0e4f92673463a1cdfdd, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6080582347598572701, guid: 67591832cba7f0e4f92673463a1cdfdd, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6080582347598572701, guid: 67591832cba7f0e4f92673463a1cdfdd, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6271761272283345973, guid: 67591832cba7f0e4f92673463a1cdfdd, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -855,6 +880,30 @@ PrefabInstance:
     - target: {fileID: 8697384778384343696, guid: 67591832cba7f0e4f92673463a1cdfdd, type: 3}
       propertyPath: m_Name
       value: Screen - Game Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 8921791924315649978, guid: 67591832cba7f0e4f92673463a1cdfdd, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8921791924315649978, guid: 67591832cba7f0e4f92673463a1cdfdd, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8921791924315649978, guid: 67591832cba7f0e4f92673463a1cdfdd, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8921791924315649978, guid: 67591832cba7f0e4f92673463a1cdfdd, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8921791924315649978, guid: 67591832cba7f0e4f92673463a1cdfdd, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8921791924315649978, guid: 67591832cba7f0e4f92673463a1cdfdd, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

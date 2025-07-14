@@ -6,6 +6,8 @@ using UnityEngine;
 using Team.GameConstants;
 using Team.UI;
 using static Team.GameConstants.MetaConstants;
+using Team.Data;
+using Team.Managers;
 
 [System.Serializable]
 public class PlayerMove
@@ -21,6 +23,9 @@ public class PlayerMove
 [DefaultExecutionOrder(2)]
 public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbility, IDestroyable
 {
+    [SerializeField]
+    private CharacterDataSO characterData;  //The SO file that will be used to update Info Panel
+
     [Header("Enumerations")]
     [SerializeField] private Enum_CharacterState CharState = Enum_CharacterState.Alive;
 
@@ -465,6 +470,12 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         IsGhosting = !IsGhosting;
         //GhostManager.isToggled = IsGhosting;
         _ghosting.toggleGhosting();
+
+        if (IsGhosting)
+        {
+            //Populate it on ghosting is true
+            UIManager.Instance.UpdateInfoPanel(characterData.Data);
+        }
     }
 
     #endregion
