@@ -1,7 +1,8 @@
+using System.Collections;
+using DG.Tweening;
 using Team.Data;
 using TMPro;
 using UnityEngine;
-using DG.Tweening;
 
 namespace Team.UI
 {
@@ -27,23 +28,38 @@ namespace Team.UI
 
         public void Populate(CharacterDataStruct _data)
         {
+            StartCoroutine(PopulateCoroutine(_data));
+        }
+
+        private IEnumerator PopulateCoroutine(CharacterDataStruct _data)
+        {
+            if (isOpen)
+            {
+                // Close panel and wait for animation to finish
+                yield return leftPanel.DOAnchorPosX(closedX, 0.2f).SetEase(Ease.InOutQuad).WaitForCompletion();
+                isOpen = false;
+            }
+
+            // Set UI data
             characterNameText.text = _data.CharacterName;
             abilityNameText.text = _data.AbilityName;
             abilityDescriptionText.text = _data.AbilityDescription;
 
-            OpenPanel();
+            // Open panel and wait if needed
+            yield return leftPanel.DOAnchorPosX(openX, duration).SetEase(Ease.InOutQuad).WaitForCompletion();
+            isOpen = true;
         }
 
-        // Optional: Open/Close manually
+        // Optional standalone open/close
         public void OpenPanel()
         {
-            //leftPanel.DOAnchorPosX(openX, duration).SetEase(Ease.InOutQuad);
+            leftPanel.DOAnchorPosX(openX, duration).SetEase(Ease.InOutQuad);
             isOpen = true;
         }
 
         public void ClosePanel()
         {
-            //leftPanel.DOAnchorPosX(closedX, duration).SetEase(Ease.InOutQuad);
+            leftPanel.DOAnchorPosX(closedX, 0.1f).SetEase(Ease.InOutQuad);
             isOpen = false;
         }
     }
