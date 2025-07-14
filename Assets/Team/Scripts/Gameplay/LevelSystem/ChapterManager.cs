@@ -41,9 +41,6 @@ namespace Team.Gameplay.LevelSystem
                 ChaptersMap.Add(chapter.chapterData.Data.ChapterID, chapter);
                 chapter.Initialize();
             }
-
-            Debug.Log("Loading all chapters complete...");
-
             LevelManager.Instance.LoadLevelMap();
         }
 
@@ -58,8 +55,6 @@ namespace Team.Gameplay.LevelSystem
 
         public void OnChapterCompleted(GameChapter _chapter)
         {
-            Debug.Log($"[ChapM] Chapter: {_chapter.chapterData.Data.ChapterName} has been completed");
-
             ChapterID nextChapterId = _chapter.NextChapterID;
 
             GameChapter nextChapter = ChaptersMap[nextChapterId];

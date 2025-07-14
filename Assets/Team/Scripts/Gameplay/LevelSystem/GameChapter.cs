@@ -64,8 +64,6 @@ namespace Team.Gameplay.LevelSystem
 
             CompletedLevels.Add(levelID);
 
-            Debug.Log("Game chapter level has been completed");
-
             //Validation if chapter is completed
             if(LevelsCompleted >= levelToCompleteRequirement)
             {
