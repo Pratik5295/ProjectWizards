@@ -21,3 +21,20 @@ MonoBehaviour:
     GameLevelPrefab: {fileID: 8420477792311323245, guid: ca52b96aa2dfc734ea5af72b25a8fddf, type: 3}
     DialogueAsset: {fileID: 0}
     HasBreakPoint: 0
+    TutorialSteps:
+    - message: Look upon these Vetruni training for their upcoming battle. If you
+        wish to see their ability, <b>click</b> on them or their portrait to access
+        their <b>Information Panel</b>.
+      uiElement: 0
+    - message: Their decisions are yours to order, within the <b>Turn Order Bar</b>.
+        <b>Drag the portraits</b> of the mages in the order you wish them to take.
+      uiElement: 1
+    - message: This is your <b>main objective</b> for this event, the <b>Fated Goal</b>.
+        To succeed, you must fulfill it.
+      uiElement: 0
+    - message: When you are ready to see your choices transpire, <b>press</b> the
+        <b>Play</b> button.
+      uiElement: 1
+    - message: If you want to try another strategy, <b>press</b> the <b>Restart</b>
+        button.
+      uiElement: 0
