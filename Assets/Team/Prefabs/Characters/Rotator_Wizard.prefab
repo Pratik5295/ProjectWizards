@@ -335,6 +335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b3116b4b447ef240ba718d2bed7b65a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterData: {fileID: 11400000, guid: ae61c23b799c9384a9d3ac85ac477144, type: 2}
   CharState: 0
   ref_gridManager: {fileID: 0}
   baseRotation: {fileID: 0}
@@ -392,6 +393,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _ghosting: {fileID: 750667303853506599}
+  IsGhosting: 0
   _characterBark: {fileID: 4470049139440990070}
   _abilityStartOffset: 2
   _lerpDuration: 0.25
@@ -463,6 +465,8 @@ MonoBehaviour:
   clickedOn:
     m_PersistentCalls:
       m_Calls: []
+  isToggled: 0
+  isHovered: 0
 --- !u!1001 &3618181580552038024
 PrefabInstance:
   m_ObjectHideFlags: 0

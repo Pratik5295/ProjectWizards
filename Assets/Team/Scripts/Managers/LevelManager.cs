@@ -74,7 +74,19 @@ namespace Team.Managers
                 if (LevelMap.ContainsKey(CurrentLevelID))
                 {
                     var original = LevelMap[_level];
-                    CurrentLevel = original; 
+                    CurrentLevel = original;
+
+
+                    //Check if the level has tutorials
+                    if (CurrentLevel.Info.Data.HasTutorial)
+                    {
+                        UIManager.Instance.InitializeTutorial(CurrentLevel.Info.Data.TutorialSteps);
+                    }
+                    else
+                    {
+                        UIManager.Instance.ResetNoTutorial();
+                    }
+
 
                     OnCurrentLevelUpdated?.Invoke(CurrentLevel.Info.Data);
                 }
@@ -116,20 +128,17 @@ namespace Team.Managers
                 // Progress tracking with proper logging
                 var progressReporter = new Progress<float>(progress =>
                 {
-                    Debug.Log($"[LevelManager] Loading Progress: {progress:P1}");
                     OnLoadingProgress?.Invoke(progress);
                 });
 
                 // Destroy existing level if present
                 if (createdLevel != null)
                 {
-                    Debug.Log("[LevelManager] Cleaning up previous level...");
                     DestroyImmediate(createdLevel.gameObject);
                     await UniTask.Yield(); // Allow cleanup to complete
                 }
 
                 // Use GameLoadManager to load the level - WAIT for completion
-                Debug.Log("[LevelManager] Starting GameLoadManager...");
                 createdLevel = await gameLoadManager.LoadGameLevelAsync(
                     CurrentLevel.Info.Data.GameLevelPrefab.gameObject,
                     progressReporter
@@ -139,14 +148,11 @@ namespace Team.Managers
                 if (createdLevel == null)
                 {
                     throw new Exception("GameLoadManager returned null level!");
-                    Debug.Log("RETURNED NULL LEVEL!");
                 }
                 else Debug.Log("CREATED LEVEL!");
 
                 //Spawn Gameplay Managers.
                 GridManager.Instance.SpawnGameplayManagers();
-
-                Debug.Log("[LevelManager] Level instantiation complete, setting up components...");
 
                 // Setup dialogue if available
                 if (CurrentLevel.Info.Data.DialogueAsset != null)
@@ -180,8 +186,6 @@ namespace Team.Managers
 
         public void OnCurrentLevelCompleted()
         {
-            Debug.Log($"Level {CurrentLevel.Info.Data.Stats.LevelName} has been completed");
-
             //Notify level its completed
             CurrentLevel.OnLevelCompleted();
 
