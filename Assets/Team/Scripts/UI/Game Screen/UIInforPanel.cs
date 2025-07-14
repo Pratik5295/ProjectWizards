@@ -38,16 +38,19 @@ namespace Team.UI
                 // Close panel and wait for animation to finish
                 yield return leftPanel.DOAnchorPosX(closedX, 0.2f).SetEase(Ease.InOutQuad).WaitForCompletion();
                 isOpen = false;
+
             }
+            else
+            {
+                // Set UI data
+                characterNameText.text = _data.CharacterName;
+                abilityNameText.text = _data.AbilityName;
+                abilityDescriptionText.text = _data.AbilityDescription;
 
-            // Set UI data
-            characterNameText.text = _data.CharacterName;
-            abilityNameText.text = _data.AbilityName;
-            abilityDescriptionText.text = _data.AbilityDescription;
-
-            // Open panel and wait if needed
-            yield return leftPanel.DOAnchorPosX(openX, duration).SetEase(Ease.InOutQuad).WaitForCompletion();
-            isOpen = true;
+                // Open panel and wait if needed
+                yield return leftPanel.DOAnchorPosX(openX, duration).SetEase(Ease.InOutQuad).WaitForCompletion();
+                isOpen = true;
+            }
         }
 
         // Optional standalone open/close
