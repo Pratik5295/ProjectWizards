@@ -138,7 +138,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 406317207395901655}
   m_Enabled: 1
-  m_VideoClip: {fileID: 0}
+  m_VideoClip: {fileID: 32900000, guid: 60bda170af270144091c3504fee760a1, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -152,14 +152,12 @@ VideoPlayer:
   m_TimeUpdateMode: 2
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 2
-  m_TargetAudioSources:
-  - {fileID: 0}
-  m_DirectAudioVolumes:
-  - 1
+  m_TargetAudioSources: []
+  m_DirectAudioVolumes: []
   m_Url: 
-  m_EnabledAudioTracks: 01
-  m_DirectAudioMutes: 00
-  m_ControlledAudioTrackCount: 1
+  m_EnabledAudioTracks: 
+  m_DirectAudioMutes: 
+  m_ControlledAudioTrackCount: 0
   m_PlayOnAwake: 1
   m_SkipOnDrop: 1
   m_Looping: 1
@@ -238,8 +236,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -68}
-  m_SizeDelta: {x: -20, y: -166}
+  m_AnchoredPosition: {x: 0, y: -63}
+  m_SizeDelta: {x: -8, y: -176}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6147926370624436155
 CanvasRenderer:
@@ -269,7 +267,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: dc9bbd8fe6034bf41be65a6db3089c31, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1acb775e53cd2544288cc983acd62abb, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -455,8 +453,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1, y: -52}
-  m_SizeDelta: {x: -18, y: 62}
+  m_AnchoredPosition: {x: 0, y: -52}
+  m_SizeDelta: {x: 0, y: 62}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4222813187747376222
 CanvasRenderer:
@@ -486,7 +484,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 88ac3e6549d2dd242a435d86fd50b075, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ed5ac0627be651f47979285b39ac49b5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -545,6 +543,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7f6da44a0007fc468693f99448610cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leftPanel: {fileID: 0}
+  duration: 0.5
   characterNameText: {fileID: 6382831268967962897}
   abilityNameText: {fileID: 4010120022445440250}
   abilityDescriptionText: {fileID: 8992247954977977143}
@@ -772,7 +772,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5937354830685912021, guid: b530c8a18573c974590426f276e4d7be, type: 3}
       propertyPath: m_fontSize
-      value: 18
+      value: 25.5
       objectReference: {fileID: 0}
     - target: {fileID: 5937354830685912021, guid: b530c8a18573c974590426f276e4d7be, type: 3}
       propertyPath: m_enableAutoSizing
@@ -837,7 +837,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2728830239950422474, guid: b530c8a18573c974590426f276e4d7be, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: -23
       objectReference: {fileID: 0}
     - target: {fileID: 2728830239950422474, guid: b530c8a18573c974590426f276e4d7be, type: 3}
       propertyPath: m_SizeDelta.y
@@ -873,7 +873,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2728830239950422474, guid: b530c8a18573c974590426f276e4d7be, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 11.5
       objectReference: {fileID: 0}
     - target: {fileID: 2728830239950422474, guid: b530c8a18573c974590426f276e4d7be, type: 3}
       propertyPath: m_AnchoredPosition.y
