@@ -8,7 +8,7 @@ namespace Team.UI
     {
         [Header("Components")]
         [SerializeField]
-        private CanvasGroup canvasGroup;
+        protected CanvasGroup canvasGroup;
 
         public GameScreen screenType;
 
