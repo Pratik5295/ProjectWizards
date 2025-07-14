@@ -36,7 +36,6 @@ namespace Team.Managers
                 tutorialsUIMap.Add(uiElement.ElementID, uiElement);
             }
 
-            Debug.Log($"[TutMan] Initialize Complete with Element Count: {tutorialsUIMap.Count}");
             return Instance;
         }
 
@@ -74,7 +73,6 @@ namespace Team.Managers
 
             if (currentIndex >= tutorialSteps.Count)
             {
-                Debug.Log("Tutorial has ended");
                 UIManager.Instance.OnTutorialCompleted();
 
                 ClearTutorialSteps();

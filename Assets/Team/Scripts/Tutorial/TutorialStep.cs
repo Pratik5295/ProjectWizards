@@ -53,7 +53,6 @@ namespace Team.Gameplay.Tutorial
         public void OnTutorialBoxClicked()
         {
             //Update the tutorial manager
-            Debug.Log($"Clicked on: {gameObject.name}");
             TutorialManager.Instance.GoToNextStep();
         }
     }
