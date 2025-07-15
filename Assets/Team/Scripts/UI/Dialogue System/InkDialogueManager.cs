@@ -1,25 +1,48 @@
+using System.Collections;
 using Ink.Runtime;
+using Team.GameConstants;
 using Team.Managers;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+
+namespace Team.GameConstants
+{
+    public static partial class MetaConstants
+    {
+        public const float HideDialogueScreenAfter = 2f;
+        public const float DialoguePauseBetweenLines = 1f;
+        public const float TypeWriterSpeed = 0.35f;
+
+        public const float MaxScrollHeight = 2000f;
+        public const float DialogueScrollSpeed = 20f;
+    }
+}
 
 namespace Team.UI.DialogueSystem
 {
     public class InkDialogueManager : MonoBehaviour
     {
         public TextMeshProUGUI dialogueText;
-        public TextMeshProUGUI nameText;
-        public Image portraitImage;
-        private Story story;
+        public RectTransform dialogueTextRect; // RectTransform of the Text object
+        private float scrollSpeed = MetaConstants.DialogueScrollSpeed;
+        private float maxScrollHeight = MetaConstants.MaxScrollHeight;
+        private float typewriterSpeed = MetaConstants.TypeWriterSpeed; // seconds between characters
 
-        //TODO: Convert these into a character sprite atlas
-        public Sprite flameWizard;
-        public Sprite pushWizard;
+        private Story story;
+        private bool isScrolling = false;
+        private bool isRevealing = false;
+
+        private Coroutine revealCoroutine;
 
         public void SetDialogue(TextAsset _asset)
         {
             story = new Story(_asset.text);
+
+            // Reset everything
+            dialogueText.text = "";
+            dialogueTextRect.anchoredPosition = new Vector2(0, -Screen.height/2); // start below
+            isScrolling = true;
+
             ContinueStory();
         }
 
@@ -27,68 +50,62 @@ namespace Team.UI.DialogueSystem
         {
             if (story.canContinue)
             {
-                string text = story.Continue().Trim();
-                dialogueText.text = text;
+                string nextLine = story.Continue().Trim();
 
-                // Default values
-                string speaker = "";
-                string portraitTag = "";
+                // Start the typewriter effect for the next line
+                if (revealCoroutine != null)
+                    StopCoroutine(revealCoroutine);
 
-                // Process tags
-                foreach (var tag in story.currentTags)
-                {
-                    if (tag.StartsWith("speaker:"))
-                        speaker = tag.Substring("speaker:".Length).Trim();
-
-                    if (tag.StartsWith("portrait:"))
-                        portraitTag = tag.Substring("portrait:".Length).Trim();
-                }
-
-                // Handle speaker name display
-                if (!string.IsNullOrEmpty(speaker))
-                {
-                    nameText.text = speaker;
-                    nameText.gameObject.SetActive(true);
-                }
-                else
-                {
-                    nameText.gameObject.SetActive(false);
-                }
-
-                // Handle portrait image display
-                if (!string.IsNullOrEmpty(portraitTag))
-                {
-                    portraitImage.sprite = GetPortraitByTag(portraitTag);
-                    portraitImage.gameObject.SetActive(portraitImage.sprite != null);
-                }
-                else
-                {
-                    portraitImage.gameObject.SetActive(false);
-                }
+                revealCoroutine = StartCoroutine(RevealTextOneByOne(nextLine));
             }
             else
             {
-                UIManager.Instance.ShowGameUI();
+                isScrolling = true; // Let final scroll finish
 
-                nameText.gameObject.SetActive(false);
-                portraitImage.gameObject.SetActive(false);
+                Invoke(nameof(OnDialogueScrollComplete), MetaConstants.HideDialogueScreenAfter);
             }
         }
 
-
-        //TODO: Turn this into a separate class or more proper getter system
-        private Sprite GetPortraitByTag(string tag)
+        private IEnumerator RevealTextOneByOne(string line)
         {
-            switch (tag)
+            isRevealing = true;
+
+            string existingText = dialogueText.text;
+            string newLine = "\n"; // Formatting between paragraphs
+            string fullText = existingText + newLine;
+            dialogueText.text = fullText;
+
+            for (int i = 0; i <= line.Length; i++)
             {
-                case "flame_wizard":
-                    return flameWizard;
-                case "push_wizard":
-                    return pushWizard;
-                default:
-                    return null;
+                dialogueText.text = fullText + line.Substring(0, i);
+                yield return new WaitForSeconds(typewriterSpeed);
+            }
+
+            isRevealing = false;
+
+            // Auto-continue after typing is done
+            yield return new WaitForSeconds(MetaConstants.DialoguePauseBetweenLines); // Optional pause after line
+            ContinueStory();
+        }
+
+        void Update()
+        {
+            if (isScrolling)
+            {
+                dialogueTextRect.anchoredPosition += new Vector2(0, scrollSpeed * Time.deltaTime);
+
+                if (dialogueTextRect.anchoredPosition.y > maxScrollHeight && !story.canContinue && !isRevealing)
+                {
+                    isScrolling = false;
+                   
+                }
             }
         }
 
+        private void OnDialogueScrollComplete()
+        {
+            Debug.Log("Story end point reached");
+            UIManager.Instance.ShowGameUI();
+        }
     }
 }

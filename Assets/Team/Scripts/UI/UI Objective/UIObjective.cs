@@ -1,4 +1,6 @@
+using Team.Gameplay.ObjectiveSystem;
 using TMPro;
+using Unity.VectorGraphics;
 using UnityEngine;
 
 namespace Team.UI
@@ -9,13 +11,24 @@ namespace Team.UI
         private TextMeshProUGUI objectiveText;
 
         [SerializeField]
+        private SVGImage iconImage;
+
+        [SerializeField]
         private string objectiveTitle;
 
+        [SerializeField]
+        private Sprite primarySprite;
+        [SerializeField]
+        private Sprite secondarySprite;
 
-        public void Populate(string _message)
+
+        public void Populate(GameObjectiveData _data)
         {
-            objectiveTitle = _message;
-            objectiveText.text = _message;
+            objectiveTitle = _data.ObjectiveName;
+            objectiveText.text = objectiveTitle;
+
+            UpdateIconBasedOnPriority(_data.Priority);
+
             InComplete();
         }
 
@@ -39,6 +52,23 @@ namespace Team.UI
         public void InComplete()
         {
             objectiveText.text = $"{objectiveTitle}";
+        }
+
+        private void UpdateIconBasedOnPriority(ObjectivePriority _priority)
+        {
+            switch (_priority)
+            {
+                case ObjectivePriority.PRIMARY:
+                    iconImage.sprite = primarySprite;
+                    break;
+
+                case ObjectivePriority.SECONDARY:
+                    iconImage.sprite = secondarySprite;
+                    break;
+
+                default:
+                    break;
+            }
         }
     }
 }
