@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Team.Data;
 using Team.Gameplay.Tutorial;
 using Team.UI;
 using Team.UI.DialogueSystem;
@@ -23,6 +24,9 @@ namespace Team.Managers
 
         [SerializeField]
         private TutorialManager _tutorialManager;
+
+        [SerializeField]
+        private UIGameScreen gameScreen;
 
         [Space(5)]
         [SerializeField]
@@ -183,6 +187,15 @@ namespace Team.Managers
 
             _tutorialManager.ClearTutorialSteps();
             hasTutorial = false;
+        }
+
+        #endregion
+
+        #region Info Panel Update Section
+
+        public void UpdateInfoPanel(CharacterDataStruct _data)
+        {
+            gameScreen.PopulateInfoPanel(_data);
         }
 
         #endregion
