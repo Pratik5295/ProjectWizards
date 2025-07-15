@@ -117,9 +117,9 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
     public bool IsGhosting = false;
 
+    bool isJumping = false;
 
     #endregion
-
 
     #region Character Barking Section
 
@@ -447,13 +447,13 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     #region Enabling and Disabling Character
     public void EnableObject()
     {
-        _meshRenderer.enabled = true;
+        _meshRenderer.gameObject.SetActive(true);
         _collider.enabled = true;
     }
 
     public void DisableObject()
     {
-        _meshRenderer.enabled = false;
+        _meshRenderer.gameObject.SetActive(false);
         _collider.enabled = false;
     }
     #endregion
@@ -494,7 +494,13 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
     public void ClickedOnJump()
     {
-        transform.DOJump(transform.position, 1f, 1, 0.5f, false);
+        if (isJumping) { return; }
+        isJumping = true;
+        _meshRenderer.transform.DOJump(_meshRenderer.transform.position, 1f, 1, 0.5f, false)
+            .OnComplete(() =>
+            {
+                isJumping = false;
+            });
     }
 
     #endregion

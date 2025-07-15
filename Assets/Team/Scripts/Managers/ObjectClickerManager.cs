@@ -30,6 +30,7 @@ public class ObjectClickerManager : MonoBehaviour
             if (hit.collider.GetComponent<ObjectClickable>())
             {
                 ObjectClickable objClickable = hit.collider.gameObject.GetComponent<ObjectClickable>();
+                if (!objClickable) { return; }
 
                 if (!objClickable.isHovered)
                 {
@@ -56,6 +57,10 @@ public class ObjectClickerManager : MonoBehaviour
     {
         if (!PreviouslyHovered) { return false; }
         ObjectClickable PreviousObjClickable = PreviouslyHovered.GetComponent<ObjectClickable>();
+        if (!PreviousObjClickable)
+        {
+            return false;
+        }
 
         return PreviouslyHovered && PreviousObjClickable.isHovered;
     }

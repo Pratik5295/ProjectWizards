@@ -43,6 +43,7 @@ public class ObjectClickable : MonoBehaviour
 
     public void HoveredObject()
     {
+        if (_ghosting == null) { return; }
         if (_ghosting.ghostingIsActive)
         {
             return;
@@ -53,6 +54,7 @@ public class ObjectClickable : MonoBehaviour
     }
     public void UnhoveredObject()
     {
+        if (_ghosting == null) { return; }
         if (_ghosting.ghostingIsActive && !isHovered){ return;}
         isHovered = false;
         _ghosting.isHovered = false;
@@ -61,28 +63,14 @@ public class ObjectClickable : MonoBehaviour
 
     public void ClickedObject()
     {
-        switch (_ghosting.ghostingIsActive)
+        if (_ghosting == null) { return; }
+        if (_ghosting.isHovered)
         {
-            case true:
-                if (_ghosting.isHovered)
-                {
-                    _ghosting.ghostingIsActive = false;
-                    return;
-                }
-
-                OnDisableClick.Invoke();
-                break;
-            
-            case false:
-                if (_ghosting.isHovered)
-                {
-                    _ghosting.ghostingIsActive = true;
-                    return;
-                }
-                OnEnableClick.Invoke();
-                break;
+            _ghosting.ghostingIsActive = false;
+            OnEnableClick.Invoke();
+            return;
         }
-
+        OnDisableClick.Invoke();
     }
 
     public bool ToggleValidity()
