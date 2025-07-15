@@ -33,6 +33,11 @@ namespace Team.Gameplay.TurnSystem
         {
 
         }
+
+        private void OnDestroy()
+        {
+            characterObject.OnTurnComplete -= CompleteTurn;
+        }
         #endregion
 
         #region Public Methods
@@ -80,6 +85,7 @@ namespace Team.Gameplay.TurnSystem
             if (_turnCompletion != null && !_turnCompletion.Task.IsCompleted)
             {
                 _turnCompletion.SetResult(true);
+                Debug.Log($"Pratik Complete: {gameObject.name}");
             }
         }
 

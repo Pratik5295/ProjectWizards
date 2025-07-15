@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 1811442762805766320}
   - component: {fileID: 2963982558421388748}
   - component: {fileID: 6828354755517443064}
+  - component: {fileID: 8049670475271076699}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -175,6 +176,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8049670475271076699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4525567847853922137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e98fb4d3c1ade7b419aab66f6c176107, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineColor: {r: 0.990566, g: 0.042052314, b: 0.61758155, a: 1}
+  outlineWidth: 4
 --- !u!1 &5150221880546262881
 GameObject:
   m_ObjectHideFlags: 0
@@ -439,9 +454,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiCharacter: {fileID: 5634161330019464301}
-  _bodyMeshes:
-  - {fileID: 6828354755517443064}
-  outlineMat: {fileID: 2100000, guid: 40dc7e7a8d152e44ea3f8985978d3896, type: 2}
   materialArray: []
 --- !u!114 &8463217217815917781
 MonoBehaviour:

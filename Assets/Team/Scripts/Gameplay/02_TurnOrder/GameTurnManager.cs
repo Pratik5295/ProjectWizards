@@ -551,6 +551,7 @@ namespace Team.Managers
                         gameCard?.MakeInteractable();
                     }
 
+                  
                     await turn.Undo();
                 }
             }

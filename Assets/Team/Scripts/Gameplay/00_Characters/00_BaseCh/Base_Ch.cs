@@ -312,7 +312,11 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
             }
         }
 
-        OnTurnComplete?.Invoke();
+        if (HistoryStack.Count == 0)
+        {
+            OnTurnComplete?.Invoke();
+            return;
+        }
     }
 
     public void UndoMovement()
