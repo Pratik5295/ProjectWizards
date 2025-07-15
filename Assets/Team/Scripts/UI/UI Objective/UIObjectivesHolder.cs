@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Team.Gameplay.ObjectiveSystem;
+using TMPro;
 using UnityEngine;
 
 namespace Team.UI
@@ -10,15 +11,23 @@ namespace Team.UI
         private GameObject uiObjectivePrefab;
 
         [SerializeField]
+        private TextMeshProUGUI levelTitleText;
+
+        [SerializeField]
         private Transform objectivesHolder;
 
         public Dictionary<GameObjectiveData, UIObjective> UIObjectivesMap = new Dictionary<GameObjectiveData, UIObjective>();
+
+        public void SetLevelTitle(string _title)
+        {
+            levelTitleText.text = _title;
+        }
 
         public void AddObjective(GameObjectiveData _data)
         {
             var spawnedObject = Instantiate(uiObjectivePrefab, objectivesHolder);
             var uiObjective = spawnedObject.GetComponent<UIObjective>();
-            uiObjective.Populate(_data.ObjectiveName);
+            uiObjective.Populate(_data);
 
             UIObjectivesMap.Add(_data, uiObjective);
         }

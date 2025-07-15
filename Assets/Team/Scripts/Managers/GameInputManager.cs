@@ -23,6 +23,8 @@ public class GameInputManager : MonoBehaviour
     public bool IsDragging => _isDragging;
     public bool IsClick { get; private set; }
 
+    public bool IsRightClick;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -41,6 +43,8 @@ public class GameInputManager : MonoBehaviour
     private void Update()
     {
         HandleClickAndDrag();
+
+        IsRightClick = _inputActions.UI.RightClick.IsPressed();
     }
 
     private void LateUpdate()
