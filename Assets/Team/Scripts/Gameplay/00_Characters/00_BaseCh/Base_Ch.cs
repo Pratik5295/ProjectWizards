@@ -6,6 +6,8 @@ using UnityEngine;
 using Team.GameConstants;
 using Team.UI;
 using static Team.GameConstants.MetaConstants;
+using Team.Data;
+using Team.Managers;
 
 [System.Serializable]
 public class PlayerMove
@@ -21,6 +23,9 @@ public class PlayerMove
 [DefaultExecutionOrder(2)]
 public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbility, IDestroyable
 {
+    [SerializeField]
+    private CharacterDataSO characterData;  //The SO file that will be used to update Info Panel
+
     [Header("Enumerations")]
     [SerializeField] private Enum_CharacterState CharState = Enum_CharacterState.Alive;
 
@@ -96,11 +101,17 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
     #region Ghosting Section
 
-    [Space(5)]
     [Header("Ghosting Section")]
 
+    public ObjectClickable GhostManager
+    {
+        get; private set;
+    }
+
     [SerializeField]
-    private GenericGhosting _ghosting;
+    public GenericGhosting _ghosting;
+
+    public bool IsGhosting = false;
 
 
     #endregion
@@ -140,6 +151,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         startingDirection = _startingDirection;
         ResetRotationToStart();
 
+        GhostManager = GetComponent<ObjectClickable>();
 
 
         transform.position = new Vector3(_currentTile.TilePosition.x, _currentTile.TilePosition.y + ySpawnOffset, _currentTile.TilePosition.z);
@@ -150,8 +162,6 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
     void Start()
     {
-        //InitialiseCharacter(_currentTileID, Enum_GridDirection.NORTH);
-
         ref_gridManager = GridManager.Instance;
     }
 
@@ -261,7 +271,6 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
             }
 
             transform.position = new Vector3(Mathf.Lerp(transform.position.x, targetPosition.x, lerpAmount), positionYLerped, Mathf.Lerp(transform.position.z, targetPosition.z, lerpAmount));
-            //transform.position = Vector3.Lerp(positionYLerped, targetPosition, lerpAmount);
 
             yield return null;
         }
@@ -385,6 +394,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         {
             case Enum_ProjectileType.Fireball:
                 KillCharacter();
+                AudioManager.instance.PlayOneShot(FMODEvents.instance.s_death, this.transform.position);
                 break;
 
             case Enum_ProjectileType.NonLethalRound:
@@ -449,6 +459,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     {
         if (_ghosting == null) return;
 
+        //GhostManager.isToggled = _value;
         _ghosting.SetGhosting(_value);
     }
 
@@ -456,7 +467,15 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     {
         if (_ghosting == null) return;
 
+        IsGhosting = !IsGhosting;
+        //GhostManager.isToggled = IsGhosting;
         _ghosting.toggleGhosting();
+
+        if (_ghosting.ghostingIsActive)
+        {
+            //Populate it on ghosting is true
+            UIManager.Instance.UpdateInfoPanel(characterData.Data);
+        }
     }
 
     #endregion

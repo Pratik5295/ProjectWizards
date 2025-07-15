@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Team.GameConstants;
 using UnityEngine;
 using static Team.GameConstants.MetaConstants;
 
@@ -33,6 +32,11 @@ namespace Team.UI
         public UIScreen CurrentScreen => currentScreen;
 
         private Dictionary<GameScreen, UIScreen> screenMap = new();
+
+        [SerializeField]
+        private UIGameScreen gameScreen;
+
+        public UIGameScreen GameScreen => gameScreen;
 
         private void Awake()
         {

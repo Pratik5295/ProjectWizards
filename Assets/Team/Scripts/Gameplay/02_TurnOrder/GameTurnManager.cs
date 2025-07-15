@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Team.Gameplay.ObjectiveSystem;
 using Team.Gameplay.TurnSystem;
@@ -7,12 +8,13 @@ using Team.GameConstants;
 using UnityEngine;
 using Team.Gameplay.GridSystem;
 using Team.UI.Gameplay;
+using UnityEngine.Rendering;
 
 namespace Team.GameConstants
 {
     public static partial class MetaConstants
     {
-        public const float PauseBetweenTurn = 0.5f;
+        public const float PauseBetweenTurn = 2f;
     }
 }
 
@@ -30,9 +32,10 @@ namespace Team.Managers
 
         public List<GameObject> DestroyedObjects = new List<GameObject>();
         public List<GameObject> Obstacles = new List<GameObject>();
+        public List<GridTile> ChangedTiles = new List<GridTile>();
 
         public List<GameObject> originalOrder = new List<GameObject>();
-        public List<GameObject> currentTurnOrder = new List<GameObject>(); //This will be used to reset the Queue
+        public List<GameObject> currentTurnOrder = new List<GameObject>();
 
         [SerializeField]
         private TurnHolder turnHolder;
@@ -40,22 +43,28 @@ namespace Team.Managers
         [Space(5)]
         [Header("Breakpoint System Variables")]
         [SerializeField]
-        private GameBreakpoint breaker; //Reference to the breaker in game turn order
+        private GameBreakpoint breaker;
         [SerializeField]
         private int breakerIndex = 0;
         [SerializeField]
-        private bool breakpoint = false;    //Breakpoint will be set at runtime by the level
+        private bool breakpoint = false;
         [SerializeField]
-        private bool playedTillBreaker = false;    //Will be set to true after first set till breakpoint is played
+        private bool playedTillBreaker = false;
 
-
-        public bool HasCharacterTurns => turnQueue.Count > 0;
-
+        public bool HasCharacterTurns => turnQueue?.Count > 0;
         private bool isQueueLoaded = false;
 
+        // Cancellation token for managing async operations
+        private CancellationTokenSource _operationCancellationTokenSource;
+        private readonly object _lockObject = new object();
+
+        // State tracking for preventing race conditions
+        private bool _isProcessingTurns = false;
+        private bool _isResetting = false;
+
         public Action OnTurnsProcessingEvent;
-        public Action OnAllTurnsCompleted;  //TODO: Update this to include the round integer
-        public Action OnResetLastTurnCompleted; //TODO: To include which turn count was the round reset to
+        public Action OnAllTurnsCompleted;
+        public Action OnResetLastTurnCompleted;
         public Action OnPlayedTillBreakpoint;
         #endregion
 
@@ -66,11 +75,24 @@ namespace Team.Managers
             if (Instance == null)
             {
                 Instance = this;
+                InitializeManager();
             }
             else
             {
                 Destroy(gameObject);
             }
+        }
+
+        private void OnDestroy()
+        {
+            CancelCurrentOperations();
+        }
+
+        private void InitializeManager()
+        {
+            turnQueue = new Queue<GameTurn>();
+            _historyStack = new Stack<GameTurn>();
+            _operationCancellationTokenSource = new CancellationTokenSource();
         }
 
         #endregion
@@ -80,50 +102,74 @@ namespace Team.Managers
         public void HasBreakpoint(bool _hasBreakPoint)
         {
             breakpoint = _hasBreakPoint;
-
-            breaker.gameObject.SetActive(breakpoint);
+            if (breaker != null)
+            {
+                breaker.gameObject.SetActive(breakpoint);
+            }
         }
 
-        public async Task LoadQueue()
+        public async Task LoadQueueAsync(CancellationToken cancellationToken = default)
         {
+            if (_isResetting) return;
+
             LoadObstacleData();
-            breakerIndex = breaker.transform.GetSiblingIndex();
+            breakerIndex = breaker != null ? breaker.transform.GetSiblingIndex() : 0;
 
-            if (turnQueue == null)
+            lock (_lockObject)
             {
-                turnQueue = new Queue<GameTurn>();
-            }
-            else
-            {
-                turnQueue.Clear();
+                turnQueue?.Clear();
+                if (turnQueue == null)
+                {
+                    turnQueue = new Queue<GameTurn>();
+                }
             }
 
-            //Wait till the end of frame
+            // Wait for end of frame
             await Task.Yield();
+
+            if (cancellationToken.IsCancellationRequested) return;
+
             foreach (var unit in currentTurnOrder)
             {
-                if (unit.TryGetComponent<GameTurn>(out var gameTurn))
+                if (cancellationToken.IsCancellationRequested) return;
+
+                if (unit != null && unit.TryGetComponent<GameTurn>(out var gameTurn))
                 {
-                    turnQueue.Enqueue(gameTurn);
+                    lock (_lockObject)
+                    {
+                        turnQueue.Enqueue(gameTurn);
+                    }
                 }
             }
 
             isQueueLoaded = true;
         }
 
-        public async Task LoadQueueFromIndex(int index)
+        public async Task LoadQueueFromIndexAsync(int index, CancellationToken cancellationToken = default)
         {
+            if (_isResetting) return;
+
             LoadObstacleData();
 
-            turnQueue.Clear();
+            lock (_lockObject)
+            {
+                turnQueue?.Clear();
+            }
 
             await Task.Yield();
 
+            if (cancellationToken.IsCancellationRequested) return;
+
             for (int i = index; i < currentTurnOrder.Count; i++)
             {
-                if (currentTurnOrder[i].TryGetComponent<GameTurn>(out var gameTurn))
+                if (cancellationToken.IsCancellationRequested) return;
+
+                if (currentTurnOrder[i] != null && currentTurnOrder[i].TryGetComponent<GameTurn>(out var gameTurn))
                 {
-                    turnQueue.Enqueue(gameTurn);
+                    lock (_lockObject)
+                    {
+                        turnQueue.Enqueue(gameTurn);
+                    }
                 }
             }
 
@@ -132,46 +178,74 @@ namespace Team.Managers
 
         public void EmptyQueue()
         {
-            //Clear history stack
-            _historyStack.Clear();
-
-            if (turnQueue != null)
+            lock (_lockObject)
             {
-                turnQueue.Clear();
+                _historyStack?.Clear();
+                turnQueue?.Clear();
+                originalOrder?.Clear();
+                currentTurnOrder?.Clear();
+                isQueueLoaded = false;
             }
-            originalOrder.Clear();
-            currentTurnOrder.Clear();
-
-            isQueueLoaded = false;
         }
 
         public void ForceRebuildTurns()
         {
-            if (turnHolder.transform.childCount == 0)
+            if (turnHolder?.transform.childCount == 0)
             {
                 Debug.LogError("Character turns are missing");
                 return;
             }
 
-            currentTurnOrder.Clear();
-            for (int i = 0; i < turnHolder.transform.childCount; i++)
+            lock (_lockObject)
             {
-                currentTurnOrder.Add(turnHolder.transform.GetChild(i).gameObject);
+                currentTurnOrder.Clear();
+                for (int i = 0; i < turnHolder.transform.childCount; i++)
+                {
+                    var child = turnHolder.transform.GetChild(i);
+                    if (child != null)
+                    {
+                        currentTurnOrder.Add(child.gameObject);
+                    }
+                }
             }
         }
 
         public void AddCharacterToTurnOrder(GameObject _turnObject)
         {
-            if (originalOrder.Contains(_turnObject)) return;
-            originalOrder.Add(_turnObject);
+            if (_turnObject == null) return;
 
-            if (currentTurnOrder.Contains(_turnObject)) return;
-            currentTurnOrder.Add(_turnObject);
+            lock (_lockObject)
+            {
+                if (!originalOrder.Contains(_turnObject))
+                {
+                    originalOrder.Add(_turnObject);
+                }
+
+                if (!currentTurnOrder.Contains(_turnObject))
+                {
+                    currentTurnOrder.Add(_turnObject);
+                }
+            }
         }
 
         public void AddDestroyedObject(GameObject _destroyedObject)
         {
-            DestroyedObjects.Add(_destroyedObject);
+            if (_destroyedObject == null) return;
+
+            lock (_lockObject)
+            {
+                DestroyedObjects.Add(_destroyedObject);
+            }
+        }
+
+        public void AddChangedTile(GridTile _changedTile)
+        {
+            if (_changedTile == null) return;
+
+            lock (_lockObject)
+            {
+                ChangedTiles.Add(_changedTile);
+            }
         }
 
         #endregion
@@ -183,11 +257,15 @@ namespace Team.Managers
             Obstacles.Clear();
 
             var gridManager = GridManager.Instance;
-            if (gridManager.Obstacles.Count == 0) return;
-
-            foreach (var obs in gridManager.Obstacles)
+            if (gridManager?.Obstacles?.Count > 0)
             {
-                Obstacles.Add(obs);
+                foreach (var obs in gridManager.Obstacles)
+                {
+                    if (obs != null)
+                    {
+                        Obstacles.Add(obs);
+                    }
+                }
             }
         }
 
@@ -195,268 +273,385 @@ namespace Team.Managers
         {
             foreach (var obs in Obstacles)
             {
-                if (obs.TryGetComponent<ObstacleData>(out var obsData))
+                if (obs != null && obs.TryGetComponent<Base_Obstacle>(out var obsData))
                 {
                     obsData.ResetToStart();
                 }
             }
         }
 
+        private void ResetTileData()
+        {
+            FireSpread.Instance?.ResetOilTiles();
+        }
+
         private void ResetBreakpointSystem()
         {
-            breakpoint = false;
             playedTillBreaker = false;
             breakerIndex = 0;
         }
 
+        private void CancelCurrentOperations()
+        {
+            _operationCancellationTokenSource?.Cancel();
+            _operationCancellationTokenSource?.Dispose();
+            _operationCancellationTokenSource = new CancellationTokenSource();
+        }
+
         #endregion
 
-        #region Context Menu Methods
-
+        #region Turn Execution Methods
 
         [ContextMenu("Play All Turns")]
         public async void PlayTurns()
         {
+            if (_isProcessingTurns || _isResetting) return;
+
+            _isProcessingTurns = true;
             OnTurnsProcessingEvent?.Invoke();
 
+            try
+            {
+                await PlayTurnsAsync(_operationCancellationTokenSource.Token);
+            }
+            catch (OperationCanceledException)
+            {
+                Debug.Log("Turn processing was cancelled");
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"Error during turn processing: {ex.Message}");
+            }
+            finally
+            {
+                _isProcessingTurns = false;
+            }
+        }
+
+        private async Task PlayTurnsAsync(CancellationToken cancellationToken)
+        {
             if (!breakpoint)
             {
-                PlayAllTurns();
+                await PlayAllTurnsAsync(cancellationToken);
             }
             else
             {
-                //Load the turn order in queue
-                if (!playedTillBreaker)
+                await PlayBreakpointTurnsAsync(cancellationToken);
+            }
+        }
+
+        private async Task PlayBreakpointTurnsAsync(CancellationToken cancellationToken)
+        {
+            if (!playedTillBreaker)
+            {
+                await LoadQueueAsync(cancellationToken);
+                if (cancellationToken.IsCancellationRequested) return;
+
+                bool playAllTurns = IsBreakerAtExtremes();
+                if (playAllTurns)
                 {
-                    //Load the queue
-                    await LoadQueue();
-
-                    //1. If breaker is at extremes
-                    bool playAllTurns = IsBreakerAtExtremes();
-                    if (playAllTurns)
-                    {
-                        PlayAllTurns();
-                    }
-                    else
-                    {
-                        //2. If first section of the game
-
-                        //Check if it is a breakpoint level
-                        int currentIndex = 0;
-
-                        while (currentIndex < breakerIndex)
-                        {
-                            Debug.Log($"Runner index: {currentIndex}");
-                            await RunNextTurn();
-                            currentIndex++;
-                        }
-
-                        playedTillBreaker = true;
-
-                        OnPlayedTillBreakpoint?.Invoke();
-
-                        turnHolder.BreakpointInitiate(currentIndex);
-
-                        breaker.MakeUnInteractable();
-                    }
+                    await PlayAllTurnsAsync(cancellationToken);
                 }
                 else
                 {
-                    //3. Last section of the game 
-
-                    //Check if it is a breakpoint level
-                    int currentIndex = breakerIndex;
-
-                    //Redo the queue based on current order
-                    await LoadQueueFromIndex(currentIndex);
-
-                    while (turnQueue.Count > 0)
-                    {
-                        Debug.Log($"Runner index: {currentIndex}");
-                        await RunNextTurn();
-                        currentIndex++;
-                    }
-
-                    Debug.Log("Completed the entire breakpoint system loop?");
-
-                    OnAllTurnsCompleted?.Invoke();
-
-                    turnHolder.Reset();
-
-                    breaker.MakeInteractable();
+                    await PlayFirstSectionAsync(cancellationToken);
                 }
             }
+            else
+            {
+                await PlayLastSectionAsync(cancellationToken);
+            }
+        }
 
+        private async Task PlayFirstSectionAsync(CancellationToken cancellationToken)
+        {
+            int currentIndex = 0;
+
+            while (currentIndex < breakerIndex && !cancellationToken.IsCancellationRequested)
+            {
+                Debug.Log($"Runner index: {currentIndex}");
+                await RunNextTurnAsync(cancellationToken);
+                currentIndex++;
+            }
+
+            if (!cancellationToken.IsCancellationRequested)
+            {
+                playedTillBreaker = true;
+                OnPlayedTillBreakpoint?.Invoke();
+                turnHolder?.BreakpointInitiate(currentIndex);
+                breaker?.MakeUnInteractable();
+            }
+        }
+
+        private async Task PlayLastSectionAsync(CancellationToken cancellationToken)
+        {
+            int currentIndex = breakerIndex;
+
+            await LoadQueueFromIndexAsync(currentIndex, cancellationToken);
+            if (cancellationToken.IsCancellationRequested) return;
+
+            while (HasCharacterTurns && !cancellationToken.IsCancellationRequested)
+            {
+                Debug.Log($"Runner index: {currentIndex}");
+                await RunNextTurnAsync(cancellationToken);
+                currentIndex++;
+            }
+
+            if (!cancellationToken.IsCancellationRequested)
+            {
+                Debug.Log("Completed the entire breakpoint system loop");
+                OnAllTurnsCompleted?.Invoke();
+                turnHolder?.Reset();
+                breaker?.MakeInteractable();
+            }
         }
 
         private bool IsBreakerAtExtremes()
         {
-            //Check if the breakpoint index is at extremes, 0 or last. If yes then ignore it
-            bool playAllTurns = breakerIndex == 0 || breakerIndex >= turnQueue.Count; //Turn Queue doesnt contain the breaker
-            Debug.Log($"Play Turns is at extreme? {playAllTurns} and turn Queue Count: {turnQueue.Count}");
-
+            bool playAllTurns = breakerIndex == 0 || breakerIndex >= (turnQueue?.Count ?? 0);
+            Debug.Log($"Play Turns is at extreme? {playAllTurns} and turn Queue Count: {turnQueue?.Count ?? 0}");
             return playAllTurns;
         }
 
-
-
-        private async void PlayAllTurns()
+        private async Task PlayAllTurnsAsync(CancellationToken cancellationToken)
         {
-            //Loads all turns and plays them
-            await LoadQueue();
+            await LoadQueueAsync(cancellationToken);
+            if (cancellationToken.IsCancellationRequested) return;
 
-            while (turnQueue.Count > 0)
+            while (HasCharacterTurns && !cancellationToken.IsCancellationRequested)
             {
-                await RunNextTurn();
+                await RunNextTurnAsync(cancellationToken);
             }
 
-            Debug.Log("All turns completed.");
-
-            OnAllTurnsCompleted?.Invoke();
+            if (!cancellationToken.IsCancellationRequested)
+            {
+                Debug.Log("All turns completed.");
+                OnAllTurnsCompleted?.Invoke();
+            }
         }
 
-        private async Task RunNextTurn()
+        private async Task RunNextTurnAsync(CancellationToken cancellationToken)
         {
-            GameTurn turn = turnQueue.Dequeue();
-           if(turn.TryGetComponent<UIGameCard>(out var gameCard))
+            GameTurn turn = null;
+
+            lock (_lockObject)
+            {
+                if (turnQueue?.Count > 0)
+                {
+                    turn = turnQueue.Dequeue();
+                }
+            }
+
+            if (turn == null || cancellationToken.IsCancellationRequested) return;
+
+            UIGameCard gameCard = turn.GetComponent<UIGameCard>();
 
             if (turn.IsAlive())
             {
                 await turn.PerformAsync();
+                if (cancellationToken.IsCancellationRequested) return;
 
-                await Task.Delay(TimeSpan.FromSeconds(MetaConstants.PauseBetweenTurn));
+                await Task.Delay(TimeSpan.FromSeconds(MetaConstants.PauseBetweenTurn), cancellationToken);
+                if (cancellationToken.IsCancellationRequested) return;
 
                 Debug.Log($"Executing: {turn.name}");
 
-                //Turn was performed by the character, update the stack
-                _historyStack.Push(turn);
+                lock (_lockObject)
+                {
+                    _historyStack.Push(turn);
+                }
 
-                //Turn is done, make it uninteractable
                 gameCard?.MakeUninteractable();
             }
             else
             {
                 Debug.Log($"{turn.name} Move character is dead, turn skipped");
-
                 gameCard?.MakeUninteractable();
             }
-        }
-
-        [ContextMenu("Reset Turns")]
-        public async void ResetAllTurns()
-        {
-            OnTurnsProcessingEvent?.Invoke();
-
-
-            //Reset all moves performed by the characters
-            while (_historyStack.Count > 0)
-            {
-                GameTurn turn = _historyStack.Pop();
-                if (turn.TryGetComponent<UIGameCard>(out var gameCard))
-                {
-                    gameCard?.MakeInteractable();
-                }
-               
-                await turn.Undo();
-            }
-
-            //Reset the turn order to original ui order
-            currentTurnOrder.Clear();
-            for (int i = 0; i < originalOrder.Count; i++)
-            {
-                var turn = originalOrder[i];
-                currentTurnOrder.Add(turn);
-                turn.transform.SetSiblingIndex(i);
-            }
-
-
-            ResetBreaker();
-            Invoke(nameof(DelayReset), 2f);
-
-
-        }
-
-        private void DelayReset()
-        {
-
-            ResetDestroyedEntities();
-            //Set All Objectives to be incomplete
-            LevelObjectiveManager.Instance.ResetAllObjectives();
-
-            ResetObstacles();
-
-            //Reset all characters to their saved start position
-            ResetCharactersToStart();
-
-
-            //Notify that undo was completed
-            OnResetLastTurnCompleted?.Invoke();
-
-            isQueueLoaded = false;
-
-
-
-            Debug.Log("Completed reset");
         }
 
         [ContextMenu("Play Next Turn")]
         public async void PlayNextTurn()
         {
+            if (_isProcessingTurns || _isResetting) return;
+
+            _isProcessingTurns = true;
             OnTurnsProcessingEvent?.Invoke();
 
-            if (!isQueueLoaded)
+            try
             {
-                await LoadQueue();
-            }
-
-            if (turnQueue.Count > 0)
-            {
-                GameTurn turn = turnQueue.Dequeue();
-
-                if (turn.IsAlive())
+                if (!isQueueLoaded)
                 {
-                    await turn.PerformAsync();
+                    await LoadQueueAsync(_operationCancellationTokenSource.Token);
                 }
-                Debug.Log("Current turn has been played");
 
-            }
-            else
-            {
-                Debug.Log("All turns have been played");
-                isQueueLoaded = false;
-
-                OnAllTurnsCompleted?.Invoke();
-            }
-
-
-
-        }
-
-        public void ResetDestroyedEntities()
-        {
-            for (int i = 0; i < DestroyedObjects.Count; i++)
-            {
-                if (DestroyedObjects[i].CompareTag(MetaConstants.CharacterTag))
+                if (HasCharacterTurns)
                 {
-                    DestroyedObjects[i].GetComponent<Base_Ch>().EnableObject();
-                    DestroyedObjects[i].GetComponent<Base_Ch>().resetCharState(true);
-                    DestroyedObjects[i].GetComponent<Base_Ch>().UndoAction();
+                    await RunNextTurnAsync(_operationCancellationTokenSource.Token);
+                    Debug.Log("Current turn has been played");
                 }
                 else
                 {
-                    DestroyedObjects[i].GetComponent<Base_Obstacle>().EnableObject();
-                    if (DestroyedObjects[i].GetComponent<MoveableObstacle>())
+                    Debug.Log("All turns have been played");
+                    isQueueLoaded = false;
+                    OnAllTurnsCompleted?.Invoke();
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                Debug.Log("Next turn processing was cancelled");
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"Error during next turn processing: {ex.Message}");
+            }
+            finally
+            {
+                _isProcessingTurns = false;
+            }
+        }
+
+        #endregion
+
+        #region Reset Methods
+
+        [ContextMenu("Reset Turns")]
+        public async void ResetAllTurns()
+        {
+            if (_isResetting) return;
+
+            _isResetting = true;
+            CancelCurrentOperations();
+            OnTurnsProcessingEvent?.Invoke();
+
+            try
+            {
+                await ResetAllTurnsAsync();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"Error during reset: {ex.Message}");
+            }
+            finally
+            {
+                _isResetting = false;
+            }
+        }
+
+        private async Task ResetAllTurnsAsync()
+        {
+            // Reset all moves performed by the characters
+            while (_historyStack.Count > 0)
+            {
+                GameTurn turn = _historyStack.Pop();
+                if (turn != null)
+                {
+                    if (turn.TryGetComponent<UIGameCard>(out var gameCard))
                     {
-                        //DestroyedObjects[i].GetComponent<MoveableObstacle>().resetCharState(true);
-                        DestroyedObjects[i].GetComponent<MoveableObstacle>().UndoAction();
+                        gameCard?.MakeInteractable();
                     }
-                    else
+
+                    await turn.Undo();
+                }
+            }
+
+            // Reset the turn order to original ui order
+            lock (_lockObject)
+            {
+                currentTurnOrder.Clear();
+                for (int i = 0; i < originalOrder.Count; i++)
+                {
+                    var turn = originalOrder[i];
+                    if (turn != null)
                     {
-                        DestroyedObjects[i].GetComponent<ObstacleData>().EnableObject();
-                        if (DestroyedObjects[i].GetComponent<Base_Ch>())
+                        currentTurnOrder.Add(turn);
+                        turn.transform.SetSiblingIndex(i);
+                    }
+                }
+            }
+
+            ResetBreaker();
+
+            // Use async delay instead of Invoke
+            await Task.Delay(TimeSpan.FromSeconds(2f));
+
+            await CompleteResetAsync();
+        }
+
+        private async Task CompleteResetAsync()
+        {
+            // All Unity operations must stay on main thread
+            ResetDestroyedEntities();
+
+            // Reset objectives
+            LevelObjectiveManager.Instance?.ResetAllObjectives();
+
+            ResetObstacles();
+
+            // Reset characters
+            ResetCharactersToStart();
+
+            // Reset tile data
+            ResetTileData();
+
+            // Reset changed tiles
+            ResetChangedTiles();
+
+            //Reset breakpoint system
+            ResetBreakpointSystem();
+
+            OnResetLastTurnCompleted?.Invoke();
+            isQueueLoaded = false;
+
+            Debug.Log("Completed reset");
+
+            // Add a small delay to ensure all operations complete
+            await Task.Yield();
+        }
+
+
+        private void ResetDestroyedEntities()
+        {
+            for (int i = DestroyedObjects.Count - 1; i >= 0; i--)
+            {
+                var destroyedObj = DestroyedObjects[i];
+                if (destroyedObj == null) continue;
+
+                if (destroyedObj.CompareTag(MetaConstants.CharacterTag))
+                {
+                    var character = destroyedObj.GetComponent<Base_Ch>();
+                    if (character != null)
+                    {
+                        character.EnableObject();
+                        character.resetCharState(true);
+                        character.UndoAction();
+                    }
+                }
+                else
+                {
+                    var obstacle = destroyedObj.GetComponent<Base_Obstacle>();
+                    if (obstacle != null)
+                    {
+                        obstacle.EnableObject();
+
+                        var moveable = destroyedObj.GetComponent<MoveableObstacle>();
+                        if (moveable != null)
                         {
-                            DestroyedObjects[i].GetComponent<Base_Ch>().resetCharState(true);
-                            DestroyedObjects[i].GetComponent<Base_Ch>().UndoAction();
+                            moveable.UndoAction();
+                        }
+                        else
+                        {
+                            var obstacleData = destroyedObj.GetComponent<ObstacleData>();
+                            if (obstacleData != null)
+                            {
+                                obstacleData.EnableObject();
+                                var character = destroyedObj.GetComponent<Base_Ch>();
+                                if (character != null)
+                                {
+                                    character.resetCharState(true);
+                                    character.UndoAction();
+                                }
+                            }
                         }
                     }
                 }
@@ -464,18 +659,28 @@ namespace Team.Managers
             DestroyedObjects.Clear();
         }
 
-        private void ResetCharactersToStart()
+        private void ResetChangedTiles()
         {
-            CharacterManager.Instance.ResetAllCharacters();
+            foreach (var tile in ChangedTiles)
+            {
+                tile?.ResetTypeToDefault();
+            }
+            ChangedTiles.Clear();
         }
 
+        private void ResetCharactersToStart()
+        {
+            CharacterManager.Instance?.ResetAllCharacters();
+        }
 
         private void ResetBreaker()
         {
-            breaker.transform.SetAsFirstSibling();
+            if (breaker != null)
+            {
+                breaker.transform.SetAsFirstSibling();
+                breaker.MakeInteractable();
+            }
             breakerIndex = 0;
-
-            breaker.MakeInteractable();
         }
 
         #endregion
@@ -484,9 +689,7 @@ namespace Team.Managers
 
         public void OnCharactersLoaded()
         {
-            turnHolder.InitializeComplete();
-
-            //Notify that undo was completed/Or turns have been loaded
+            turnHolder?.InitializeComplete();
             OnResetLastTurnCompleted?.Invoke();
         }
 

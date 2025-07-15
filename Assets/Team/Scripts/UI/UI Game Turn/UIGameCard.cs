@@ -2,6 +2,7 @@ using Team.Data;
 using Team.Gameplay.Characters;
 using Team.Managers;
 using TMPro;
+using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -28,11 +29,11 @@ namespace Team.UI.Gameplay
         [SerializeField]
         private Vector3 selectedScale = new Vector3(1.25f, 1.25f, 1.25f);
 
+        [SerializeField]
+        private TextMeshProUGUI turnIndexNumber; //This will be turned to image later in future
+
         [Space(5)]
         [Header("Card Components")]
-
-        [SerializeField]
-        private CanvasGroup canvasGroup;
 
         [SerializeField]
         private Color interactableColor;
@@ -43,13 +44,19 @@ namespace Team.UI.Gameplay
         #region Unity Methods
         protected void Start()
         {
+            _turnHolder.OnTurnOrderUpdatedEvent += UpdateTurnIndexText;
             OnSiblingIndexUpdatedEvent += OnSiblingIndexUpdatedEventHandler;
+
+            UpdateTurnIndexText();
         }
 
         private void OnDestroy()
         {
             OnSiblingIndexUpdatedEvent -= OnSiblingIndexUpdatedEventHandler;
+            _turnHolder.OnTurnOrderUpdatedEvent -= UpdateTurnIndexText;
         }
+
+
         #endregion
 
         #region Event Listeners
@@ -57,7 +64,14 @@ namespace Team.UI.Gameplay
         {
             // Notify turn manager of updated order
             GameTurnManager.Instance.ForceRebuildTurns();
+            
         }
+
+        private void UpdateTurnIndexText()
+        {
+            turnIndexNumber.text = transform.GetSiblingIndex().ToString();
+        }
+
         #endregion
 
         #region Public Methods

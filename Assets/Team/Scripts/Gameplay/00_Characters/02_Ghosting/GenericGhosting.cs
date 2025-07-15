@@ -4,7 +4,7 @@ public class GenericGhosting : MonoBehaviour
 {
     protected Transform ghostingContent;
 
-    protected bool ghostingIsActive;
+    public bool ghostingIsActive;
 
     [SerializeField] private GameObject _ghostingEffect;
     protected GameObject ghostingEffectRef;
@@ -27,8 +27,10 @@ public class GenericGhosting : MonoBehaviour
     [ContextMenu("Toggle Ghosting Effect")]
     public void toggleGhosting()
     {
-        if (!ghostingIsActive) { enableGhosting(); return; }
+        
+        if (!ghostingIsActive) { enableGhosting();   return; }
         disableGhosting();
+        
     }
 
     [ContextMenu("Enable Ghosting Effect")]
@@ -43,6 +45,7 @@ public class GenericGhosting : MonoBehaviour
     {
         ghostingContent?.gameObject.SetActive(false);  
         ghostingIsActive = false;
+        Debug.Log("Hello");
     }
 
     public void SetGhosting(bool _value)

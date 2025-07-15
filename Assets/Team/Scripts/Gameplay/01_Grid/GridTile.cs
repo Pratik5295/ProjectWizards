@@ -3,6 +3,8 @@ using Team.GameConstants;
 using Team.Gameplay.GridSystem;
 using UnityEditor;
 using UnityEngine.Events;
+using Team.Gameplay.GameLevelSystem;
+using Team.Managers;
 
 
 namespace Team.Gameplay.GridSystem
@@ -38,7 +40,7 @@ namespace Team.Gameplay.GridSystem
         public Vector3 TilePosition => transform.position;
 
         public GameObject tilePrefab;
-        public GameObject oilTilePrefab;
+        
         public GameObject deathTilePrefab;
         public GameObject iceTilePrefab;
 
@@ -52,26 +54,36 @@ namespace Team.Gameplay.GridSystem
                 if(tileType != value)
                 {
                     tileType = value;
+#if UNITY_EDITOR
+                    EditorSpawnTileType();
+
+#else
                     SpawnTileType();
+#endif
+
                 }
             }
         }
-        private TileType startingTileType;
+
+        [SerializeField]
+        protected TileType startingTileType;
+
+        public bool hasChangedType = false;
 
         public TileDirection Direction; //Rotation 
 
         [SerializeField]
-        private LevelTileCreator gridManager;
+        protected LevelTileCreator gridManager;
 
         [SerializeField]
-        private GameObject tileObject = null; //The created tile object
+        protected GameObject tileObject = null; //The created tile object
 
         [SerializeField] private GameObject _startingObject;
 
         [SerializeField] private UITile tileUI;
 
         [SerializeField]
-        private GameObject objectOccupyingTile;
+        protected GameObject objectOccupyingTile;
         public GameObject ObjectOccupyingTile
         {
             get { return objectOccupyingTile; }
@@ -80,7 +92,7 @@ namespace Team.Gameplay.GridSystem
         /// <summary>
         /// Initialize the tile
         /// </summary>
-        public bool Init(LevelTileCreator _tileCreator, TileID _tileId)
+        public virtual bool Init(LevelTileCreator _tileCreator, TileID _tileId, bool specificType = false)
         {
             gridManager = _tileCreator;
             TileID = _tileId;
@@ -95,7 +107,10 @@ namespace Team.Gameplay.GridSystem
             //Check if spawn tile
             if (IsTileWalkable())
             {
-                tileObject = SpawnTileObject();
+                if (!specificType)
+                {
+                    tileObject = SpawnTileObject();
+                }
 
                 //Setup each tile to be facing north at start
                 Direction = new TileDirection
@@ -116,10 +131,7 @@ namespace Team.Gameplay.GridSystem
             return Instantiate(tilePrefab, transform);
         }
 
-        private GameObject SpawnOilTileObject()
-        {
-            return Instantiate(oilTilePrefab, transform);
-        }
+        
         private GameObject SpawnDeathTileObject()
         {
             return Instantiate(deathTilePrefab, transform);
@@ -176,22 +188,63 @@ namespace Team.Gameplay.GridSystem
             EditorUtility.SetDirty(gameObject);
 #endif
         }
+
+        [ContextMenu("Set starting tile type")]
+        public void SetStartingTileType()
+        {
+            startingTileType = tileType;
+#if UNITY_EDITOR
+            EditorUtility.SetDirty(gameObject);
+#endif
+        }
         #endregion
 
-        [ExecuteInEditMode]
-        protected void SpawnTileType()
+        public virtual void SpawnTileType()
         {
             if (tileObject && tileType != TileType.OCCUPIEDTILE) 
+            {
+                Destroy(tileObject);
+                tileObject = null;
+            }
+
+            /* if(tileType == TileType.OILTILE) // Cannot do this as this will execute after tile is set to oil.
+             {
+                 LevelManager.Instance.CreatedLevel.LevelTiles.RemoveTile(this);
+                 GridTile newTile = LevelManager.Instance.CreatedLevel.LevelTiles.CreateNewTile(this);
+                 newTile.SpawnTileType();
+                 Destroy(gameObject);
+             }*/
+
+            HandleTileSpawn();
+        }
+
+        [ExecuteInEditMode]
+        protected virtual void EditorSpawnTileType()
+        {
+            if (tileObject && tileType != TileType.OCCUPIEDTILE)
             {
 #if UNITY_EDITOR
                 DestroyImmediate(tileObject);
 #endif
-                if (tileObject)
-                {
-                    Destroy(tileObject);
-                }
                 tileObject = null;
             }
+            /* if(tileType == TileType.OILTILE) // Cannot do this as this will execute after tile is set to oil.
+             {
+                 LevelManager.Instance.CreatedLevel.LevelTiles.RemoveTile(this);
+                 GridTile newTile = LevelManager.Instance.CreatedLevel.LevelTiles.CreateNewTile(this);
+                 newTile.SpawnTileType();
+                 Destroy(gameObject);
+             }*/
+
+            HandleTileSpawn();
+            if (tileType != TileType.OILTILE)
+            {
+                gridManager.DirtySaveTileChanges();
+            }
+        }
+
+        private void HandleTileSpawn()
+        {
             switch (tileType)
             {
                 case TileType.TILE:
@@ -208,7 +261,7 @@ namespace Team.Gameplay.GridSystem
                     break;
 
                 case TileType.OILTILE:
-                    tileObject = SpawnOilTileObject();
+                    gridManager.CreateNewOilTile(TileID, transform.position.x, transform.position.z);
                     break;
 
                 case TileType.ICETILE:
@@ -219,10 +272,9 @@ namespace Team.Gameplay.GridSystem
                     SpawnObjectOnTile();
                     break;
             }
-#if UNITY_EDITOR
-            EditorUtility.SetDirty(gameObject);
-#endif
         }
+
+
 
         [ContextMenu("Spawn Object Occupying Tile space")]
         public void SpawnObjectOnTile()
@@ -324,14 +376,24 @@ namespace Team.Gameplay.GridSystem
 
                 case false:
                         objectOccupyingTile = null;
+                    if (hasChangedType)
+                    {
                         SetTileType(TileType.TILE);
+                        break;
+                    }
+                    SetTileType(startingTileType);
                     break;
             }
         }
 
         public void ResetTypeToDefault()
         {
+            if(tileType == startingTileType) { return; }
+
             tileType = startingTileType;
+            hasChangedType = false;
+            Destroy(tileObject);
+            HandleTileSpawn();
         }
 
         public void ParentOccupyingObject()

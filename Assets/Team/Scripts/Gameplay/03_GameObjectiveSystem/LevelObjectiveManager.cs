@@ -128,6 +128,8 @@ namespace Team.Gameplay.ObjectiveSystem
                 }
 
                 _levelObjectives.Add(objective);
+
+                objectivesHolder.SetLevelTitle("Disciples of the Garden");
                 objectivesHolder.AddObjective(data);
 
                 // Report progress
@@ -190,7 +192,7 @@ namespace Team.Gameplay.ObjectiveSystem
             foreach (var objective in _levelObjectives)
             {
                 bool result = objective.CheckObjectiveComplete();
-                if (!result)
+                if (!result && objective.Data.Priority == ObjectivePriority.PRIMARY)   //Primary Objectives failing would result in level failure
                 {
                     levelCompleted = false;
                 }

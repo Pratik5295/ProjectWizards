@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57ef3c952f43f2148b18f31aa4ee9c25, type: 3}
+  m_Name: SO 1-06
+  m_EditorClassIdentifier: 
+  Data:
+    Stats:
+      LevelID: 5
+      LevelName: 1-06
+      State: 1
+      NextLevel: -100
+    GameLevelPrefab: {fileID: 5031299853038245827, guid: 3d442cb16caea294680b5a14475adf40, type: 3}
+    DialogueAsset: {fileID: 0}
+    HasBreakPoint: 1
+    TutorialSteps:
+    - message: Some battles involve controlling many units. You can use the Breakpoint
+        by <b>dragging it between portraits to freeze actions at your desired point
+        in time</b>.
+      uiElement: 0
+    - message: When you Play out the level, actions before the Breakpoint occur as
+        normal. <b>Actions after it are paused and can be reordered</b>. Press Play
+        again to continue the second sequence. Be careful, as Breakpoints <b>cannot
+        be moved after the first sequence</b> has occured.
+      uiElement: 1

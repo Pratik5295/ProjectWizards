@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -34,6 +35,8 @@ namespace Team.Gameplay.TurnSystem
         private GameObject selected = null;
 
         public bool HasSelected => selected != null;
+
+        public Action OnTurnOrderUpdatedEvent;
 
         [Header("Breakpoint Variable System")]
 

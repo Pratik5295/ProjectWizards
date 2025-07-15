@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57ef3c952f43f2148b18f31aa4ee9c25, type: 3}
+  m_Name: SO 2-03
+  m_EditorClassIdentifier: 
+  Data:
+    Stats:
+      LevelID: 8
+      LevelName: 02-03
+      State: 1
+      NextLevel: 9
+    GameLevelPrefab: {fileID: 6137878210451446953, guid: 7b3eecc8c3790cf4a9f9025469494161, type: 3}
+    DialogueAsset: {fileID: 0}
+    HasBreakPoint: 0
+    TutorialSteps:
+    - message: These trails of oil can be <b>engulfed in flames</b>, triggering a
+        chain reaction that destroys any unit on the tile.
+      uiElement: 0

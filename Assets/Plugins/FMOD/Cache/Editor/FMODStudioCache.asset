@@ -1,0 +1,331 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-4604689085777222185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/death
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/death
+  Guid:
+    Data1: 56632352
+    Data2: 1263064180
+    Data3: 837570739
+    Data4: 519538872
+  Banks:
+  - {fileID: 7200759810738269531}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-3889832616057464774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/projectile_fireball
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/projectile_fireball
+  Guid:
+    Data1: -1959368883
+    Data2: 1125475876
+    Data3: -1445507412
+    Data4: 122664747
+  Banks:
+  - {fileID: 7200759810738269531}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-3523607915446267771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Level 1.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/StreamingAssets/Level 1.bank
+  Name: Level 1
+  StudioPath: bank:/Level 1
+  lastModified: 638880831735242692
+  FileSizes: []
+  Exists: 1
+--- !u!114 &-437909438059279769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.strings.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/StreamingAssets/Master.strings.bank
+  Name: Master.strings
+  StudioPath: bank:/Master.strings
+  lastModified: 638880831735392299
+  FileSizes:
+  - Name: 
+    Value: 1218
+  Exists: 1
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d32cf7c32a3ed8347bac48ef5ed56d82, type: 3}
+  m_Name: FMODStudioCache
+  m_EditorClassIdentifier: 
+  EditorBanks:
+  - {fileID: -437909438059279769}
+  - {fileID: -3523607915446267771}
+  - {fileID: 3094242135668914944}
+  - {fileID: 7200759810738269531}
+  - {fileID: 3701144735789410853}
+  EditorEvents:
+  - {fileID: 6682734718934197020}
+  - {fileID: 8712155188487911797}
+  - {fileID: -4604689085777222185}
+  - {fileID: 7248193001200449640}
+  - {fileID: -3889832616057464774}
+  - {fileID: 4581783015253500192}
+  - {fileID: 2735013285647812069}
+  EditorParameters: []
+  MasterBanks:
+  - {fileID: 3094242135668914944}
+  StringsBanks:
+  - {fileID: -437909438059279769}
+  cacheVersion: 131848
+  cacheTime: 638880831736419535
+  SerializableEventsDict:
+  - key: event:/Ambience/Chapter_1_Ambience
+    index: 0
+  - key: event:/Music/Level_1_Music
+    index: 1
+  - key: event:/SFX/death
+    index: 2
+  - key: event:/SFX/projectile_wind
+    index: 3
+  - key: event:/SFX/projectile_fireball
+    index: 4
+  - key: event:/SFX/rotate
+    index: 5
+  - key: event:/System/level_select
+    index: 6
+--- !u!114 &2735013285647812069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/System/level_select
+  m_EditorClassIdentifier: 
+  Path: event:/System/level_select
+  Guid:
+    Data1: -644218180
+    Data2: 1145483882
+    Data3: -1109317725
+    Data4: 480020682
+  Banks:
+  - {fileID: 3701144735789410853}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &3094242135668914944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/StreamingAssets/Master.bank
+  Name: Master
+  StudioPath: bank:/Master
+  lastModified: 638880831735372346
+  FileSizes: []
+  Exists: 1
+--- !u!114 &3701144735789410853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/System.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/StreamingAssets/System.bank
+  Name: System
+  StudioPath: bank:/System
+  lastModified: 638880831736419535
+  FileSizes: []
+  Exists: 1
+--- !u!114 &4581783015253500192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/rotate
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/rotate
+  Guid:
+    Data1: 2002601913
+    Data2: 1119939287
+    Data3: -838304352
+    Data4: -60563257
+  Banks:
+  - {fileID: 7200759810738269531}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &6682734718934197020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Ambience/Chapter_1_Ambience
+  m_EditorClassIdentifier: 
+  Path: event:/Ambience/Chapter_1_Ambience
+  Guid:
+    Data1: -362321549
+    Data2: 1196820991
+    Data3: 1431042182
+    Data4: 47160943
+  Banks:
+  - {fileID: -3523607915446267771}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 60000
+--- !u!114 &7200759810738269531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/SFX.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/StreamingAssets/SFX.bank
+  Name: SFX
+  StudioPath: bank:/SFX
+  lastModified: 638880831736389632
+  FileSizes: []
+  Exists: 1
+--- !u!114 &7248193001200449640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/projectile_wind
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/projectile_wind
+  Guid:
+    Data1: -1141475521
+    Data2: 1257874175
+    Data3: 599559608
+    Data4: -677561165
+  Banks:
+  - {fileID: 7200759810738269531}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &8712155188487911797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/Level_1_Music
+  m_EditorClassIdentifier: 
+  Path: event:/Music/Level_1_Music
+  Guid:
+    Data1: -652939018
+    Data2: 1099750771
+    Data3: 1720102833
+    Data4: -1226067776
+  Banks:
+  - {fileID: -3523607915446267771}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 183046

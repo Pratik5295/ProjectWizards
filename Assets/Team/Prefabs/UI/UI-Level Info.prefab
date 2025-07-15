@@ -91,11 +91,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelNameText: {fileID: 5289857276969213935}
-  levelInfoData: {fileID: 0}
+  levelData: {fileID: 0}
   unlockedColor: {r: 1, g: 1, b: 1, a: 1}
-  lockedColor: {r: 0.31132078, g: 0.31132078, b: 0.31132078, a: 1}
+  completedColor: {r: 0.56737316, g: 0.990566, b: 0.2663314, a: 1}
   levelImage: {fileID: 6665249892622672576}
   button: {fileID: 7056379237552919780}
+  Status: 0
 --- !u!114 &7056379237552919780
 MonoBehaviour:
   m_ObjectHideFlags: 0

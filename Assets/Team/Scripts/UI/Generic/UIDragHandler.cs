@@ -20,11 +20,12 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     protected TurnHolder _turnHolder;
 
     public Transform originalParent;
-    private CanvasGroup canvasGroup;
-    private RectTransform rectTransform;
+    [SerializeField]
+    protected CanvasGroup canvasGroup;
+    protected RectTransform rectTransform;
     private LayoutElement layoutElement;
-    private int originalIndex;
-    private int newIndex;
+    protected int originalIndex;
+    protected int newIndex;
 
     [SerializeField]
     private float offsetX;
@@ -110,6 +111,8 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         {
             originalIndex = newIndex;
             OnSiblingIndexUpdatedEvent?.Invoke(newIndex);
+
+            _turnHolder.OnTurnOrderUpdatedEvent?.Invoke();
         }
     }
 }

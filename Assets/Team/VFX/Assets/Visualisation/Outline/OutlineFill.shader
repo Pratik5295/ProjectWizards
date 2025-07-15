@@ -1,6 +1,6 @@
 Shader "Custom/Outline Fill" {
     Properties {
-        _OutlineColor("Outline Color", Color) = (0, 0, 0, 0)
+        _OutlineColor("Outline Color", Color) = (1, 1, 1, 1) [HDR]
         _OutlineWidth("Outline Width", Range(0, 20)) = 10
     }
     SubShader {

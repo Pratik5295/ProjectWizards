@@ -330,6 +330,8 @@ namespace Team.Tool
 
                 objective.ObjectiveName = EditorGUILayout.TextField("Objective Name", objective.ObjectiveName);
 
+                objective.Priority = (ObjectivePriority)EditorGUILayout.EnumPopup("Objective Priority", objective.Priority);
+
                 // Edit list of strings for ObjectiveTargets
                 GUILayout.Label("Objective Targets:");
                 if (objective.ObjectiveTargets == null)

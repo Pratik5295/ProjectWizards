@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57ef3c952f43f2148b18f31aa4ee9c25, type: 3}
+  m_Name: SO 2-01
+  m_EditorClassIdentifier: 
+  Data:
+    Stats:
+      LevelID: 6
+      LevelName: 2-01
+      State: 1
+      NextLevel: 7
+    GameLevelPrefab: {fileID: 6475981915181890083, guid: 445ca1004aa74c542ab6f1ec0f067f85, type: 3}
+    DialogueAsset: {fileID: 0}
+    HasBreakPoint: 0
+    TutorialSteps:
+    - message: As the power of the divine fell, some turned to dark magic and left
+        decay in their way. Anything that lands here meets an <b>immediate end</b>.
+      uiElement: 0

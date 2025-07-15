@@ -1,4 +1,6 @@
+using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Team.Gameplay.GameLevelSystem;
 using UnityEngine;
 
@@ -36,6 +38,11 @@ namespace Team.Gameplay.GridSystem
             get { return _defaultObstacle; }
         }
 
+        [Space(5)]
+        [Header("Gameplay Managers")]
+        [SerializeField] private GameObject _fireManager;
+        [SerializeField] private GameObject _projectileManager;
+
         private void Awake()
         {
             if(Instance == null)
@@ -57,7 +64,7 @@ namespace Team.Gameplay.GridSystem
                 LoadTilesFromLevelTiles();
 
                 InitializeDictionary();
-                FindAllObstacles();
+
             }
         }
 
@@ -72,6 +79,9 @@ namespace Team.Gameplay.GridSystem
 
             //Initialize Dictionary
             InitializeDictionary();
+
+            //Find all the obstacles in the level.
+            FindAllObstacles();
         }
 
         private void LoadTilesFromLevelTiles()
@@ -145,6 +155,11 @@ namespace Team.Gameplay.GridSystem
             }
         }
         #endregion
-        
+
+        public void SpawnGameplayManagers()
+        {
+            Instantiate(_fireManager, Vector3.zero, Quaternion.identity, transform.parent);
+            Instantiate(_projectileManager, Vector3.zero, Quaternion.identity, transform.parent);
+        }
     }
 }
