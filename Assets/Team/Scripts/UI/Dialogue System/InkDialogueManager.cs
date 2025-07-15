@@ -9,8 +9,8 @@ namespace Team.UI.DialogueSystem
     public class InkDialogueManager : MonoBehaviour
     {
         public TextMeshProUGUI dialogueText;
-        public TextMeshProUGUI nameText;
-        public Image portraitImage;
+        //public TextMeshProUGUI nameText;
+        //public Image portraitImage;
         private Story story;
 
         //TODO: Convert these into a character sprite atlas
@@ -45,33 +45,33 @@ namespace Team.UI.DialogueSystem
                 }
 
                 // Handle speaker name display
-                if (!string.IsNullOrEmpty(speaker))
-                {
-                    nameText.text = speaker;
-                    nameText.gameObject.SetActive(true);
-                }
-                else
-                {
-                    nameText.gameObject.SetActive(false);
-                }
+                //if (!string.IsNullOrEmpty(speaker))
+                //{
+                //    nameText.text = speaker;
+                //    nameText.gameObject.SetActive(true);
+                //}
+                //else
+                //{
+                //    nameText.gameObject.SetActive(false);
+                //}
 
                 // Handle portrait image display
-                if (!string.IsNullOrEmpty(portraitTag))
-                {
-                    portraitImage.sprite = GetPortraitByTag(portraitTag);
-                    portraitImage.gameObject.SetActive(portraitImage.sprite != null);
-                }
-                else
-                {
-                    portraitImage.gameObject.SetActive(false);
-                }
+                //if (!string.IsNullOrEmpty(portraitTag))
+                //{
+                //    portraitImage.sprite = GetPortraitByTag(portraitTag);
+                //    portraitImage.gameObject.SetActive(portraitImage.sprite != null);
+                //}
+                //else
+                //{
+                //    portraitImage.gameObject.SetActive(false);
+                //}
             }
             else
             {
                 UIManager.Instance.ShowGameUI();
 
-                nameText.gameObject.SetActive(false);
-                portraitImage.gameObject.SetActive(false);
+                //nameText.gameObject.SetActive(false);
+               // portraitImage.gameObject.SetActive(false);
             }
         }
 
