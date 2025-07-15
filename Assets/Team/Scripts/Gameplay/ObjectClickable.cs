@@ -1,3 +1,4 @@
+using Team.Managers;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -66,8 +67,8 @@ public class ObjectClickable : MonoBehaviour
         if (_ghosting == null) { return; }
         if (_ghosting.isHovered)
         {
-            _ghosting.ghostingIsActive = false;
             OnEnableClick.Invoke();
+            _ghosting.ghostingIsActive = false;
             return;
         }
         OnDisableClick.Invoke();
@@ -80,5 +81,10 @@ public class ObjectClickable : MonoBehaviour
             return _ghosting.ghostingIsActive;
         }
         return false;
+    }
+
+    public void ShowInfoPanel()
+    {
+        UIManager.Instance.UpdateInfoPanel(baseCh.CharacterData.Data);
     }
 }

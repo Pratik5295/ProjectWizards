@@ -33,6 +33,7 @@ namespace Team.Managers
         public List<GameObject> DestroyedObjects = new List<GameObject>();
         public List<GameObject> Obstacles = new List<GameObject>();
         public List<GridTile> ChangedTiles = new List<GridTile>();
+        public List<GridTile> RotatedTiles = new List<GridTile>();
 
         public List<GameObject> originalOrder = new List<GameObject>();
         public List<GameObject> currentTurnOrder = new List<GameObject>();
@@ -246,6 +247,14 @@ namespace Team.Managers
             {
                 ChangedTiles.Add(_changedTile);
             }
+        }
+
+        public void AddRotatedTile(GridTile _changedTile)
+        {
+            if (_changedTile == null) return;
+            if (RotatedTiles.Contains(_changedTile)) return;
+
+            RotatedTiles.Add(_changedTile);
         }
 
         #endregion
@@ -597,6 +606,9 @@ namespace Team.Managers
             // Reset changed tiles
             ResetChangedTiles();
 
+            //Reset Any tiles that have been rotated back to their initial starting points.
+            ResetRotatedTiles();
+
             //Reset breakpoint system
             ResetBreakpointSystem();
 
@@ -666,6 +678,15 @@ namespace Team.Managers
                 tile?.ResetTypeToDefault();
             }
             ChangedTiles.Clear();
+        }
+
+        private void ResetRotatedTiles()
+        {
+            foreach (var tile in RotatedTiles)
+            {
+                tile?.ResetTileToOrigin();
+            }
+            RotatedTiles.Clear();
         }
 
         private void ResetCharactersToStart()

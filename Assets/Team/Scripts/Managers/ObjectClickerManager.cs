@@ -41,6 +41,10 @@ public class ObjectClickerManager : MonoBehaviour
                 {
                     LockGhostingVisual(hit, objClickable);
                 }
+                if (GameInputManager.Instance.IsRightClick)
+                {
+                    ShowInfoPanel(objClickable);
+                }
             }
             else
             {
@@ -84,5 +88,10 @@ public class ObjectClickerManager : MonoBehaviour
     public void LockGhostingVisual(RaycastHit hit, ObjectClickable objClickable)
     {
         objClickable.ClickedObject();
+    }
+
+    private void ShowInfoPanel(ObjectClickable objClickable)
+    {
+        objClickable.ShowInfoPanel();
     }
 }

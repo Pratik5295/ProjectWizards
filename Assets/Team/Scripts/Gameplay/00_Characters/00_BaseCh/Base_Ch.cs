@@ -26,7 +26,9 @@ public class PlayerMove
 public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbility, IDestroyable
 {
     [SerializeField]
-    private CharacterDataSO characterData;  //The SO file that will be used to update Info Panel
+    private CharacterDataSO characterData;  //The SO file that will be used to update Info Panel.
+    public CharacterDataSO CharacterData { get; private set; }
+
 
     [Header("Enumerations")]
     [SerializeField] private Enum_CharacterState CharState = Enum_CharacterState.Alive;
@@ -139,6 +141,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     [ContextMenu("Initialise this Character")]
     public virtual void InitialiseCharacter(TileID StartingTileID, Enum_GridDirection _startingDirection)
     {
+        CharacterData = characterData; 
+
         ref_gridManager = GridManager.Instance;
         OffsetValue = MetaConstants.GridSlot_Offset;
 
