@@ -6,6 +6,10 @@ public class ChRedirectWizard : ChProjectileWizard
 {
     private Enum_ProjectileType cachedProjectileType;
 
+    [Header("Redirect Variables")]
+    [SerializeField]
+    private GameObject ShieldVFX;
+
     public void TryAbsorbProjectile(Enum_ProjectileType ProjectileType, GameObject PrefabReference, Enum_GridDirection ProjectileDir = Enum_GridDirection.NORTH, int MoveAmount = 0)
     {
         if (!PrefabReference)
@@ -22,7 +26,12 @@ public class ChRedirectWizard : ChProjectileWizard
                     GameTurnManager.Instance.AddDestroyedObject(gameObject);
                     return;
                 }
-                else _projectilePrefab = PrefabReference;
+                else 
+                {
+                    AbsorbVFX(ProjectileDir);
+                    _projectilePrefab = PrefabReference;
+                }
+
                     break;
 
             case Enum_ProjectileType.NonLethalRound:
@@ -32,7 +41,11 @@ public class ChRedirectWizard : ChProjectileWizard
                     StartCoroutine(MoveByAmount(MoveAmount, direction, true));
                     return;
                 }
-                else _projectilePrefab = PrefabReference;
+                else
+                {
+                    AbsorbVFX(ProjectileDir);
+                    _projectilePrefab = PrefabReference;
+                }
                 break;
         }
 
@@ -63,6 +76,35 @@ public class ChRedirectWizard : ChProjectileWizard
     private void UnreferenceProjectile()
     {
         _projectilePrefab = null;
+    }
+
+    private void AbsorbVFX(Enum_GridDirection ProjectileDir = Enum_GridDirection.NORTH)
+    {
+        Vector3 spawnPosition = Vector3.zero;
+        Quaternion spawnRotation = Quaternion.identity;
+
+        switch (ProjectileDir)
+        {
+            case Enum_GridDirection.NORTH:
+                spawnPosition = new Vector3(0, 0, -0.5f);
+                spawnRotation = Quaternion.Euler(0, 0, 0);
+                break;
+            case Enum_GridDirection.SOUTH:
+                spawnPosition = new Vector3(0, 0, 0.5f);
+                spawnRotation = Quaternion.Euler(0, 0, 0);
+                break;
+            case Enum_GridDirection.WEST:
+                spawnPosition = new Vector3(0.5f, 0, 0);
+                spawnRotation = Quaternion.Euler(0, 90, 0);
+                break;
+            case Enum_GridDirection.EAST:
+                spawnPosition = new Vector3(-0.5f, 0, 0);
+                spawnRotation = Quaternion.Euler(0, 90, 0);
+                break;
+        }
+        VFXManager VFX = Instantiate(ShieldVFX, transform.position + spawnPosition, spawnRotation).GetComponent<VFXManager>();
+        VFX.transform.parent = transform;
+        VFX.EnableParticleEffectChildren();
     }
 
     public override void OnCastBark()

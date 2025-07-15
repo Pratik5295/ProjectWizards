@@ -125,12 +125,12 @@ public class ChRotatorWizard : Base_Ch
             }
         }
 
-        if (HistoryStack.Count == 0)
+        /*if (HistoryStack.Count == 0)
         {
             Debug.Log("No move to undo");
             OnTurnComplete?.Invoke();
             return;
-        }
+        }*/
     }
 
     private void UndoRotate()
