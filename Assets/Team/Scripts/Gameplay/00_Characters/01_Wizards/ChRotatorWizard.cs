@@ -107,10 +107,13 @@ public class ChRotatorWizard : Base_Ch
     [ContextMenu("Undo Rotation")]
     public override void UndoAction()
     {
+        Debug.Log($"{gameObject.name} Moves count: {HistoryStack.Count}");
+
         while (HistoryStack.Count > 0)
         {
             var move = HistoryStack.Pop();
 
+            Debug.Log($"{gameObject.name} Move was: {move.wasMoved}");
 
             if (move.wasMoved)
             {
@@ -121,6 +124,13 @@ public class ChRotatorWizard : Base_Ch
                 UndoRotate();
             }
         }
+
+        /*if (HistoryStack.Count == 0)
+        {
+            Debug.Log("No move to undo");
+            OnTurnComplete?.Invoke();
+            return;
+        }*/
     }
 
     private void UndoRotate()
