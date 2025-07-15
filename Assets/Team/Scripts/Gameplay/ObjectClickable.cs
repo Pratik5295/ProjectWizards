@@ -29,6 +29,8 @@ public class ObjectClickable : MonoBehaviour
             {
                 baseCh = GetComponent<Base_Ch>();
                 onHovered.AddListener(baseCh.ShowHideOutline);
+                OnEnableClick.AddListener(baseCh.ClickedOnJump);
+                OnDisableClick.AddListener(baseCh.ClickedOnJump);
             }
 
             if (GetComponent<Base_Obstacle>())

@@ -9,6 +9,7 @@ using Team.UI;
 using static Team.GameConstants.MetaConstants;
 using Team.Data;
 using Team.Managers;
+using DG.Tweening;
 
 [System.Serializable]
 public class PlayerMove
@@ -489,6 +490,11 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
             CharacterReskinner.ShowOutline();
         }
         else CharacterReskinner.HideOutline();
+    }
+
+    public void ClickedOnJump()
+    {
+        transform.DOJump(transform.position, 1f, 1, 0.5f, false);
     }
 
     #endregion
