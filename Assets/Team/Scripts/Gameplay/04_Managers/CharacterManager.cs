@@ -136,7 +136,7 @@ namespace Team.Managers
             // Reskin character if reskinner exists
             if (characterObject.TryGetComponent<CharacterReskinner>(out var characterReskinner))
             {
-                characterReskinner.SetCharacterReskin(data.CharacterSkin);
+                characterReskinner.SetupCharacterOutline(data.CharacterSkin);
             }
 
             await LoadCardUIAsync(baseCharacterRef, data);

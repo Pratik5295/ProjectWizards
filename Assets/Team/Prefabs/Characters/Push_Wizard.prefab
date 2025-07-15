@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 1811442762805766320}
   - component: {fileID: 2963982558421388748}
   - component: {fileID: 6828354755517443064}
-  - component: {fileID: 8049670475271076699}
+  - component: {fileID: 3485055431321745422}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -176,7 +176,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &8049670475271076699
+--- !u!114 &3485055431321745422
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -188,7 +188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e98fb4d3c1ade7b419aab66f6c176107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineColor: {r: 0.990566, g: 0.042052314, b: 0.61758155, a: 1}
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
   outlineWidth: 4
 --- !u!1 &5150221880546262881
 GameObject:
@@ -347,6 +347,7 @@ MonoBehaviour:
   CharState: 0
   ref_gridManager: {fileID: 0}
   baseRotation: {fileID: 0}
+  CharacterReskinner: {fileID: 0}
   _currentTileID:
     x: 0
     y: 0
@@ -454,7 +455,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiCharacter: {fileID: 5634161330019464301}
-  materialArray: []
+  PrimaryObjectiveColor: {r: 1, g: 0, b: 0.05376625, a: 1}
+  SecondaryObjectiveColor: {r: 0, g: 0, b: 0, a: 0}
+  outlineComponent: {fileID: 3485055431321745422}
 --- !u!114 &8463217217815917781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -467,10 +470,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2354517d8444e6a4599dc65b7688ab19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickedOn:
+  onHovered:
     m_PersistentCalls:
       m_Calls: []
-  isToggled: 0
+  OnEnableClick:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDisableClick:
+    m_PersistentCalls:
+      m_Calls: []
   isHovered: 0
 --- !u!1 &8340474836053233325
 GameObject:
