@@ -20,14 +20,13 @@ namespace Team.Gameplay.Characters
 
         public UICharacter UICharacter => uiCharacter;
 
-        //[SerializeField]
-        //private Renderer[] _bodyMeshes;    //Convert it to a list if the model is going to have multiple meshes to color
-
-        //[SerializeField]
-        //private Material outlineMat;
+        [SerializeField]
+        private Renderer[] _bodyMeshes;    //Convert it to a list if the model is going to have multiple meshes to color
 
         [SerializeField]
-        private SimpleOutline outlineComponent;
+        private Material outlineMat;
+        
+        public bool isOutlined {get; private set;}
 
         private Material outlineInstMat;
 
@@ -35,43 +34,43 @@ namespace Team.Gameplay.Characters
         private Material[] materialArray;
         public void SetCharacterReskin(CharacterReskinData _reskinData)
         {
-            //outlineInstMat = new Material(outlineMat);
-            //var bodyMat = _bodyMeshes[0].material;
-            //materialArray = new Material[2];
+            outlineInstMat = new Material(outlineMat);
+            var bodyMat = _bodyMeshes[0].material;
+            materialArray = new Material[2];
 
-            //materialArray[0] = _reskinData.SkinMaterial;
-            //materialArray[1] = outlineInstMat;
+            materialArray[0] = _reskinData.SkinMaterial;
+            materialArray[1] = outlineInstMat;
 
-            //for (int i = 0; i < _bodyMeshes.Length; i++)
-            //{
-            //    _bodyMeshes[i].materials = materialArray;
-            //}
+            for (int i = 0; i < _bodyMeshes.Length; i++)
+            {
+                _bodyMeshes[i].materials = materialArray;
+            }
 
-            //HideOutline();
+            HideOutline();
         }
 
         public void ToolSetCharacterSkin(CharacterReskinData _reskinData)
         {
 
-            //for (int i = 0; i < _bodyMeshes.Length; i++)
-            //{
-            //    _bodyMeshes[i].material = _reskinData.SkinMaterial;
-            //}
+            for (int i = 0; i < _bodyMeshes.Length; i++)
+            {
+                _bodyMeshes[i].material = _reskinData.SkinMaterial;
+            }
         }
 
         public void ShowOutline()
         {
-            //float thickness = MetaConstants.CharacterOutlineThickness;
-            //outlineInstMat.SetFloat("_Outline_Thickness", thickness);
-
-            outlineComponent.enabled = true;
+            isOutlined = true;
+            
+            float thickness = MetaConstants.CharacterOutlineThickness;
+            outlineInstMat.SetFloat("_Outline_Thickness", thickness);
         }
 
         public void HideOutline()
         {
-            //outlineInstMat.SetFloat("_Outline_Thickness", 0f);
-
-            outlineComponent.enabled = false;
+            isOutlined = false;
+            
+            outlineInstMat.SetFloat("_Outline_Thickness", 0f);
         }
     }
 }
