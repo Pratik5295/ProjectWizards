@@ -2,19 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Team.GameConstants;
+using Team.Gameplay.GridSystem;
 using Team.Gameplay.ObjectiveSystem;
 using Team.Gameplay.TurnSystem;
-using Team.GameConstants;
-using UnityEngine;
-using Team.Gameplay.GridSystem;
 using Team.UI.Gameplay;
-using UnityEngine.Rendering;
+using UnityEngine;
 
 namespace Team.GameConstants
 {
     public static partial class MetaConstants
     {
-        public const float PauseBetweenTurn = 2f;
+        public const float PauseBetweenTurn = 0.1f;
     }
 }
 
