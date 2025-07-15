@@ -47,6 +47,8 @@ public class ExplosiveObject : MoveableObstacle
         _meshRenderer.enabled = false;
 
         _explosionVFX.EnableParticleEffectChildren();
+        Camera.main.GetComponent<StressReceiver>().InduceStress(0.1f);
+        PostProcessManager.instance.Explode();
 
         AffectTiles();
     }

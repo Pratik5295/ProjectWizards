@@ -74,6 +74,12 @@
         },
         {
             "m_Id": "17efc134b4cd4b3295650ba31c7ab3f7"
+        },
+        {
+            "m_Id": "78473b5f883f4de7be4524e8e718ec45"
+        },
+        {
+            "m_Id": "a7c8a7b56def426f9e1f3f8ce463d00c"
         }
     ],
     "m_Keywords": [],
@@ -1833,8 +1839,8 @@
     ],
     "m_VertexContext": {
         "m_Position": {
-            "x": 4188.66650390625,
-            "y": 312.0000305175781
+            "x": 4242.0,
+            "y": -168.00006103515626
         },
         "m_Blocks": [
             {
@@ -1908,7 +1914,7 @@
     "m_Title": "Camera",
     "m_Position": {
         "x": -1656.6666259765625,
-        "y": 287.3336181640625
+        "y": 287.33349609375
     }
 }
 
@@ -3960,10 +3966,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 2063.33349609375,
-            "y": 875.9999389648438,
-            "width": 129.3330078125,
-            "height": 120.0001220703125
+            "x": 2001.333251953125,
+            "y": 838.6666259765625,
+            "width": 129.333251953125,
+            "height": 120.00006103515625
         }
     },
     "m_Slots": [
@@ -5759,8 +5765,8 @@
     "m_ObjectId": "45afe90193b84eabb8ee197acb811b66",
     "m_Title": "Foam",
     "m_Position": {
-        "x": 609.3333740234375,
-        "y": 83.9998779296875
+        "x": 609.3333129882813,
+        "y": 58.6666259765625
     }
 }
 
@@ -5975,10 +5981,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 2308.666748046875,
-            "y": 845.3333129882813,
+            "x": 2246.666748046875,
+            "y": 808.0000610351563,
             "width": 158.0,
-            "height": 144.0
+            "height": 143.99993896484376
         }
     },
     "m_Slots": [
@@ -6807,8 +6813,8 @@
         "m_Expanded": false,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 1940.66650390625,
-            "y": 866.6666259765625,
+            "x": 1878.6666259765625,
+            "y": 829.3334350585938,
             "width": 81.3333740234375,
             "height": 78.6666259765625
         }
@@ -7480,7 +7486,7 @@
     "m_ObjectId": "6e1a04b6809f4d8299cf08873883edf2",
     "m_Title": "Wave_1",
     "m_Position": {
-        "x": 116.0,
+        "x": 116.00006103515625,
         "y": -990.0
     }
 }
@@ -7676,10 +7682,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 1887.9998779296875,
-            "y": 971.9999389648438,
+            "x": 1826.0,
+            "y": 934.6666870117188,
             "width": 140.6666259765625,
-            "height": 36.0
+            "height": 36.00006103515625
         }
     },
     "m_Slots": [
@@ -7805,10 +7811,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 2549.999755859375,
-            "y": 750.6666259765625,
+            "x": 2488.0,
+            "y": 713.3333129882813,
             "width": 147.33349609375,
-            "height": 131.33331298828126
+            "height": 131.33343505859376
         }
     },
     "m_Slots": [
@@ -7880,6 +7886,34 @@
         "y": 0.0,
         "z": 0.0,
         "w": 0.0
+    }
+}
+
+{
+    "m_SGVersion": 1,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
+    "m_ObjectId": "78473b5f883f4de7be4524e8e718ec45",
+    "m_Guid": {
+        "m_GuidSerialized": "bbbf2160-5133-4205-88a7-a31630f3b21d"
+    },
+    "m_Name": "WaveIntensity",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "WaveIntensity",
+    "m_DefaultReferenceName": "_WaveIntensity",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": 0.0,
+    "m_FloatType": 0,
+    "m_RangeValues": {
+        "x": 0.0,
+        "y": 1.0
     }
 }
 
@@ -9234,10 +9268,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 2751.33349609375,
-            "y": 808.6666870117188,
+            "x": 2689.33349609375,
+            "y": 771.3333740234375,
             "width": 165.333251953125,
-            "height": 179.33343505859376
+            "height": 179.333251953125
         }
     },
     "m_Slots": [
@@ -9920,6 +9954,34 @@
         "e31": 0.0,
         "e32": 0.0,
         "e33": 1.0
+    }
+}
+
+{
+    "m_SGVersion": 1,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
+    "m_ObjectId": "a7c8a7b56def426f9e1f3f8ce463d00c",
+    "m_Guid": {
+        "m_GuidSerialized": "c43d34f0-e38e-4b2e-9eb6-ab5aef167719"
+    },
+    "m_Name": "WaveSpeed",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "WaveSpeed",
+    "m_DefaultReferenceName": "_WaveSpeed",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": 0.0,
+    "m_FloatType": 0,
+    "m_RangeValues": {
+        "x": 0.0,
+        "y": 1.0
     }
 }
 
@@ -10653,10 +10715,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 2273.999755859375,
-            "y": 1007.9999389648438,
+            "x": 2212.0,
+            "y": 970.666748046875,
             "width": 198.0,
-            "height": 36.00006103515625
+            "height": 36.0
         }
     },
     "m_Slots": [
@@ -11193,10 +11255,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 2994.0,
-            "y": 396.0000305175781,
-            "width": 133.33349609375,
-            "height": 119.99990844726563
+            "x": 3024.666748046875,
+            "y": 117.33336639404297,
+            "width": 133.333251953125,
+            "height": 119.9999771118164
         }
     },
     "m_Slots": [
@@ -12078,10 +12140,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 2520.66650390625,
-            "y": 921.9999389648438,
+            "x": 2458.666748046875,
+            "y": 884.6666870117188,
             "width": 151.333251953125,
-            "height": 155.33319091796876
+            "height": 155.33331298828126
         }
     },
     "m_Slots": [
@@ -12284,6 +12346,12 @@
         },
         {
             "m_Id": "17efc134b4cd4b3295650ba31c7ab3f7"
+        },
+        {
+            "m_Id": "78473b5f883f4de7be4524e8e718ec45"
+        },
+        {
+            "m_Id": "a7c8a7b56def426f9e1f3f8ce463d00c"
         }
     ]
 }
@@ -13283,7 +13351,7 @@
     "m_ObjectId": "f0a18d1717904bc897ffc6be6632f942",
     "m_Title": "Wave_2",
     "m_Position": {
-        "x": 200.0,
+        "x": 200.00006103515626,
         "y": -2439.3330078125
     }
 }
