@@ -4,10 +4,12 @@ using Team.Gameplay.GridSystem;
 using Team.Enum.Character;
 using UnityEngine;
 using Team.GameConstants;
+using Team.Gameplay.Characters;
 using Team.UI;
 using static Team.GameConstants.MetaConstants;
 using Team.Data;
 using Team.Managers;
+using DG.Tweening;
 
 [System.Serializable]
 public class PlayerMove
@@ -24,7 +26,9 @@ public class PlayerMove
 public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbility, IDestroyable
 {
     [SerializeField]
-    private CharacterDataSO characterData;  //The SO file that will be used to update Info Panel
+    private CharacterDataSO characterData;  //The SO file that will be used to update Info Panel.
+    public CharacterDataSO CharacterData { get; private set; }
+
 
     [Header("Enumerations")]
     [SerializeField] private Enum_CharacterState CharState = Enum_CharacterState.Alive;
@@ -42,6 +46,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     {
         get { return baseRotation; }
     }
+
+    public CharacterReskinner CharacterReskinner;
 
 
     [Space(5)]
@@ -113,9 +119,9 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
     public bool IsGhosting = false;
 
+    bool isJumping = false;
 
     #endregion
-
 
     #region Character Barking Section
 
@@ -135,6 +141,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     [ContextMenu("Initialise this Character")]
     public virtual void InitialiseCharacter(TileID StartingTileID, Enum_GridDirection _startingDirection)
     {
+        CharacterData = characterData; 
+
         ref_gridManager = GridManager.Instance;
         OffsetValue = MetaConstants.GridSlot_Offset;
 
@@ -153,6 +161,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
         GhostManager = GetComponent<ObjectClickable>();
 
+        CharacterReskinner = GetComponent<CharacterReskinner>();
 
         transform.position = new Vector3(_currentTile.TilePosition.x, _currentTile.TilePosition.y + ySpawnOffset, _currentTile.TilePosition.z);
 
@@ -442,13 +451,13 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     #region Enabling and Disabling Character
     public void EnableObject()
     {
-        _meshRenderer.enabled = true;
+        _meshRenderer.gameObject.SetActive(true);
         _collider.enabled = true;
     }
 
     public void DisableObject()
     {
-        _meshRenderer.enabled = false;
+        _meshRenderer.gameObject.SetActive(false);
         _collider.enabled = false;
     }
     #endregion
@@ -476,6 +485,26 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
             //Populate it on ghosting is true
             UIManager.Instance.UpdateInfoPanel(characterData.Data);
         }
+    }
+
+    public void ShowHideOutline()
+    {
+        if (!CharacterReskinner.isOutlined)
+        {
+            CharacterReskinner.ShowOutline();
+        }
+        else CharacterReskinner.HideOutline();
+    }
+
+    public void ClickedOnJump()
+    {
+        if (isJumping) { return; }
+        isJumping = true;
+        _meshRenderer.transform.DOJump(_meshRenderer.transform.position, 1f, 1, 0.5f, false)
+            .OnComplete(() =>
+            {
+                isJumping = false;
+            });
     }
 
     #endregion

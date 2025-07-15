@@ -36,6 +36,7 @@ namespace Team.Gameplay.GridSystem
     public class GridTile : MonoBehaviour
     {
         public TileID TileID; // ID of the tile in the grid
+        private TileID _startingTileID;
 
         public Vector3 TilePosition => transform.position;
 
@@ -78,7 +79,8 @@ namespace Team.Gameplay.GridSystem
         [SerializeField]
         protected GameObject tileObject = null; //The created tile object
 
-        [SerializeField] private GameObject _startingObject;
+        [SerializeField] private GameObject _startingObjectPrefab;
+        private GameObject _startingObjectInstance = null; // The referenced instance of an obejct that this tile started with.
 
         [SerializeField] private UITile tileUI;
 
@@ -96,6 +98,7 @@ namespace Team.Gameplay.GridSystem
         {
             gridManager = _tileCreator;
             TileID = _tileId;
+            _startingTileID = TileID;
 
             if (objectOccupyingTile)
             {
@@ -123,6 +126,13 @@ namespace Team.Gameplay.GridSystem
             }
 
             return false;
+        }
+
+        private void Awake()
+        {
+            //Do not include anything that is relient on the level having been loaded first!
+            _startingTileID = TileID;
+            _startingObjectInstance = objectOccupyingTile;
         }
 
         #region Spawning Tile Types
@@ -286,9 +296,9 @@ namespace Team.Gameplay.GridSystem
             Vector3 spawnLocation = new Vector3(tileObject.transform.position.x, 1.5f, tileObject.transform.position.z);
             Base_Obstacle obstacleData = null;
 
-            if (_startingObject)
+            if (_startingObjectPrefab)
             {
-                GameObject InstantiatedObject = Instantiate(_startingObject, spawnLocation, Quaternion.identity, tileObject.transform);
+                GameObject InstantiatedObject = Instantiate(_startingObjectPrefab, spawnLocation, Quaternion.identity, tileObject.transform);
                 objectOccupyingTile = InstantiatedObject;
                 if (!InstantiatedObject.GetComponent<Collider>())
                 {
@@ -349,7 +359,7 @@ namespace Team.Gameplay.GridSystem
 
         private bool canSpawnAnyObject()
         {
-            return !gridManager.DefaultObstacle && !_startingObject;
+            return !gridManager.DefaultObstacle && !_startingObjectPrefab;
         }
 
         public void SetObjectOccupyingTile(GameObject Object)
@@ -394,6 +404,24 @@ namespace Team.Gameplay.GridSystem
             hasChangedType = false;
             Destroy(tileObject);
             HandleTileSpawn();
+        }
+
+        public void ResetTileToOrigin()
+        {
+            GridManager.Instance.RemoveTileFromGrid(TileID, this);
+
+            TileID = _startingTileID;
+            gameObject.name = MetaConstants.GetNewName(TileID.x, TileID.y);
+
+            if (_startingObjectInstance)
+            {
+                _startingObjectInstance.transform.parent = gameObject.transform;
+                _startingObjectInstance.transform.position = new Vector3(gameObject.transform.position.x,
+                                                                            _startingObjectInstance.transform.position.y, gameObject.transform.position.z);
+                objectOccupyingTile = _startingObjectInstance;
+            }
+
+            GridManager.Instance.AddTileToGrid(TileID, this);
         }
 
         public void ParentOccupyingObject()
