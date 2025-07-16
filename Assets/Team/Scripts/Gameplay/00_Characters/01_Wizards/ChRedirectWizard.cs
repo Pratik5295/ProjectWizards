@@ -2,6 +2,12 @@ using UnityEngine;
 using Team.Enum.Character;
 using Team.Managers;
 using static Team.GameConstants.MetaConstants;
+
+public static partial class RedirectConstants
+{
+    public static float VFXOffset = 0.5f;
+    public static float VFXRotation = 90f;
+}
 public class ChRedirectWizard : ChProjectileWizard
 {
     private Enum_ProjectileType cachedProjectileType;
@@ -86,20 +92,20 @@ public class ChRedirectWizard : ChProjectileWizard
         switch (ProjectileDir)
         {
             case Enum_GridDirection.NORTH:
-                spawnPosition = new Vector3(0, 0, -0.5f);
+                spawnPosition = new Vector3(0, 0, -RedirectConstants.VFXOffset);
                 spawnRotation = Quaternion.Euler(0, 0, 0);
                 break;
             case Enum_GridDirection.SOUTH:
-                spawnPosition = new Vector3(0, 0, 0.5f);
+                spawnPosition = new Vector3(0, 0, RedirectConstants.VFXOffset);
                 spawnRotation = Quaternion.Euler(0, 0, 0);
                 break;
             case Enum_GridDirection.WEST:
-                spawnPosition = new Vector3(0.5f, 0, 0);
-                spawnRotation = Quaternion.Euler(0, 90, 0);
+                spawnPosition = new Vector3(RedirectConstants.VFXOffset, 0, 0);
+                spawnRotation = Quaternion.Euler(0, RedirectConstants.VFXRotation, 0);
                 break;
             case Enum_GridDirection.EAST:
-                spawnPosition = new Vector3(-0.5f, 0, 0);
-                spawnRotation = Quaternion.Euler(0, 90, 0);
+                spawnPosition = new Vector3(-RedirectConstants.VFXOffset, 0, 0);
+                spawnRotation = Quaternion.Euler(0, RedirectConstants.VFXRotation, 0);
                 break;
         }
         VFXManager VFX = Instantiate(ShieldVFX, transform.position + spawnPosition, spawnRotation).GetComponent<VFXManager>();
