@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Team.Gameplay.GridSystem;
 using UnityEngine;
 using Team.GameConstants;
-using UnityEditor.Experimental.GraphView;
+using Team.Managers;
 
 namespace Team.GameConstants
 {
@@ -24,6 +23,7 @@ namespace Team.GameConstants
 
 public class ChRotatorWizard : Base_Ch
 {
+
     [Header("Rotator Wizard Variables")]
     private MetaConstants.Enum_Rotation rotation = MetaConstants.Enum_Rotation.Clockwise;
     [SerializeField]
@@ -44,9 +44,11 @@ public class ChRotatorWizard : Base_Ch
     private float _landingVFXOffset;
     private VFXManager _landingVFXManager;
 
+    private Coroutine activeCoroutine = null;
+
     private void OnDestroy()
     {
-        if(_landingVFXManager != null)
+        if (_landingVFXManager != null)
         {
             Destroy(_landingVFXManager);
         }
@@ -66,10 +68,72 @@ public class ChRotatorWizard : Base_Ch
         OnCastBark();
 
         GetTilesToRotate();
-        if (!centerTile)
+
+        if (!centerTile || _tilesToMove.Count != 5)
         {
             Debug.Log("Cant Execute Ability as no tiles no center tile.");
-            OnTurnComplete();
+            OnTurnComplete?.Invoke();
+            return;
+        }
+
+        for (int i = 1; i < _tilesToMove.Count; i++)
+        {
+            if (!_tilesToMove[i]) { return; }
+        }
+
+        _rotatorHolder = new GameObject("_rotatorHolder");
+        _rotatorHolder.transform.position = centerTile.TilePosition;
+        _rotatorHolder.transform.SetParent(ref_gridManager.CurrentTileParent.transform);
+
+        for (int i = 0; i < _tilesToMove.Count; i++)
+        {
+            GameTurnManager.Instance.AddRotatedTile(_tilesToMove[i]);
+            if (_tilesToMove[i].ObjectOccupyingTile)
+            {
+                _tilesToMove[i].ParentOccupyingObject();
+            }
+            _tilesToMove[i].transform.SetParent(_rotatorHolder.transform);
+            _tilesToMove[i].gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.darkSlateGray;
+        }
+        rotation = MetaConstants.Enum_Rotation.Clockwise;
+
+        PlayerMove move = new PlayerMove(false);
+        HistoryStack.Push(move);
+
+        TileDataChanges();
+        activeCoroutine = StartCoroutine(LerpUpDown(true));
+    }
+
+    [ContextMenu("Undo Rotation")]
+    public override void UndoAction()
+    {
+        Debug.Log($"{gameObject.name} Moves count: {HistoryStack.Count}");
+
+        while (HistoryStack.Count > 0)
+        {
+            var move = HistoryStack.Pop();
+
+            Debug.Log($"{gameObject.name} Move was: {move.wasMoved}");
+
+            if (move.wasMoved)
+            {
+                UndoMovement();
+            }
+            else
+            {
+                UndoRotate();
+            }
+        }
+    }
+
+    private void UndoRotate()
+    {
+        GetTilesToRotate();
+
+        if (!centerTile || _tilesToMove.Count != 5)
+        {
+            Debug.Log("Cant Execute Ability as no tiles no center tile.");
+            OnTurnComplete?.Invoke();
             return;
         }
 
@@ -91,62 +155,9 @@ public class ChRotatorWizard : Base_Ch
             _tilesToMove[i].transform.SetParent(_rotatorHolder.transform);
             _tilesToMove[i].gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.darkSlateGray;
         }
-        rotation = MetaConstants.Enum_Rotation.Clockwise;
-
-        PlayerMove move = new PlayerMove(false);
-        HistoryStack.Push(move);
-
-        TileDataChanges();
-        StartCoroutine(LerpUpDown(true));
-
-        AudioManager.instance.PlayOneShot(FMODEvents.instance.s_rotate, this.transform.position);
-    }
-
-    [ContextMenu("Undo Rotation")]
-    public override void UndoAction()
-    {
-        Debug.Log($"Moves count: {HistoryStack.Count}");
-
-        while (HistoryStack.Count > 0)
-        {
-            var move = HistoryStack.Pop();
-
-            if (move.wasMoved)
-            {
-                UndoMovement();
-            }
-            else
-            {
-                UndoRotate();
-            }
-        }
-    }
-
-    private void UndoRotate()
-    {
-        GetTilesToRotate();
-
-        for (int i = 1; i < _tilesToMove.Count; i++)
-        {
-            if (!_tilesToMove[i]) { return; }
-        }
-
-        _rotatorHolder = new GameObject("_rotatorHolder");
-        _rotatorHolder.transform.position = centerTile.TilePosition;
-        _rotatorHolder.transform.SetParent(ref_gridManager.CurrentTileParent.transform);
-
-        for (int i = 0; i < _tilesToMove.Count; i++)
-        {
-            if (_tilesToMove[i].ObjectOccupyingTile)
-            {
-                _tilesToMove[i].ParentOccupyingObject();
-            }
-            _tilesToMove[i].transform.SetParent(_rotatorHolder.transform);
-            _tilesToMove[i].gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.darkSlateGray;
-        }
         rotation = MetaConstants.Enum_Rotation.AntiClockwise;
         TileDataChanges();
-        StartCoroutine(LerpUpDown(true));
+        activeCoroutine = StartCoroutine(LerpUpDown(true));
     }
 
     private void GetTilesToRotate()
@@ -170,16 +181,19 @@ public class ChRotatorWizard : Base_Ch
 
         _tilesToMove.Add(centerTile);
 
-        for(int i = 1; i < NeighbourTiles.Length; i++)
+        for (int i = 1; i < NeighbourTiles.Length; i++)
         {
-            _tilesToMove.Add(NeighbourTiles[i]);
+            if (NeighbourTiles[i] != null)
+            {
+                _tilesToMove.Add(NeighbourTiles[i]);
+            }
         }
     }
 
     private void TileDataChanges()
     {
 
-        for(int i = 0; i < _tilesToMove.Count; i++)
+        for (int i = 0; i < _tilesToMove.Count; i++)
         {
             //Remove Tiles from dictionary.
             if (i != 0) // Only execute the following code if i is not 0.
@@ -195,8 +209,8 @@ public class ChRotatorWizard : Base_Ch
             if (characterOnTile)
             {
                 Base_Rotation charactersRotationSc = characterOnTile.GetComponent<Base_Rotation>();
-                if(rotation == MetaConstants.Enum_Rotation.AntiClockwise) 
-                { 
+                if (rotation == MetaConstants.Enum_Rotation.AntiClockwise)
+                {
                     charactersRotationSc.changeFacingDirection(DirectionUtilities.RotateAntiClockwise(charactersRotationSc.DirectionFacing));
                 }
                 if (rotation == MetaConstants.Enum_Rotation.Clockwise)
@@ -205,7 +219,7 @@ public class ChRotatorWizard : Base_Ch
                 }
             }
 
-            if(i == 0) //Skip to next iteration in the loop if its the center tile.
+            if (i == 0) //Skip to next iteration in the loop if its the center tile.
             {
                 continue;
             }
@@ -232,7 +246,7 @@ public class ChRotatorWizard : Base_Ch
                             _tilesToMove[i].name = MetaConstants.GetNewName(_tilesToMove[i].TileID.x, _tilesToMove[i].TileID.y);
                             break;
                     }
-                  break;
+                    break;
                 case MetaConstants.Enum_Rotation.AntiClockwise:
                     switch (i) // Change Tile ID and rename to new tile name.
                     {
@@ -259,7 +273,7 @@ public class ChRotatorWizard : Base_Ch
 
         }
 
-        for(int j = 1; j < _tilesToMove.Count; j++) //Re-add tile To dictionary, after frame has removed from dictionary.
+        for (int j = 1; j < _tilesToMove.Count; j++) //Re-add tile To dictionary, after frame has removed from dictionary.
         {
             ref_gridManager.AddTileToGrid(_tilesToMove[j].TileID, _tilesToMove[j]);
         }
@@ -294,6 +308,8 @@ public class ChRotatorWizard : Base_Ch
         }
         OnTurnComplete?.Invoke();
         //_tilesToMove.Clear();
+
+        activeCoroutine = null;
     }
 
     private IEnumerator LerpUpDown(bool isLerpingUp)
@@ -317,7 +333,7 @@ public class ChRotatorWizard : Base_Ch
 
             yield return null;
         }
-        if (isLerpingUp) { StartCoroutine(RotateLerp()); }
+        if (isLerpingUp) { activeCoroutine = StartCoroutine(RotateLerp()); }
         if (!isLerpingUp)
         {
             /*GameObject instance = Instantiate(_rotationLandingVFX, centerTile.transform);
@@ -343,7 +359,7 @@ public class ChRotatorWizard : Base_Ch
         while (elapsedTime < _lerpDuration)
         {
             elapsedTime += Time.deltaTime;
-            
+
             float fraction = elapsedTime / _lerpDuration;
 
             _rotatorHolder.transform.rotation = Quaternion.Slerp(startingRotation, targetRotation, fraction);
@@ -352,7 +368,7 @@ public class ChRotatorWizard : Base_Ch
         }
 
         _rotatorHolder.transform.rotation = targetRotation;
-        StartCoroutine(LerpUpDown(false));
+        activeCoroutine = StartCoroutine(LerpUpDown(false));
     }
 
     private float GetRotationValue(MetaConstants.Enum_Rotation Rotation)
@@ -367,4 +383,5 @@ public class ChRotatorWizard : Base_Ch
         Debug.LogWarning($"{gameObject}: Get Rotation Value: Wasnt able to be determined whether it was clockwise or Anti-Clockwise.");
         return 90f;
     }
+
 }

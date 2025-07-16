@@ -30,6 +30,13 @@ namespace Team.Managers
             get { return createdLevel; }
         }
 
+        [SerializeField]
+        private GameObject createdEnvironment = null;
+        public GameObject CreatedEnvironment
+        {
+            get { return createdEnvironment; }
+        }
+
 
         public List<Level> LevelList = new List<Level>();
 
@@ -143,6 +150,12 @@ namespace Team.Managers
                     CurrentLevel.Info.Data.GameLevelPrefab.gameObject,
                     progressReporter
                 );
+
+                //Load in Environment.
+                createdEnvironment = await gameLoadManager.LoadEnvironmentAsync(
+                    CurrentLevel.Info.Data.EnvironmentPrefab,
+                    progressReporter
+                    );
 
                 // Ensure the level is fully loaded before proceeding
                 if (createdLevel == null)

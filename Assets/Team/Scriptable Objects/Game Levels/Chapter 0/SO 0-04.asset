@@ -19,10 +19,12 @@ MonoBehaviour:
       State: 1
       NextLevel: 16
     GameLevelPrefab: {fileID: 5943324180294003362, guid: dd928ccf3327371409c5d6d8a9343809, type: 3}
+    EnvironmentPrefab: {fileID: 573041560392627169, guid: 9a9b9829f6c83ba47948e1b439322926, type: 3}
     DialogueAsset: {fileID: 0}
     HasBreakPoint: 0
     TutorialSteps:
     - message: The Stoyniki are unlike any other mage, as they are artisans who craft
         their own enhanced trinkets. They are able to <b>absorb the first projectile
-        magic they are hit by</b> and <b>cast it on their turn</b>.
+        magic they are hit by</b> and <b>cast it on their turn</b>. If they have
+        not absorbed a spell, they will not do anything on their turn.
       uiElement: 0

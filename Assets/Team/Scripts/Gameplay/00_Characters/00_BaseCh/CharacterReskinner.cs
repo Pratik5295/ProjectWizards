@@ -1,12 +1,14 @@
 using Team.Data;
 using Team.GameConstants;
+using Team.Gameplay.ObjectiveSystem;
 using Team.UI;
 using UnityEngine;
 namespace Team.GameConstants
 {
     public static partial class MetaConstants
     {
-        public const float CharacterOutlineThickness = 0.01f;
+        public const float CharacterOutlineThickness = 4f;
+
     }
 }
 
@@ -20,51 +22,62 @@ namespace Team.Gameplay.Characters
 
         public UICharacter UICharacter => uiCharacter;
 
-        [SerializeField]
-        private Renderer[] _bodyMeshes;    //Convert it to a list if the model is going to have multiple meshes to color
+        public bool isOutlined { get; private set; }
+
+        private bool IsObjective = false;
+        public Color PrimaryObjectiveColor;
+        public Color SecondaryObjectiveColor;
+
 
         [SerializeField]
-        private Material outlineMat;
+        private SimpleOutline outlineComponent; //Reference to the outline shader attached on body
 
-        private Material outlineInstMat;
-
-        [SerializeField]
-        private Material[] materialArray;
-        public void SetCharacterReskin(CharacterReskinData _reskinData)
+        public void SetupCharacterOutline(CharacterReskinData _reskinData)
         {
-            outlineInstMat = new Material(outlineMat);
-            var bodyMat = _bodyMeshes[0].material;
-            materialArray = new Material[2];
-
-            materialArray[0] = _reskinData.SkinMaterial;
-            materialArray[1] = outlineInstMat;
-
-            for (int i = 0; i < _bodyMeshes.Length; i++)
+            if (outlineComponent != null)
             {
-                _bodyMeshes[i].materials = materialArray;
+                outlineComponent.OutlineWidth = MetaConstants.CharacterOutlineThickness;
             }
 
             HideOutline();
         }
 
-        public void ToolSetCharacterSkin(CharacterReskinData _reskinData)
-        {
-
-            for (int i = 0; i < _bodyMeshes.Length; i++)
-            {
-                _bodyMeshes[i].material = _reskinData.SkinMaterial;
-            }
-        }
 
         public void ShowOutline()
         {
-            float thickness = MetaConstants.CharacterOutlineThickness;
-            outlineInstMat.SetFloat("_Outline_Thickness", thickness);
+            isOutlined = true;
+
+            if (outlineComponent != null)
+            {
+                outlineComponent.enabled = true;
+            }
         }
 
         public void HideOutline()
         {
-            outlineInstMat.SetFloat("_Outline_Thickness", 0f);
+            if (IsObjective) return;
+
+            isOutlined = false;
+
+            if (outlineComponent != null)
+            {
+                outlineComponent.enabled = false;
+            }
+        }
+
+        public void SetTargetObjective(ObjectivePriority priority)
+        {
+            if (outlineComponent == null)
+            {
+                Debug.LogError($"Couldnt add priority shader as outline is missing for {gameObject.name}");
+                return;
+            }
+
+            outlineComponent.OutlineColor = PrimaryObjectiveColor;
+
+            IsObjective = true;
+
+            ShowOutline();
         }
     }
 }
