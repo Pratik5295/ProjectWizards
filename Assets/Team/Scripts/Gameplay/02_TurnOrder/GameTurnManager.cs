@@ -184,6 +184,10 @@ namespace Team.Managers
                 turnQueue?.Clear();
                 originalOrder?.Clear();
                 currentTurnOrder?.Clear();
+                DestroyedObjects?.Clear();
+                Obstacles?.Clear();
+                RotatedTiles?.Clear();
+                ChangedTiles?.Clear();
                 isQueueLoaded = false;
             }
         }

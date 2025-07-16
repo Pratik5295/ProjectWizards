@@ -67,6 +67,7 @@ public class MoveableObstacle : Base_Obstacle, IMoveable
         _previousGridTile.UpdateOccupiedStatus(false);
 
         _currentGridTile.UpdateOccupiedStatus(true, gameObject);
+        transform.parent = _currentGridTile.transform;
 
         PlayerMove playerMove = new PlayerMove(true);
         HistoryStack.Push(playerMove);
