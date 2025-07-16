@@ -8,7 +8,6 @@ namespace Team.GameConstants
     public static partial class MetaConstants
     {
         public const float CharacterOutlineThickness = 4f;
-        public const float GlowIntensity = 125f;
     }
 }
 
@@ -38,14 +37,6 @@ namespace Team.Gameplay.Characters
         [SerializeField]
         private SimpleOutline outlineComponent; //Reference to the outline shader attached on body
 
-        private void Awake()
-        {
-            IntensifyColors(DefaultObjectiveColor);
-            IntensifyColors(PrimaryObjectiveColor);
-            IntensifyColors(SecondaryObjectiveColor);
-
-            Debug.Log($"Intensity: {outlineComponent.OutlineColor.a}");
-        }
 
         public void SetupCharacterOutline(CharacterReskinData _reskinData)
         {
@@ -76,15 +67,7 @@ namespace Team.Gameplay.Characters
             if (IsObjective)
             {
                 //Switch to based on priority
-                switch (_cachedPriority)
-                {
-                    case ObjectivePriority.PRIMARY:
-                        SetOutlineColor(PrimaryObjectiveColor);
-                        break;
-                    case ObjectivePriority.SECONDARY:
-                        SetOutlineColor(SecondaryObjectiveColor);
-                        break;
-                }
+                SwitchColorOnPriority(_cachedPriority);
 
                 return;
             }
@@ -105,18 +88,9 @@ namespace Team.Gameplay.Characters
 
             _cachedPriority = priority;
 
-            switch (priority)
-            {
-                case ObjectivePriority.PRIMARY:
-                    SetOutlineColor(PrimaryObjectiveColor);
-                    break;
-                case ObjectivePriority.SECONDARY:
-                    SetOutlineColor(SecondaryObjectiveColor);
-                    break;
-            }
+            SwitchColorOnPriority(priority);
 
-
-            IsObjective = true;
+             IsObjective = true;
 
             //Force enabled for objectives
             outlineComponent.enabled = true;
@@ -128,10 +102,21 @@ namespace Team.Gameplay.Characters
             outlineComponent.OutlineColor = color;
         }
 
-        private void IntensifyColors(Color _color)
+        private void SwitchColorOnPriority(ObjectivePriority priority)
         {
-            Color hdrColor = _color * MetaConstants.GlowIntensity;
-            _color = hdrColor;
+            switch (priority)
+            {
+                case ObjectivePriority.PRIMARY:
+                    SetOutlineColor(PrimaryObjectiveColor);
+                    break;
+                case ObjectivePriority.SECONDARY:
+                    SetOutlineColor(SecondaryObjectiveColor);
+                    break;
+
+                default:
+                    SetOutlineColor(DefaultObjectiveColor);
+                    break;
+            }
         }
     }
 }
