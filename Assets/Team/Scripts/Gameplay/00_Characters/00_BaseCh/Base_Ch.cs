@@ -474,6 +474,15 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
         //GhostManager.isToggled = _value;
         _ghosting.SetGhosting(_value);
+
+        if (_value)
+        {
+            CharacterReskinner.ShowOutline();
+        }
+        else
+        {
+              CharacterReskinner.HideOutline();
+        }
     }
 
     public void ToggleGhosting()
@@ -484,20 +493,11 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         //GhostManager.isToggled = IsGhosting;
         _ghosting.toggleGhosting();
 
-        if (_ghosting.ghostingIsActive)
+        if (GameInputManager.Instance.IsRightClick)
         {
             //Populate it on ghosting is true
             UIManager.Instance.UpdateInfoPanel(characterData.Data);
         }
-    }
-
-    public void ShowHideOutline()
-    {
-        if (!CharacterReskinner.isOutlined)
-        {
-            CharacterReskinner.ShowOutline();
-        }
-        else CharacterReskinner.HideOutline();
     }
 
     public void ClickedOnJump()

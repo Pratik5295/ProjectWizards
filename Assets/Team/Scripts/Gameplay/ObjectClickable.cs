@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class ObjectClickable : MonoBehaviour
 {
 
-    public UnityEvent onHovered;
+    public UnityEvent<bool> onHovered;
     public UnityEvent OnEnableClick;
     public UnityEvent OnDisableClick;
 
@@ -22,14 +22,14 @@ public class ObjectClickable : MonoBehaviour
         {
             _ghosting = GetComponentInChildren<GenericGhosting>();
             
-            onHovered.AddListener(_ghosting.toggleGhosting);
+            onHovered.AddListener(_ghosting.SetGhosting);
             OnEnableClick.AddListener(_ghosting.enableGhosting);
             OnDisableClick.AddListener(_ghosting.disableGhosting);
 
             if (GetComponent<Base_Ch>())
             {
                 baseCh = GetComponent<Base_Ch>();
-                onHovered.AddListener(baseCh.ShowHideOutline);
+                onHovered.AddListener(baseCh.SetGhosting);
                 OnEnableClick.AddListener(baseCh.ClickedOnJump);
                 OnDisableClick.AddListener(baseCh.ClickedOnJump);
             }
@@ -51,7 +51,7 @@ public class ObjectClickable : MonoBehaviour
         }
         isHovered = true;
         _ghosting.isHovered = true;
-        onHovered.Invoke();
+        onHovered?.Invoke(true);
     }
     public void UnhoveredObject()
     {
@@ -59,7 +59,7 @@ public class ObjectClickable : MonoBehaviour
         if (_ghosting.ghostingIsActive && !isHovered){ return;}
         isHovered = false;
         _ghosting.isHovered = false;
-        onHovered.Invoke();
+        onHovered?.Invoke(false);
     }
 
     public void ClickedObject()
