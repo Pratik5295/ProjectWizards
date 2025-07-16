@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using Team.GameConstants;
 using Team.Gameplay.GridSystem;
 using UnityEngine;
+using Team.GameConstants;
+using Team.Managers;
 
 namespace Team.GameConstants
 {
@@ -86,6 +87,7 @@ public class ChRotatorWizard : Base_Ch
 
         for (int i = 0; i < _tilesToMove.Count; i++)
         {
+            GameTurnManager.Instance.AddRotatedTile(_tilesToMove[i]);
             if (_tilesToMove[i].ObjectOccupyingTile)
             {
                 _tilesToMove[i].ParentOccupyingObject();
@@ -123,12 +125,12 @@ public class ChRotatorWizard : Base_Ch
             }
         }
 
-        if (HistoryStack.Count == 0)
+        /*if (HistoryStack.Count == 0)
         {
             Debug.Log("No move to undo");
             OnTurnComplete?.Invoke();
             return;
-        }
+        }*/
     }
 
     private void UndoRotate()
