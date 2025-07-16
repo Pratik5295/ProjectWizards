@@ -24,12 +24,16 @@ MonoBehaviour:
     TutorialSteps:
     - message: Look upon these Vetruni training for their upcoming battle. They wield
         the wind powers of forest spirits and are able to <b>push others</b> in battle.If
-        you wish to see their ability, <b>click</b> on them or their portrait to
-        access their <b>Information Panel</b>.
+        you wish to see their ability, <b>right-click</b> on them or their portrait
+        to access their <b>Information Panel</b>.
       uiElement: 0
     - message: Their decisions are yours to order, within the <b>Turn Order Bar</b>.
         <b>Drag the portraits</b> of the mages in the order you wish them to take.
       uiElement: 1
+    - message: <b>Hovering</b> over portraits or units shows you a preview of their
+        action. You can <b>left-click</b> to lock in the preview and click again
+        to unlock it.
+      uiElement: 0
     - message: This is your <b>main objective</b> for this event, the <b>Fated Goal</b>.
         To succeed, you must fulfill it.
       uiElement: 0
