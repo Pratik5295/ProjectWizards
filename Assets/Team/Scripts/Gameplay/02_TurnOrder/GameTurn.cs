@@ -33,6 +33,11 @@ namespace Team.Gameplay.TurnSystem
         {
 
         }
+
+        private void OnDestroy()
+        {
+            characterObject.OnTurnComplete -= CompleteTurn;
+        }
         #endregion
 
         #region Public Methods

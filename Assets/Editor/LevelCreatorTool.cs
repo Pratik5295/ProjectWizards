@@ -271,12 +271,12 @@ namespace Team.Tool
                 characterObject.transform.eulerAngles = RotateToFaceDir(character.FacingDirection);
 
                 //Skin the character
-                if (characterObject.TryGetComponent<CharacterReskinner>(out var characterReskinner))
-                {
-                    characterReskinner.ToolSetCharacterSkin(character.CharacterSkin);
+                //if (characterObject.TryGetComponent<CharacterReskinner>(out var characterReskinner))
+                //{
+                //    characterReskinner.ToolSetCharacterSkin(character.CharacterSkin);
 
-                    characterReskinner.UICharacter.PopulateCharacterUI(character.CharacterID, character.CharacterSkin);
-                }
+                //    characterReskinner.UICharacter.PopulateCharacterUI(character.CharacterID, character.CharacterSkin);
+                //}
 
             }
         }

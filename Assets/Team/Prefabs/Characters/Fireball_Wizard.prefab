@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2880200595035709693}
   - component: {fileID: 1302977592271568510}
   - component: {fileID: 1873998357246849830}
+  - component: {fileID: 3503630877077307805}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -67,8 +68,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3963241562183589234, guid: a8df33068111ca94ea1645da3718002c, type: 3}
-  - {fileID: 2100000, guid: 40dc7e7a8d152e44ea3f8985978d3896, type: 2}
+  - {fileID: 2100000, guid: 419fe366c67e0c5448ce0f92f5ea0370, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -90,6 +90,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3503630877077307805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2574550701955658289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e98fb4d3c1ade7b419aab66f6c176107, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineColor: {r: 4, g: 4, b: 4, a: 1}
+  outlineWidth: 4
 --- !u!1 &5150221880546262881
 GameObject:
   m_ObjectHideFlags: 0
@@ -247,6 +261,7 @@ MonoBehaviour:
   CharState: 0
   ref_gridManager: {fileID: 0}
   baseRotation: {fileID: 0}
+  CharacterReskinner: {fileID: 0}
   _currentTileID:
     x: 0
     y: 0
@@ -354,10 +369,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiCharacter: {fileID: 6957525172392576261}
-  _bodyMeshes:
-  - {fileID: 1873998357246849830}
-  outlineMat: {fileID: 2100000, guid: 40dc7e7a8d152e44ea3f8985978d3896, type: 2}
-  materialArray: []
+  PrimaryObjectiveColor: {r: 1, g: 0.7929859, b: 0, a: 1}
+  SecondaryObjectiveColor: {r: 0, g: 0.6323595, b: 1, a: 1}
+  outlineComponent: {fileID: 3503630877077307805}
 --- !u!114 &9042292581444207771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -370,10 +384,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2354517d8444e6a4599dc65b7688ab19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickedOn:
+  onHovered:
     m_PersistentCalls:
       m_Calls: []
-  isToggled: 0
+  OnEnableClick:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDisableClick:
+    m_PersistentCalls:
+      m_Calls: []
   isHovered: 0
 --- !u!1 &5943259596805188545
 GameObject:
