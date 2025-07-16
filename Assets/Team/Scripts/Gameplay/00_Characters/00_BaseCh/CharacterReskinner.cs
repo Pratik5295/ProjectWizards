@@ -8,7 +8,7 @@ namespace Team.GameConstants
     public static partial class MetaConstants
     {
         public const float CharacterOutlineThickness = 4f;
-
+        public const float GlowIntensity = 1.25f;
     }
 }
 
@@ -40,6 +40,9 @@ namespace Team.Gameplay.Characters
             if (outlineComponent != null)
             {
                 outlineComponent.OutlineWidth = MetaConstants.CharacterOutlineThickness;
+
+
+                GlowUp();
             }
 
             HideOutline();
@@ -51,6 +54,8 @@ namespace Team.Gameplay.Characters
             if (IsObjective)
             {
                 outlineComponent.OutlineColor = DefaultObjectiveColor;
+
+                GlowUp();
             }
 
             if (outlineComponent != null)
@@ -73,6 +78,8 @@ namespace Team.Gameplay.Characters
                         outlineComponent.OutlineColor = SecondaryObjectiveColor;
                         break;
                 }
+
+                GlowUp();
 
                 return; 
             }
@@ -108,6 +115,17 @@ namespace Team.Gameplay.Characters
 
             //Force enabled for objectives
             outlineComponent.enabled = true;
+
+            GlowUp();
+
+        }
+
+        private void GlowUp()
+        {
+            Color hdrColor = outlineComponent.OutlineColor * MetaConstants.GlowIntensity;
+            // Ensure alpha stays the same
+            hdrColor.a = outlineComponent.OutlineColor.a;
+            outlineComponent.OutlineColor = hdrColor;
         }
     }
 }
