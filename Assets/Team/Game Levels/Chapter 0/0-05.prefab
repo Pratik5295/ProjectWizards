@@ -403,7 +403,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 4489636997839146506}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 1679631491955647346}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &139937260581469777
@@ -465,7 +465,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 8222825680475093561}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 7143903246621967826}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &145924748814035033
@@ -953,7 +953,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 5685467744301492133}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 1844431852340477360}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &217641979297164758
@@ -1792,7 +1792,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 8261026712930140883}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 5091904990499232070}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &388971527813868062
@@ -1983,7 +1983,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 8247591238798371382}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 4152203160156611337}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &414237746402691642
@@ -2217,7 +2217,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 6812584453863739231}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 5050546886390862338}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &490884960255054121
@@ -2748,7 +2748,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 7910960338796942632}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 918734078671060885}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &619041965290499071
@@ -2810,7 +2810,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 2627752029448077723}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 8785871839888343621}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &633883755212536806
@@ -2872,7 +2872,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 199069575146994811}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 3191707415830174243}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &675658779385215436
@@ -3814,7 +3814,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 5892430234006102834}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 6815145904983320861}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &828104116489294912
@@ -4244,7 +4244,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 3207997722266824758}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 2519997932135694919}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &865208166168237802
@@ -4564,7 +4564,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 4155085372788728218}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 9191813235632405527}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &977462599719391410
@@ -4998,7 +4998,7 @@ MonoBehaviour:
       SkinMaterial: {fileID: 2100000, guid: 419fe366c67e0c5448ce0f92f5ea0370, type: 2}
       CharacterColor: {r: 1, g: 0, b: 0, a: 1}
   - CharacterID: Absorb Wizard 1
-    CharacterPrefab: {fileID: 5407380294395882597, guid: 5ecfadebda0155d4695ab480153decc0, type: 3}
+    CharacterPrefab: {fileID: 5407380294395882597, guid: 604f4677b03d1274db7eb86d5b6438d1, type: 3}
     StartTileID:
       x: 3
       y: 2
@@ -5085,7 +5085,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 1908836845465938078}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 8589274159056635595}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &1097125435097679495
@@ -5147,7 +5147,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 6004725783546642596}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 954606604921938573}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &1098503056368101901
@@ -5209,7 +5209,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 6505863001854980252}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 4765535147761295826}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &1135657798317652794
@@ -5271,7 +5271,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 1865439377822855329}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 8452025705236580931}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &1149188271114063027
@@ -5877,7 +5877,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 4028189024641862483}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 7788608574818050268}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &1271868839581069462
@@ -6354,7 +6354,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 5185408948036099609}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 6505780412367349818}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &1589398280532099884
@@ -6545,7 +6545,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 8604230265068512184}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 2152465287065297718}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &1666189826108824350
@@ -6801,7 +6801,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 223913199906816898}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 10575578671701819}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &1865439377822855329
@@ -7025,7 +7025,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 720707427937371408}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 3339966625227322188}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &1958964635685824776
@@ -7401,7 +7401,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 2965606784120858841}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 1823901671876406209}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &2030458170722484994
@@ -8175,7 +8175,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 6056409308321190091}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 1886707014482657311}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &2168626500768723221
@@ -9530,7 +9530,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 263073263684328919}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 9010801690721432293}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &2535292324003161862
@@ -10853,7 +10853,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 830557764720554099}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 4311201282526362459}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &2965606784120858841
@@ -10969,7 +10969,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 8962286842455879154}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 1555786425968670264}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &3036580150124715087
@@ -11625,7 +11625,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 5007031887507356467}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 481751117678232220}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &3267699505575943408
@@ -11795,7 +11795,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 8236152506025239438}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 1685333945099319725}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &3349347659874539499
@@ -14240,7 +14240,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 2192121915530674235}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 459375460797677774}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &4202582756381504899
@@ -14803,7 +14803,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 1942993728668175855}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 8719660038129644180}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &4430188033346926978
@@ -15151,7 +15151,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 6384950660564069715}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 8807485947732850927}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &4489636997839146506
@@ -15895,7 +15895,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 6678760252677238607}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 2362545638657736624}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &4633715503757269526
@@ -16473,7 +16473,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 3279638626314156671}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 7876069078830136722}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &4684957118520623485
@@ -17064,7 +17064,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 5334982797204460524}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 820722422345933064}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &4922973522601029458
@@ -17126,7 +17126,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 2757958974624025955}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 5568908126371717613}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &4927631544988827071
@@ -17274,7 +17274,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 2081378970972833291}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 3874982797628576}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &5007031887507356467
@@ -18298,7 +18298,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 6657904091993005514}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 8129478147548396900}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &5291755272928082705
@@ -18360,7 +18360,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 3238923719649983944}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 1810303960006680104}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &5329640076923111484
@@ -18745,7 +18745,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 1747868305257067412}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 3505002990499605268}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &5615212663107466508
@@ -18861,7 +18861,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 5258938515800042080}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 8976024181343693367}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &5631275776105081894
@@ -18923,7 +18923,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 2643156161109913688}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 1174834466201470360}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &5643297771422385138
@@ -18985,7 +18985,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 3523430518252900043}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 1882119745244826324}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &5685467744301492133
@@ -19344,7 +19344,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 697471579251127705}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 8093404397829567858}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &5760818837720836857
@@ -21445,7 +21445,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 6277504433564075505}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 4063583884725030504}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &6250556496191316670
@@ -21690,7 +21690,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 3897123852521114941}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 5545318196609845724}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &6384950660564069715
@@ -21963,7 +21963,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 517648541820501981}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 5399749208221470372}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &6471218611805000303
@@ -22025,7 +22025,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 7219100040678975359}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 4827296655028338893}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &6496734507200438406
@@ -23036,7 +23036,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 8152312259546282108}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 2352322031353743084}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &6811085081962101790
@@ -23367,7 +23367,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 3267699505575943408}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 4391195848400095408}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &6912822945981194636
@@ -24724,7 +24724,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 8741716120001435822}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 2915776798134095100}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &7433732407242461936
@@ -25782,7 +25782,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 8360431267665752492}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 1845581050423477811}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &7789266711573646182
@@ -25844,7 +25844,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 7682780819455219332}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 3133458178214304360}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &7818949054567321333
@@ -25906,7 +25906,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 8653790195294179892}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 6314802133430925912}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &7910960338796942632
@@ -26736,7 +26736,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 8478996554299565651}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 304838044760731592}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &8073850782141143629
@@ -28137,7 +28137,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 7032999367960609623}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 4658449144596566644}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &8422727175908276806
@@ -28797,7 +28797,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 5329640076923111484}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 3497494557781051563}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &8531160511865630215
@@ -29203,7 +29203,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 7730722455658636928}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 60816715148995108}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &8604230265068512184
@@ -29373,7 +29373,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 2621102165634108023}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 3178237966260916797}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &8684010321480064696
@@ -29564,7 +29564,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 289952118502062528}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 6484676245796624184}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &8741716120001435822
@@ -29809,7 +29809,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 8952726329128639232}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 5476548636402141263}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &8778874964054484623
@@ -30157,7 +30157,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 2319522247852093491}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 117801148261978263}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &8900967635826370406
@@ -30641,7 +30641,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 2266881640970216379}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 3582976914105749910}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &9040698854539058960
@@ -30703,7 +30703,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 5615212663107466508}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 7062438494398827511}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &9043012487451272844
@@ -30765,7 +30765,7 @@ MonoBehaviour:
     TileFacing: 0
   gridManager: {fileID: 2857168496891649937}
   tileObject: {fileID: 1682337256457786640}
-  _startingObject: {fileID: 0}
+  _startingObjectPrefab: {fileID: 0}
   tileUI: {fileID: 1885323143595322221}
   objectOccupyingTile: {fileID: 0}
 --- !u!1 &9081920092959855128
