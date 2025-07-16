@@ -6,12 +6,18 @@ using UnityEngine;
 public class InstantiateLevelOperation : ILoadingOperation
 {
     [SerializeField] private GameObject levelPrefab;
+    [SerializeField] private GameObject environmentPrefab;
 
     public string Description => $"Instantiating Level: {(levelPrefab ? levelPrefab.name : "Unknown")}";
 
     public void SetLevelPrefab(GameObject prefab)
     {
         levelPrefab = prefab;
+    }
+
+    public void SetEnvironmentPrefab(GameObject prefab)
+    {
+        environmentPrefab = prefab;
     }
 
     public async UniTask<GameObject> LoadAsync(IProgress<float> progress = null)
@@ -43,6 +49,37 @@ public class InstantiateLevelOperation : ILoadingOperation
         catch (Exception ex)
         {
             Debug.LogError($"[InstantiateLevelOperation] Failed to instantiate level prefab: {ex.Message}");
+            throw;
+        }
+    }
+
+    public async UniTask<GameObject> LoadEnvironmentAsync(IProgress<float> progress = null)
+    {
+        if (environmentPrefab == null)
+        {
+            throw new ArgumentNullException(nameof(environmentPrefab), "environment prefab is not set!");
+        }
+
+        try
+        {
+            progress?.Report(0.0f);
+
+            // Simulate instantiation time for heavy prefabs
+            await UniTask.Delay(100);
+            progress?.Report(0.5f);
+
+            var instantiatedEnvironment = UnityEngine.Object.Instantiate(environmentPrefab);
+
+            progress?.Report(0.8f);
+            await UniTask.Yield(); // Allow instantiation to complete
+
+            progress?.Report(1.0f);
+
+            return instantiatedEnvironment;
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"[InstantiateEnvironmentOperation] Failed to instantiate environment prefab: {ex.Message}");
             throw;
         }
     }
