@@ -25,6 +25,11 @@ namespace Team.Gameplay.Characters
         public bool isOutlined { get; private set; }
 
         private bool IsObjective = false;
+
+        [SerializeField]
+        private ObjectivePriority _cachedPriority;
+
+        public Color DefaultObjectiveColor;
         public Color PrimaryObjectiveColor;
         public Color SecondaryObjectiveColor;
 
@@ -45,17 +50,36 @@ namespace Team.Gameplay.Characters
 
         public void ShowOutline()
         {
-            isOutlined = true;
+            if (IsObjective)
+            {
+                outlineComponent.OutlineColor = DefaultObjectiveColor;
+            }
 
             if (outlineComponent != null)
             {
                 outlineComponent.enabled = true;
             }
+
+            isOutlined = true;
         }
 
         public void HideOutline()
         {
-            if (IsObjective) return;
+            if (IsObjective) 
+            {
+                //Switch to based on priority
+                switch (_cachedPriority)
+                {
+                    case ObjectivePriority.PRIMARY:
+                        outlineComponent.OutlineColor = PrimaryObjectiveColor;
+                        break;
+                    case ObjectivePriority.SECONDARY:
+                        outlineComponent.OutlineColor = SecondaryObjectiveColor;
+                        break;
+                }
+
+                return; 
+            }
 
             isOutlined = false;
 
@@ -73,11 +97,22 @@ namespace Team.Gameplay.Characters
                 return;
             }
 
-            outlineComponent.OutlineColor = PrimaryObjectiveColor;
+            _cachedPriority = priority;
+
+            switch (priority)
+            {
+                case ObjectivePriority.PRIMARY:
+                    outlineComponent.OutlineColor = PrimaryObjectiveColor;
+                    break;
+                case ObjectivePriority.SECONDARY:
+                    outlineComponent.OutlineColor = SecondaryObjectiveColor;
+                    break;
+            }
+            
 
             IsObjective = true;
 
-            ShowOutline();
+            //ShowOutline();
         }
     }
 }

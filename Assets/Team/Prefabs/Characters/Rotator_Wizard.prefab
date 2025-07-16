@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e98fb4d3c1ade7b419aab66f6c176107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineColor: {r: 4, g: 4, b: 4, a: 1}
+  outlineColor: {r: 2, g: 2, b: 2, a: 1}
   outlineWidth: 4
 --- !u!1 &4249444757291939459
 GameObject:
@@ -462,6 +462,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiCharacter: {fileID: 5032114173345562314}
+  _cachedPriority: 0
+  DefaultObjectiveColor: {r: 1, g: 1, b: 1, a: 1}
   PrimaryObjectiveColor: {r: 1, g: 0.7921569, b: 0, a: 1}
   SecondaryObjectiveColor: {r: 0, g: 0.6313726, b: 1, a: 1}
   outlineComponent: {fileID: 2975719934766380879}
