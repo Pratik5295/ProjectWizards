@@ -50,6 +50,7 @@ namespace Team.Gameplay.LevelSystem
     {
         public LevelStats Stats;
         public GameLevel GameLevelPrefab;
+        public GameObject EnvironmentPrefab;
         public TextAsset DialogueAsset = null;
 
         public bool HasBreakPoint = false;  //No breaker by default
@@ -63,6 +64,7 @@ namespace Team.Gameplay.LevelSystem
         {
             Stats = new LevelStats(_data.Stats); 
             GameLevelPrefab = _data.GameLevelPrefab;
+            EnvironmentPrefab = _data.EnvironmentPrefab;
             DialogueAsset = _data.DialogueAsset;
             HasBreakPoint = _data.HasBreakPoint;
 
