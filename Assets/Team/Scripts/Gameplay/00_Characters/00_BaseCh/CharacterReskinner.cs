@@ -8,7 +8,7 @@ namespace Team.GameConstants
     public static partial class MetaConstants
     {
         public const float CharacterOutlineThickness = 4f;
-        public const float GlowIntensity = 1.25f;
+        public const float GlowIntensity = 125f;
     }
 }
 
@@ -27,9 +27,11 @@ namespace Team.Gameplay.Characters
         [SerializeField]
         private ObjectivePriority _cachedPriority;
 
-
+        [ColorUsageAttribute(true, true)]
         public Color DefaultObjectiveColor;
+        [ColorUsageAttribute(true, true)]
         public Color PrimaryObjectiveColor;
+        [ColorUsageAttribute(true, true)]
         public Color SecondaryObjectiveColor;
 
 
