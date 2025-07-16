@@ -19,9 +19,12 @@ MonoBehaviour:
       State: 1
       NextLevel: 5
     GameLevelPrefab: {fileID: 1803155446698858720, guid: 355e8014e849bc74dacd60c165095e64, type: 3}
+    EnvironmentPrefab: {fileID: 8364801034606318011, guid: e7b63e2e8c363e14d90b869bc4539fed, type: 3}
     DialogueAsset: {fileID: 0}
     HasBreakPoint: 0
     TutorialSteps:
     - message: Humanity has created its own destructive magic by using gunpowder.
         Destroying these barrels with fireballs leads to <b>area of effect</b> damage.
+        You can <b>hover over barrels to see a preview of what area is affected.<br>
+        Click to dismiss.
       uiElement: 0
