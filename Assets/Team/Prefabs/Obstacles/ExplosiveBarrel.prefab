@@ -40,7 +40,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5063510673096400438}
-  m_Mesh: {fileID: -2643173543783292932, guid: 9d7f24d00d5dfeb4696ff51241b31845, type: 3}
+  m_Mesh: {fileID: -364044783463932134, guid: 5c7bbefd2f42e794eb49aaf64e646064, type: 3}
 --- !u!23 &8564023545181033933
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6538903991835684241, guid: 7821338d8f4cdd145a3896f1077411df, type: 3}
+  - {fileID: 2100000, guid: a318423dc99d46447b735a3c06267a4e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -145,7 +145,7 @@ MonoBehaviour:
   _startTileID:
     x: 0
     y: 0
-  ySpawnOffset: 1
+  ySpawnOffset: 1.43
   _startTile: {fileID: 0}
   _currentGridTile: {fileID: 0}
   _startingDirection: 0
@@ -155,6 +155,7 @@ MonoBehaviour:
   _meshRenderer: {fileID: 0}
   canBeDestroyed: 1
   _ghosting: {fileID: 4118845384335995682}
+  IsGhosting: 0
   RefFireballProjectile: {fileID: 0}
   _explosionEffect: {fileID: 7739599241381896197}
   ExplosionDelayTime: 1
@@ -207,6 +208,8 @@ MonoBehaviour:
   clickedOn:
     m_PersistentCalls:
       m_Calls: []
+  isToggled: 0
+  isHovered: 0
 --- !u!1001 &6734385307520696145
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -322,6 +325,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4896799715752823528, guid: 70bdffb65e4c68549a9dda94fdff4cb5, type: 3}
+      propertyPath: _ghostingEffect
+      value: 
+      objectReference: {fileID: 7007957148075646140, guid: 363d63a5b6c2b2d4db1ba0b61a446d99, type: 3}
     - target: {fileID: 7410347285120169737, guid: 70bdffb65e4c68549a9dda94fdff4cb5, type: 3}
       propertyPath: m_Name
       value: Generic-Ghosting
