@@ -22,8 +22,6 @@ namespace Team.Gameplay.Characters
 
         public UICharacter UICharacter => uiCharacter;
 
-        public bool isOutlined { get; private set; }
-
         private bool IsObjective = false;
 
         [SerializeField]
@@ -59,8 +57,6 @@ namespace Team.Gameplay.Characters
             {
                 outlineComponent.enabled = true;
             }
-
-            isOutlined = true;
         }
 
         public void HideOutline()
@@ -80,8 +76,6 @@ namespace Team.Gameplay.Characters
 
                 return; 
             }
-
-            isOutlined = false;
 
             if (outlineComponent != null)
             {
@@ -112,7 +106,8 @@ namespace Team.Gameplay.Characters
 
             IsObjective = true;
 
-            //ShowOutline();
+            //Force enabled for objectives
+            outlineComponent.enabled = true;
         }
     }
 }
