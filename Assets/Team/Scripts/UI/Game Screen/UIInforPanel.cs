@@ -62,8 +62,9 @@ namespace Team.UI
             if (isOpen)
             {
                 // Close panel and wait for animation to finish
-                yield return leftPanel.DOAnchorPosX(closedX, 0.2f).SetEase(Ease.InOutQuad)
-                    .OnComplete(() => activeCoroutine = StartCoroutine(HandleOpeningPanel(_data)));
+                yield return leftPanel.DOAnchorPosX(closedX, 0.2f).SetEase(Ease.InOutQuad).WaitForCompletion();
+
+                activeCoroutine = StartCoroutine(HandleOpeningPanel(_data));
                 isOpen = false;
 
             }
@@ -76,9 +77,6 @@ namespace Team.UI
 
         private IEnumerator HandleOpeningPanel(CharacterDataStruct _data)
         {
-            //Fully closed, Populate and open
-            _cacheCharacterName = _data.CharacterName;
-
             characterNameText.text = _data.CharacterName;
             abilityNameText.text = _data.AbilityName;
             abilityDescriptionText.text = _data.AbilityDescription;
@@ -87,6 +85,7 @@ namespace Team.UI
             yield return leftPanel.DOAnchorPosX(openX, duration).SetEase(Ease.InOutQuad).WaitForCompletion();
 
             isOpen = true;
+            _cacheCharacterName = _data.CharacterName;
 
             activeCoroutine = null;
         }

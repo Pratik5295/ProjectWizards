@@ -493,8 +493,11 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         //GhostManager.isToggled = IsGhosting;
         _ghosting.toggleGhosting();
 
-        //Populate it on ghosting is true
-        UIManager.Instance.UpdateInfoPanel(characterData.Data);
+        if (GameInputManager.Instance.IsRightClick)
+        {
+            //Populate it on ghosting is true
+            UIManager.Instance.UpdateInfoPanel(characterData.Data);
+        }
     }
 
     public void ClickedOnJump()
