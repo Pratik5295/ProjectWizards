@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using Team.Data;
 using Team.GameConstants;
+using Team.Gameplay.Characters;
 using Team.Managers;
 using Team.UI;
 using UnityEngine;
@@ -124,6 +126,15 @@ namespace Team.Gameplay.ObjectiveSystem
                         Debug.LogError($"Could not find character target for objective: {data.ObjectiveName}", gameObject);
                         continue;
                     }
+
+                    var priority = data.Priority;
+                    var skinner = characterObject.GetComponent<CharacterReskinner>();
+                    if(skinner == null)
+                    {
+                        Debug.LogError($"Character skinner component is missing for: {characterObject.name}");
+                    }
+
+                    skinner.SetTargetObjective(priority);
                     objective.AddCharacterReference(characterObject);
                 }
 
