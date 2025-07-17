@@ -206,7 +206,7 @@ namespace Team.Managers
                 for (int i = 0; i < turnHolder.transform.childCount; i++)
                 {
                     var child = turnHolder.transform.GetChild(i);
-                    if (child != null)
+                    if (child != null && child.gameObject.TryGetComponent<GameTurn>(out var turn))
                     {
                         currentTurnOrder.Add(child.gameObject);
                     }
@@ -258,6 +258,11 @@ namespace Team.Managers
             if (RotatedTiles.Contains(_changedTile)) return;
 
             RotatedTiles.Add(_changedTile);
+        }
+
+        public int GetIndexFor(GameTurn _turn)
+        {
+            return 0;
         }
 
         #endregion
