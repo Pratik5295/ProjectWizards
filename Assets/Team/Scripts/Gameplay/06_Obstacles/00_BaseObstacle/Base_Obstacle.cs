@@ -172,6 +172,7 @@ public class Base_Obstacle : MonoBehaviour, IDestroyable
 
         Vector3 tilePosition = new Vector3(_startTile.transform.position.x, 1.5f, _startTile.transform.position.z);
         transform.position = tilePosition;
+        transform.parent = _startTile.transform;
 
         //Make my start tile as unwalkable
         MakeTileUnwalkable();
