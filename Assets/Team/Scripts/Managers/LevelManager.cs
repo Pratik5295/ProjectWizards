@@ -234,6 +234,16 @@ namespace Team.Managers
             }
         }
 
+        public void StopLevel()
+        {
+            UIManager.Instance.ShowLevelSelectionUI();
+
+            if(createdLevel != null)
+            {
+                DestroyImmediate(createdLevel.gameObject);
+            }
+        }
+
         public void AddLevelToMap(Level _level)
         {
             LevelList.Add(_level);
