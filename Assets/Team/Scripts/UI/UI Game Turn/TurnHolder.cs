@@ -1,7 +1,17 @@
 using System;
 using System.Collections.Generic;
+using Team.GameConstants;
+using Team.UI;
 using UnityEngine;
 using UnityEngine.UI;
+
+namespace Team.GameConstants
+{
+    public static partial class MetaConstants
+    {
+        public const float CardDiviFactor = 2.86f;
+    }
+}
 
 namespace Team.Gameplay.TurnSystem
 {
@@ -18,7 +28,7 @@ namespace Team.Gameplay.TurnSystem
         private int numberOfChildren;
 
         [SerializeField]
-        private float cardSize = 200f;
+        private float cardSize;
 
         [SerializeField]
         private float spacing;
@@ -43,6 +53,12 @@ namespace Team.Gameplay.TurnSystem
         [SerializeField]
         private int minIndex = 0;
 
+        [Space(5)]
+        [Header("Ghost Card Reference")]
+
+        [SerializeField]
+        private GhostCard ghostCard;
+
         [ContextMenu("Get Starting Position")]
         public void CalculateExtremePositions()
         {
@@ -65,6 +81,8 @@ namespace Team.Gameplay.TurnSystem
 
             GenerateCardRanges();
 
+            DeactivateGhostCard();
+
             Debug.Log($"Max Position: {endingPosX}");
         }
 
@@ -86,12 +104,12 @@ namespace Team.Gameplay.TurnSystem
                 for (int i = 0; i < cardRanges.Count; i++)
                 {
                     //Check if the only the start is greater
-                    if(_positionX >= cardRanges[i].start)
+                    if (_positionX >= cardRanges[i].start)
                     {
                         index = i;
 
                         //Check if it goes beyond that ranges' end
-                        if(_positionX <= cardRanges[i].end)
+                        if (_positionX <= cardRanges[i].end)
                         {
                             return index;
                         }
@@ -104,7 +122,7 @@ namespace Team.Gameplay.TurnSystem
                 }
             }
 
-            if(index == -1)
+            if (index == -1)
             {
                 index = minIndex;
             }
@@ -119,7 +137,7 @@ namespace Team.Gameplay.TurnSystem
             for (int i = 0; i < numberOfChildren; i++)
             {
                 float start = startingPosX + i * (cardSize + spacing);
-                float end = start + (cardSize/2);
+                float end = start + (cardSize / MetaConstants.CardDiviFactor);
 
                 cardRanges.Add(new CardRange { start = start, end = end });
             }
@@ -127,7 +145,7 @@ namespace Team.Gameplay.TurnSystem
 
         public void RemoveCardRanges(int _count)
         {
-            cardRanges.RemoveRange(0,_count);
+            cardRanges.RemoveRange(0, _count);
         }
 
         public void SetSelected(GameObject _selected)
@@ -150,5 +168,21 @@ namespace Team.Gameplay.TurnSystem
 
             startingPosX = transform.GetChild(minIndex).GetComponent<RectTransform>().localPosition.x + (spacing * 2);
         }
+
+
+        #region Ghost Card Section
+
+        public void ActivateGhostCard()
+        {
+            ghostCard.gameObject.SetActive(true);
+        }
+
+        public void DeactivateGhostCard()
+        {
+            ghostCard.gameObject.SetActive(false);
+        }
+
+
+        #endregion
     }
 }

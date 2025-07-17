@@ -250,6 +250,11 @@ namespace Team.Managers
             {
                 DestroyImmediate(createdLevel.gameObject);
             }
+
+            if(createdEnvironment != null)
+            {
+                DestroyImmediate(createdEnvironment.gameObject);
+            }
         }
 
         public void AddLevelToMap(Level _level)

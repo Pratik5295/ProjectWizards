@@ -2,7 +2,6 @@ using Team.Data;
 using Team.Gameplay.Characters;
 using Team.Managers;
 using TMPro;
-using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -138,6 +137,29 @@ namespace Team.UI.Gameplay
             canvasGroup.interactable = false;
             cardImage.raycastTarget = false;
             cardImage.color = unInteractableColor;
+        }
+
+        #endregion
+
+        #region Drag Handlers Section
+
+        public override void OnBeginDrag(PointerEventData eventData)
+        {
+            base.OnBeginDrag(eventData);
+
+            _turnHolder.ActivateGhostCard();
+        }
+
+        public override void OnDrag(PointerEventData eventData)
+        {
+            base.OnDrag(eventData);
+        }
+
+        public override void OnEndDrag(PointerEventData eventData)
+        {
+            base.OnEndDrag(eventData);
+
+            _turnHolder.DeactivateGhostCard();
         }
 
         #endregion

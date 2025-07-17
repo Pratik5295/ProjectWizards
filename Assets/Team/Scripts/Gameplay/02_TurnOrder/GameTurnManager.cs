@@ -113,7 +113,7 @@ namespace Team.Managers
             if (_isResetting) return;
 
             LoadObstacleData();
-            breakerIndex = breaker != null ? breaker.transform.GetSiblingIndex() : 0;
+            //breakerIndex = breaker != null ? breaker.transform.GetSiblingIndex() : 0;
 
             lock (_lockObject)
             {
