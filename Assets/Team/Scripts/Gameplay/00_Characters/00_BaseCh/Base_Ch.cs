@@ -50,6 +50,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     public CharacterReskinner CharacterReskinner;
 
 
+    #region Tile Variables
     [Space(5)]
     [Header("Movement Variables")]
     [Header("---Tile Variables---")]
@@ -87,6 +88,9 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     private Vector3 startPosition;
 
     private bool alreadyMoving;
+
+    public PushProjectile PushProjectileInstance;
+    #endregion
 
     #region Vars_InvalidMovementShake
 
@@ -256,7 +260,15 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         PlayerMove playerMove = new PlayerMove(true);
         HistoryStack.Push(playerMove);
 
-        if (wasPushed) { yield break; }
+        if (wasPushed)
+        {
+            if (PushProjectileInstance)
+            {
+                PushProjectileInstance.CleanUp();
+                PushProjectileInstance = null;
+            }
+            yield break;
+        }
 
         OnTurnComplete?.Invoke();
     }

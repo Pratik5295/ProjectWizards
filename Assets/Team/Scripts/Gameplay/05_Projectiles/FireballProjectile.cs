@@ -31,8 +31,7 @@ public class FireballProjectile : Base_Projectile
             if (other.gameObject.GetComponent<ExplosiveObject>())
             {
                 HitExplosive(other);
-                canMove = false;
-                _VFX.SetActive(false);
+                VisuallyDestroy();
                 GameTurnManager.Instance.AddDestroyedObject(other.gameObject);
                 return;
             }

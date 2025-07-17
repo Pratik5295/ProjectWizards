@@ -151,6 +151,14 @@ namespace Team.Managers
                     progressReporter
                 );
 
+
+                // Destroy existing environment if not the same.
+                if(createdEnvironment != null && createdEnvironment != CurrentLevel.Info.Data.EnvironmentPrefab)
+                {
+                    DestroyImmediate(createdEnvironment);
+                    await UniTask.Yield();
+                }
+
                 //Load in Environment.
                 createdEnvironment = await gameLoadManager.LoadEnvironmentAsync(
                     CurrentLevel.Info.Data.EnvironmentPrefab,

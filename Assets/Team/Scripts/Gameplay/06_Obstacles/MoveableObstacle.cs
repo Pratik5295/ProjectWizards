@@ -11,6 +11,7 @@ public class MoveableObstacle : Base_Obstacle, IMoveable
     [Header("Movement Variables")]
     private float smoothingTime = 1f; //Time to reach the target position.
     private float currentTime; //Current elapsed Time for movement lerp.
+#region Grid Variables
 
     private int movementIteration;
 
@@ -18,6 +19,8 @@ public class MoveableObstacle : Base_Obstacle, IMoveable
 
     private bool alreadyMoving;
 
+    public PushProjectile PushProjectileInstance;
+#endregion
 
     #region Vars_InvalidMovementShake
 
@@ -67,6 +70,16 @@ public class MoveableObstacle : Base_Obstacle, IMoveable
         _previousGridTile.UpdateOccupiedStatus(false);
 
         _currentGridTile.UpdateOccupiedStatus(true, gameObject);
+        transform.parent = _currentGridTile.transform;
+
+        if (wasPushed)
+        {
+            if (PushProjectileInstance)
+            {
+                PushProjectileInstance.CleanUp();
+                PushProjectileInstance = null;
+            }
+        }
 
         PlayerMove playerMove = new PlayerMove(true);
         HistoryStack.Push(playerMove);

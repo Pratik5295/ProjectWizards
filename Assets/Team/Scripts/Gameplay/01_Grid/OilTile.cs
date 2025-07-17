@@ -58,6 +58,10 @@ public class OilTile : GridTile
         {
             _oilSpillMesh = tileObject.transform.GetChild(1).gameObject;
         }
+
+        //Do not include anything that is relient on the level having been loaded first!
+        _startingTileID = TileID;
+        _startingObjectInstance = objectOccupyingTile;
     }
 
     private GameObject SpawnOilTileObject()
