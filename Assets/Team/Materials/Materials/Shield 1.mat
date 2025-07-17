@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Target
-  m_Shader: {fileID: -6465566751694194690, guid: 28690723bef42f64491aec10b8c5a0fa, type: 3}
+  m_Name: Shield 1
+  m_Shader: {fileID: -6465566751694194690, guid: cbd90d88b4c9e81469986c81302b9afe, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -25,7 +25,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Texture2D:
-        m_Texture: {fileID: 2800000, guid: 6d30675ba176b024d806e5d3d0772585, type: 3}
+        m_Texture: {fileID: 2800000, guid: 716704be0ef176340b8d09bbd1e7ce63, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -42,14 +42,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Alpha: 0.021
     - _QueueControl: 0
     - _QueueOffset: 0
-    m_Colors:
-    - _Color: {r: 8.323223, g: 0, b: 0, a: 0.2509804}
+    m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &6926057937877976632
+--- !u!114 &8822301360891477292
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
