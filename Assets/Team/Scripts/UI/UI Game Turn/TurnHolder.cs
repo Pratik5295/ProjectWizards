@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using Team.GameConstants;
@@ -192,6 +193,7 @@ namespace Team.Gameplay.TurnSystem
 
         public void SetGhostIndex(int _index)
         {
+            // Get target sibling's position
             ghostCard.transform.SetSiblingIndex(_index);
         }
 

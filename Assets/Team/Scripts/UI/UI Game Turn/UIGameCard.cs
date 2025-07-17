@@ -1,3 +1,4 @@
+using DG.Tweening;
 using Team.Data;
 using Team.Gameplay.Characters;
 using Team.Managers;
@@ -63,7 +64,7 @@ namespace Team.UI.Gameplay
         {
             // Notify turn manager of updated order
             GameTurnManager.Instance.ForceRebuildTurns();
-            
+
         }
 
         private void UpdateTurnIndexText()
@@ -98,9 +99,10 @@ namespace Team.UI.Gameplay
 
             characterReskinner.ShowOutline();
 
-            transform.localScale = selectedScale;
-
-            LayoutRebuilder.ForceRebuildLayoutImmediate(originalParent as RectTransform);
+            transform.DOScale(selectedScale, 0.2f).SetEase(Ease.OutBack)
+            .OnComplete(
+                () => LayoutRebuilder.ForceRebuildLayoutImmediate(originalParent as RectTransform)
+             );
 
         }
 
@@ -108,9 +110,12 @@ namespace Team.UI.Gameplay
         {
             characterReskinner.HideOutline();
 
-            transform.localScale = defaultScale;
+            transform.DOScale(defaultScale, 0.2f).SetEase(Ease.OutBack)
+            .OnComplete(
+                () => LayoutRebuilder.ForceRebuildLayoutImmediate(originalParent as RectTransform)
+             );
 
-            LayoutRebuilder.ForceRebuildLayoutImmediate(originalParent as RectTransform);
+
         }
 
         public void OnPointerClick(PointerEventData eventData)
@@ -128,7 +133,7 @@ namespace Team.UI.Gameplay
             canvasGroup.interactable = true;
             cardImage.raycastTarget = true;
             cardImage.color = interactableColor;
-            
+
         }
 
         [ContextMenu("Make Uninteractable")]
