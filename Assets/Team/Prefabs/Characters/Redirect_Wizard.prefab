@@ -27,8 +27,8 @@ Transform:
   m_GameObject: {fileID: 3615089582331622750}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.4, z: 0}
-  m_LocalScale: {x: 1, y: 0.0009999999, z: 1}
+  m_LocalPosition: {x: 0, y: -0.7, z: 0}
+  m_LocalScale: {x: 1.2, y: 0.0009999999, z: 1.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1200999271759842075}
@@ -252,7 +252,7 @@ MonoBehaviour:
   _startTileID:
     x: 0
     y: 0
-  ySpawnOffset: 1.5
+  ySpawnOffset: 1.8
   ydefaultOffset: 2
   _yMovementCurve:
     serializedVersion: 2
@@ -336,8 +336,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.268111, y: 1.3009036, z: 1.3807237}
-  m_Center: {x: 0.011075705, y: 0.14954829, z: 0.027059913}
+  m_Size: {x: 1.268111, y: 1.6852392, z: 1.3807237}
+  m_Center: {x: 0.011075735, y: -0.042619526, z: 0.027059913}
 --- !u!114 &16408066933818421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,9 +352,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiCharacter: {fileID: 8679929900226405929}
   _cachedPriority: 0
-  DefaultObjectiveColor: {r: 2.3784142, g: 2.3784142, b: 2.3784142, a: 1}
-  PrimaryObjectiveColor: {r: 1.7814789, g: 0.5036642, b: 0, a: 1}
-  SecondaryObjectiveColor: {r: 0, g: 1.7814789, b: 0.7741505, a: 1}
+  DefaultObjectiveColor: {r: 1.7814789, g: 1.7814789, b: 1.7814789, a: 1}
+  PrimaryObjectiveColor: {r: 1.7814786, g: 1.0095046, b: 0, a: 1}
+  SecondaryObjectiveColor: {r: 0, g: 1.7814786, b: 1.2173439, a: 1}
   outlineComponent: {fileID: 7281656631181355048}
 --- !u!114 &611382918006109890
 MonoBehaviour:
