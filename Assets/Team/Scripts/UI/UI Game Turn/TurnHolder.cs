@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Team.GameConstants;
 using Team.UI;
+using Team.UI.Gameplay;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -172,14 +173,26 @@ namespace Team.Gameplay.TurnSystem
 
         #region Ghost Card Section
 
-        public void ActivateGhostCard()
+        public void ActivateGhostCard(UIGameCard _card)
         {
+            int index = _card.transform.GetSiblingIndex();
+
+            ghostCard.transform.SetSiblingIndex(index);
             ghostCard.gameObject.SetActive(true);
+
+            ghostCard.PairCardWith(_card);
         }
 
         public void DeactivateGhostCard()
         {
             ghostCard.gameObject.SetActive(false);
+
+            ghostCard.ResetGhostCard();
+        }
+
+        public void SetGhostIndex(int _index)
+        {
+            ghostCard.transform.SetSiblingIndex(_index);
         }
 
 

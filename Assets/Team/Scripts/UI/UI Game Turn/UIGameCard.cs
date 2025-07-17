@@ -145,14 +145,19 @@ namespace Team.UI.Gameplay
 
         public override void OnBeginDrag(PointerEventData eventData)
         {
-            base.OnBeginDrag(eventData);
+            _turnHolder.ActivateGhostCard(this);
 
-            _turnHolder.ActivateGhostCard();
+            base.OnBeginDrag(eventData);
         }
 
         public override void OnDrag(PointerEventData eventData)
         {
             base.OnDrag(eventData);
+
+            //Move Ghost card along with it
+
+            var ghostIndex = _turnHolder.GetIndex(rectTransform.localPosition.x);
+            _turnHolder.SetGhostIndex(ghostIndex);
         }
 
         public override void OnEndDrag(PointerEventData eventData)
