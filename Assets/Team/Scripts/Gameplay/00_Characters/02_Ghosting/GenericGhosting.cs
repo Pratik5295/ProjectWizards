@@ -47,13 +47,21 @@ public class GenericGhosting : MonoBehaviour
     {
         ghostingContent?.gameObject.SetActive(false);  
         ghostingIsActive = false;
-        Debug.Log("Hello");
     }
 
     public void SetGhosting(bool _value)
     {
         ghostingContent?.gameObject.SetActive(_value);
         ghostingIsActive = _value;
+
+        if (_value)
+        {
+            enableGhosting();
+        }
+        else
+        {
+            disableGhosting();
+        }
     }
 
 }

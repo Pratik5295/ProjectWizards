@@ -43,7 +43,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 829936749359615232}
-  m_Mesh: {fileID: -7659660354936277904, guid: 17545a4e5f6ee3e43945a03c95822712, type: 3}
+  m_Mesh: {fileID: -8481364610660780190, guid: b428093db928d3546a4d6fa3c1fcfa75, type: 3}
 --- !u!23 &8404958254488607872
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -67,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c3e131c9d49cf9242bfeb762378b34ee, type: 2}
+  - {fileID: 4231548561304958339, guid: b428093db928d3546a4d6fa3c1fcfa75, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e98fb4d3c1ade7b419aab66f6c176107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineColor: {r: 4, g: 4, b: 4, a: 1}
+  outlineColor: {r: 1.7814789, g: 1.7814789, b: 1.7814789, a: 1}
   outlineWidth: 4
 --- !u!1 &4249444757291939459
 GameObject:
@@ -438,8 +438,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiCharacter: {fileID: 5032114173345562314}
-  PrimaryObjectiveColor: {r: 1, g: 0.7921569, b: 0, a: 1}
-  SecondaryObjectiveColor: {r: 0, g: 0.6313726, b: 1, a: 1}
+  _cachedPriority: 0
+  DefaultObjectiveColor: {r: 2.3784142, g: 2.3784142, b: 2.3784142, a: 1}
+  PrimaryObjectiveColor: {r: 1.7814789, g: 0.5036642, b: 0, a: 1}
+  SecondaryObjectiveColor: {r: 0, g: 1.7814789, b: 0.7741505, a: 1}
   outlineComponent: {fileID: 2975719934766380879}
 --- !u!114 &8005485794937069453
 MonoBehaviour:
