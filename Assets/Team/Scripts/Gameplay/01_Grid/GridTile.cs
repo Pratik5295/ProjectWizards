@@ -36,7 +36,7 @@ namespace Team.Gameplay.GridSystem
     public class GridTile : MonoBehaviour
     {
         public TileID TileID; // ID of the tile in the grid
-        private TileID _startingTileID;
+        protected TileID _startingTileID;
 
         public Vector3 TilePosition => transform.position;
 
@@ -80,7 +80,7 @@ namespace Team.Gameplay.GridSystem
         protected GameObject tileObject = null; //The created tile object
 
         [SerializeField] private GameObject _startingObjectPrefab;
-        private GameObject _startingObjectInstance = null; // The referenced instance of an obejct that this tile started with.
+        protected GameObject _startingObjectInstance = null; // The referenced instance of an obejct that this tile started with.
 
         [SerializeField] private UITile tileUI;
 

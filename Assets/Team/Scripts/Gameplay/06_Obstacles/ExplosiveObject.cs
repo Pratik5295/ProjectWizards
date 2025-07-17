@@ -97,7 +97,9 @@ public class ExplosiveObject : MoveableObstacle
         {
             FireSpread.Instance.FireballRef = RefFireballProjectile;
             FireSpread.Instance.StartFire();
+            return;
         }
+        RefFireballProjectile.CleanUp();
     }
 
 }

@@ -90,4 +90,10 @@ public class Base_Projectile : MonoBehaviour
         OnProjectileEnd?.Invoke();
         Destroy(gameObject);
     }
+
+    protected void VisuallyDestroy()
+    {
+        canMove = false;
+        _VFX.SetActive(false);
+    }
 }
