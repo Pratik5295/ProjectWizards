@@ -348,6 +348,7 @@ namespace Team.Gameplay.GridSystem
 
         public Base_Obstacle ObstacleImplementsScript()
         {
+            if (!objectOccupyingTile) { return null; }
             return objectOccupyingTile.GetComponent<Base_Obstacle>();
         }
 

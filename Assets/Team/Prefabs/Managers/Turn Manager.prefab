@@ -44,6 +44,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d850adf26faf7648bee0e1214a60edc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DestroyedObjects: []
+  Obstacles: []
+  ChangedTiles: []
+  RotatedTiles: []
   originalOrder: []
   currentTurnOrder: []
   turnHolder: {fileID: 0}
+  breaker: {fileID: 0}
+  breakerIndex: 0
+  breakpoint: 0
+  playedTillBreaker: 0
+  turnIdentifierAtlas:
+  - {fileID: 21300000, guid: f5d1a04e3d7239e46a41e11fc540f001, type: 3}
+  - {fileID: 21300000, guid: 8086df42985cc9d48a353b642c4d2625, type: 3}
+  - {fileID: 21300000, guid: fd5243c1f5f672446a64e2419f25a343, type: 3}
+  - {fileID: 21300000, guid: 1a31ae99f52aa594ea824e4dae595612, type: 3}
+  - {fileID: 21300000, guid: 9873fddc2e713b743b0a9ba656a291c3, type: 3}
+  - {fileID: 21300000, guid: 290920b38b4076e41b0fc2819baaf790, type: 3}
+  - {fileID: 21300000, guid: c398320fb2c11aa4dbcc05154011ebbb, type: 3}
+  - {fileID: 21300000, guid: e99baf0b7580d924face53537882940d, type: 3}

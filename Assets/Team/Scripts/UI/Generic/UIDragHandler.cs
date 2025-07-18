@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using Team.Gameplay.TurnSystem;
@@ -42,7 +43,7 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         _turnHolder = originalParent.GetComponent<TurnHolder>();
     }
 
-    public void OnBeginDrag(PointerEventData eventData)
+    public virtual void OnBeginDrag(PointerEventData eventData)
     {
         originalIndex = transform.GetSiblingIndex();
 
@@ -64,7 +65,7 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         _turnHolder.SetSelected(gameObject);
     }
 
-    public void OnDrag(PointerEventData eventData)
+    public virtual void OnDrag(PointerEventData eventData)
     {
         if (!GameInputManager.Instance.IsPointerPressed) return;
 
@@ -79,19 +80,36 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     }
 
-    public void OnEndDrag(PointerEventData eventData)
+    public virtual void OnEndDrag(PointerEventData eventData)
     {
         canvasGroup.blocksRaycasts = true;
         layoutElement.ignoreLayout = false;
 
+        // Disable layout group to avoid conflicts during tween
+        var layoutGroup = originalParent.GetComponent<HorizontalLayoutGroup>();
+        if (layoutGroup != null)
+            layoutGroup.enabled = false;
+
+        // Get target position from sibling at newIndex
         newIndex = _turnHolder.GetIndex(rectTransform.localPosition.x);
-        transform.SetSiblingIndex(newIndex);
+        Vector3 targetPos = originalParent.GetChild(newIndex).position;
 
-        transform.SetParent(originalParent);
+        // Tween the position to targetPos smoothly
+        rectTransform.DOMove(targetPos, 0.25f).SetEase(Ease.OutQuad).OnComplete(() =>
+        {
+            // Set sibling index and reset local position
+            transform.SetSiblingIndex(newIndex);
+            rectTransform.localPosition = Vector3.zero;
 
-        _turnHolder.SetSelected(null);
+            // Re-enable layout group
+            if (layoutGroup != null)
+                layoutGroup.enabled = true;
 
-        StartCoroutine(FinalizeDrag());
+            transform.SetParent(originalParent);
+            _turnHolder.SetSelected(null);
+
+            StartCoroutine(FinalizeDrag());
+        });
     }
 
     private IEnumerator FinalizeDrag()
