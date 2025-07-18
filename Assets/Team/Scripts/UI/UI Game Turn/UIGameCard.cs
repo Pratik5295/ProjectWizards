@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using DG.Tweening;
 using Team.Data;
 using Team.GameConstants;
@@ -24,9 +25,6 @@ namespace Team.UI.Gameplay
         private Image cardImage;
 
         [SerializeField]
-        private TextMeshProUGUI nameText;
-
-        [SerializeField]
         private CharacterReskinner characterReskinner;
 
         [SerializeField]
@@ -39,7 +37,11 @@ namespace Team.UI.Gameplay
         private Vector3 selectedScale = new Vector3(1.25f, 1.25f, 1.25f);
 
         [SerializeField]
-        private TextMeshProUGUI turnIndexNumber; //This will be turned to image later in future
+        private Image turnIndexIdentifier;
+
+        [SerializeField]
+        private Image wizardImage
+            ;
 
         [Space(5)]
         [Header("Card Components")]
@@ -49,6 +51,12 @@ namespace Team.UI.Gameplay
 
         [SerializeField]
         private Color unInteractableColor;
+
+        [Space(5)]
+        [Header("Card Sprites")]
+
+        [SerializeField]
+        private List<Sprite> cardSprites;
 
         #region Unity Methods
         protected void Start()
@@ -78,8 +86,8 @@ namespace Team.UI.Gameplay
 
         private void UpdateTurnIndexText()
         {
-            int currentIndex = GameTurnManager.Instance.GetIndexFor(gameObject);
-            turnIndexNumber.text = currentIndex.ToString();
+            Sprite currentIndex = GameTurnManager.Instance.GetTurnIdentifierSprite(gameObject);
+            turnIndexIdentifier.sprite = currentIndex;
         }
 
         #endregion
@@ -88,10 +96,15 @@ namespace Team.UI.Gameplay
         public void PopulateUICardData(CharacterData data, CharacterReskinner _skinner)
         {
             gameObject.name = $"Game-Card: {data.CharacterID}";
+
+            var CharacterCode = data.CharacterSkin.CharacterCode;
+
+            wizardImage.sprite = cardSprites[(int)CharacterCode];
+
             interactableColor = data.CharacterSkin.CharacterColor;
             cardImage.color = interactableColor;
 
-            nameText.text = data.CharacterID;
+            //nameText.text = data.CharacterID;
 
             characterReskinner = _skinner;
 

@@ -66,6 +66,14 @@ namespace Team.Managers
         public Action OnAllTurnsCompleted;
         public Action OnResetLastTurnCompleted;
         public Action OnPlayedTillBreakpoint;
+
+
+        [Space(5)]
+        [Header("Turn Identifier Images")]
+
+        [SerializeField]
+        private List<Sprite> turnIdentifierAtlas = new List<Sprite>();
+
         #endregion
 
         #region Unity Methods
@@ -263,6 +271,13 @@ namespace Team.Managers
         public int GetIndexFor(GameObject _turn)
         {
             return currentTurnOrder.IndexOf(_turn);
+        }
+
+        public Sprite GetTurnIdentifierSprite(GameObject _turn)
+        {
+            int index = GetIndexFor(_turn);
+
+            return turnIdentifierAtlas[index];
         }
 
         #endregion
