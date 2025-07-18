@@ -222,7 +222,7 @@ namespace Team.Gameplay.ObjectiveSystem
         {
             UIManager.Instance.ShowPostGameUI();
 
-            LevelManager.Instance.StopLevel();
+            LevelManager.Instance.CleanupLevelContent();
         }
     }
 }

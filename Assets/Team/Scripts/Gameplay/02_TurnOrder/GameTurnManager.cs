@@ -426,7 +426,6 @@ namespace Team.Managers
         private bool IsBreakerAtExtremes()
         {
             bool playAllTurns = breakerIndex == 0 || breakerIndex >= (turnQueue?.Count ?? 0);
-            Debug.Log($"Play Turns is at extreme? {playAllTurns} and turn Queue Count: {turnQueue?.Count ?? 0}");
             return playAllTurns;
         }
 
@@ -471,8 +470,6 @@ namespace Team.Managers
                 await Task.Delay(TimeSpan.FromSeconds(MetaConstants.PauseBetweenTurn), cancellationToken);
                 if (cancellationToken.IsCancellationRequested) return;
 
-                Debug.Log($"Executing: {turn.name}");
-
                 lock (_lockObject)
                 {
                     _historyStack.Push(turn);
@@ -482,7 +479,6 @@ namespace Team.Managers
             }
             else
             {
-                Debug.Log($"{turn.name} Move character is dead, turn skipped");
                 gameCard?.MakeUninteractable();
             }
         }
@@ -505,11 +501,9 @@ namespace Team.Managers
                 if (HasCharacterTurns)
                 {
                     await RunNextTurnAsync(_operationCancellationTokenSource.Token);
-                    Debug.Log("Current turn has been played");
                 }
                 else
                 {
-                    Debug.Log("All turns have been played");
                     isQueueLoaded = false;
                     OnAllTurnsCompleted?.Invoke();
                 }

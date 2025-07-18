@@ -1,11 +1,20 @@
 using DG.Tweening;
 using Team.Data;
+using Team.GameConstants;
 using Team.Gameplay.Characters;
 using Team.Managers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+
+namespace Team.GameConstants
+{
+    public static partial class MetaConstants
+    {
+        public const float ScaleMaxTimer = 0.1f;
+    }
+}
 
 namespace Team.UI.Gameplay
 {
@@ -99,10 +108,8 @@ namespace Team.UI.Gameplay
 
             characterReskinner.ShowOutline();
 
-            transform.DOScale(selectedScale, 0.2f).SetEase(Ease.OutBack)
-            .OnComplete(
-                () => LayoutRebuilder.ForceRebuildLayoutImmediate(originalParent as RectTransform)
-             );
+            transform.DOScale(selectedScale, MetaConstants.ScaleMaxTimer).SetEase(Ease.OutBack).WaitForCompletion();
+           // LayoutRebuilder.ForceRebuildLayoutImmediate(originalParent as RectTransform);
 
         }
 
@@ -110,10 +117,8 @@ namespace Team.UI.Gameplay
         {
             characterReskinner.HideOutline();
 
-            transform.DOScale(defaultScale, 0.2f).SetEase(Ease.OutBack)
-            .OnComplete(
-                () => LayoutRebuilder.ForceRebuildLayoutImmediate(originalParent as RectTransform)
-             );
+            transform.DOScale(defaultScale, MetaConstants.ScaleMaxTimer).SetEase(Ease.OutBack).WaitForCompletion();
+           // LayoutRebuilder.ForceRebuildLayoutImmediate(originalParent as RectTransform);
 
 
         }

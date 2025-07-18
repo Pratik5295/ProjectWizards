@@ -128,14 +128,14 @@ namespace Team.Managers
         {
             _screenManager.ShowScreen(GameConstants.MetaConstants.GameScreen.GAME);
 
-            if (hasTutorial)
-            {
-                _screenManager.GameScreen.ShowTutorialUI();
-            }
-            else
-            {
-                _screenManager.GameScreen.HideTutorialUI();
-            }
+            //if (hasTutorial)
+            //{
+            //    _screenManager.GameScreen.ShowTutorialUI();
+            //}
+            //else
+            //{
+            //    _screenManager.GameScreen.HideTutorialUI();
+            //}
         }
 
 
@@ -158,6 +158,12 @@ namespace Team.Managers
         {
             _screenManager.GameScreen.HideTutorialUI();
             hasTutorial = false;
+        }
+
+        public void OnBackButton()
+        {
+            //This will take you back to the level selection screen
+            LevelManager.Instance.CleanupLevelContent();
         }
 
         #endregion

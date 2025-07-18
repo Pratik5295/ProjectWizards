@@ -246,12 +246,17 @@ namespace Team.Managers
         {
             UIManager.Instance.ShowLevelSelectionUI();
 
-            if(createdLevel != null)
+            CleanupLevelContent();
+        }
+
+        public void CleanupLevelContent()
+        {
+            if (createdLevel != null)
             {
                 DestroyImmediate(createdLevel.gameObject);
             }
 
-            if(createdEnvironment != null)
+            if (createdEnvironment != null)
             {
                 DestroyImmediate(createdEnvironment.gameObject);
             }
