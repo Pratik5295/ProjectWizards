@@ -149,9 +149,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4ac901582ea89f44ac6674be2c7913a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterData: {fileID: 0}
   CharState: 0
   ref_gridManager: {fileID: 0}
   baseRotation: {fileID: 0}
+  CharacterReskinner: {fileID: 0}
   _currentTileID:
     x: 0
     y: 0
@@ -161,7 +163,7 @@ MonoBehaviour:
   _startTileID:
     x: 0
     y: 0
-  ySpawnOffset: 1.5
+  ySpawnOffset: 1.4
   ydefaultOffset: 2
   _yMovementCurve:
     serializedVersion: 2
@@ -205,10 +207,13 @@ MonoBehaviour:
     m_PreInfinity: 1
     m_PostInfinity: 2
     m_RotationOrder: 4
+  PushProjectileInstance: {fileID: 0}
   _ghosting: {fileID: 0}
+  IsGhosting: 0
   _characterBark: {fileID: 0}
   _projectilePrefab: {fileID: 3625092468094944024, guid: 3d4d34703d5b66249bca19cbcc3a194f, type: 3}
   _fireFromPoint: {fileID: 5150221880546262881}
+  ghostingEffect: {fileID: 0}
   _projectileRange: -66
 --- !u!114 &933473269899832427
 MonoBehaviour:

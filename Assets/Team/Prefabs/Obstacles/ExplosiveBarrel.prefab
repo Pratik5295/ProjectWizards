@@ -156,6 +156,7 @@ MonoBehaviour:
   canBeDestroyed: 1
   _ghosting: {fileID: 4118845384335995682}
   IsGhosting: 0
+  PushProjectileInstance: {fileID: 0}
   RefFireballProjectile: {fileID: 0}
   _explosionEffect: {fileID: 7739599241381896197}
   ExplosionDelayTime: 1
@@ -191,8 +192,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.5, y: 0.5, z: 0.5}
-  m_Center: {x: 0, y: 0.25, z: 0}
+  m_Size: {x: 1.0801926, y: 1.1427227, z: 0.9821311}
+  m_Center: {x: 0.001529932, y: 0.045767367, z: -0.045258284}
 --- !u!114 &5473852294397457992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,10 +206,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2354517d8444e6a4599dc65b7688ab19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickedOn:
+  onHovered:
     m_PersistentCalls:
       m_Calls: []
-  isToggled: 0
+  OnEnableClick:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDisableClick:
+    m_PersistentCalls:
+      m_Calls: []
   isHovered: 0
 --- !u!1001 &6734385307520696145
 PrefabInstance:

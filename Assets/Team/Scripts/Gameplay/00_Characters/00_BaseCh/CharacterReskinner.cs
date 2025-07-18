@@ -8,7 +8,6 @@ namespace Team.GameConstants
     public static partial class MetaConstants
     {
         public const float CharacterOutlineThickness = 4f;
-
     }
 }
 
@@ -22,15 +21,22 @@ namespace Team.Gameplay.Characters
 
         public UICharacter UICharacter => uiCharacter;
 
-        public bool isOutlined { get; private set; }
-
         private bool IsObjective = false;
+
+        [SerializeField]
+        private ObjectivePriority _cachedPriority;
+
+        [ColorUsageAttribute(true, true)]
+        public Color DefaultObjectiveColor;
+        [ColorUsageAttribute(true, true)]
         public Color PrimaryObjectiveColor;
+        [ColorUsageAttribute(true, true)]
         public Color SecondaryObjectiveColor;
 
 
         [SerializeField]
         private SimpleOutline outlineComponent; //Reference to the outline shader attached on body
+
 
         public void SetupCharacterOutline(CharacterReskinData _reskinData)
         {
@@ -45,7 +51,10 @@ namespace Team.Gameplay.Characters
 
         public void ShowOutline()
         {
-            isOutlined = true;
+            if (IsObjective)
+            {
+                SetOutlineColor(DefaultObjectiveColor);
+            }
 
             if (outlineComponent != null)
             {
@@ -55,9 +64,13 @@ namespace Team.Gameplay.Characters
 
         public void HideOutline()
         {
-            if (IsObjective) return;
+            if (IsObjective)
+            {
+                //Switch to based on priority
+                SwitchColorOnPriority(_cachedPriority);
 
-            isOutlined = false;
+                return;
+            }
 
             if (outlineComponent != null)
             {
@@ -73,11 +86,37 @@ namespace Team.Gameplay.Characters
                 return;
             }
 
-            outlineComponent.OutlineColor = PrimaryObjectiveColor;
+            _cachedPriority = priority;
 
-            IsObjective = true;
+            SwitchColorOnPriority(priority);
 
-            ShowOutline();
+             IsObjective = true;
+
+            //Force enabled for objectives
+            outlineComponent.enabled = true;
+
+        }
+
+        private void SetOutlineColor(Color color)
+        {
+            outlineComponent.OutlineColor = color;
+        }
+
+        private void SwitchColorOnPriority(ObjectivePriority priority)
+        {
+            switch (priority)
+            {
+                case ObjectivePriority.PRIMARY:
+                    SetOutlineColor(PrimaryObjectiveColor);
+                    break;
+                case ObjectivePriority.SECONDARY:
+                    SetOutlineColor(SecondaryObjectiveColor);
+                    break;
+
+                default:
+                    SetOutlineColor(DefaultObjectiveColor);
+                    break;
+            }
         }
     }
 }
