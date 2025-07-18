@@ -256,9 +256,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueText: {fileID: 3742326203745265137}
   dialogueTextRect: {fileID: 6931143326999196128}
-  scrollSpeed: 20
-  maxScrollHeight: 2000
-  typewriterSpeed: 0.05
 --- !u!1 &6547637504543776013
 GameObject:
   m_ObjectHideFlags: 0
@@ -439,7 +436,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6681399092426347368}
         m_TargetAssemblyTypeName: Team.UI.DialogueSystem.InkDialogueManager, Assembly-CSharp
-        m_MethodName: ContinueStory
+        m_MethodName: SkipAll
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -677,20 +674,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5937354830685912021, guid: b530c8a18573c974590426f276e4d7be, type: 3}
       propertyPath: m_text
-      value: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
-        eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-        sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-        Lorem
-        ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-        nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
-        eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-        sunt in culpa qui officia deserunt mollit anim id est laborum.'
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5937354830685912021, guid: b530c8a18573c974590426f276e4d7be, type: 3}
       propertyPath: m_fontSize
