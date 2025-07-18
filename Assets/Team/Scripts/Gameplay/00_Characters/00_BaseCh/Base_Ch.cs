@@ -469,12 +469,16 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     {
         _meshRenderer.gameObject.SetActive(true);
         _collider.enabled = true;
+
+        _currentTile.UpdateOccupiedStatus(true, gameObject);
     }
 
     public void DisableObject()
     {
         _meshRenderer.gameObject.SetActive(false);
         _collider.enabled = false;
+
+        _currentTile.UpdateOccupiedStatus(false, gameObject);
     }
     #endregion
 
