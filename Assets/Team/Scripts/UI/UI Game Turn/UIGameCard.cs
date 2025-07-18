@@ -78,7 +78,8 @@ namespace Team.UI.Gameplay
 
         private void UpdateTurnIndexText()
         {
-            turnIndexNumber.text = transform.GetSiblingIndex().ToString();
+            int currentIndex = GameTurnManager.Instance.GetIndexFor(gameObject);
+            turnIndexNumber.text = currentIndex.ToString();
         }
 
         #endregion

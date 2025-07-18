@@ -260,9 +260,9 @@ namespace Team.Managers
             RotatedTiles.Add(_changedTile);
         }
 
-        public int GetIndexFor(GameTurn _turn)
+        public int GetIndexFor(GameObject _turn)
         {
-            return 0;
+            return currentTurnOrder.IndexOf(_turn);
         }
 
         #endregion
