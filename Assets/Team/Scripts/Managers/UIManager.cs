@@ -128,14 +128,14 @@ namespace Team.Managers
         {
             _screenManager.ShowScreen(GameConstants.MetaConstants.GameScreen.GAME);
 
-            //if (hasTutorial)
-            //{
-            //    _screenManager.GameScreen.ShowTutorialUI();
-            //}
-            //else
-            //{
-            //    _screenManager.GameScreen.HideTutorialUI();
-            //}
+            if (hasTutorial)
+            {
+                _screenManager.GameScreen.ShowTutorialUI();
+            }
+            else
+            {
+                _screenManager.GameScreen.HideTutorialUI();
+            }
         }
 
 
