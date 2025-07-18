@@ -221,6 +221,8 @@ namespace Team.Gameplay.ObjectiveSystem
         private void ShowLevelCompletedUI()
         {
             UIManager.Instance.ShowPostGameUI();
+
+            LevelManager.Instance.CleanupLevelContent();
         }
     }
 }

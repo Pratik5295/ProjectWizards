@@ -160,6 +160,12 @@ namespace Team.Managers
             hasTutorial = false;
         }
 
+        public void OnBackButton()
+        {
+            //This will take you back to the level selection screen
+            LevelManager.Instance.StopLevel();
+        }
+
         #endregion
 
         #region Dialogue Manager Handling

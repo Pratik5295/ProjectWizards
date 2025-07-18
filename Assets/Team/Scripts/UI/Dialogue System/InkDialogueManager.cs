@@ -23,10 +23,11 @@ namespace Team.UI.DialogueSystem
     public class InkDialogueManager : MonoBehaviour
     {
         public TextMeshProUGUI dialogueText;
-        public RectTransform dialogueTextRect; // RectTransform of the Text object
+        public RectTransform dialogueTextRect;
+
         private float scrollSpeed = MetaConstants.DialogueScrollSpeed;
         private float maxScrollHeight = MetaConstants.MaxScrollHeight;
-        private float typewriterSpeed = MetaConstants.TypeWriterSpeed; // seconds between characters
+        private float typewriterSpeed = MetaConstants.TypeWriterSpeed;
 
         private Story story;
         private bool isScrolling = false;
@@ -34,13 +35,16 @@ namespace Team.UI.DialogueSystem
 
         private Coroutine revealCoroutine;
 
+        private string currentLine = "";
+        private string fullTextBeforeLine = "";
+
         public void SetDialogue(TextAsset _asset)
         {
             story = new Story(_asset.text);
 
-            // Reset everything
+            // Reset
             dialogueText.text = "";
-            dialogueTextRect.anchoredPosition = new Vector2(0, -Screen.height/2); // start below
+            dialogueTextRect.anchoredPosition = new Vector2(0, -Screen.height / 2);
             isScrolling = true;
 
             ContinueStory();
@@ -50,18 +54,16 @@ namespace Team.UI.DialogueSystem
         {
             if (story.canContinue)
             {
-                string nextLine = story.Continue().Trim();
+                currentLine = story.Continue().Trim();
 
-                // Start the typewriter effect for the next line
                 if (revealCoroutine != null)
                     StopCoroutine(revealCoroutine);
 
-                revealCoroutine = StartCoroutine(RevealTextOneByOne(nextLine));
+                revealCoroutine = StartCoroutine(RevealTextOneByOne(currentLine));
             }
             else
             {
-                isScrolling = true; // Let final scroll finish
-
+                isScrolling = true;
                 Invoke(nameof(OnDialogueScrollComplete), MetaConstants.HideDialogueScreenAfter);
             }
         }
@@ -70,25 +72,59 @@ namespace Team.UI.DialogueSystem
         {
             isRevealing = true;
 
-            string existingText = dialogueText.text;
-            string newLine = "\n\n"; // Formatting between paragraphs
-            string fullText = existingText + newLine;
-            dialogueText.text = fullText;
+            fullTextBeforeLine = dialogueText.text + "\n\n"; // Store text before current line
+            dialogueText.text = fullTextBeforeLine;
 
             for (int i = 0; i <= line.Length; i++)
             {
-                dialogueText.text = fullText + line.Substring(0, i);
+                dialogueText.text = fullTextBeforeLine + line.Substring(0, i);
                 yield return new WaitForSeconds(typewriterSpeed);
             }
 
             isRevealing = false;
 
-            // Auto-continue after typing is done
-            yield return new WaitForSeconds(MetaConstants.DialoguePauseBetweenLines); // Optional pause after line
+            yield return new WaitForSeconds(MetaConstants.DialoguePauseBetweenLines);
             ContinueStory();
         }
 
-        void Update()
+
+        public void SkipAll()
+        {
+            if (isRevealing)
+            {
+                // Stop typewriter coroutine if running
+                if (revealCoroutine != null)
+                {
+                    StopCoroutine(revealCoroutine);
+                    revealCoroutine = null;
+                }
+
+                isRevealing = false;
+                isScrolling = false;
+
+                // Show all remaining text
+                while (story.canContinue)
+                {
+                    string line = story.Continue().Trim();
+                    dialogueText.text += "\n\n" + line;
+                }
+
+                // Optionally force scroll position to max if you're using a ScrollView
+                dialogueTextRect.anchoredPosition = new Vector2(0, 0);
+
+                // Immediately trigger completion logic
+                CancelInvoke(nameof(OnDialogueScrollComplete)); // Just in case
+                                                                //OnDialogueScrollComplete();
+            }
+
+            else
+            {
+                OnDialogueScrollComplete();
+            }
+        }
+
+
+        private void Update()
         {
             if (isScrolling)
             {
@@ -97,7 +133,6 @@ namespace Team.UI.DialogueSystem
                 if (dialogueTextRect.anchoredPosition.y > maxScrollHeight && !story.canContinue && !isRevealing)
                 {
                     isScrolling = false;
-                   
                 }
             }
         }

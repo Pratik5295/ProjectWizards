@@ -79,6 +79,9 @@ namespace Team.Gameplay.GridSystem
         [SerializeField]
         protected GameObject tileObject = null; //The created tile object
 
+        protected Material _startingMaterial;
+        public Color normalColour { protected set; get; }
+
         [SerializeField] private GameObject _startingObjectPrefab;
         protected GameObject _startingObjectInstance = null; // The referenced instance of an obejct that this tile started with.
 
@@ -133,6 +136,8 @@ namespace Team.Gameplay.GridSystem
             //Do not include anything that is relient on the level having been loaded first!
             _startingTileID = TileID;
             _startingObjectInstance = objectOccupyingTile;
+            _startingMaterial = tileObject.transform.GetChild(0).GetComponent<MeshRenderer>().material;
+            normalColour = _startingMaterial.color;
         }
 
         #region Spawning Tile Types
@@ -348,6 +353,7 @@ namespace Team.Gameplay.GridSystem
 
         public Base_Obstacle ObstacleImplementsScript()
         {
+            if (!objectOccupyingTile) { return null; }
             return objectOccupyingTile.GetComponent<Base_Obstacle>();
         }
 

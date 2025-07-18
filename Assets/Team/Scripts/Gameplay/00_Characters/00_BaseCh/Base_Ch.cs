@@ -249,6 +249,11 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
             {
                 StartCoroutine(ShakeCharacter(0.25f));
                 alreadyMoving = false;
+                if (wasPushed)
+                {
+                    WasPushed(wasPushed);
+                    yield break;
+                }
                 OnTurnComplete?.Invoke();
                 yield break;
             }
@@ -262,11 +267,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
         if (wasPushed)
         {
-            if (PushProjectileInstance)
-            {
-                PushProjectileInstance.CleanUp();
-                PushProjectileInstance = null;
-            }
+            WasPushed(wasPushed);
             yield break;
         }
 
@@ -388,6 +389,18 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         transform.localPosition = defaultPos;
     }
 
+    private void WasPushed(bool wasPushed)
+    {
+        if (wasPushed)
+        {
+            if (PushProjectileInstance)
+            {
+                PushProjectileInstance.CleanUp();
+                PushProjectileInstance = null;
+            }
+        }
+    }
+
     public void UpdateCurrentTileID()
     {
         _currentTileID = _currentTile.TileID;
@@ -469,12 +482,16 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     {
         _meshRenderer.gameObject.SetActive(true);
         _collider.enabled = true;
+
+        _currentTile.UpdateOccupiedStatus(true, gameObject);
     }
 
     public void DisableObject()
     {
         _meshRenderer.gameObject.SetActive(false);
         _collider.enabled = false;
+
+        _currentTile.UpdateOccupiedStatus(false, gameObject);
     }
     #endregion
 

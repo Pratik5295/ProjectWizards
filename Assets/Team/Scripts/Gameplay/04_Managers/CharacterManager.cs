@@ -6,6 +6,7 @@ using Team.Data;
 using Team.Gameplay.Characters;
 using Team.Gameplay.GridSystem;
 using Team.Gameplay.TurnSystem;
+using Team.UI;
 using Team.UI.Gameplay;
 using UnityEngine;
 
@@ -177,7 +178,7 @@ namespace Team.Managers
             for (int i = 0; i < cardHolder.childCount; i++)
             {
                 var card = cardHolder.GetChild(i);
-                if (card.gameObject.GetComponent<GameBreakpoint>() == null)
+                if (card.gameObject.GetComponent<GhostCard>() == null)
                 {
                     Destroy(card.gameObject);
                 }

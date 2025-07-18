@@ -4,9 +4,10 @@ namespace Team.Data
 {
     public enum CharacterColorCode
     {
-        RED = 0,
-        BLUE = 1,
-        BLACK = 3
+        FIRE = 0,
+        PUSH = 1,
+        REDIRECT = 2,
+        ROTATE = 3
     }
 
     [System.Serializable]

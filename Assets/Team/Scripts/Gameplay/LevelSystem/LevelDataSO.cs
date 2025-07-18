@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using static Team.GameConstants.LevelConstants;
 using static Team.GameConstants.MetaConstants;
 using Team.Gameplay.Tutorial;
+using FMODUnity;
 
 namespace Team.GameConstants
 {
@@ -55,6 +56,8 @@ namespace Team.Gameplay.LevelSystem
 
         public bool HasBreakPoint = false;  //No breaker by default
 
+        public EventReference s_ambience;
+
         //Place to add tutorial data
         public List<TutorialData> TutorialSteps = new List<TutorialData>();
 
@@ -67,6 +70,7 @@ namespace Team.Gameplay.LevelSystem
             EnvironmentPrefab = _data.EnvironmentPrefab;
             DialogueAsset = _data.DialogueAsset;
             HasBreakPoint = _data.HasBreakPoint;
+            s_ambience = _data.s_ambience;
 
             TutorialSteps = new List<TutorialData>();
             foreach (var step in _data.TutorialSteps)
