@@ -66,6 +66,14 @@ namespace Team.Managers
         public Action OnAllTurnsCompleted;
         public Action OnResetLastTurnCompleted;
         public Action OnPlayedTillBreakpoint;
+
+
+        [Space(5)]
+        [Header("Turn Identifier Images")]
+
+        [SerializeField]
+        private List<Sprite> turnIdentifierAtlas = new List<Sprite>();
+
         #endregion
 
         #region Unity Methods
@@ -113,7 +121,7 @@ namespace Team.Managers
             if (_isResetting) return;
 
             LoadObstacleData();
-            breakerIndex = breaker != null ? breaker.transform.GetSiblingIndex() : 0;
+            //breakerIndex = breaker != null ? breaker.transform.GetSiblingIndex() : 0;
 
             lock (_lockObject)
             {
@@ -206,7 +214,7 @@ namespace Team.Managers
                 for (int i = 0; i < turnHolder.transform.childCount; i++)
                 {
                     var child = turnHolder.transform.GetChild(i);
-                    if (child != null)
+                    if (child != null && child.gameObject.TryGetComponent<GameTurn>(out var turn))
                     {
                         currentTurnOrder.Add(child.gameObject);
                     }
@@ -258,6 +266,18 @@ namespace Team.Managers
             if (RotatedTiles.Contains(_changedTile)) return;
 
             RotatedTiles.Add(_changedTile);
+        }
+
+        public int GetIndexFor(GameObject _turn)
+        {
+            return currentTurnOrder.IndexOf(_turn);
+        }
+
+        public Sprite GetTurnIdentifierSprite(GameObject _turn)
+        {
+            int index = GetIndexFor(_turn);
+
+            return turnIdentifierAtlas[index];
         }
 
         #endregion
@@ -421,7 +441,6 @@ namespace Team.Managers
         private bool IsBreakerAtExtremes()
         {
             bool playAllTurns = breakerIndex == 0 || breakerIndex >= (turnQueue?.Count ?? 0);
-            Debug.Log($"Play Turns is at extreme? {playAllTurns} and turn Queue Count: {turnQueue?.Count ?? 0}");
             return playAllTurns;
         }
 
@@ -466,8 +485,6 @@ namespace Team.Managers
                 await Task.Delay(TimeSpan.FromSeconds(MetaConstants.PauseBetweenTurn), cancellationToken);
                 if (cancellationToken.IsCancellationRequested) return;
 
-                Debug.Log($"Executing: {turn.name}");
-
                 lock (_lockObject)
                 {
                     _historyStack.Push(turn);
@@ -477,7 +494,6 @@ namespace Team.Managers
             }
             else
             {
-                Debug.Log($"{turn.name} Move character is dead, turn skipped");
                 gameCard?.MakeUninteractable();
             }
         }
@@ -500,11 +516,9 @@ namespace Team.Managers
                 if (HasCharacterTurns)
                 {
                     await RunNextTurnAsync(_operationCancellationTokenSource.Token);
-                    Debug.Log("Current turn has been played");
                 }
                 else
                 {
-                    Debug.Log("All turns have been played");
                     isQueueLoaded = false;
                     OnAllTurnsCompleted?.Invoke();
                 }
@@ -526,6 +540,14 @@ namespace Team.Managers
         #endregion
 
         #region Reset Methods
+
+        public void CleanUpLevel()
+        {
+            foreach (var turn in currentTurnOrder)
+            {
+                DestroyImmediate(turn.gameObject);
+            }
+        }
 
         [ContextMenu("Reset Turns")]
         public async void ResetAllTurns()
@@ -583,7 +605,7 @@ namespace Team.Managers
                 }
             }
 
-            ResetBreaker();
+           // ResetBreaker();
 
             // Use async delay instead of Invoke
             await Task.Delay(TimeSpan.FromSeconds(2f));
@@ -614,7 +636,10 @@ namespace Team.Managers
             ResetRotatedTiles();
 
             //Reset breakpoint system
-            ResetBreakpointSystem();
+            //ResetBreakpointSystem();
+
+            //Turn all cards interactable
+            TurnAllCardsInteractable();
 
             OnResetLastTurnCompleted?.Invoke();
             isQueueLoaded = false;
@@ -716,6 +741,19 @@ namespace Team.Managers
         {
             turnHolder?.InitializeComplete();
             OnResetLastTurnCompleted?.Invoke();
+        }
+
+        private void TurnAllCardsInteractable()
+        {
+            //Do it after all characters are reset
+
+            foreach(var turn in originalOrder)
+            {
+                if(turn.TryGetComponent<UIGameCard>(out var card))
+                {
+                    card.MakeInteractable();
+                }
+            }
         }
 
         #endregion

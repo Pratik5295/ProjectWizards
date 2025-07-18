@@ -1,22 +1,26 @@
+using System.Collections.Generic;
+using DG.Tweening;
 using Team.Data;
+using Team.GameConstants;
 using Team.Gameplay.Characters;
 using Team.Managers;
 using TMPro;
-using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+
+namespace Team.GameConstants
+{
+    public static partial class MetaConstants
+    {
+        public const float ScaleMaxTimer = 0.1f;
+    }
+}
 
 namespace Team.UI.Gameplay
 {
     public class UIGameCard : UIDragHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
-        [SerializeField]
-        private Image cardImage;
-
-        [SerializeField]
-        private TextMeshProUGUI nameText;
-
         [SerializeField]
         private CharacterReskinner characterReskinner;
 
@@ -30,7 +34,13 @@ namespace Team.UI.Gameplay
         private Vector3 selectedScale = new Vector3(1.25f, 1.25f, 1.25f);
 
         [SerializeField]
-        private TextMeshProUGUI turnIndexNumber; //This will be turned to image later in future
+        private Image turnIndexIdentifier;
+
+        [SerializeField]
+        private Image wizardImage;
+
+        [SerializeField]
+        private Image turnCompletedCard;    //Just a low opacity darken outline image
 
         [Space(5)]
         [Header("Card Components")]
@@ -40,6 +50,12 @@ namespace Team.UI.Gameplay
 
         [SerializeField]
         private Color unInteractableColor;
+
+        [Space(5)]
+        [Header("Card Sprites")]
+
+        [SerializeField]
+        private List<Sprite> cardSprites;
 
         #region Unity Methods
         protected void Start()
@@ -64,12 +80,13 @@ namespace Team.UI.Gameplay
         {
             // Notify turn manager of updated order
             GameTurnManager.Instance.ForceRebuildTurns();
-            
+
         }
 
         private void UpdateTurnIndexText()
         {
-            turnIndexNumber.text = transform.GetSiblingIndex().ToString();
+            Sprite currentIndex = GameTurnManager.Instance.GetTurnIdentifierSprite(gameObject);
+            turnIndexIdentifier.sprite = currentIndex;
         }
 
         #endregion
@@ -78,10 +95,15 @@ namespace Team.UI.Gameplay
         public void PopulateUICardData(CharacterData data, CharacterReskinner _skinner)
         {
             gameObject.name = $"Game-Card: {data.CharacterID}";
-            interactableColor = data.CharacterSkin.CharacterColor;
-            cardImage.color = interactableColor;
 
-            nameText.text = data.CharacterID;
+            var CharacterCode = data.CharacterSkin.CharacterCode;
+
+            wizardImage.sprite = cardSprites[(int)CharacterCode];
+
+            //interactableColor = data.CharacterSkin.CharacterColor;
+            //cardImage.color = interactableColor;
+
+            //nameText.text = data.CharacterID;
 
             characterReskinner = _skinner;
 
@@ -99,9 +121,8 @@ namespace Team.UI.Gameplay
 
             characterReskinner.ShowOutline();
 
-            transform.localScale = selectedScale;
-
-            LayoutRebuilder.ForceRebuildLayoutImmediate(originalParent as RectTransform);
+            transform.DOScale(selectedScale, MetaConstants.ScaleMaxTimer).SetEase(Ease.OutBack).WaitForCompletion();
+           // LayoutRebuilder.ForceRebuildLayoutImmediate(originalParent as RectTransform);
 
         }
 
@@ -109,9 +130,10 @@ namespace Team.UI.Gameplay
         {
             characterReskinner.HideOutline();
 
-            transform.localScale = defaultScale;
+            transform.DOScale(defaultScale, MetaConstants.ScaleMaxTimer).SetEase(Ease.OutBack).WaitForCompletion();
+           // LayoutRebuilder.ForceRebuildLayoutImmediate(originalParent as RectTransform);
 
-            LayoutRebuilder.ForceRebuildLayoutImmediate(originalParent as RectTransform);
+
         }
 
         public void OnPointerClick(PointerEventData eventData)
@@ -127,17 +149,47 @@ namespace Team.UI.Gameplay
         public void MakeInteractable()
         {
             canvasGroup.interactable = true;
-            cardImage.raycastTarget = true;
-            cardImage.color = interactableColor;
-            
+            turnCompletedCard.gameObject.SetActive(false);
+            canvasGroup.blocksRaycasts = true;
+            //cardImage.color = interactableColor;
+
         }
 
         [ContextMenu("Make Uninteractable")]
         public void MakeUninteractable()
         {
             canvasGroup.interactable = false;
-            cardImage.raycastTarget = false;
-            cardImage.color = unInteractableColor;
+            turnCompletedCard.gameObject.SetActive(true);
+            canvasGroup.blocksRaycasts = false;
+            //cardImage.color = unInteractableColor;
+        }
+
+        #endregion
+
+        #region Drag Handlers Section
+
+        public override void OnBeginDrag(PointerEventData eventData)
+        {
+            _turnHolder.ActivateGhostCard(this);
+
+            base.OnBeginDrag(eventData);
+        }
+
+        public override void OnDrag(PointerEventData eventData)
+        {
+            base.OnDrag(eventData);
+
+            //Move Ghost card along with it
+
+            var ghostIndex = _turnHolder.GetIndex(rectTransform.localPosition.x);
+            _turnHolder.SetGhostIndex(ghostIndex);
+        }
+
+        public override void OnEndDrag(PointerEventData eventData)
+        {
+            base.OnEndDrag(eventData);
+
+            _turnHolder.DeactivateGhostCard();
         }
 
         #endregion

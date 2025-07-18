@@ -677,6 +677,26 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1932039701754617963, guid: 67591832cba7f0e4f92673463a1cdfdd, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1932039701754617963, guid: 67591832cba7f0e4f92673463a1cdfdd, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1932039701754617963, guid: 67591832cba7f0e4f92673463a1cdfdd, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 240
+      objectReference: {fileID: 0}
+    - target: {fileID: 1932039701754617963, guid: 67591832cba7f0e4f92673463a1cdfdd, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1932039701754617963, guid: 67591832cba7f0e4f92673463a1cdfdd, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -160
+      objectReference: {fileID: 0}
     - target: {fileID: 3284243491537909938, guid: 67591832cba7f0e4f92673463a1cdfdd, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -876,6 +896,18 @@ PrefabInstance:
     - target: {fileID: 6990796223144039816, guid: 67591832cba7f0e4f92673463a1cdfdd, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7262490856928763156, guid: 67591832cba7f0e4f92673463a1cdfdd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 654094173956003650}
+    - target: {fileID: 7262490856928763156, guid: 67591832cba7f0e4f92673463a1cdfdd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnBackButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 7262490856928763156, guid: 67591832cba7f0e4f92673463a1cdfdd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Team.Managers.UIManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7571836542556432860, guid: 67591832cba7f0e4f92673463a1cdfdd, type: 3}
       propertyPath: m_AnchorMax.y
