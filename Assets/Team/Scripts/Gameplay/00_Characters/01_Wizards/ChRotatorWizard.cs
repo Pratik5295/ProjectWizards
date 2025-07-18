@@ -304,7 +304,7 @@ public class ChRotatorWizard : Base_Ch
 
                 _tilesToMove[i].UnparentOccupyingObject();
             }
-            _tilesToMove[i].gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.white;
+            _tilesToMove[i].gameObject.GetComponentInChildren<MeshRenderer>().material.color = _tilesToMove[i].normalColour;
         }
         OnTurnComplete?.Invoke();
         //_tilesToMove.Clear();
