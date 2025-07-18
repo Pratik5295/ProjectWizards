@@ -125,12 +125,17 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         LayoutRebuilder.ForceRebuildLayoutImmediate(originalParent as RectTransform);
 
 
-        if (originalIndex != newIndex)
-        {
-            originalIndex = newIndex;
-            OnSiblingIndexUpdatedEvent?.Invoke(newIndex);
+        //if (originalIndex != newIndex)
+        //{
+        //    originalIndex = newIndex;
+        //    OnSiblingIndexUpdatedEvent?.Invoke(newIndex);
 
-            _turnHolder.OnTurnOrderUpdatedEvent?.Invoke();
-        }
+        //    _turnHolder.OnTurnOrderUpdatedEvent?.Invoke();
+        //}
+
+        originalIndex = newIndex;
+        OnSiblingIndexUpdatedEvent?.Invoke(newIndex);
+
+        _turnHolder.OnTurnOrderUpdatedEvent?.Invoke();
     }
 }
