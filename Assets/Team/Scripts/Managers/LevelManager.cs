@@ -260,6 +260,9 @@ namespace Team.Managers
             {
                 DestroyImmediate(createdEnvironment.gameObject);
             }
+
+            CharacterManager.Instance.CleanUp();
+            GameTurnManager.Instance.CleanUpLevel();
         }
 
         public void AddLevelToMap(Level _level)

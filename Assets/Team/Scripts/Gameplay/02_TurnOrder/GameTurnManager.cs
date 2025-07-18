@@ -541,6 +541,14 @@ namespace Team.Managers
 
         #region Reset Methods
 
+        public void CleanUpLevel()
+        {
+            foreach (var turn in currentTurnOrder)
+            {
+                DestroyImmediate(turn.gameObject);
+            }
+        }
+
         [ContextMenu("Reset Turns")]
         public async void ResetAllTurns()
         {
@@ -597,7 +605,7 @@ namespace Team.Managers
                 }
             }
 
-            ResetBreaker();
+           // ResetBreaker();
 
             // Use async delay instead of Invoke
             await Task.Delay(TimeSpan.FromSeconds(2f));
@@ -628,7 +636,10 @@ namespace Team.Managers
             ResetRotatedTiles();
 
             //Reset breakpoint system
-            ResetBreakpointSystem();
+            //ResetBreakpointSystem();
+
+            //Turn all cards interactable
+            TurnAllCardsInteractable();
 
             OnResetLastTurnCompleted?.Invoke();
             isQueueLoaded = false;
@@ -730,6 +741,19 @@ namespace Team.Managers
         {
             turnHolder?.InitializeComplete();
             OnResetLastTurnCompleted?.Invoke();
+        }
+
+        private void TurnAllCardsInteractable()
+        {
+            //Do it after all characters are reset
+
+            foreach(var turn in originalOrder)
+            {
+                if(turn.TryGetComponent<UIGameCard>(out var card))
+                {
+                    card.MakeInteractable();
+                }
+            }
         }
 
         #endregion

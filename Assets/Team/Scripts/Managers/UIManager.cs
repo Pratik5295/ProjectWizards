@@ -163,7 +163,7 @@ namespace Team.Managers
         public void OnBackButton()
         {
             //This will take you back to the level selection screen
-            LevelManager.Instance.CleanupLevelContent();
+            LevelManager.Instance.StopLevel();
         }
 
         #endregion

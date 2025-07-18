@@ -22,9 +22,6 @@ namespace Team.UI.Gameplay
     public class UIGameCard : UIDragHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         [SerializeField]
-        private Image cardImage;
-
-        [SerializeField]
         private CharacterReskinner characterReskinner;
 
         [SerializeField]
@@ -40,8 +37,10 @@ namespace Team.UI.Gameplay
         private Image turnIndexIdentifier;
 
         [SerializeField]
-        private Image wizardImage
-            ;
+        private Image wizardImage;
+
+        [SerializeField]
+        private Image turnCompletedCard;    //Just a low opacity darken outline image
 
         [Space(5)]
         [Header("Card Components")]
@@ -101,8 +100,8 @@ namespace Team.UI.Gameplay
 
             wizardImage.sprite = cardSprites[(int)CharacterCode];
 
-            interactableColor = data.CharacterSkin.CharacterColor;
-            cardImage.color = interactableColor;
+            //interactableColor = data.CharacterSkin.CharacterColor;
+            //cardImage.color = interactableColor;
 
             //nameText.text = data.CharacterID;
 
@@ -150,8 +149,9 @@ namespace Team.UI.Gameplay
         public void MakeInteractable()
         {
             canvasGroup.interactable = true;
-            cardImage.raycastTarget = true;
-            cardImage.color = interactableColor;
+            turnCompletedCard.gameObject.SetActive(false);
+            canvasGroup.blocksRaycasts = true;
+            //cardImage.color = interactableColor;
 
         }
 
@@ -159,8 +159,9 @@ namespace Team.UI.Gameplay
         public void MakeUninteractable()
         {
             canvasGroup.interactable = false;
-            cardImage.raycastTarget = false;
-            cardImage.color = unInteractableColor;
+            turnCompletedCard.gameObject.SetActive(true);
+            canvasGroup.blocksRaycasts = false;
+            //cardImage.color = unInteractableColor;
         }
 
         #endregion
