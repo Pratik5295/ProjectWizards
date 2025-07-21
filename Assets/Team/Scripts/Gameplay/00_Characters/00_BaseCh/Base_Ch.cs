@@ -1,17 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
-using Team.Gameplay.GridSystem;
+using System.Threading.Tasks;
+using DG.Tweening;
+using Team.Data;
 using Team.Enum.Character;
-using UnityEngine;
 using Team.GameConstants;
 using Team.Gameplay.Characters;
-using Team.UI;
-using static Team.GameConstants.MetaConstants;
-using Team.Data;
+using Team.Gameplay.GridSystem;
 using Team.Managers;
-using DG.Tweening;
-using System.Threading.Tasks;
-using UnityEditor.Build;
+using Team.UI;
+using UnityEngine;
+using static Team.GameConstants.MetaConstants;
 
 [System.Serializable]
 public class PlayerMove
@@ -261,7 +260,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
                     WasPushed(wasPushed);
                     yield break;
                 }
-                OnTurnComplete?.Invoke();
+
+                OnAbilityCompleted();
                 yield break;
             }
         }
@@ -277,7 +277,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
             yield break;
         }
 
-        OnTurnComplete?.Invoke();
+        OnAbilityCompleted();
     }
 
 
@@ -445,7 +445,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         if (_currentTile.IsDeathTile())
         {
             KillCharacter();
-            OnTurnComplete?.Invoke();
+            OnAbilityCompleted();
+            OnTurnComplete?.Invoke(); //FUTURE SCARE: Maybe will cause an issue
         }
         if (_currentTile.IsIceTile())
         {
@@ -498,11 +499,26 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         }
     }
 
+    protected TaskCompletionSource<bool> abilityWaiter = new TaskCompletionSource<bool>();
 
-    public virtual void UseAbility()
+    public async virtual Task UseAbility()
     {
+        abilityWaiter = new TaskCompletionSource<bool>();
         // Debug.LogError($" {gameObject.name} Ability not programmed for character");
         StartCoroutine(MoveByAmount(1, baseRotation.GetFacingDirection()));
+
+        await abilityWaiter.Task;
+
+    }
+
+    protected void OnAbilityCompleted()
+    {
+        if (abilityWaiter != null && !abilityWaiter.Task.IsCompleted)
+        {
+            abilityWaiter.SetResult(true);
+        }
+
+        OnTurnComplete?.Invoke();
     }
 
     #region Enabling and Disabling Character

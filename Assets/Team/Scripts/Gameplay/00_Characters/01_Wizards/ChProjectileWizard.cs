@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 
 [DefaultExecutionOrder(2)]
@@ -49,13 +50,14 @@ public class ChProjectileWizard : Base_Ch
     }
 
 
-    public override void UseAbility()
+    public async override Task UseAbility()
     {
-        if (!_projectilePrefab) 
+        abilityWaiter = new TaskCompletionSource<bool>();
+        if (_projectilePrefab == null) 
         { 
             StartCoroutine(ShakeCharacter(0.25f)); 
-            endTurn(); 
-            return; 
+            endTurn();
+            return;
         }
         ProjectileInstance = Instantiate(_projectilePrefab, _fireFromPoint.transform.position, Quaternion.identity);
         scProjectile = ProjectileInstance.GetComponent<Base_Projectile>();
@@ -67,17 +69,19 @@ public class ChProjectileWizard : Base_Ch
         scProjectile.OnProjectileEnd += endTurn;
 
         OnCastBark();
+
+        await abilityWaiter.Task;
     }
 
     private void endTurn()
     {
-        if (_projectilePrefab)
+        if (_projectilePrefab != null)
         {
             scProjectile.OnProjectileEnd -= endTurn;
         }
         ProjectileInstance = null;
         scProjectile = null;
 
-        OnTurnComplete?.Invoke();
+        OnAbilityCompleted();
     }
 }

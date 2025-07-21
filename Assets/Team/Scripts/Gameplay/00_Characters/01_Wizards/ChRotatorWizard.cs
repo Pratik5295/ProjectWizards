@@ -64,8 +64,9 @@ public class ChRotatorWizard : Base_Ch
         _landingVFXManager.transform.position = new Vector3(transform.position.x, _landingVFXOffset, transform.position.z);
     }
 
-    public override void UseAbility()
+    public async override Task UseAbility()
     {
+        abilityWaiter = new TaskCompletionSource<bool>();
         OnCastBark();
 
         GetTilesToRotate();
@@ -73,7 +74,7 @@ public class ChRotatorWizard : Base_Ch
         if (!centerTile || _tilesToMove.Count != 5)
         {
             Debug.Log("Cant Execute Ability as no tiles no center tile.");
-            OnTurnComplete?.Invoke();
+            OnAbilityCompleted();
             return;
         }
 
@@ -103,6 +104,8 @@ public class ChRotatorWizard : Base_Ch
 
         TileDataChanges();
         activeCoroutine = StartCoroutine(LerpUpDown(true));
+
+        await abilityWaiter.Task;
     }
 
     [ContextMenu("Undo Rotation")]
@@ -319,7 +322,6 @@ public class ChRotatorWizard : Base_Ch
             }
             _tilesToMove[i].gameObject.GetComponentInChildren<MeshRenderer>().material.color = _tilesToMove[i].normalColour;
         }
-        OnTurnComplete?.Invoke();
         //_tilesToMove.Clear();
 
         activeCoroutine = null;
@@ -355,6 +357,8 @@ public class ChRotatorWizard : Base_Ch
             _landingVFXManager.EnableParticleEffectChildren();
 
             CleanUpTiles();
+
+            OnAbilityCompleted();
         }
     }
 
