@@ -328,23 +328,29 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     }
 
     [ContextMenu("Undo Movement")]
-    public virtual async void UndoAction()
+    public virtual async Task UndoAction()
     {
         Debug.Log($"Pratik starting awaiting on: {gameObject.name}");
-        await CheckForStackEmpty();
+        await CharacterUndoStack();
 
         Debug.Log($"Pratik awaiting completed. Well done {gameObject.name}");
+
+        OnTurnComplete?.Invoke();
     }
 
     protected void HistoryStackIsEmpty()
     {
         if (HistoryStack.Count == 0)
         {
-            undoAwaiter.SetResult(true);
+            if(undoAwaiter != null && !undoAwaiter.Task.IsCompleted)
+            {
+                undoAwaiter.SetResult(true);
+            }
+            
         }
     }
 
-    protected virtual async Task CheckForStackEmpty()
+    protected virtual async Task CharacterUndoStack()
     {
         undoAwaiter = new TaskCompletionSource<bool>();
 
@@ -359,16 +365,19 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
                 if (move.wasMoved)
                 {
-                    UndoMovement();
+                   await UndoMovement();
                 }
             }
             await undoAwaiter.Task;
         }
-        OnTurnComplete?.Invoke();
+    
     }
 
-    public void UndoMovement()
+    protected TaskCompletionSource<bool> undoAbilityWaiter = new TaskCompletionSource<bool>();
+
+    public async Task UndoMovement()
     {
+        undoAbilityWaiter = new TaskCompletionSource<bool>();
         if (_currentTileID == _startTileID)
         {
             transform.position = new Vector3(_currentTile.TilePosition.x, transform.position.y, _currentTile.TilePosition.z);
@@ -385,7 +394,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
         ResetRotationToStart();
 
-        HistoryStackIsEmpty();
+        await undoAbilityWaiter.Task;
     }
 
     private void ResetRotationToStart()
@@ -393,6 +402,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         baseRotation.changeFacingDirection(startingDirection);
         Vector2 v2Dir = baseRotation.dirToV2(baseRotation.DirectionFacing);
         baseRotation.RotateToFaceDir(v2Dir);
+
+        OnUndoAbilityCompleted();
     }
 
     //Shakes character if path or tile is invalid.
@@ -519,6 +530,17 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         }
 
         OnTurnComplete?.Invoke();
+    }
+
+    protected void OnUndoAbilityCompleted()
+    {
+        if(undoAbilityWaiter != null && !undoAbilityWaiter.Task.IsCompleted)
+        {
+            undoAbilityWaiter.SetResult(true);
+        }
+
+        //Check if all moves in undo is completed
+        HistoryStackIsEmpty();
     }
 
     #region Enabling and Disabling Character

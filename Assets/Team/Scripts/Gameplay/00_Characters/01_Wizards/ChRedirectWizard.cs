@@ -2,6 +2,7 @@ using UnityEngine;
 using Team.Enum.Character;
 using Team.Managers;
 using static Team.GameConstants.MetaConstants;
+using System.Threading.Tasks;
 
 public static partial class RedirectConstants
 {
@@ -59,15 +60,16 @@ public class ChRedirectWizard : ChProjectileWizard
     }
 
 
-    public override void UndoAction()
+    protected override async Task CharacterUndoStack()
     {
+        undoAwaiter = new TaskCompletionSource<bool>();
         while (HistoryStack.Count > 0)
         {
             var move = HistoryStack.Pop();
 
             if (move.wasMoved)
             {
-                UndoMovement();
+                await UndoMovement();
             }
             else
             {
@@ -76,12 +78,17 @@ public class ChRedirectWizard : ChProjectileWizard
         }
 
         UnreferenceProjectile();
-        OnTurnComplete?.Invoke();
+
+        await undoAwaiter.Task;
+
+        //OnTurnComplete?.Invoke();
     }
 
     private void UnreferenceProjectile()
     {
         _projectilePrefab = null;
+
+        OnUndoAbilityCompleted();
     }
 
     private void AbsorbVFX(Enum_GridDirection ProjectileDir = Enum_GridDirection.NORTH)

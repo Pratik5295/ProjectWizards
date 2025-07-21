@@ -71,9 +71,11 @@ namespace Team.Gameplay.TurnSystem
         {
             _turnCompletion = new TaskCompletionSource<bool>();
 
-            characterObject.UndoAction();
+            await characterObject.UndoAction();
 
             await _turnCompletion.Task;
+
+            Debug.Log($"Pratik {gameObject.name} turn has undoed completely");
 
         }
 
