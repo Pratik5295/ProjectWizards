@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using Team.Gameplay.GridSystem;
-using UnityEngine;
+using System.Threading.Tasks;
 using Team.GameConstants;
+using Team.Gameplay.GridSystem;
 using Team.Managers;
+using UnityEngine;
 
 namespace Team.GameConstants
 {
@@ -105,25 +106,35 @@ public class ChRotatorWizard : Base_Ch
     }
 
     [ContextMenu("Undo Rotation")]
-    public override void UndoAction()
+    protected override async Task CheckForStackEmpty()
     {
+        undoAwaiter = new TaskCompletionSource<bool>();
+
         Debug.Log($"{gameObject.name} Moves count: {HistoryStack.Count}");
 
-        while (HistoryStack.Count > 0)
+        if (HistoryStack.Count == 0)
         {
-            var move = HistoryStack.Pop();
-
-            Debug.Log($"{gameObject.name} Move was: {move.wasMoved}");
-
-            if (move.wasMoved)
-            {
-                UndoMovement();
-            }
-            else
-            {
-                UndoRotate();
-            }
         }
+        else
+        {
+            while (HistoryStack.Count > 0)
+            {
+                var move = HistoryStack.Pop();
+
+                Debug.Log($"{gameObject.name} Move was: {move.wasMoved}");
+                
+                if (move.wasMoved)
+                {
+                    UndoMovement();
+                }
+                else
+                {
+                    UndoRotate();
+                }
+            }
+            await undoAwaiter.Task;
+        }
+        OnTurnComplete?.Invoke();
     }
 
     private void UndoRotate()
@@ -133,7 +144,7 @@ public class ChRotatorWizard : Base_Ch
         if (!centerTile || _tilesToMove.Count != 5)
         {
             Debug.Log("Cant Execute Ability as no tiles no center tile.");
-            OnTurnComplete?.Invoke();
+           // OnTurnComplete?.Invoke();
             return;
         }
 
@@ -158,6 +169,8 @@ public class ChRotatorWizard : Base_Ch
         rotation = MetaConstants.Enum_Rotation.AntiClockwise;
         TileDataChanges();
         activeCoroutine = StartCoroutine(LerpUpDown(true));
+
+        HistoryStackIsEmpty();
     }
 
     private void GetTilesToRotate()

@@ -10,6 +10,8 @@ using static Team.GameConstants.MetaConstants;
 using Team.Data;
 using Team.Managers;
 using DG.Tweening;
+using System.Threading.Tasks;
+using UnityEditor.Build;
 
 [System.Serializable]
 public class PlayerMove
@@ -42,6 +44,10 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     [SerializeField] protected GridManager ref_gridManager;
 
     [SerializeField] protected Base_Rotation baseRotation;
+
+
+    //Turn Completion Handler
+    protected TaskCompletionSource<bool> undoAwaiter = new TaskCompletionSource<bool>();
     public Base_Rotation BaseRotation
     {
         get { return baseRotation; }
@@ -145,7 +151,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     [ContextMenu("Initialise this Character")]
     public virtual void InitialiseCharacter(TileID StartingTileID, Enum_GridDirection _startingDirection)
     {
-        CharacterData = characterData; 
+        CharacterData = characterData;
 
         ref_gridManager = GridManager.Instance;
         OffsetValue = MetaConstants.GridSlot_Offset;
@@ -189,8 +195,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         {
             StartCoroutine(MoveByAmount(2, new Vector2(0, 1)));
         }
-        else 
-        { 
+        else
+        {
             StartCoroutine(MoveByAmount(2, new Vector2(0, -1)));
         }
     }
@@ -204,8 +210,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         {
             StartCoroutine(MoveByAmount(2, new Vector2(1, 0)));
         }
-        else 
-        { 
+        else
+        {
             StartCoroutine(MoveByAmount(2, new Vector2(-1, 0)));
         }
     }
@@ -274,7 +280,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         OnTurnComplete?.Invoke();
     }
 
-    
+
     //Lerps the movement to the next available tile.
     public virtual IEnumerator LerpingMovement(Vector3 targetPosition, bool wasPushed = false)
     {
@@ -322,31 +328,51 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     }
 
     [ContextMenu("Undo Movement")]
-    public virtual void UndoAction()
+    public virtual async void UndoAction()
     {
-        while (HistoryStack.Count > 0)
-        {
-            var move = HistoryStack.Pop();
+        Debug.Log($"Pratik starting awaiting on: {gameObject.name}");
+        await CheckForStackEmpty();
 
-            if (move.wasMoved)
-            {
-                UndoMovement();
-            }
+        Debug.Log($"Pratik awaiting completed. Well done {gameObject.name}");
+    }
+
+    protected void HistoryStackIsEmpty()
+    {
+        if (HistoryStack.Count == 0)
+        {
+            undoAwaiter.SetResult(true);
         }
+    }
+
+    protected virtual async Task CheckForStackEmpty()
+    {
+        undoAwaiter = new TaskCompletionSource<bool>();
 
         if (HistoryStack.Count == 0)
         {
-            OnTurnComplete?.Invoke();
-            return;
         }
+        else
+        {
+            while (HistoryStack.Count > 0)
+            {
+                var move = HistoryStack.Pop();
+
+                if (move.wasMoved)
+                {
+                    UndoMovement();
+                }
+            }
+            await undoAwaiter.Task;
+        }
+        OnTurnComplete?.Invoke();
     }
 
     public void UndoMovement()
     {
-        if (_currentTileID == _startTileID) 
+        if (_currentTileID == _startTileID)
         {
             transform.position = new Vector3(_currentTile.TilePosition.x, transform.position.y, _currentTile.TilePosition.z);
-            return; 
+            //return; 
         }
         _currentTile.UpdateOccupiedStatus();
 
@@ -358,6 +384,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         transform.position = new Vector3(_currentTile.TilePosition.x, transform.position.y, _currentTile.TilePosition.z);
 
         ResetRotationToStart();
+
+        HistoryStackIsEmpty();
     }
 
     private void ResetRotationToStart()
@@ -373,8 +401,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         Vector3 defaultPos = transform.localPosition;
 
         shakeTimer = 0f;
-        
-        while(shakeTimer < MaxShakeTime)
+
+        while (shakeTimer < MaxShakeTime)
         {
             transform.localPosition = defaultPos;
             shakeTimer += Time.deltaTime;
@@ -510,7 +538,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         }
         else
         {
-              CharacterReskinner.HideOutline();
+            CharacterReskinner.HideOutline();
         }
     }
 
