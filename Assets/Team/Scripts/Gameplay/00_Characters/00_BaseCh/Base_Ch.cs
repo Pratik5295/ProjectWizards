@@ -216,6 +216,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     {
         _previousTileID = _currentTileID;
         _previousTile = ref_gridManager.FindTile(_previousTileID);
+        _previousTile.UpdateOccupiedStatus(false);
 
         for (int i = 0; i < movementAmount; i++)
         {
@@ -258,7 +259,6 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
                 yield break;
             }
         }
-        _previousTile.UpdateOccupiedStatus(false);
 
         _currentTile.UpdateOccupiedStatus(true, gameObject);
 
