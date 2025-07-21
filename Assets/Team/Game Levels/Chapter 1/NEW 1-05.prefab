@@ -40593,6 +40593,7 @@ MonoBehaviour:
   canBeDestroyed: 1
   _ghosting: {fileID: 3207922766694166132}
   IsGhosting: 0
+  PushProjectileInstance: {fileID: 0}
   RefFireballProjectile: {fileID: 0}
   _explosionEffect: {fileID: 593268561111660398}
   ExplosionDelayTime: 1
@@ -64487,7 +64488,7 @@ MonoBehaviour:
       y: 5
     FacingDirection: 3
     CharacterSkin:
-      CharacterCode: 0
+      CharacterCode: 1
       SkinMaterial: {fileID: 2100000, guid: 5c18256d3f3e7d14d9e49f6e2e78e876, type: 2}
       CharacterColor: {r: 0, g: 0.5550184, b: 1, a: 1}
   - CharacterID: Rotator Wizard 1
@@ -64497,7 +64498,7 @@ MonoBehaviour:
       y: 2
     FacingDirection: 0
     CharacterSkin:
-      CharacterCode: 0
+      CharacterCode: 3
       SkinMaterial: {fileID: 1411009148027576344, guid: 29daf79e109a1334db1b3cc191357059, type: 3}
       CharacterColor: {r: 0, g: 0.7924528, b: 0.084793486, a: 1}
   - CharacterID: Fireball Wizard 1
@@ -64517,7 +64518,7 @@ MonoBehaviour:
       y: 5
     FacingDirection: 1
     CharacterSkin:
-      CharacterCode: 0
+      CharacterCode: 2
       SkinMaterial: {fileID: -3963241562183589234, guid: a8df33068111ca94ea1645da3718002c, type: 3}
       CharacterColor: {r: 1, g: 1, b: 1, a: 1}
   - CharacterID: Redirect Wizard 2
@@ -64527,7 +64528,7 @@ MonoBehaviour:
       y: 4
     FacingDirection: 1
     CharacterSkin:
-      CharacterCode: 0
+      CharacterCode: 2
       SkinMaterial: {fileID: -3963241562183589234, guid: a8df33068111ca94ea1645da3718002c, type: 3}
       CharacterColor: {r: 1, g: 1, b: 1, a: 1}
   _objectiveMap:
@@ -64543,7 +64544,7 @@ MonoBehaviour:
     ObjectiveTargets:
     - Redirect Wizard 1
     Type: 3
-    Priority: 1
+    Priority: 0
     LocationTileID:
       x: 0
       y: 5

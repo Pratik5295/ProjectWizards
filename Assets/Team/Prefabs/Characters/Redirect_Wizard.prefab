@@ -303,7 +303,7 @@ MonoBehaviour:
   _characterBark: {fileID: 263506131393621909}
   _projectilePrefab: {fileID: 0}
   _fireFromPoint: {fileID: 5150221880546262881}
-  ghostingEffect: {fileID: 0}
+  ghostingEffect: {fileID: 2447313050296894671}
   _projectileRange: -105
   ShieldVFX: {fileID: 3821005567170528586, guid: bffed2df35de36940bab059d09b63d0b, type: 3}
 --- !u!114 &933473269899832427
@@ -354,9 +354,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiCharacter: {fileID: 8679929900226405929}
   _cachedPriority: 0
-  DefaultObjectiveColor: {r: 1.7814789, g: 1.7814789, b: 1.7814789, a: 1}
-  PrimaryObjectiveColor: {r: 1.7814786, g: 1.0095046, b: 0, a: 1}
-  SecondaryObjectiveColor: {r: 0, g: 1.7814786, b: 1.2173439, a: 1}
+  DefaultObjectiveColor: {r: 1.4980394, g: 1.4980394, b: 1.4980394, a: 1}
+  PrimaryObjectiveColor: {r: 1.4980391, g: 0.8488888, b: 0, a: 1}
+  SecondaryObjectiveColor: {r: 0, g: 1.4980391, b: 1.0236602, a: 1}
   outlineComponent: {fileID: 7281656631181355048}
 --- !u!114 &611382918006109890
 MonoBehaviour:
@@ -689,3 +689,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1996949661786862625, guid: d5d47d27e75253341ad1708a54ea00b9, type: 3}
   m_PrefabInstance: {fileID: 1704361004562681589}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2447313050296894671 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3914051444212451898, guid: d5d47d27e75253341ad1708a54ea00b9, type: 3}
+  m_PrefabInstance: {fileID: 1704361004562681589}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d17534397bc32014da9fbcefda074191, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
