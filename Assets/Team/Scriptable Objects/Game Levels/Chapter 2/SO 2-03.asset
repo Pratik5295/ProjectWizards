@@ -30,7 +30,8 @@ MonoBehaviour:
         Data4: 0
       Path: 
     TutorialSteps:
-    - message: 1/1 <br> <br>Oil tiles are a tile variation. They are activated by
-        barrel explosions and cause a chain reaction that destroys anything on them.
-        <br> <br>Click the box to dismiss.
+    - message: 1/1 <br> <br>Oil tiles are a tile variation. They are set alight by
+        barrel explosions, destroyng anything placed on them. Any oil tiles adjacent
+        to alight oil tiles are also set on fire, triggering a chain reaction.. <br>
+        <br>Click the box to dismiss.
       uiElement: 0
