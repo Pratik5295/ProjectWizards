@@ -69,7 +69,7 @@ public class ChRedirectWizard : ChProjectileWizard
 
             if (move.wasMoved)
             {
-                await UndoMovement();
+                await UndoMovement(move.movedFrom);
             }
             else
             {

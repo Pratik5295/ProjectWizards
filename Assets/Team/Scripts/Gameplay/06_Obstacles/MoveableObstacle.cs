@@ -75,7 +75,7 @@ public class MoveableObstacle : Base_Obstacle, IMoveable
 
         WasPushed(wasPushed);
 
-        PlayerMove playerMove = new PlayerMove(true);
+        PlayerMove playerMove = new PlayerMove(_previousGridTile.TileID,true);
         HistoryStack.Push(playerMove);
     }
 

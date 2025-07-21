@@ -15,10 +15,13 @@ using static Team.GameConstants.MetaConstants;
 [System.Serializable]
 public class PlayerMove
 {
+    //FUTURE SCARE: Update the previous Rotation here. So the character can rotate back to previous move's rotation
+    public TileID movedFrom;
     public bool wasMoved;
 
-    public PlayerMove(bool _move)
+    public PlayerMove(TileID _movedFrom, bool _move)
     {
+        movedFrom = _movedFrom;
         wasMoved = _move;
     }
 }
@@ -268,7 +271,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
         _currentTile.UpdateOccupiedStatus(true, gameObject);
 
-        PlayerMove playerMove = new PlayerMove(true);
+        PlayerMove playerMove = new PlayerMove(_previousTileID, true);
         HistoryStack.Push(playerMove);
 
         if (wasPushed)
@@ -365,7 +368,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
                 if (move.wasMoved)
                 {
-                   await UndoMovement();
+                   await UndoMovement(move.movedFrom);
                 }
             }
             await undoAwaiter.Task;
@@ -375,17 +378,18 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
     protected TaskCompletionSource<bool> undoAbilityWaiter = new TaskCompletionSource<bool>();
 
-    public async Task UndoMovement()
+    public async Task UndoMovement(TileID _moveToTileID)
     {
         undoAbilityWaiter = new TaskCompletionSource<bool>();
-        if (_currentTileID == _startTileID)
+        if (_currentTileID == _moveToTileID)
         {
-            transform.position = new Vector3(_currentTile.TilePosition.x, transform.position.y, _currentTile.TilePosition.z);
+            var tile = ref_gridManager.FindTile(_moveToTileID);
+            transform.position = new Vector3(tile.TilePosition.x, transform.position.y, tile.TilePosition.z);
             //return; 
         }
         _currentTile.UpdateOccupiedStatus();
 
-        _currentTileID = _startTileID;
+        _currentTileID = _moveToTileID;
         _currentTile = ref_gridManager.FindTile(_currentTileID);
 
         _currentTile.SetObjectOccupyingTile(this.gameObject);
