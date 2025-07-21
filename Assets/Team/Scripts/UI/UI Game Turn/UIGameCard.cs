@@ -22,6 +22,10 @@ namespace Team.UI.Gameplay
     public class UIGameCard : UIDragHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         [SerializeField]
+        private GameObject unit_Numberer;
+
+
+        [SerializeField]
         private CharacterReskinner characterReskinner;
 
         [SerializeField]
@@ -64,6 +68,10 @@ namespace Team.UI.Gameplay
             OnSiblingIndexUpdatedEvent += OnSiblingIndexUpdatedEventHandler;
 
             UpdateTurnIndexText();
+
+
+            unit_Numberer.transform.position = Camera.main.ViewportToScreenPoint(characterRef.transform.position);
+
         }
 
         private void OnDestroy()
