@@ -64,6 +64,7 @@ public class MoveableObstacle : Base_Obstacle, IMoveable
             {
                 StartCoroutine(ShakeCharacter(0.25f));
                 alreadyMoving = false;
+                WasPushed(wasPushed);
                 yield break;
             }
         }
@@ -72,14 +73,7 @@ public class MoveableObstacle : Base_Obstacle, IMoveable
         _currentGridTile.UpdateOccupiedStatus(true, gameObject);
         transform.parent = _currentGridTile.transform;
 
-        if (wasPushed)
-        {
-            if (PushProjectileInstance)
-            {
-                PushProjectileInstance.CleanUp();
-                PushProjectileInstance = null;
-            }
-        }
+        WasPushed(wasPushed);
 
         PlayerMove playerMove = new PlayerMove(true);
         HistoryStack.Push(playerMove);
@@ -144,6 +138,18 @@ public class MoveableObstacle : Base_Obstacle, IMoveable
             yield return null;
         }
         transform.localPosition = defaultPos;
+    }
+
+    private void WasPushed(bool wasPushed)
+    {
+        if (wasPushed)
+        {
+            if (PushProjectileInstance)
+            {
+                PushProjectileInstance.CleanUp();
+                PushProjectileInstance = null;
+            }
+        }
     }
 
     #region Undo Functions

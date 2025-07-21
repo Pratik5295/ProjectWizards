@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 829936749359615232}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.3, z: 0}
+  m_LocalPosition: {x: 0, y: 0.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -290,7 +290,7 @@ GameObject:
   - component: {fileID: 3136886351939346752}
   - component: {fileID: 6142953301238890639}
   - component: {fileID: 8005485794937069453}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Rotator_Wizard
   m_TagString: Character
   m_Icon: {fileID: 0}
@@ -425,8 +425,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.1536779, y: 1.3218775, z: 1.1586454}
-  m_Center: {x: 0.009237766, y: 0.24220416, z: 0.051352143}
+  m_Size: {x: 1, y: 1.3851509, z: 1}
+  m_Center: {x: 0, y: 0.10742462, z: -0.060000002}
 --- !u!114 &6142953301238890639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -441,9 +441,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiCharacter: {fileID: 5032114173345562314}
   _cachedPriority: 0
-  DefaultObjectiveColor: {r: 1.7814789, g: 1.7814789, b: 1.7814789, a: 1}
-  PrimaryObjectiveColor: {r: 1.7814786, g: 1.0095046, b: 0, a: 1}
-  SecondaryObjectiveColor: {r: 0, g: 1.7814786, b: 1.2173439, a: 1}
+  DefaultObjectiveColor: {r: 1.4980394, g: 1.4980394, b: 1.4980394, a: 1}
+  PrimaryObjectiveColor: {r: 1.4980391, g: 0.8488888, b: 0, a: 1}
+  SecondaryObjectiveColor: {r: 0, g: 1.4980391, b: 1.0236602, a: 1}
   outlineComponent: {fileID: 2975719934766380879}
 --- !u!114 &8005485794937069453
 MonoBehaviour:

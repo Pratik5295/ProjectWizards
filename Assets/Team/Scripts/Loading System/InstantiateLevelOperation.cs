@@ -70,6 +70,7 @@ public class InstantiateLevelOperation : ILoadingOperation
 
             var instantiatedEnvironment = UnityEngine.Object.Instantiate(environmentPrefab);
 
+            await UniTask.Delay(400);
             progress?.Report(0.8f);
             await UniTask.Yield(); // Allow instantiation to complete
 

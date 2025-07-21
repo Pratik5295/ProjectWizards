@@ -279,7 +279,7 @@ MonoBehaviour:
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 4
-  startingTileType: 1
+  startingTileType: 4
   hasChangedType: 0
   Direction:
     TileFacing: 0
@@ -37729,7 +37729,7 @@ MonoBehaviour:
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 4
-  startingTileType: 1
+  startingTileType: 4
   hasChangedType: 0
   Direction:
     TileFacing: 0
@@ -38238,7 +38238,7 @@ MonoBehaviour:
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 4
-  startingTileType: 1
+  startingTileType: 4
   hasChangedType: 0
   Direction:
     TileFacing: 0
@@ -80908,7 +80908,7 @@ MonoBehaviour:
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 4
-  startingTileType: 1
+  startingTileType: 4
   hasChangedType: 0
   Direction:
     TileFacing: 0
@@ -86027,7 +86027,7 @@ MonoBehaviour:
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 4
-  startingTileType: 1
+  startingTileType: 4
   hasChangedType: 0
   Direction:
     TileFacing: 0
@@ -126227,6 +126227,7 @@ MonoBehaviour:
   canBeDestroyed: 1
   _ghosting: {fileID: 0}
   IsGhosting: 0
+  PushProjectileInstance: {fileID: 0}
   RefFireballProjectile: {fileID: 0}
   _explosionEffect: {fileID: 8341627291623008688}
   ExplosionDelayTime: 1
@@ -131715,7 +131716,7 @@ MonoBehaviour:
       y: 3
     FacingDirection: 1
     CharacterSkin:
-      CharacterCode: 0
+      CharacterCode: 1
       SkinMaterial: {fileID: 2100000, guid: 5c18256d3f3e7d14d9e49f6e2e78e876, type: 2}
       CharacterColor: {r: 0, g: 0.56810045, b: 1, a: 1}
   - CharacterID: Push Wizard 2
@@ -131725,7 +131726,7 @@ MonoBehaviour:
       y: 5
     FacingDirection: 3
     CharacterSkin:
-      CharacterCode: 0
+      CharacterCode: 1
       SkinMaterial: {fileID: 2100000, guid: 5c18256d3f3e7d14d9e49f6e2e78e876, type: 2}
       CharacterColor: {r: 0, g: 0.5686275, b: 1, a: 1}
   - CharacterID: Push Wizard 1
@@ -131735,7 +131736,7 @@ MonoBehaviour:
       y: 4
     FacingDirection: 1
     CharacterSkin:
-      CharacterCode: 0
+      CharacterCode: 1
       SkinMaterial: {fileID: 2100000, guid: 5c18256d3f3e7d14d9e49f6e2e78e876, type: 2}
       CharacterColor: {r: 0, g: 0.5686275, b: 1, a: 1}
   - CharacterID: Rotator Wizard 3
@@ -131745,7 +131746,7 @@ MonoBehaviour:
       y: 2
     FacingDirection: 0
     CharacterSkin:
-      CharacterCode: 0
+      CharacterCode: 3
       SkinMaterial: {fileID: 1411009148027576344, guid: 29daf79e109a1334db1b3cc191357059, type: 3}
       CharacterColor: {r: 0, g: 0.8867924, b: 0.21488738, a: 1}
   - CharacterID: Rotator Wizard 1
@@ -131755,7 +131756,7 @@ MonoBehaviour:
       y: 4
     FacingDirection: 1
     CharacterSkin:
-      CharacterCode: 0
+      CharacterCode: 3
       SkinMaterial: {fileID: 1411009148027576344, guid: 29daf79e109a1334db1b3cc191357059, type: 3}
       CharacterColor: {r: 0, g: 0.8862745, b: 0.21568628, a: 1}
   - CharacterID: Rotator Wizard 2
@@ -131765,7 +131766,7 @@ MonoBehaviour:
       y: 6
     FacingDirection: 2
     CharacterSkin:
-      CharacterCode: 0
+      CharacterCode: 3
       SkinMaterial: {fileID: 1411009148027576344, guid: 29daf79e109a1334db1b3cc191357059, type: 3}
       CharacterColor: {r: 0, g: 0.8862745, b: 0.21568628, a: 1}
   - CharacterID: Fireball Wizard 1
@@ -131785,7 +131786,7 @@ MonoBehaviour:
       y: 2
     FacingDirection: 3
     CharacterSkin:
-      CharacterCode: 0
+      CharacterCode: 2
       SkinMaterial: {fileID: -3963241562183589234, guid: a8df33068111ca94ea1645da3718002c, type: 3}
       CharacterColor: {r: 1, g: 1, b: 1, a: 1}
   _objectiveMap:
@@ -132064,7 +132065,7 @@ MonoBehaviour:
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 3
-  startingTileType: 1
+  startingTileType: 3
   hasChangedType: 0
   Direction:
     TileFacing: 0
@@ -142532,6 +142533,7 @@ MonoBehaviour:
   canBeDestroyed: 1
   _ghosting: {fileID: 0}
   IsGhosting: 0
+  PushProjectileInstance: {fileID: 0}
   RefFireballProjectile: {fileID: 0}
   _explosionEffect: {fileID: 9033910006555291278}
   ExplosionDelayTime: 1
@@ -249258,6 +249260,7 @@ MonoBehaviour:
   canBeDestroyed: 1
   _ghosting: {fileID: 0}
   IsGhosting: 0
+  PushProjectileInstance: {fileID: 0}
   RefFireballProjectile: {fileID: 0}
   _explosionEffect: {fileID: 1990339138259764876}
   ExplosionDelayTime: 1

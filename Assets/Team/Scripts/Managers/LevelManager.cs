@@ -242,6 +242,29 @@ namespace Team.Managers
             }
         }
 
+        public void StopLevel()
+        {
+            UIManager.Instance.ShowLevelSelectionUI();
+
+            CleanupLevelContent();
+        }
+
+        public void CleanupLevelContent()
+        {
+            if (createdLevel != null)
+            {
+                DestroyImmediate(createdLevel.gameObject);
+            }
+
+            if (createdEnvironment != null)
+            {
+                DestroyImmediate(createdEnvironment.gameObject);
+            }
+
+            //CharacterManager.Instance.CleanUp();
+            //GameTurnManager.Instance.CleanUpLevel();
+        }
+
         public void AddLevelToMap(Level _level)
         {
             LevelList.Add(_level);
