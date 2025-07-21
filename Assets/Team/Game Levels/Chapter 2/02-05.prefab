@@ -40735,7 +40735,7 @@ MonoBehaviour:
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 4
-  startingTileType: 1
+  startingTileType: 4
   hasChangedType: 0
   Direction:
     TileFacing: 0
@@ -50065,7 +50065,7 @@ MonoBehaviour:
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 4
-  startingTileType: 1
+  startingTileType: 4
   hasChangedType: 0
   Direction:
     TileFacing: 0
@@ -63761,12 +63761,12 @@ MonoBehaviour:
       SkinMaterial: {fileID: 2100000, guid: 0b29132a849f60d4faf5579ef0e889d0, type: 2}
       CharacterColor: {r: 1, g: 0.92941177, b: 0, a: 1}
   _objectiveMap:
-  - ObjectiveName: Defeat all mages except the highlighted one.
+  - ObjectiveName: Defeat all highlighted mages.
     ObjectiveTargets:
     - Push Wizard 1
     - Rotator Wizard 1
     - Redirect Wizard 1
-    - Redirect Wizard 1
+    - Push Wizard 2
     - Rotator Wizard 2
     Type: 1
     Priority: 0
@@ -122112,7 +122112,7 @@ MonoBehaviour:
   deathTilePrefab: {fileID: 5985581457219956967, guid: 3c6f4aa93597a8446a5115244318e18f, type: 3}
   iceTilePrefab: {fileID: 8318891550986471432, guid: 5cc94e07fa8b56b4aad37c86af6285d4, type: 3}
   tileType: 4
-  startingTileType: 1
+  startingTileType: 4
   hasChangedType: 0
   Direction:
     TileFacing: 0
