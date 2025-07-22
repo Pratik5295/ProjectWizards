@@ -136,7 +136,7 @@ namespace Team.Gameplay.TurnSystem
         {
             cardRanges.Clear();
 
-            for (int i = 0; i < numberOfChildren; i++)
+            for (int i = 0; i < numberOfChildren - 1; i++)
             {
                 float start = startingPosX + i * (cardSize + spacing);
                 float end = start + (cardSize / MetaConstants.CardDiviFactor);
