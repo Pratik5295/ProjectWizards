@@ -99,7 +99,7 @@ public class ChRotatorWizard : Base_Ch
         }
         rotation = MetaConstants.Enum_Rotation.Clockwise;
 
-        PlayerMove move = new PlayerMove(CurrentTileID,false, baseRotation.DirectionFacing);
+        PlayerMove move = new PlayerMove(CurrentTileID, PlayerMoveType.ROTATED, baseRotation.DirectionFacing);
         HistoryStack.Push(move);
 
         TileDataChanges();
@@ -124,13 +124,14 @@ public class ChRotatorWizard : Base_Ch
             {
                 var move = HistoryStack.Pop();
 
-                Debug.Log($"{gameObject.name} Move was: {move.wasMoved}");
+                //Debug.Log($"{gameObject.name} Move was: {move.wasMoved}");
                 
-                if (move.wasMoved)
+                if (move.Type == PlayerMoveType.PUSH)
                 {
-                    await UndoMovement(move.movedFrom);
+                    Debug.Log("Pratik why is rotator handling push?");
+                    move.interactedWith.UndoMovement(this, move.movedFrom);
                 }
-                else
+                else if(move.Type == PlayerMoveType.ROTATED)
                 {
                     await UndoRotate();
                 }

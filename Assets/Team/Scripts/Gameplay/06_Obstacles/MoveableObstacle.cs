@@ -75,7 +75,7 @@ public class MoveableObstacle : Base_Obstacle, IMoveable
 
         WasPushed(wasPushed);
 
-        PlayerMove playerMove = new PlayerMove(_previousGridTile.TileID, true, baseRotation.DirectionFacing);
+        PlayerMove playerMove = new PlayerMove(_previousGridTile.TileID, PlayerMoveType.PUSH, baseRotation.DirectionFacing);
         HistoryStack.Push(playerMove);
     }
 
@@ -160,7 +160,7 @@ public class MoveableObstacle : Base_Obstacle, IMoveable
         {
             var move = HistoryStack.Pop();
 
-            if (move.wasMoved)
+            if (move.Type == PlayerMoveType.PUSH)
             {
                 UndoMovement();
             }

@@ -12,20 +12,32 @@ using Team.UI;
 using UnityEngine;
 using static Team.GameConstants.MetaConstants;
 
+
+public enum PlayerMoveType
+{
+    PUSH, //Default is pushed
+    DESTROYED,
+    ROTATED
+}
+
 [System.Serializable]
 public class PlayerMove
 {
     //FUTURE SCARE: Update the previous Rotation here. So the character can rotate back to previous move's rotation
     public TileID movedFrom;
-    public bool wasMoved;
+
+    public PlayerMoveType Type;
 
     public Enum_GridDirection previousRotation;
 
-    public PlayerMove(TileID _movedFrom, bool _move, Enum_GridDirection _previousRotation)
+    public Base_Ch interactedWith;
+
+    public PlayerMove(TileID _movedFrom, PlayerMoveType _move, Enum_GridDirection _previousRotation, Base_Ch _interacted = null)
     {
         movedFrom = _movedFrom;
-        wasMoved = _move;
+        Type = _move;
         previousRotation = _previousRotation;
+        interactedWith = _interacted;
     }
 }
 
@@ -278,8 +290,9 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
         _currentTile.UpdateOccupiedStatus(true, gameObject);
 
-        PlayerMove playerMove = new PlayerMove(_previousTileID, true, baseRotation.DirectionFacing);
-        HistoryStack.Push(playerMove);
+        //FUTURE SCARE: Check if moved properly
+        //PlayerMove playerMove = new PlayerMove(_previousTileID, PlayerMoveType.PUSH, baseRotation.DirectionFacing);
+        //HistoryStack.Push(playerMove);
 
         if (wasPushed)
         {
@@ -352,11 +365,11 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     {
         if (HistoryStack.Count == 0)
         {
-            if(undoAwaiter != null && !undoAwaiter.Task.IsCompleted)
+            if (undoAwaiter != null && !undoAwaiter.Task.IsCompleted)
             {
                 undoAwaiter.SetResult(true);
             }
-            
+
         }
     }
 
@@ -373,21 +386,20 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
             {
                 var move = HistoryStack.Pop();
 
-                 if (move.wasMoved)
+                if (move.Type == PlayerMoveType.PUSH)
                 {
-                   await UndoMovement(move.movedFrom);
+                    move.interactedWith.UndoMovement(this, move.movedFrom);
                 }
             }
             await undoAwaiter.Task;
         }
-    
+
     }
 
     protected TaskCompletionSource<bool> undoAbilityWaiter = new TaskCompletionSource<bool>();
 
-    public async Task UndoMovement(TileID _moveToTileID)
+    public void UndoMovement(Base_Ch _characterFiredFrom,TileID _moveToTileID)
     {
-        undoAbilityWaiter = new TaskCompletionSource<bool>();
         if (_currentTileID == _moveToTileID)
         {
             var tile = ref_gridManager.FindTile(_moveToTileID);
@@ -403,18 +415,24 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
         transform.position = new Vector3(_currentTile.TilePosition.x, transform.position.y, _currentTile.TilePosition.z);
 
-        ResetRotationToStart();
-
-        await undoAbilityWaiter.Task;
+        ResetRotationToStart(_characterFiredFrom);
     }
 
-    private void ResetRotationToStart()
+    private void ResetRotationToStart(Base_Ch _fireOn = null)
     {
         baseRotation.changeFacingDirection(startingDirection);
         Vector2 v2Dir = baseRotation.dirToV2(baseRotation.DirectionFacing);
         baseRotation.RotateToFaceDir(v2Dir);
 
-        OnUndoAbilityCompleted();
+        if (_fireOn != null)
+        {
+            _fireOn.OnUndoAbilityCompleted();
+        }
+        //FUTURE SCARE
+        //else
+        //{
+        //    OnUndoAbilityCompleted();
+        //}
     }
 
     public void CompleteReset()
@@ -535,6 +553,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         {
             OnStateChanged?.Invoke();
             CharState = Enum_CharacterState.Alive;
+            EnableObject();
         }
     }
 
@@ -562,7 +581,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
     protected void OnUndoAbilityCompleted()
     {
-        if(undoAbilityWaiter != null && !undoAbilityWaiter.Task.IsCompleted)
+        if (undoAbilityWaiter != null && !undoAbilityWaiter.Task.IsCompleted)
         {
             undoAbilityWaiter.SetResult(true);
         }

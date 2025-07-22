@@ -23,7 +23,10 @@ public class FireballProjectile : Base_Projectile
 
         if (other.CompareTag(MetaConstants.CharacterTag))
         {
-            other.GetComponent<Base_Ch>().HitByProjectile(_projectileType);
+            var hitCharacter = other.GetComponent<Base_Ch>();
+            _projectileHandle.characterInteracted = hitCharacter;
+            _projectileHandle.beforeTileID = hitCharacter.CurrentTileID;
+            hitCharacter.HitByProjectile(_projectileType);
         }
         if (other.CompareTag(MetaConstants.EnvironmentTag) && other.GetComponent<Base_Obstacle>())
         {

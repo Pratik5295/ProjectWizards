@@ -56,7 +56,7 @@ public class ChProjectileWizard : Base_Ch
         if (_projectilePrefab == null) 
         { 
             StartCoroutine(ShakeCharacter(0.25f)); 
-            endTurn();
+            endTurn(null);
             return;
         }
         ProjectileInstance = Instantiate(_projectilePrefab, _fireFromPoint.transform.position, Quaternion.identity);
@@ -73,7 +73,7 @@ public class ChProjectileWizard : Base_Ch
         await abilityWaiter.Task;
     }
 
-    private void endTurn()
+    private void endTurn(ProjectileHandler _projectileHandler)
     {
         if (_projectilePrefab != null)
         {
@@ -82,6 +82,71 @@ public class ChProjectileWizard : Base_Ch
         ProjectileInstance = null;
         scProjectile = null;
 
+        if(_projectileHandler != null)
+        {
+            //Turn detected
+
+            PlayerMoveType type = PlayerMoveType.PUSH;
+
+            switch (_projectileHandler.ProjectileType)
+            {
+                case Team.Enum.Character.Enum_ProjectileType.Fireball:
+                    type = PlayerMoveType.DESTROYED;
+                    break;
+
+                case Team.Enum.Character.Enum_ProjectileType.NonLethalRound:
+                    type = PlayerMoveType.PUSH;
+                    break;
+            }
+
+
+            PlayerMove playerMove 
+                = new PlayerMove
+                (_projectileHandler.beforeTileID, type, baseRotation.DirectionFacing,_projectileHandler.characterInteracted);
+            HistoryStack.Push(playerMove);
+        }
+
         OnAbilityCompleted();
+    }
+
+    protected override async Task CharacterUndoStack()
+    {
+        undoAwaiter = new TaskCompletionSource<bool>();
+
+        Debug.Log($"{gameObject.name} Moves count: {HistoryStack.Count}");
+
+        if (HistoryStack.Count == 0)
+        {
+        }
+        else
+        {
+            while (HistoryStack.Count > 0)
+            {
+                var move = HistoryStack.Pop();
+
+                //Debug.Log($"{gameObject.name} Move was: {move.wasMoved}");
+
+                if (move.Type == PlayerMoveType.PUSH)
+                {
+                    move.interactedWith.UndoMovement(this, move.movedFrom);
+                }
+                else if (move.Type == PlayerMoveType.DESTROYED)
+                {
+                    await UndoDestroy(move);
+                }
+            }
+            await undoAwaiter.Task;
+        }
+    }
+
+    protected async Task UndoDestroy(PlayerMove _move)
+    {
+        var ch = _move.interactedWith;
+
+        ch.resetCharState(true);
+
+        OnUndoAbilityCompleted();
+
+        await undoAbilityWaiter.Task;
     }
 }

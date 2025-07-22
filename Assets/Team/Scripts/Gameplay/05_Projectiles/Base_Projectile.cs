@@ -1,6 +1,15 @@
 using UnityEngine;
 using Team.Enum.Character;
 using Team.Managers;
+using Team.Gameplay.GridSystem;
+
+public class ProjectileHandler
+{
+    public Enum_ProjectileType ProjectileType;
+    public Base_Ch characterInteracted;
+    public TileID beforeTileID;
+
+}
 
 
 public class Base_Projectile : MonoBehaviour
@@ -28,11 +37,16 @@ public class Base_Projectile : MonoBehaviour
     [Header("Particle Effects")]
     [SerializeField] protected ParticleSystem _collisionEffect;
 
-    public System.Action OnProjectileEnd;
+
+    public ProjectileHandler _projectileHandle = null;
+    public System.Action<ProjectileHandler> OnProjectileEnd;
 
     void Start()
     {
         ProjectileManager.Instance.RegisterSceneProjectile(this);
+        _projectileHandle = new ProjectileHandler();
+        _projectileHandle.ProjectileType = _projectileType;
+
         time = 0f;
         _VFX = transform.GetChild(0).gameObject;
         FiredSound();
@@ -87,7 +101,7 @@ public class Base_Projectile : MonoBehaviour
     public virtual void CleanUp()
     {
         ProjectileManager.Instance.UnregisterSceneProjectile(this);
-        OnProjectileEnd?.Invoke();
+        OnProjectileEnd?.Invoke(_projectileHandle);
         Destroy(gameObject);
     }
 

@@ -17,6 +17,8 @@ public class ChRedirectWizard : ChProjectileWizard
     [SerializeField]
     private GameObject ShieldVFX;
 
+    public bool hasStoredProj => _projectilePrefab != null;
+
     public void TryAbsorbProjectile(Enum_ProjectileType ProjectileType, GameObject PrefabReference, Enum_GridDirection ProjectileDir = Enum_GridDirection.NORTH, int MoveAmount = 0)
     {
         if (!PrefabReference)
@@ -67,9 +69,14 @@ public class ChRedirectWizard : ChProjectileWizard
         {
             var move = HistoryStack.Pop();
 
-            if (move.wasMoved)
+            if (move.Type == PlayerMoveType.PUSH)
             {
-                await UndoMovement(move.movedFrom);
+                Debug.Log("Pratik why is redirect pushing itself?");
+                move.interactedWith.UndoMovement(this,move.movedFrom);
+            }
+            else if(move.Type == PlayerMoveType.DESTROYED)
+            {
+                await UndoDestroy(move);
             }
             else
             {

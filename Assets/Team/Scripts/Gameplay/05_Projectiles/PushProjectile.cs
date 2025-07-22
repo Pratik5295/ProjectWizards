@@ -4,6 +4,7 @@ using UnityEngine;
 using Team.Gameplay.GridSystem;
 using Team.GameConstants;
 using Team.Managers;
+using System.Buffers.Text;
 
 public class PushProjectile : Base_Projectile
 {
@@ -18,9 +19,17 @@ public class PushProjectile : Base_Projectile
     public override void OnTriggerEnter(Collider other)
     {
         if (other.gameObject == CastingWizard || other.gameObject.layer == 3) { return; } //Check that the collision isnt with the wizard that casted the projectile.
-        if (other.GetComponent<ChRedirectWizard>())
+        if (other.TryGetComponent<ChRedirectWizard>(out var redirectWizard))
         {
-            
+            if (redirectWizard.hasStoredProj)
+            {
+                _projectileHandle.characterInteracted = redirectWizard;
+                _projectileHandle.beforeTileID = redirectWizard.CurrentTileID;
+            }
+            else
+            {
+                _projectileHandle = null;
+            }
             base.OnTriggerEnter(other);
             return;
         }
@@ -60,6 +69,9 @@ public class PushProjectile : Base_Projectile
         {
             if (BaseCh)
             {
+                _projectileHandle.characterInteracted = BaseCh;
+                _projectileHandle.beforeTileID = BaseCh.CurrentTileID;
+
                 BaseCh.PushProjectileInstance = this;
             }
             else 
