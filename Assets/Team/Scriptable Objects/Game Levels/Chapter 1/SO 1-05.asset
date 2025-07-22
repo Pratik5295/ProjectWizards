@@ -22,9 +22,18 @@ MonoBehaviour:
     EnvironmentPrefab: {fileID: 8364801034606318011, guid: e7b63e2e8c363e14d90b869bc4539fed, type: 3}
     DialogueAsset: {fileID: 0}
     HasBreakPoint: 0
+    s_ambience:
+      Guid:
+        Data1: 0
+        Data2: 0
+        Data3: 0
+        Data4: 0
+      Path: 
     TutorialSteps:
-    - message: Humanity has created its own destructive magic by using gunpowder.
-        Destroying these barrels with fireballs leads to <b>area of effect</b> damage.
-        You can <b>hover over barrels to see a preview of what area is affected.<br>
-        Click to dismiss.
+    - message: 1/2 <br> <br>This is an explosive barrel. When hit by a fire projectile,
+        they explode in an area around them and destroy anything on the tiles. <br><br>
+        Click the box to dismiss.
+      uiElement: 0
+    - message: 2/2 <br><br> You can hover or left-click over barrels to see the area
+        affected. <br> <br>Click the box to dismiss.
       uiElement: 0

@@ -22,26 +22,40 @@ MonoBehaviour:
     EnvironmentPrefab: {fileID: 573041560392627169, guid: 9a9b9829f6c83ba47948e1b439322926, type: 3}
     DialogueAsset: {fileID: 4900000, guid: ac68b47203cbb354991ab739c974e56d, type: 3}
     HasBreakPoint: 0
+    s_ambience:
+      Guid:
+        Data1: 0
+        Data2: 0
+        Data3: 0
+        Data4: 0
+      Path: 
     TutorialSteps:
-    - message: Look upon these Vetruni training for their upcoming battle. They wield
-        the wind powers of forest spirits and are able to <b>push others</b> in battle.If
-        you wish to see their ability, <b>right-click</b> on them or their portrait
-        to access their <b>Information Panel</b>.<br> Click to dismiss.
+    - message: 1/8 <br><br> In this game, you control the order in which mages take
+        their predetermined actions  to complete an objective. <br><br> Click the
+        box to dismiss.
       uiElement: 0
-    - message: Their decisions are yours to order, within the <b>Turn Order Bar</b>.
-        <b>Drag the portraits</b> of the mages in the order you wish them to take.<br>
-        Click to dismiss.
+    - message: 2/8 <br><br> This is the Turn Order Bar. Each portrait in it represents
+        a mage in the field. You can drag the portraits to determine the order in
+        which mages cast their spells. <br><br> Click the box to dismiss.
       uiElement: 1
-    - message: <b>Hovering</b> over portraits or units shows you a preview of their
-        action. You can <b>left-click</b> to lock in the preview and click again
-        to unlock it.<br> Click to dismiss.
+    - message: 3/8 <br><br> The left-most mage will go first and the right-most mage
+        will go last. <br><br> Click the box to dismiss.
       uiElement: 0
-    - message: This is your <b>main objective</b> for this event, the <b>Fated Goal</b>.
-        To succeed, you must fulfill it.<br> Click to dismiss.
+    - message: 4/8 <br><br> In this level, you control the Vetruni mages. They fire
+        wind projectiles that push the target they hit.  <br> <br>Click the box to
+        dismiss.
       uiElement: 0
-    - message: When you are ready to see your choices transpire, <b>press</b> the
-        <b>Play</b> button.<br> Click to dismiss.
+    - message: 5/8 <br><br> You can hover over both portraits and mages in the level
+        to see a preview of their spell. <br><br> Click the box to dismiss.
+      uiElement: 0
+    - message: 6/8 <br> <br>You can use also left-click to lock and unlock previews
+        and right-click to access a mage's information panel. <br><br> Click the
+        box to dismiss.
+      uiElement: 0
+    - message: 7/8 <br> <br>This is the level objective. You must fulfill it to pass
+        the level. <br> <br>Click the box to dismiss.
       uiElement: 1
-    - message: If you want to try another strategy, <b>press</b> the <b>Restart</b>
-        button.<br> Click to dismiss.
+    - message: 8/8 <br><br> When you are ready, press Play to see whether you created
+        the correct order. If your order is wrong, a Restart button will appear.
+        <br><br> Click the box to dismiss.
       uiElement: 0
