@@ -19,10 +19,13 @@ public class PlayerMove
     public TileID movedFrom;
     public bool wasMoved;
 
-    public PlayerMove(TileID _movedFrom, bool _move)
+    public Enum_GridDirection previousRotation;
+
+    public PlayerMove(TileID _movedFrom, bool _move, Enum_GridDirection _previousRotation)
     {
         movedFrom = _movedFrom;
         wasMoved = _move;
+        previousRotation = _previousRotation;
     }
 }
 
@@ -47,13 +50,13 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
     [SerializeField] protected Base_Rotation baseRotation;
 
-
-    //Turn Completion Handler
-    protected TaskCompletionSource<bool> undoAwaiter = new TaskCompletionSource<bool>();
     public Base_Rotation BaseRotation
     {
         get { return baseRotation; }
     }
+
+    //Turn Completion Handler
+    protected TaskCompletionSource<bool> undoAwaiter = new TaskCompletionSource<bool>();
 
     public CharacterReskinner CharacterReskinner;
 
@@ -256,6 +259,10 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
             }
             else
             {
+                _previousTileID = _currentTileID;
+                _previousTile = ref_gridManager.FindTile(_previousTileID);
+                _previousTile.UpdateOccupiedStatus(true, gameObject);
+
                 StartCoroutine(ShakeCharacter(0.25f));
                 alreadyMoving = false;
                 if (wasPushed)
@@ -271,7 +278,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
         _currentTile.UpdateOccupiedStatus(true, gameObject);
 
-        PlayerMove playerMove = new PlayerMove(_previousTileID, true);
+        PlayerMove playerMove = new PlayerMove(_previousTileID, true, baseRotation.DirectionFacing);
         HistoryStack.Push(playerMove);
 
         if (wasPushed)
@@ -366,7 +373,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
             {
                 var move = HistoryStack.Pop();
 
-                if (move.wasMoved)
+                 if (move.wasMoved)
                 {
                    await UndoMovement(move.movedFrom);
                 }
@@ -408,6 +415,23 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         baseRotation.RotateToFaceDir(v2Dir);
 
         OnUndoAbilityCompleted();
+    }
+
+    public void CompleteReset()
+    {
+        //Reset the tiles and the tile ID's
+        _currentTileID = _startTileID;
+        _previousTileID = _currentTileID;
+
+        _currentTile = GridManager.Instance.FindTile(_startTileID);
+        _previousTile = _currentTile;
+
+        //Ensure the transform position is reset to the begining.
+        transform.position = new Vector3(_currentTile.TilePosition.x, transform.position.y, _currentTile.TilePosition.z);
+
+        //Reset direction character is facing to starting direction.
+        Vector2 v2Dir = baseRotation.dirToV2(startingDirection);
+        baseRotation.RotateToFaceDir(v2Dir);
     }
 
     //Shakes character if path or tile is invalid.

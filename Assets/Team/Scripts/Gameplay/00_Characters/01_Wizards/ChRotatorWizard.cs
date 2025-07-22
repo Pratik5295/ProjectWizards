@@ -99,7 +99,7 @@ public class ChRotatorWizard : Base_Ch
         }
         rotation = MetaConstants.Enum_Rotation.Clockwise;
 
-        PlayerMove move = new PlayerMove(CurrentTileID,false);
+        PlayerMove move = new PlayerMove(CurrentTileID,false, baseRotation.DirectionFacing);
         HistoryStack.Push(move);
 
         TileDataChanges();

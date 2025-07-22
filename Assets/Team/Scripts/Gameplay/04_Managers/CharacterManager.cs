@@ -191,6 +191,7 @@ namespace Team.Managers
             foreach (var _character in CharactersInLevel)
             {
                 //_character.Value.UndoMovement();
+                _character.Value.CompleteReset();
             }
         }
 
