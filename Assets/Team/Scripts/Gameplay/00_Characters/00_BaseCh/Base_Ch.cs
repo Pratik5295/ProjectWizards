@@ -20,6 +20,9 @@ public enum PlayerMoveType
     ROTATED
 }
 
+/// <summary>
+/// A Move performed by the player
+/// </summary>
 [System.Serializable]
 public class PlayerMove
 {
@@ -32,12 +35,15 @@ public class PlayerMove
 
     public Base_Ch interactedWith;
 
-    public PlayerMove(TileID _movedFrom, PlayerMoveType _move, Enum_GridDirection _previousRotation, Base_Ch _interacted = null)
+    public Base_Obstacle interactedObstacle;
+
+    public PlayerMove(TileID _movedFrom, PlayerMoveType _move, Enum_GridDirection _previousRotation, Base_Ch _interacted = null, Base_Obstacle _interactedObstacle = null)
     {
         movedFrom = _movedFrom;
         Type = _move;
         previousRotation = _previousRotation;
         interactedWith = _interacted;
+        interactedObstacle = _interactedObstacle;
     }
 }
 
@@ -579,7 +585,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         OnTurnComplete?.Invoke();
     }
 
-    protected void OnUndoAbilityCompleted()
+    public void OnUndoAbilityCompleted()
     {
         if (undoAbilityWaiter != null && !undoAbilityWaiter.Task.IsCompleted)
         {

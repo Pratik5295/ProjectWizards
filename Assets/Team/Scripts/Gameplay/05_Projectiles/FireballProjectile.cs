@@ -15,8 +15,18 @@ public class FireballProjectile : Base_Projectile
     public override void OnTriggerEnter(Collider other)
     {
         if (other.gameObject == CastingWizard || other.gameObject.layer == 3) { return; } //Check that the collision isnt with the wizard that casted the projectile.
-        if (other.GetComponent<ChRedirectWizard>())
+        if (other.TryGetComponent<ChRedirectWizard>(out var redirectWizard))
         {
+            if (redirectWizard.hasStoredProj)
+            {
+                _projectileHandle.characterInteracted = redirectWizard;
+                _projectileHandle.obstacleInteracted = null;
+                _projectileHandle.beforeTileID = redirectWizard.CurrentTileID;
+            }
+            else
+            {
+                _projectileHandle = null;
+            }
             base.OnTriggerEnter(other);
             return;
         }
@@ -25,17 +35,22 @@ public class FireballProjectile : Base_Projectile
         {
             var hitCharacter = other.GetComponent<Base_Ch>();
             _projectileHandle.characterInteracted = hitCharacter;
+            _projectileHandle.obstacleInteracted = null;
             _projectileHandle.beforeTileID = hitCharacter.CurrentTileID;
             hitCharacter.HitByProjectile(_projectileType);
         }
-        if (other.CompareTag(MetaConstants.EnvironmentTag) && other.GetComponent<Base_Obstacle>())
+        if (other.CompareTag(MetaConstants.EnvironmentTag) && other.TryGetComponent<Base_Obstacle>(out var Obstacle))
         {
+            _projectileHandle.characterInteracted = null;
+            _projectileHandle.obstacleInteracted = Obstacle;
+            _projectileHandle.beforeTileID = Obstacle.CurrentTileID;
+
             other.gameObject.GetComponent<Base_Obstacle>().DisableObject();
             if (other.gameObject.GetComponent<ExplosiveObject>())
             {
                 HitExplosive(other);
                 VisuallyDestroy();
-                GameTurnManager.Instance.AddDestroyedObject(other.gameObject);
+                //GameTurnManager.Instance.AddDestroyedObject(other.gameObject);
                 return;
             }
         }

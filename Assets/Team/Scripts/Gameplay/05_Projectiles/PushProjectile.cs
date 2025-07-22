@@ -24,6 +24,7 @@ public class PushProjectile : Base_Projectile
             if (redirectWizard.hasStoredProj)
             {
                 _projectileHandle.characterInteracted = redirectWizard;
+                _projectileHandle.obstacleInteracted = null;
                 _projectileHandle.beforeTileID = redirectWizard.CurrentTileID;
             }
             else
@@ -70,6 +71,7 @@ public class PushProjectile : Base_Projectile
             if (BaseCh)
             {
                 _projectileHandle.characterInteracted = BaseCh;
+                _projectileHandle.obstacleInteracted = null;
                 _projectileHandle.beforeTileID = BaseCh.CurrentTileID;
 
                 BaseCh.PushProjectileInstance = this;
@@ -83,6 +85,10 @@ public class PushProjectile : Base_Projectile
         {
             if (Obstacle)
             {
+                _projectileHandle.characterInteracted = null;
+                _projectileHandle.obstacleInteracted = Obstacle;
+                _projectileHandle.beforeTileID = Obstacle.CurrentTileID;
+
                 Obstacle.PushProjectileInstance = this;
             }
             else 

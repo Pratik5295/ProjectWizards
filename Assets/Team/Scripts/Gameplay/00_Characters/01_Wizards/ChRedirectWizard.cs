@@ -69,18 +69,42 @@ public class ChRedirectWizard : ChProjectileWizard
         {
             var move = HistoryStack.Pop();
 
-            if (move.Type == PlayerMoveType.PUSH)
+            //If its a character
+            if (move.interactedWith != null)
             {
-                Debug.Log("Pratik why is redirect pushing itself?");
-                move.interactedWith.UndoMovement(this,move.movedFrom);
+                if (move.Type == PlayerMoveType.PUSH)
+                {
+                    move.interactedWith.UndoMovement(this, move.movedFrom);
+                }
+                else if (move.Type == PlayerMoveType.DESTROYED)
+                {
+                    UndoDestroy(this, move);
+                }
+                else
+                {
+                    UnreferenceProjectile();
+                }
             }
-            else if(move.Type == PlayerMoveType.DESTROYED)
+
+            //If its an obstacle
+            else if (move.interactedObstacle != null)
             {
-                await UndoDestroy(move);
-            }
-            else
-            {
-                UnreferenceProjectile();
+                if (move.Type == PlayerMoveType.PUSH)
+                {
+                    if (move.interactedObstacle.TryGetComponent<MoveableObstacle>(out var moveableObstacle))
+                    {
+                        moveableObstacle.ForceUndoMovement(this, move.movedFrom);
+                    }
+                    else
+                    {
+                        //FUTURE SCARE: Unmoveable obstacles need to fire Undo Complete as they wont move
+                    }
+
+                }
+                else if (move.Type == PlayerMoveType.DESTROYED)
+                {
+                    move.interactedObstacle.ResetToStart();
+                }
             }
         }
 
@@ -154,5 +178,6 @@ public class ChRedirectWizard : ChProjectileWizard
 
         _characterUI.UpdateBark(bark);
     }
+
 
 }

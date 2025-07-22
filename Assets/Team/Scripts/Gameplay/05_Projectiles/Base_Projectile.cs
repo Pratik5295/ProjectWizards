@@ -7,6 +7,7 @@ public class ProjectileHandler
 {
     public Enum_ProjectileType ProjectileType;
     public Base_Ch characterInteracted;
+    public Base_Obstacle obstacleInteracted;
     public TileID beforeTileID;
 
 }

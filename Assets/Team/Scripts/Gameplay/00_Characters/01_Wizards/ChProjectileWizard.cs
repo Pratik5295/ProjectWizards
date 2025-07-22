@@ -102,7 +102,9 @@ public class ChProjectileWizard : Base_Ch
 
             PlayerMove playerMove 
                 = new PlayerMove
-                (_projectileHandler.beforeTileID, type, baseRotation.DirectionFacing,_projectileHandler.characterInteracted);
+                (_projectileHandler.beforeTileID, type, baseRotation.DirectionFacing,
+                _projectileHandler.characterInteracted, _projectileHandler.obstacleInteracted);
+
             HistoryStack.Push(playerMove);
         }
 
@@ -124,29 +126,51 @@ public class ChProjectileWizard : Base_Ch
             {
                 var move = HistoryStack.Pop();
 
-                //Debug.Log($"{gameObject.name} Move was: {move.wasMoved}");
+                //If its a character interacted 
 
-                if (move.Type == PlayerMoveType.PUSH)
+                if (move.interactedWith != null)
                 {
-                    move.interactedWith.UndoMovement(this, move.movedFrom);
+
+                    if (move.Type == PlayerMoveType.PUSH)
+                    {
+                        move.interactedWith.UndoMovement(this, move.movedFrom);
+                    }
+                    else if (move.Type == PlayerMoveType.DESTROYED)
+                    {
+                        UndoDestroy(this,move);
+                    }
                 }
-                else if (move.Type == PlayerMoveType.DESTROYED)
+
+                else if(move.interactedObstacle != null)
                 {
-                    await UndoDestroy(move);
+                    if (move.Type == PlayerMoveType.PUSH)
+                    {
+                        if (move.interactedObstacle.TryGetComponent<MoveableObstacle>(out var moveableObstacle))
+                        {
+                            moveableObstacle.ForceUndoMovement(this, move.movedFrom);
+                        }
+                        else
+                        {
+                            //FUTURE SCARE: Unmoveable obstacles need to fire Undo Complete as they wont move
+                            //Need to do the same in redirect wizard
+                        }
+                    }
+                    else if(move.Type == PlayerMoveType.DESTROYED)
+                    {
+                        move.interactedObstacle.ResetToStart();
+                    }
                 }
             }
             await undoAwaiter.Task;
         }
     }
 
-    protected async Task UndoDestroy(PlayerMove _move)
+    protected void UndoDestroy(Base_Ch _character,PlayerMove _move)
     {
         var ch = _move.interactedWith;
 
         ch.resetCharState(true);
 
-        OnUndoAbilityCompleted();
-
-        await undoAbilityWaiter.Task;
+        _character.OnUndoAbilityCompleted();
     }
 }
