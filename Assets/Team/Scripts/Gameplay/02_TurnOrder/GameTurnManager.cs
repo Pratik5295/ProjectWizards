@@ -120,7 +120,7 @@ namespace Team.Managers
         {
             if (_isResetting) return;
 
-            LoadObstacleData();
+            //LoadObstacleData();
             //breakerIndex = breaker != null ? breaker.transform.GetSiblingIndex() : 0;
 
             lock (_lockObject)
@@ -153,11 +153,17 @@ namespace Team.Managers
             isQueueLoaded = true;
         }
 
+        /// <summary>
+        /// BreakPoint Method. Currently Unused
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task LoadQueueFromIndexAsync(int index, CancellationToken cancellationToken = default)
         {
             if (_isResetting) return;
 
-            LoadObstacleData();
+            //LoadObstacleData();
 
             lock (_lockObject)
             {
@@ -310,6 +316,8 @@ namespace Team.Managers
                     obsData.ResetToStart();
                 }
             }
+
+            Obstacles.Clear();
         }
 
         private void ResetTileData()
@@ -621,7 +629,7 @@ namespace Team.Managers
             // Reset objectives
             LevelObjectiveManager.Instance?.ResetAllObjectives();
 
-            ResetObstacles();
+            //ResetObstacles();
 
             // Reset characters
             ResetCharactersToStart();
@@ -665,7 +673,7 @@ namespace Team.Managers
                     {
                         character.EnableObject();
                         character.resetCharState(true);
-                        character.UndoAction();
+                        //character.UndoAction();
                     }
                 }
                 else
@@ -690,7 +698,7 @@ namespace Team.Managers
                                 if (character != null)
                                 {
                                     character.resetCharState(true);
-                                    character.UndoAction();
+                                    //character.UndoAction();
                                 }
                             }
                         }

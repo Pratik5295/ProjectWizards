@@ -170,7 +170,7 @@ public class Base_Obstacle : MonoBehaviour, IDestroyable
 
         UpdateObstacleTileData(_startTileID, _startTile);
 
-        Vector3 tilePosition = new Vector3(_startTile.transform.position.x, 1.5f, _startTile.transform.position.z);
+        Vector3 tilePosition = new Vector3(_startTile.transform.position.x, _startTile.transform.position.y + ySpawnOffset, _startTile.transform.position.z);
         transform.position = tilePosition;
         transform.parent = _startTile.transform;
 

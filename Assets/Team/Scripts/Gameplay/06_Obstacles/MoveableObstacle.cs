@@ -75,7 +75,7 @@ public class MoveableObstacle : Base_Obstacle, IMoveable
 
         WasPushed(wasPushed);
 
-        PlayerMove playerMove = new PlayerMove(true);
+        PlayerMove playerMove = new PlayerMove(_previousGridTile.TileID, PlayerMoveType.PUSH, baseRotation.DirectionFacing,null,this);
         HistoryStack.Push(playerMove);
     }
 
@@ -160,7 +160,7 @@ public class MoveableObstacle : Base_Obstacle, IMoveable
         {
             var move = HistoryStack.Pop();
 
-            if (move.wasMoved)
+            if (move.Type == PlayerMoveType.PUSH)
             {
                 UndoMovement();
             }
@@ -178,6 +178,26 @@ public class MoveableObstacle : Base_Obstacle, IMoveable
         _currentGridTile.SetObjectOccupyingTile(this.gameObject);
 
         transform.position = new Vector3(_currentGridTile.TilePosition.x, transform.position.y, _currentGridTile.TilePosition.z);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="_characterResponsible">Who Fired the trigger</param>
+    /// <param name="_movedBackTo"></param>
+    public void ForceUndoMovement(Base_Ch _characterResponsible,TileID _movedBackTo)
+    {
+        //if (_currentTileID == _movedBackTo) { return; }
+        _currentGridTile.UpdateOccupiedStatus();
+
+        _currentTileID = _movedBackTo;
+        _currentGridTile = ref_gridManager.FindTile(_currentTileID);
+
+        _currentGridTile.SetObjectOccupyingTile(this.gameObject);
+
+        transform.position = new Vector3(_currentGridTile.TilePosition.x, transform.position.y, _currentGridTile.TilePosition.z);
+
+        _characterResponsible.OnUndoAbilityCompleted();
     }
     #endregion
 }

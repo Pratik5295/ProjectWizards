@@ -1,24 +1,49 @@
 using System.Collections;
 using System.Collections.Generic;
-using Team.Gameplay.GridSystem;
+using System.Threading.Tasks;
+using DG.Tweening;
+using Team.Data;
 using Team.Enum.Character;
-using UnityEngine;
 using Team.GameConstants;
 using Team.Gameplay.Characters;
-using Team.UI;
-using static Team.GameConstants.MetaConstants;
-using Team.Data;
+using Team.Gameplay.GridSystem;
 using Team.Managers;
-using DG.Tweening;
+using Team.UI;
+using UnityEngine;
+using static Team.GameConstants.MetaConstants;
 
+
+public enum PlayerMoveType
+{
+    PUSH, //Default is pushed
+    DESTROYED,
+    ROTATED
+}
+
+/// <summary>
+/// A Move performed by the player
+/// </summary>
 [System.Serializable]
 public class PlayerMove
 {
-    public bool wasMoved;
+    //FUTURE SCARE: Update the previous Rotation here. So the character can rotate back to previous move's rotation
+    public TileID movedFrom;
 
-    public PlayerMove(bool _move)
+    public PlayerMoveType Type;
+
+    public Enum_GridDirection previousRotation;
+
+    public Base_Ch interactedWith;
+
+    public Base_Obstacle interactedObstacle;
+
+    public PlayerMove(TileID _movedFrom, PlayerMoveType _move, Enum_GridDirection _previousRotation, Base_Ch _interacted = null, Base_Obstacle _interactedObstacle = null)
     {
-        wasMoved = _move;
+        movedFrom = _movedFrom;
+        Type = _move;
+        previousRotation = _previousRotation;
+        interactedWith = _interacted;
+        interactedObstacle = _interactedObstacle;
     }
 }
 
@@ -42,10 +67,14 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     [SerializeField] protected GridManager ref_gridManager;
 
     [SerializeField] protected Base_Rotation baseRotation;
+
     public Base_Rotation BaseRotation
     {
         get { return baseRotation; }
     }
+
+    //Turn Completion Handler
+    protected TaskCompletionSource<bool> undoAwaiter = new TaskCompletionSource<bool>();
 
     public CharacterReskinner CharacterReskinner;
 
@@ -145,7 +174,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     [ContextMenu("Initialise this Character")]
     public virtual void InitialiseCharacter(TileID StartingTileID, Enum_GridDirection _startingDirection)
     {
-        CharacterData = characterData; 
+        CharacterData = characterData;
 
         ref_gridManager = GridManager.Instance;
         OffsetValue = MetaConstants.GridSlot_Offset;
@@ -189,8 +218,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         {
             StartCoroutine(MoveByAmount(2, new Vector2(0, 1)));
         }
-        else 
-        { 
+        else
+        {
             StartCoroutine(MoveByAmount(2, new Vector2(0, -1)));
         }
     }
@@ -204,8 +233,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         {
             StartCoroutine(MoveByAmount(2, new Vector2(1, 0)));
         }
-        else 
-        { 
+        else
+        {
             StartCoroutine(MoveByAmount(2, new Vector2(-1, 0)));
         }
     }
@@ -248,6 +277,10 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
             }
             else
             {
+                _previousTileID = _currentTileID;
+                _previousTile = ref_gridManager.FindTile(_previousTileID);
+                _previousTile.UpdateOccupiedStatus(true, gameObject);
+
                 StartCoroutine(ShakeCharacter(0.25f));
                 alreadyMoving = false;
                 if (wasPushed)
@@ -255,15 +288,17 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
                     WasPushed(wasPushed);
                     yield break;
                 }
-                OnTurnComplete?.Invoke();
+
+                OnAbilityCompleted();
                 yield break;
             }
         }
 
         _currentTile.UpdateOccupiedStatus(true, gameObject);
 
-        PlayerMove playerMove = new PlayerMove(true);
-        HistoryStack.Push(playerMove);
+        //FUTURE SCARE: Check if moved properly
+        //PlayerMove playerMove = new PlayerMove(_previousTileID, PlayerMoveType.PUSH, baseRotation.DirectionFacing);
+        //HistoryStack.Push(playerMove);
 
         if (wasPushed)
         {
@@ -271,10 +306,10 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
             yield break;
         }
 
-        OnTurnComplete?.Invoke();
+        OnAbilityCompleted();
     }
 
-    
+
     //Lerps the movement to the next available tile.
     public virtual IEnumerator LerpingMovement(Vector3 targetPosition, bool wasPushed = false)
     {
@@ -322,48 +357,101 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     }
 
     [ContextMenu("Undo Movement")]
-    public virtual void UndoAction()
+    public virtual async Task UndoAction()
     {
-        while (HistoryStack.Count > 0)
-        {
-            var move = HistoryStack.Pop();
+        await CharacterUndoStack();
 
-            if (move.wasMoved)
-            {
-                UndoMovement();
-            }
-        }
+        OnTurnComplete?.Invoke();
+    }
 
+    protected void HistoryStackIsEmpty()
+    {
         if (HistoryStack.Count == 0)
         {
-            OnTurnComplete?.Invoke();
-            return;
+            if (undoAwaiter != null && !undoAwaiter.Task.IsCompleted)
+            {
+                undoAwaiter.SetResult(true);
+            }
+
         }
     }
 
-    public void UndoMovement()
+    protected virtual async Task CharacterUndoStack()
     {
-        if (_currentTileID == _startTileID) 
+        undoAwaiter = new TaskCompletionSource<bool>();
+
+        if (HistoryStack.Count == 0)
         {
-            transform.position = new Vector3(_currentTile.TilePosition.x, transform.position.y, _currentTile.TilePosition.z);
-            return; 
+        }
+        else
+        {
+            while (HistoryStack.Count > 0)
+            {
+                var move = HistoryStack.Pop();
+
+                if (move.Type == PlayerMoveType.PUSH)
+                {
+                    move.interactedWith.UndoMovement(this, move.movedFrom);
+                }
+            }
+            await undoAwaiter.Task;
+        }
+
+    }
+
+    protected TaskCompletionSource<bool> undoAbilityWaiter = new TaskCompletionSource<bool>();
+
+    public void UndoMovement(Base_Ch _characterFiredFrom,TileID _moveToTileID)
+    {
+        if (_currentTileID == _moveToTileID)
+        {
+            var tile = ref_gridManager.FindTile(_moveToTileID);
+            transform.position = new Vector3(tile.TilePosition.x, transform.position.y, tile.TilePosition.z);
+            //return; 
         }
         _currentTile.UpdateOccupiedStatus();
 
-        _currentTileID = _startTileID;
+        _currentTileID = _moveToTileID;
         _currentTile = ref_gridManager.FindTile(_currentTileID);
 
         _currentTile.SetObjectOccupyingTile(this.gameObject);
 
         transform.position = new Vector3(_currentTile.TilePosition.x, transform.position.y, _currentTile.TilePosition.z);
 
-        ResetRotationToStart();
+        ResetRotationToStart(_characterFiredFrom);
     }
 
-    private void ResetRotationToStart()
+    private void ResetRotationToStart(Base_Ch _fireOn = null)
     {
         baseRotation.changeFacingDirection(startingDirection);
         Vector2 v2Dir = baseRotation.dirToV2(baseRotation.DirectionFacing);
+        baseRotation.RotateToFaceDir(v2Dir);
+
+        if (_fireOn != null)
+        {
+            _fireOn.OnUndoAbilityCompleted();
+        }
+        //FUTURE SCARE
+        //else
+        //{
+        //    OnUndoAbilityCompleted();
+        //}
+    }
+
+    public void CompleteReset()
+    {
+        //Reset the tiles and the tile ID's
+        _currentTileID = _startTileID;
+        _previousTileID = _currentTileID;
+
+        _currentTile = GridManager.Instance.FindTile(_startTileID);
+        _previousTile = _currentTile;
+
+        //Ensure the transform position is reset to the begining.
+        transform.position = new Vector3(_currentTile.TilePosition.x, transform.position.y, _currentTile.TilePosition.z);
+
+        //Reset direction character is facing to starting direction.
+        Vector2 v2Dir = baseRotation.dirToV2(startingDirection);
         baseRotation.RotateToFaceDir(v2Dir);
     }
 
@@ -373,8 +461,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         Vector3 defaultPos = transform.localPosition;
 
         shakeTimer = 0f;
-        
-        while(shakeTimer < MaxShakeTime)
+
+        while (shakeTimer < MaxShakeTime)
         {
             transform.localPosition = defaultPos;
             shakeTimer += Time.deltaTime;
@@ -417,7 +505,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         if (_currentTile.IsDeathTile())
         {
             KillCharacter();
-            OnTurnComplete?.Invoke();
+            OnAbilityCompleted();
+            OnTurnComplete?.Invoke(); //FUTURE SCARE: Maybe will cause an issue
         }
         if (_currentTile.IsIceTile())
         {
@@ -467,14 +556,41 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         {
             OnStateChanged?.Invoke();
             CharState = Enum_CharacterState.Alive;
+            EnableObject();
         }
     }
 
+    protected TaskCompletionSource<bool> abilityWaiter = new TaskCompletionSource<bool>();
 
-    public virtual void UseAbility()
+    public async virtual Task UseAbility()
     {
+        abilityWaiter = new TaskCompletionSource<bool>();
         // Debug.LogError($" {gameObject.name} Ability not programmed for character");
         StartCoroutine(MoveByAmount(1, baseRotation.GetFacingDirection()));
+
+        await abilityWaiter.Task;
+
+    }
+
+    protected void OnAbilityCompleted()
+    {
+        if (abilityWaiter != null && !abilityWaiter.Task.IsCompleted)
+        {
+            abilityWaiter.SetResult(true);
+        }
+
+        OnTurnComplete?.Invoke();
+    }
+
+    public void OnUndoAbilityCompleted()
+    {
+        if (undoAbilityWaiter != null && !undoAbilityWaiter.Task.IsCompleted)
+        {
+            undoAbilityWaiter.SetResult(true);
+        }
+
+        //Check if all moves in undo is completed
+        HistoryStackIsEmpty();
     }
 
     #region Enabling and Disabling Character
@@ -510,7 +626,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         }
         else
         {
-              CharacterReskinner.HideOutline();
+            CharacterReskinner.HideOutline();
         }
     }
 
