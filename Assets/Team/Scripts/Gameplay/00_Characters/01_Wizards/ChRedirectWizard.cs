@@ -33,6 +33,7 @@ public class ChRedirectWizard : ChProjectileWizard
                 {
                     HitByProjectile(ProjectileType);
                     GameTurnManager.Instance.AddDestroyedObject(gameObject);
+                    _projectilePrefab = null;
                     return;
                 }
                 else 
@@ -103,7 +104,7 @@ public class ChRedirectWizard : ChProjectileWizard
                 }
                 else if (move.Type == PlayerMoveType.DESTROYED)
                 {
-                    move.interactedObstacle.ResetToStart();
+                    UndoDestroyObstacle(this,move);
                 }
             }
         }
@@ -114,6 +115,7 @@ public class ChRedirectWizard : ChProjectileWizard
 
         //OnTurnComplete?.Invoke();
     }
+
 
     private void UnreferenceProjectile()
     {
