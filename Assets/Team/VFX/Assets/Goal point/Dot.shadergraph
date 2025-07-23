@@ -53,9 +53,6 @@
         },
         {
             "m_Id": "844460a0ad8049ed907e5df4e440026e"
-        },
-        {
-            "m_Id": "c89d1d12eca54125a8de57b07082999a"
         }
     ],
     "m_GroupDatas": [],
@@ -202,9 +199,6 @@
             },
             {
                 "m_Id": "130e97f956d846d2896b6d84c39d7c95"
-            },
-            {
-                "m_Id": "c89d1d12eca54125a8de57b07082999a"
             }
         ]
     },
@@ -451,7 +445,7 @@
     "m_ZWriteControl": 0,
     "m_AlphaMode": 0,
     "m_RenderFace": 2,
-    "m_AlphaClip": true,
+    "m_AlphaClip": false,
     "m_CastShadows": false,
     "m_ReceiveShadows": true,
     "m_DisableTint": false,
@@ -716,10 +710,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -285.9999694824219,
-            "y": -81.3332748413086,
-            "width": 121.99996948242188,
-            "height": 150.66661071777345
+            "x": -207.99996948242188,
+            "y": 323.33331298828127,
+            "width": 122.00001525878906,
+            "height": 150.66665649414063
         }
     },
     "m_Slots": [
@@ -1112,21 +1106,6 @@
 
 {
     "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
-    "m_ObjectId": "c62d83d7fe2f45ed95f5c86e35f21912",
-    "m_Id": 0,
-    "m_DisplayName": "Alpha Clip Threshold",
-    "m_SlotType": 0,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "AlphaClipThreshold",
-    "m_StageCapability": 2,
-    "m_Value": 0.5,
-    "m_DefaultValue": 0.5,
-    "m_Labels": []
-}
-
-{
-    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.DynamicValueMaterialSlot",
     "m_ObjectId": "c797c18ccea14f9ca8593786059d0ab3",
     "m_Id": 2,
@@ -1171,40 +1150,6 @@
         "e32": 0.0,
         "e33": 1.0
     }
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.BlockNode",
-    "m_ObjectId": "c89d1d12eca54125a8de57b07082999a",
-    "m_Group": {
-        "m_Id": ""
-    },
-    "m_Name": "SurfaceDescription.AlphaClipThreshold",
-    "m_DrawState": {
-        "m_Expanded": true,
-        "m_Position": {
-            "serializedVersion": "2",
-            "x": 0.0,
-            "y": 0.0,
-            "width": 0.0,
-            "height": 0.0
-        }
-    },
-    "m_Slots": [
-        {
-            "m_Id": "c62d83d7fe2f45ed95f5c86e35f21912"
-        }
-    ],
-    "synonyms": [],
-    "m_Precision": 0,
-    "m_PreviewExpanded": true,
-    "m_DismissedVersion": 0,
-    "m_PreviewMode": 0,
-    "m_CustomColors": {
-        "m_SerializableColors": []
-    },
-    "m_SerializedDescriptor": "SurfaceDescription.AlphaClipThreshold"
 }
 
 {
