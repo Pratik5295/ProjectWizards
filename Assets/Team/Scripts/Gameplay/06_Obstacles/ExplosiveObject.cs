@@ -1,4 +1,6 @@
+using Ink.Parsed;
 using System.Collections;
+using System.Collections.Generic;
 using Team.Enum.Character;
 using Team.GameConstants;
 using Team.Gameplay.GridSystem;
@@ -56,6 +58,7 @@ public class ExplosiveObject : MoveableObstacle
     protected void AffectTiles()
     {
         GridTile[] NeighbourTiles = _currentGridTile.FindNeighbouringTiles();
+        List<OilTile> fireOriginTiles = new List<OilTile>();
 
         for(int i = 1; i < NeighbourTiles.Length; i++)
         {
@@ -63,10 +66,9 @@ public class ExplosiveObject : MoveableObstacle
             {
                 if (NeighbourTiles[i].IsOilTile())
                 {
-                    if (!NeighbourTiles[i].GetComponent<OilTile>().isOnFire)
+                    if (NeighbourTiles[i].TryGetComponent(out OilTile oilTile) && !oilTile.isOnFire)
                     {
-                        NeighbourTiles[i].GetComponent<OilTile>().Ignite();
-                        NeighbourTiles[i].GetComponent<OilTile>().visited = true;
+                        fireOriginTiles.Add(oilTile);
                         hasFireStarted = true;
                     }
                 }
@@ -96,7 +98,7 @@ public class ExplosiveObject : MoveableObstacle
         if (hasFireStarted)
         {
             FireSpread.Instance.FireballRef = RefFireballProjectile;
-            FireSpread.Instance.StartFire();
+            FireSpread.Instance.StartFire(fireOriginTiles);
             return;
         }
         RefFireballProjectile.CleanUp();

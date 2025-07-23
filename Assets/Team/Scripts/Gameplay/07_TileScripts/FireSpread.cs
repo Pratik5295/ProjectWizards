@@ -31,12 +31,7 @@ public class FireSpread : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        Initialise();
-    }
-
-    private void Initialise()
+    public void Initialise()
     {
         _levelTileCreator = LevelManager.Instance.CreatedLevel.LevelTiles;
         gridWidth = _levelTileCreator.Max_GridSize_Acc.x;
@@ -44,18 +39,25 @@ public class FireSpread : MonoBehaviour
     }
 
     [ContextMenu("Start A Fire!")]
-    public void StartFire()
+    public void StartFire(List<OilTile> originTiles)
     {
-        StartCoroutine(SpreadFire());
+        if (originTiles == null || originTiles.Count == 0) return;
+        StartCoroutine(SpreadFire(originTiles));
     }
 
-    public IEnumerator SpreadFire()
+    public IEnumerator SpreadFire(List<OilTile> startingTiles)
     {
         Queue<OilTile> fireQueue = new Queue<OilTile>();
 
-        for (int x = 0; x <  _levelTileCreator.OilTiles.Count; x++)
+        for (int x = 0; x <  startingTiles.Count; x++)
         {
-             fireQueue.Enqueue(_levelTileCreator.OilTiles[x]);
+            OilTile tile = startingTiles[x];
+            if (tile != null && !tile.isOnFire && !tile.visited)
+            {
+                tile.visited = true;
+                tile.Ignite();
+                fireQueue.Enqueue(tile);
+            }
         }
 
         while (fireQueue.Count > 0)
@@ -66,20 +68,15 @@ public class FireSpread : MonoBehaviour
 
             for (int i = 1; i < neighbours.Length; i++)
             {
-                if (neighbours[i] && neighbours[i].GetComponent<OilTile>())
-                {
-                    OilTile neighbouringOilTile = neighbours[i].GetComponent<OilTile>();                
-
+                if (neighbours[i] && neighbours[i].TryGetComponent(out OilTile neighbouringOilTile))
+                {             
                     if(!neighbouringOilTile.visited && !neighbouringOilTile.isOnFire)
                     {
                         yield return new WaitForSeconds(0.2f);
+
+                        neighbouringOilTile.visited = true;
                         neighbouringOilTile.Ignite();
                         fireQueue.Enqueue(neighbouringOilTile);
-                        neighbouringOilTile.visited = true;
-                    }
-                    if (neighbouringOilTile.visited && neighbouringOilTile.isOnFire)
-                    {
-                        continue;
                     }
                 }
             }
