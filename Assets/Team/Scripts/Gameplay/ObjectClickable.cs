@@ -56,7 +56,11 @@ public class ObjectClickable : MonoBehaviour
     public void UnhoveredObject()
     {
         if (_ghosting == null) { return; }
-        if (_ghosting.ghostingIsActive && !isHovered){ return;}
+        if (_ghosting.ghostingIsActive && !_ghosting.isHovered)
+        {
+            isHovered = false; 
+            return;
+        }
         isHovered = false;
         _ghosting.isHovered = false;
         onHovered?.Invoke(false);
@@ -67,8 +71,9 @@ public class ObjectClickable : MonoBehaviour
         if (_ghosting == null) { return; }
         if (_ghosting.isHovered)
         {
+            _ghosting.isHovered = false;
             OnEnableClick.Invoke();
-            _ghosting.ghostingIsActive = false;
+            //_ghosting.ghostingIsActive = false;
             return;
         }
         OnDisableClick.Invoke();

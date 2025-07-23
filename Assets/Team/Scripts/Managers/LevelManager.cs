@@ -174,6 +174,7 @@ namespace Team.Managers
 
                 //Spawn Gameplay Managers.
                 GridManager.Instance.SpawnGameplayManagers();
+                FireSpread.Instance.Initialise();
 
                 // Setup dialogue if available
                 if (CurrentLevel.Info.Data.DialogueAsset != null)

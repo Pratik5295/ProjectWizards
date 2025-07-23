@@ -42,6 +42,7 @@ namespace Team.Gameplay.GridSystem
         [Header("Gameplay Managers")]
         [SerializeField] private GameObject _fireManager;
         [SerializeField] private GameObject _projectileManager;
+        [SerializeField] private GameObject _ClickableManager;
 
         private void Awake()
         {
@@ -160,6 +161,7 @@ namespace Team.Gameplay.GridSystem
         {
             Instantiate(_fireManager, Vector3.zero, Quaternion.identity, transform.parent);
             Instantiate(_projectileManager, Vector3.zero, Quaternion.identity, transform.parent);
+            Instantiate(_ClickableManager, Vector3.zero, Quaternion.identity, transform.parent);
         }
     }
 }
