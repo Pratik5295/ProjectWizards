@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 
 [DefaultExecutionOrder(2)]
@@ -49,13 +50,14 @@ public class ChProjectileWizard : Base_Ch
     }
 
 
-    public override void UseAbility()
+    public async override Task UseAbility()
     {
-        if (!_projectilePrefab) 
+        abilityWaiter = new TaskCompletionSource<bool>();
+        if (_projectilePrefab == null) 
         { 
             StartCoroutine(ShakeCharacter(0.25f)); 
-            endTurn(); 
-            return; 
+            endTurn(null);
+            return;
         }
         ProjectileInstance = Instantiate(_projectilePrefab, _fireFromPoint.transform.position, Quaternion.identity);
         scProjectile = ProjectileInstance.GetComponent<Base_Projectile>();
@@ -67,17 +69,117 @@ public class ChProjectileWizard : Base_Ch
         scProjectile.OnProjectileEnd += endTurn;
 
         OnCastBark();
+
+        await abilityWaiter.Task;
     }
 
-    private void endTurn()
+    private void endTurn(ProjectileHandler _projectileHandler)
     {
-        if (_projectilePrefab)
+        if (_projectilePrefab != null)
         {
             scProjectile.OnProjectileEnd -= endTurn;
         }
         ProjectileInstance = null;
         scProjectile = null;
 
-        OnTurnComplete?.Invoke();
+        if(_projectileHandler != null)
+        {
+            //Turn detected
+
+            PlayerMoveType type = PlayerMoveType.PUSH;
+
+            switch (_projectileHandler.ProjectileType)
+            {
+                case Team.Enum.Character.Enum_ProjectileType.Fireball:
+                    type = PlayerMoveType.DESTROYED;
+                    break;
+
+                case Team.Enum.Character.Enum_ProjectileType.NonLethalRound:
+                    type = PlayerMoveType.PUSH;
+                    break;
+            }
+
+
+            PlayerMove playerMove 
+                = new PlayerMove
+                (_projectileHandler.beforeTileID, type, baseRotation.DirectionFacing,
+                _projectileHandler.characterInteracted, _projectileHandler.obstacleInteracted);
+
+            HistoryStack.Push(playerMove);
+        }
+
+        OnAbilityCompleted();
+    }
+
+    protected override async Task CharacterUndoStack()
+    {
+        undoAwaiter = new TaskCompletionSource<bool>();
+
+        Debug.Log($"{gameObject.name} Moves count: {HistoryStack.Count}");
+
+        if (HistoryStack.Count == 0)
+        {
+        }
+        else
+        {
+            while (HistoryStack.Count > 0)
+            {
+                var move = HistoryStack.Pop();
+
+                //If its a character interacted 
+
+                if (move.interactedWith != null)
+                {
+
+                    if (move.Type == PlayerMoveType.PUSH)
+                    {
+                        move.interactedWith.UndoMovement(this, move.movedFrom);
+                    }
+                    else if (move.Type == PlayerMoveType.DESTROYED)
+                    {
+                        UndoDestroy(this,move);
+                    }
+                }
+
+                else if(move.interactedObstacle != null)
+                {
+                    if (move.Type == PlayerMoveType.PUSH)
+                    {
+                        if (move.interactedObstacle.TryGetComponent<MoveableObstacle>(out var moveableObstacle))
+                        {
+                            moveableObstacle.ForceUndoMovement(this, move.movedFrom);
+                        }
+                        else
+                        {
+                            //FUTURE SCARE: Unmoveable obstacles need to fire Undo Complete as they wont move
+                            //Need to do the same in redirect wizard
+                        }
+                    }
+                    else if(move.Type == PlayerMoveType.DESTROYED)
+                    {
+                        UndoDestroyObstacle(this,move); 
+                    }
+                }
+            }
+            await undoAwaiter.Task;
+        }
+    }
+
+    protected void UndoDestroy(Base_Ch _character,PlayerMove _move)
+    {
+        var ch = _move.interactedWith;
+
+        ch.resetCharState(true);
+
+        _character.OnUndoAbilityCompleted();
+    }
+
+    protected void UndoDestroyObstacle(Base_Ch _character, PlayerMove _move)
+    {
+        var interactedObstacle = _move.interactedObstacle;
+
+        interactedObstacle.ResetToStart();
+
+        _character.OnUndoAbilityCompleted();
     }
 }

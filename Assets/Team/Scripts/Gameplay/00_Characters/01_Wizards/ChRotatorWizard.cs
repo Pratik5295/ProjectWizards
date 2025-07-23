@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using Team.Gameplay.GridSystem;
-using UnityEngine;
+using System.Threading.Tasks;
 using Team.GameConstants;
+using Team.Gameplay.GridSystem;
 using Team.Managers;
+using UnityEngine;
 
 namespace Team.GameConstants
 {
@@ -63,8 +64,9 @@ public class ChRotatorWizard : Base_Ch
         _landingVFXManager.transform.position = new Vector3(transform.position.x, _landingVFXOffset, transform.position.z);
     }
 
-    public override void UseAbility()
+    public async override Task UseAbility()
     {
+        abilityWaiter = new TaskCompletionSource<bool>();
         OnCastBark();
 
         GetTilesToRotate();
@@ -72,7 +74,7 @@ public class ChRotatorWizard : Base_Ch
         if (!centerTile || _tilesToMove.Count != 5)
         {
             Debug.Log("Cant Execute Ability as no tiles no center tile.");
-            OnTurnComplete?.Invoke();
+            OnAbilityCompleted();
             return;
         }
 
@@ -97,46 +99,58 @@ public class ChRotatorWizard : Base_Ch
         }
         rotation = MetaConstants.Enum_Rotation.Clockwise;
 
-        PlayerMove move = new PlayerMove(false);
+        PlayerMove move = new PlayerMove(CurrentTileID, PlayerMoveType.ROTATED, baseRotation.DirectionFacing);
         HistoryStack.Push(move);
 
         TileDataChanges();
         activeCoroutine = StartCoroutine(LerpUpDown(true));
+
+        await abilityWaiter.Task;
     }
 
     [ContextMenu("Undo Rotation")]
-    public override void UndoAction()
+    protected override async Task CharacterUndoStack()
     {
+        undoAwaiter = new TaskCompletionSource<bool>();
+
         Debug.Log($"{gameObject.name} Moves count: {HistoryStack.Count}");
 
-        while (HistoryStack.Count > 0)
+        if (HistoryStack.Count == 0)
         {
-            var move = HistoryStack.Pop();
-
-            Debug.Log($"{gameObject.name} Move was: {move.wasMoved}");
-
-            if (move.wasMoved)
+        }
+        else
+        {
+            while (HistoryStack.Count > 0)
             {
-                UndoMovement();
+                var move = HistoryStack.Pop();
+
+                //Debug.Log($"{gameObject.name} Move was: {move.wasMoved}");
+                
+                if (move.Type == PlayerMoveType.PUSH)
+                {
+                    move.interactedWith.UndoMovement(this, move.movedFrom);
+                }
+                else if(move.Type == PlayerMoveType.ROTATED)
+                {
+                    await UndoRotate();
+                }
             }
-            else
-            {
-                UndoRotate();
-            }
+            await undoAwaiter.Task;
         }
     }
 
-    private void UndoRotate()
+    private async Task UndoRotate()
     {
         GetTilesToRotate();
 
         if (!centerTile || _tilesToMove.Count != 5)
         {
             Debug.Log("Cant Execute Ability as no tiles no center tile.");
-            OnTurnComplete?.Invoke();
+           // OnTurnComplete?.Invoke();
             return;
         }
 
+        undoAbilityWaiter = new TaskCompletionSource<bool>();
         for (int i = 1; i < _tilesToMove.Count; i++)
         {
             if (!_tilesToMove[i]) { return; }
@@ -157,7 +171,9 @@ public class ChRotatorWizard : Base_Ch
         }
         rotation = MetaConstants.Enum_Rotation.AntiClockwise;
         TileDataChanges();
-        activeCoroutine = StartCoroutine(LerpUpDown(true));
+        activeCoroutine = StartCoroutine(LerpUpDown(true,true));
+
+        await undoAbilityWaiter.Task;
     }
 
     private void GetTilesToRotate()
@@ -279,7 +295,7 @@ public class ChRotatorWizard : Base_Ch
         }
     }
 
-    private void CleanUpTiles()
+    private void CleanUpTiles(bool _isUndoing)
     {
         _rotatorHolder.transform.DetachChildren();
         Destroy(_rotatorHolder);
@@ -306,17 +322,25 @@ public class ChRotatorWizard : Base_Ch
             }
             _tilesToMove[i].gameObject.GetComponentInChildren<MeshRenderer>().material.color = _tilesToMove[i].normalColour;
         }
-        OnTurnComplete?.Invoke();
         //_tilesToMove.Clear();
 
         activeCoroutine = null;
+
+        if (!_isUndoing)
+        {
+            OnAbilityCompleted();
+        }
+        else
+        {
+            OnUndoAbilityCompleted();
+        }
     }
 
-    private IEnumerator LerpUpDown(bool isLerpingUp)
+    private IEnumerator LerpUpDown(bool isLerpingUp, bool _isUndoing = false)
     {
         float elapsedTime = 0f;
         Vector3 _holderStartPos = _rotatorHolder.transform.position;
-        Vector3 _holderEndPos = new Vector3(_rotatorHolder.transform.position.x, MetaConstants.holderLerpUpOffset, _rotatorHolder.transform.position.z); //Need Pratik to add a default position to grid tile script, so that the hard coded value can be changed.
+        Vector3 _holderEndPos = new Vector3(_rotatorHolder.transform.position.x, MetaConstants.holderLerpUpOffset, _rotatorHolder.transform.position.z); 
 
         if (isLerpingUp)
         {
@@ -333,7 +357,17 @@ public class ChRotatorWizard : Base_Ch
 
             yield return null;
         }
-        if (isLerpingUp) { activeCoroutine = StartCoroutine(RotateLerp()); }
+        if (isLerpingUp) 
+        {
+            if (!_isUndoing)
+            {
+                activeCoroutine = StartCoroutine(RotateLerp());
+            }
+            else
+            {
+                activeCoroutine = StartCoroutine(RotateLerp(true));
+            }
+        }
         if (!isLerpingUp)
         {
             /*GameObject instance = Instantiate(_rotationLandingVFX, centerTile.transform);
@@ -341,12 +375,14 @@ public class ChRotatorWizard : Base_Ch
             _landingVFXManager.transform.localPosition = new Vector3(0, _landingVFXOffset, 0);
             _landingVFXManager.EnableParticleEffectChildren();
 
-            CleanUpTiles();
+            CleanUpTiles(_isUndoing);
+
+           
         }
     }
 
 
-    private IEnumerator RotateLerp()
+    private IEnumerator RotateLerp(bool _isUndoing = false)
     {
         float elapsedTime = 0f;
         float RotationValue = GetRotationValue(rotation);
@@ -368,7 +404,14 @@ public class ChRotatorWizard : Base_Ch
         }
 
         _rotatorHolder.transform.rotation = targetRotation;
-        activeCoroutine = StartCoroutine(LerpUpDown(false));
+        if (!_isUndoing)
+        {
+            activeCoroutine = StartCoroutine(LerpUpDown(false));
+        }
+        else
+        {
+            activeCoroutine = StartCoroutine(LerpUpDown(false, true));
+        }
     }
 
     private float GetRotationValue(MetaConstants.Enum_Rotation Rotation)

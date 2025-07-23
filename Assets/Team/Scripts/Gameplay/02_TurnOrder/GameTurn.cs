@@ -59,7 +59,7 @@ namespace Team.Gameplay.TurnSystem
 
             OnTurnStartedEvent?.Invoke();
 
-            characterObject.UseAbility();
+            await characterObject.UseAbility();
 
             // Wait until external call completes the turn
             await _turnCompletion.Task;
@@ -71,7 +71,7 @@ namespace Team.Gameplay.TurnSystem
         {
             _turnCompletion = new TaskCompletionSource<bool>();
 
-            characterObject.UndoAction();
+            await characterObject.UndoAction();
 
             await _turnCompletion.Task;
 
