@@ -61,12 +61,17 @@ namespace Team.Managers
         // State tracking for preventing race conditions
         private bool _isProcessingTurns = false;
         private bool _isResetting = false;
+        //Added by Rían sorry Pratikkk
+        public bool _areCharNumbersActive { get; private set; } = false;
+
 
         public Action OnTurnsProcessingEvent;
         public Action OnAllTurnsCompleted;
         public Action OnResetLastTurnCompleted;
         public Action OnPlayedTillBreakpoint;
 
+        //Also added by Rían sorrrrrrrrry Pratikkkk
+        public Action<bool> OnCharacterNumberVisibilityChanged;
 
         [Space(5)]
         [Header("Turn Identifier Images")]
@@ -285,6 +290,17 @@ namespace Team.Managers
 
             return turnIdentifierAtlas[index];
         }
+
+        public void ToggleCharacterNumberVisibility(bool isActive)
+        {
+
+            OnCharacterNumberVisibilityChanged.Invoke(isActive);
+
+            _areCharNumbersActive = isActive;
+
+        }
+
+
 
         #endregion
 
