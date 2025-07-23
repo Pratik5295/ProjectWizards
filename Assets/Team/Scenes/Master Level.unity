@@ -160,9 +160,7 @@ GameObject:
   m_Component:
   - component: {fileID: 89748215}
   - component: {fileID: 89748211}
-  - component: {fileID: 89748214}
   - component: {fileID: 89748213}
-  - component: {fileID: 89748212}
   m_Layer: 0
   m_Name: Secondary Camera
   m_TagString: MainCamera
@@ -221,21 +219,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!114 &89748212
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 89748210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1ee1c62c905bb24ea7c9cf3d9d40b56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TraumaExponent: 1
-  MaximumAngularShake: {x: 2, y: 2, z: 2}
-  MaximumTranslationShake: {x: 0.75, y: 0.75, z: 0.75}
 --- !u!114 &89748213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -280,14 +263,6 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
---- !u!81 &89748214
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 89748210}
-  m_Enabled: 1
 --- !u!4 &89748215
 Transform:
   m_ObjectHideFlags: 0
