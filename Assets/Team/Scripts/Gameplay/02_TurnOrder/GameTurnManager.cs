@@ -629,7 +629,7 @@ namespace Team.Managers
             // Reset objectives
             LevelObjectiveManager.Instance?.ResetAllObjectives();
 
-            ResetObstacles();
+            //ResetObstacles();
 
             // Reset characters
             ResetCharactersToStart();

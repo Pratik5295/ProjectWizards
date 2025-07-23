@@ -157,7 +157,7 @@ public class ChProjectileWizard : Base_Ch
                     }
                     else if(move.Type == PlayerMoveType.DESTROYED)
                     {
-                        move.interactedObstacle.ResetToStart();
+                        UndoDestroyObstacle(this,move); 
                     }
                 }
             }
@@ -170,6 +170,15 @@ public class ChProjectileWizard : Base_Ch
         var ch = _move.interactedWith;
 
         ch.resetCharState(true);
+
+        _character.OnUndoAbilityCompleted();
+    }
+
+    protected void UndoDestroyObstacle(Base_Ch _character, PlayerMove _move)
+    {
+        var interactedObstacle = _move.interactedObstacle;
+
+        interactedObstacle.ResetToStart();
 
         _character.OnUndoAbilityCompleted();
     }
