@@ -128,7 +128,6 @@ public class ChRotatorWizard : Base_Ch
                 
                 if (move.Type == PlayerMoveType.PUSH)
                 {
-                    Debug.Log("Pratik why is rotator handling push?");
                     move.interactedWith.UndoMovement(this, move.movedFrom);
                 }
                 else if(move.Type == PlayerMoveType.ROTATED)
@@ -333,7 +332,6 @@ public class ChRotatorWizard : Base_Ch
         }
         else
         {
-            Debug.Log("Pratik firing undo rotate here");
             OnUndoAbilityCompleted();
         }
     }
@@ -342,7 +340,7 @@ public class ChRotatorWizard : Base_Ch
     {
         float elapsedTime = 0f;
         Vector3 _holderStartPos = _rotatorHolder.transform.position;
-        Vector3 _holderEndPos = new Vector3(_rotatorHolder.transform.position.x, MetaConstants.holderLerpUpOffset, _rotatorHolder.transform.position.z); //Need Pratik to add a default position to grid tile script, so that the hard coded value can be changed.
+        Vector3 _holderEndPos = new Vector3(_rotatorHolder.transform.position.x, MetaConstants.holderLerpUpOffset, _rotatorHolder.transform.position.z); 
 
         if (isLerpingUp)
         {

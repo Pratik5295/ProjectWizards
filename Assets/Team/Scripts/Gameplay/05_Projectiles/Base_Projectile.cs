@@ -81,7 +81,6 @@ public class Base_Projectile : MonoBehaviour
 
             if (t >= 1f || time >= _lifespan)
             {
-                Debug.Log($"Pratik Projectile: {gameObject.name} dying out after lifespan");
                 ResetProjectileHandler();
                 CleanUp();
             }

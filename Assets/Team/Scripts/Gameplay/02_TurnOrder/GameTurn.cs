@@ -75,8 +75,6 @@ namespace Team.Gameplay.TurnSystem
 
             await _turnCompletion.Task;
 
-            Debug.Log($"Pratik {gameObject.name} turn has undoed completely");
-
         }
 
         /// <summary>

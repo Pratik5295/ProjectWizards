@@ -359,10 +359,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     [ContextMenu("Undo Movement")]
     public virtual async Task UndoAction()
     {
-        Debug.Log($"Pratik starting awaiting on: {gameObject.name}");
         await CharacterUndoStack();
-
-        Debug.Log($"Pratik awaiting completed. Well done {gameObject.name}");
 
         OnTurnComplete?.Invoke();
     }
