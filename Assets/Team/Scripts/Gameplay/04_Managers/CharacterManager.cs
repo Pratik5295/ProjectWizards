@@ -187,9 +187,11 @@ namespace Team.Managers
 
         public void ResetAllCharacters()
         {
+            //FUTURE SCARE: Can this be completely removed?
             foreach (var _character in CharactersInLevel)
             {
-                _character.Value.UndoMovement();
+                //_character.Value.UndoMovement();
+                _character.Value.CompleteReset();
             }
         }
 

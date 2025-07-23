@@ -92,6 +92,7 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
         // Get target position from sibling at newIndex
         newIndex = _turnHolder.GetIndex(rectTransform.localPosition.x);
+        Debug.Log($"Pratik New Index: {newIndex}");
         Vector3 targetPos = originalParent.GetChild(newIndex).position;
 
         // Tween the position to targetPos smoothly
