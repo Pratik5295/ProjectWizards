@@ -27,6 +27,7 @@ namespace Team.Gameplay.TurnSystem
     [DefaultExecutionOrder(5)]
     public class TurnHolder : MonoBehaviour
     {
+        [SerializeField]
         private int numberOfChildren;
 
         [SerializeField]
@@ -61,10 +62,11 @@ namespace Team.Gameplay.TurnSystem
         [SerializeField]
         private GhostCard ghostCard;
 
+
         [ContextMenu("Get Starting Position")]
         public void CalculateExtremePositions()
         {
-            startingPosX = transform.GetChild(0).GetComponent<RectTransform>().localPosition.x;
+            //startingPosX = transform.GetChild(0).GetComponent<RectTransform>().localPosition.x;
             endingPosX = startingPosX + numberOfChildren * (cardSize + spacing);
 
         }
@@ -73,7 +75,7 @@ namespace Team.Gameplay.TurnSystem
         {
             LayoutRebuilder.ForceRebuildLayoutImmediate(transform as RectTransform);
 
-            numberOfChildren = transform.childCount;
+            numberOfChildren = transform.childCount - 1;
 
             var horizontalLayout = GetComponent<HorizontalLayoutGroup>();
 
@@ -90,7 +92,7 @@ namespace Team.Gameplay.TurnSystem
 
         public int GetIndex(float _positionX)
         {
-            int index = numberOfChildren - 1;   //By default it will go to the last element
+            int index = numberOfChildren;   //By default it will go to the last element
 
             if (_positionX <= startingPosX)
             {
@@ -98,7 +100,7 @@ namespace Team.Gameplay.TurnSystem
             }
             else if (_positionX >= endingPosX)
             {
-                index = numberOfChildren - 1;
+                index = numberOfChildren;
             }
             else
             {
@@ -136,7 +138,7 @@ namespace Team.Gameplay.TurnSystem
         {
             cardRanges.Clear();
 
-            for (int i = 0; i < numberOfChildren - 1; i++)
+            for (int i = 0; i < numberOfChildren; i++)
             {
                 float start = startingPosX + i * (cardSize + spacing);
                 float end = start + (cardSize / MetaConstants.CardDiviFactor);
