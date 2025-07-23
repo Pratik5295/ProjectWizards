@@ -74,10 +74,6 @@ namespace Team.UI.Gameplay
                 int index_Number = transform.GetSiblingIndex();
                 char_Number.UpdateCharacterNumberText(index_Number);
             }
-            else
-            {
-                Debug.Log("You fucked up");
-            }
         }
 
         private void OnDestroy()
