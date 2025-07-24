@@ -13,7 +13,7 @@ namespace Team.GameConstants
 {
     public static partial class MetaConstants
     {
-        public const float PauseBetweenTurn = 0.65f;
+        public const float PauseBetweenTurn = 0.4f;
     }
 }
 
@@ -61,12 +61,17 @@ namespace Team.Managers
         // State tracking for preventing race conditions
         private bool _isProcessingTurns = false;
         private bool _isResetting = false;
+        //Added by Rían sorry Pratikkk
+        public bool _areCharNumbersActive { get; private set; } = false;
+
 
         public Action OnTurnsProcessingEvent;
         public Action OnAllTurnsCompleted;
         public Action OnResetLastTurnCompleted;
         public Action OnPlayedTillBreakpoint;
 
+        //Also added by Rían sorrrrrrrrry Pratikkkk
+        public Action<bool> OnCharacterNumberVisibilityChanged;
 
         [Space(5)]
         [Header("Turn Identifier Images")]
@@ -120,7 +125,7 @@ namespace Team.Managers
         {
             if (_isResetting) return;
 
-            LoadObstacleData();
+            //LoadObstacleData();
             //breakerIndex = breaker != null ? breaker.transform.GetSiblingIndex() : 0;
 
             lock (_lockObject)
@@ -153,11 +158,17 @@ namespace Team.Managers
             isQueueLoaded = true;
         }
 
+        /// <summary>
+        /// BreakPoint Method. Currently Unused
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task LoadQueueFromIndexAsync(int index, CancellationToken cancellationToken = default)
         {
             if (_isResetting) return;
 
-            LoadObstacleData();
+            //LoadObstacleData();
 
             lock (_lockObject)
             {
@@ -280,6 +291,17 @@ namespace Team.Managers
             return turnIdentifierAtlas[index];
         }
 
+        public void ToggleCharacterNumberVisibility(bool isActive)
+        {
+
+            OnCharacterNumberVisibilityChanged.Invoke(isActive);
+
+            _areCharNumbersActive = isActive;
+
+        }
+
+
+
         #endregion
 
         #region Private Methods
@@ -310,6 +332,8 @@ namespace Team.Managers
                     obsData.ResetToStart();
                 }
             }
+
+            Obstacles.Clear();
         }
 
         private void ResetTileData()
@@ -621,7 +645,7 @@ namespace Team.Managers
             // Reset objectives
             LevelObjectiveManager.Instance?.ResetAllObjectives();
 
-            ResetObstacles();
+            //ResetObstacles();
 
             // Reset characters
             ResetCharactersToStart();
@@ -665,7 +689,7 @@ namespace Team.Managers
                     {
                         character.EnableObject();
                         character.resetCharState(true);
-                        character.UndoAction();
+                        //character.UndoAction();
                     }
                 }
                 else
@@ -690,7 +714,7 @@ namespace Team.Managers
                                 if (character != null)
                                 {
                                     character.resetCharState(true);
-                                    character.UndoAction();
+                                    //character.UndoAction();
                                 }
                             }
                         }

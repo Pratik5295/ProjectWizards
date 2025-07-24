@@ -2,6 +2,7 @@ using UnityEngine;
 using Team.Enum.Character;
 using Team.Managers;
 using static Team.GameConstants.MetaConstants;
+using System.Threading.Tasks;
 
 public static partial class RedirectConstants
 {
@@ -15,6 +16,8 @@ public class ChRedirectWizard : ChProjectileWizard
     [Header("Redirect Variables")]
     [SerializeField]
     private GameObject ShieldVFX;
+
+    public bool hasStoredProj => _projectilePrefab != null;
 
     public void TryAbsorbProjectile(Enum_ProjectileType ProjectileType, GameObject PrefabReference, Enum_GridDirection ProjectileDir = Enum_GridDirection.NORTH, int MoveAmount = 0)
     {
@@ -30,6 +33,7 @@ public class ChRedirectWizard : ChProjectileWizard
                 {
                     HitByProjectile(ProjectileType);
                     GameTurnManager.Instance.AddDestroyedObject(gameObject);
+                    _projectilePrefab = null;
                     return;
                 }
                 else 
@@ -59,29 +63,65 @@ public class ChRedirectWizard : ChProjectileWizard
     }
 
 
-    public override void UndoAction()
+    protected override async Task CharacterUndoStack()
     {
+        undoAwaiter = new TaskCompletionSource<bool>();
         while (HistoryStack.Count > 0)
         {
             var move = HistoryStack.Pop();
 
-            if (move.wasMoved)
+            //If its a character
+            if (move.interactedWith != null)
             {
-                UndoMovement();
+                if (move.Type == PlayerMoveType.PUSH)
+                {
+                    move.interactedWith.UndoMovement(this, move.movedFrom);
+                }
+                else if (move.Type == PlayerMoveType.DESTROYED)
+                {
+                    UndoDestroy(this, move);
+                }
+                else
+                {
+                    UnreferenceProjectile();
+                }
             }
-            else
+
+            //If its an obstacle
+            else if (move.interactedObstacle != null)
             {
-                UnreferenceProjectile();
+                if (move.Type == PlayerMoveType.PUSH)
+                {
+                    if (move.interactedObstacle.TryGetComponent<MoveableObstacle>(out var moveableObstacle))
+                    {
+                        moveableObstacle.ForceUndoMovement(this, move.movedFrom);
+                    }
+                    else
+                    {
+                        //FUTURE SCARE: Unmoveable obstacles need to fire Undo Complete as they wont move
+                    }
+
+                }
+                else if (move.Type == PlayerMoveType.DESTROYED)
+                {
+                    UndoDestroyObstacle(this,move);
+                }
             }
         }
 
         UnreferenceProjectile();
-        OnTurnComplete?.Invoke();
+
+        await undoAwaiter.Task;
+
+        //OnTurnComplete?.Invoke();
     }
+
 
     private void UnreferenceProjectile()
     {
         _projectilePrefab = null;
+
+        OnUndoAbilityCompleted();
     }
 
     private void AbsorbVFX(Enum_GridDirection ProjectileDir = Enum_GridDirection.NORTH)
@@ -140,5 +180,6 @@ public class ChRedirectWizard : ChProjectileWizard
 
         _characterUI.UpdateBark(bark);
     }
+
 
 }

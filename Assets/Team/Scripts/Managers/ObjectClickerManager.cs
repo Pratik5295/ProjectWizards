@@ -71,6 +71,14 @@ public class ObjectClickerManager : MonoBehaviour
 
     private void HoverClickable(bool shouldHover, RaycastHit hit)
     {
+        if(hit.collider.gameObject.GetComponent<ObjectClickable>() != PreviouslyHovered) 
+        {
+            if (PreviousSelectionCanUnhover())
+            {
+                PreviouslyHovered.GetComponent<ObjectClickable>().UnhoveredObject();
+            }
+        }
+
         switch (shouldHover)
         {
             case true:

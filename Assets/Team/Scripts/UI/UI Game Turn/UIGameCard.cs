@@ -21,6 +21,8 @@ namespace Team.UI.Gameplay
 {
     public class UIGameCard : UIDragHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
+
+
         [SerializeField]
         private CharacterReskinner characterReskinner;
 
@@ -60,16 +62,24 @@ namespace Team.UI.Gameplay
         #region Unity Methods
         protected void Start()
         {
-            _turnHolder.OnTurnOrderUpdatedEvent += UpdateTurnIndexText;
+ /*           _turnHolder.OnTurnOrderUpdatedEvent += UpdateTurnIndexText;*/
             OnSiblingIndexUpdatedEvent += OnSiblingIndexUpdatedEventHandler;
 
             UpdateTurnIndexText();
+
+            CharacterNumberHandler char_Number = characterRef.GetComponent<CharacterNumberHandler>();
+
+            if (char_Number != null)
+            {
+                int index_Number = transform.GetSiblingIndex();
+                char_Number.UpdateCharacterNumberText(index_Number);
+            }
         }
 
         private void OnDestroy()
         {
             OnSiblingIndexUpdatedEvent -= OnSiblingIndexUpdatedEventHandler;
-            _turnHolder.OnTurnOrderUpdatedEvent -= UpdateTurnIndexText;
+/*            _turnHolder.OnTurnOrderUpdatedEvent -= UpdateTurnIndexText;*/
         }
 
 
