@@ -139,7 +139,10 @@ namespace Team.UI.Gameplay
 
             selectedOutline.SetActive(true);
 
-            characterRef.SetGhosting(true);
+            if (characterRef.GetGhostingLock)
+            {
+                characterRef.SetGhosting(true);
+            }
 
             transform.DOScale(selectedScale, MetaConstants.ScaleMaxTimer).SetEase(Ease.OutBack).WaitForCompletion();
 
@@ -151,18 +154,18 @@ namespace Team.UI.Gameplay
 
             selectedOutline.SetActive(false);
 
-            characterRef.SetGhosting(false);
+            if (characterRef.GetGhostingLock)
+            {
+                characterRef.SetGhosting(false);
+            }
 
             transform.DOScale(defaultScale, MetaConstants.ScaleMaxTimer).SetEase(Ease.OutBack).WaitForCompletion();
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            //Have base character toggle Ghosting (characterRef)
-            //characterRef.ToggleGhosting();
-
             //Toggle Lock Ghosting Effect
-
+            characterRef.ToggleGhostingLock();
             //Fire On Click Bark
             characterRef.OnClickBark();
         }

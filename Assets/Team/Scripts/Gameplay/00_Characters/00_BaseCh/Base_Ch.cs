@@ -613,6 +613,20 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
     #region Character Move Ghosting Section
 
+    public bool GetGhostingLock => _ghosting.IsLocked;
+
+    public void ToggleGhostingLock()
+    {
+        if(_ghosting == null)
+        {
+            Debug.LogWarning($"{gameObject.name} missing ghosting reference");
+            return;
+        }
+
+        _ghosting.ToggleGhostingLock();
+    }
+
+
     public void SetGhosting(bool _value)
     {
         if (_ghosting == null) return;
