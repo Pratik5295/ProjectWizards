@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using DG.Tweening;
+using Ink;
 using Team.Data;
 using Team.GameConstants;
 using Team.Gameplay.Characters;
@@ -40,6 +41,9 @@ namespace Team.UI.Gameplay
 
         [SerializeField]
         private Image wizardImage;
+
+        [SerializeField]
+        private GameObject selectedOutline; //Game Object containing an image with selected outline effect
 
         [SerializeField]
         private Image turnCompletedCard;    //Just a low opacity darken outline image
@@ -122,6 +126,8 @@ namespace Team.UI.Gameplay
             var uiCharacter = characterReskinner.UICharacter;
             uiCharacter?.PopulateCharacterUI(data.CharacterID, data.CharacterSkin);
 
+            selectedOutline.SetActive(false);
+
             MakeInteractable();
         }
 
@@ -129,27 +135,33 @@ namespace Team.UI.Gameplay
         {
             if (_turnHolder.HasSelected) return;
 
-            characterReskinner.ShowOutline();
+            //characterReskinner.ShowOutline();
+
+            selectedOutline.SetActive(true);
+
+            characterRef.SetGhosting(true);
 
             transform.DOScale(selectedScale, MetaConstants.ScaleMaxTimer).SetEase(Ease.OutBack).WaitForCompletion();
-           // LayoutRebuilder.ForceRebuildLayoutImmediate(originalParent as RectTransform);
 
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            characterReskinner.HideOutline();
+            //characterReskinner.HideOutline();
+
+            selectedOutline.SetActive(false);
+
+            characterRef.SetGhosting(false);
 
             transform.DOScale(defaultScale, MetaConstants.ScaleMaxTimer).SetEase(Ease.OutBack).WaitForCompletion();
-           // LayoutRebuilder.ForceRebuildLayoutImmediate(originalParent as RectTransform);
-
-
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
             //Have base character toggle Ghosting (characterRef)
-            characterRef.ToggleGhosting();
+            //characterRef.ToggleGhosting();
+
+            //Toggle Lock Ghosting Effect
 
             //Fire On Click Bark
             characterRef.OnClickBark();
