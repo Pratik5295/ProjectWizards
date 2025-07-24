@@ -9,9 +9,16 @@ public class Windmill : MonoBehaviour
 
     private Vector3 rot = new Vector3 (360f, 0f, 0f);
 
+    Tween windmill;
+
     void Start()
     {
-        transform.DORotate(rot, duration, RotateMode.LocalAxisAdd).SetEase(Ease.Linear).SetLoops(-1);
+        windmill = transform.DORotate(rot, duration, RotateMode.LocalAxisAdd).SetEase(Ease.Linear).SetLoops(-1);
+    }
+
+    private void OnDisable()
+    {
+        windmill.Kill();
     }
 
 }
