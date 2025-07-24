@@ -9,7 +9,6 @@ public class ObjectClickerManager : MonoBehaviour
 
     private GameObject PreviouslyHovered;
 
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
@@ -17,7 +16,7 @@ public class ObjectClickerManager : MonoBehaviour
         {
             Instance = this;
         }
-        else Destroy(this);
+        else Destroy(gameObject);
     }
 
     // Update is called once per frame
