@@ -659,6 +659,14 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         }
     }
 
+    public void RefreshGhosting()
+    {
+        if (TryGetComponent<GenericGhosting>(out var ghosting))
+        {
+            ghosting.RefreshGhosting();
+        }
+    }
+
     public void ClickedOnJump()
     {
         if (isJumping) { return; }

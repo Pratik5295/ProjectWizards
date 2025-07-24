@@ -237,10 +237,10 @@ namespace Team.UI.Gameplay
 
         private void OnDetectedClick()
         {
-            Debug.Log($"Pratik Clicked on model: {gameObject.name}");
             ClickedOnCharacter();
             UnhighlightCard();
 
+            characterRef.RefreshGhosting(); 
         }
 
         private void ClickedOnCharacter()

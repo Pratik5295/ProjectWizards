@@ -56,8 +56,7 @@ public class GenericGhosting : MonoBehaviour
 
     public void SetGhosting(bool _value)
     {
-        ghostingContent?.gameObject.SetActive(_value);
-        ghostingIsActive = _value;
+        if (_lockGhosting) return;
 
         if (_value)
         {
@@ -67,6 +66,14 @@ public class GenericGhosting : MonoBehaviour
         {
             disableGhosting();
         }
+    }
+
+    public void RefreshGhosting()
+    {
+        if (_lockGhosting)
+            enableGhosting();
+        else
+            disableGhosting();
     }
 
     public void ToggleGhostingLock()

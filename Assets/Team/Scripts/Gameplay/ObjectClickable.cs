@@ -1,44 +1,41 @@
+using System.Collections;
 using Team.Managers;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class ObjectClickable : MonoBehaviour
 {
-
     public UnityEvent<bool> onHovered;
     public UnityEvent OnEnableClick;
     public UnityEvent OnDisableClick;
 
     private Base_Ch baseCh;
     private Base_Obstacle baseObstacle;
-    
-    GenericGhosting _ghosting;
-    public bool isHovered = false;
+    private GenericGhosting _ghosting;
+
+    public bool isHovered { get; private set; } = false;
+    private bool isClicked = false;
 
     void Start()
     {
-        if (GetComponentInChildren<GenericGhosting>())
+        _ghosting = GetComponentInChildren<GenericGhosting>();
+
+        if (_ghosting)
         {
-            _ghosting = GetComponentInChildren<GenericGhosting>();
-            
             onHovered.AddListener(_ghosting.SetGhosting);
-            //OnEnableClick.AddListener(_ghosting.enableGhosting);
-            //OnDisableClick.AddListener(_ghosting.disableGhosting);
-
-            if (GetComponent<Base_Ch>())
-            {
-                baseCh = GetComponent<Base_Ch>();
-                onHovered.AddListener(baseCh.SetGhosting);
-                OnEnableClick.AddListener(baseCh.ClickedOnJump);
-                OnDisableClick.AddListener(baseCh.ClickedOnJump);
-            }
-
-            if (GetComponent<Base_Obstacle>())
-            {
-                baseObstacle = GetComponent<Base_Obstacle>();
-            }
         }
-        Debug.Log($"has initiailised character");
+
+        baseCh = GetComponent<Base_Ch>();
+        if (baseCh)
+        {
+            onHovered.AddListener(baseCh.SetGhosting);
+            OnEnableClick.AddListener(baseCh.ClickedOnJump);
+            OnDisableClick.AddListener(baseCh.ClickedOnJump);
+        }
+
+        baseObstacle = GetComponent<Base_Obstacle>();
+
+        Debug.Log($"Initialized ObjectClickable for: {gameObject.name}");
     }
 
     private void OnDestroy()
@@ -50,54 +47,47 @@ public class ObjectClickable : MonoBehaviour
 
     public void HoveredObject()
     {
-        //if (_ghosting == null) { return; }
-        //if (_ghosting.ghostingIsActive)
-        //{
-        //    return;
-        //}
-        //isHovered = true;
-        //_ghosting.isHovered = true;
+        if (isHovered) return;
+
+        isHovered = true;
         onHovered?.Invoke(true);
     }
+
     public void UnhoveredObject()
     {
-        //if (_ghosting == null) { return; }
-        //if (_ghosting.ghostingIsActive && !_ghosting.isHovered)
-        //{
-        //    isHovered = false; 
-        //    return;
-        //}
-        //isHovered = false;
-        //_ghosting.isHovered = false;
+        if (!isHovered) return;
+
+        isHovered = false;
         onHovered?.Invoke(false);
     }
 
     public void ClickedObject()
     {
-        if (_ghosting == null) { return; }
-        //if (_ghosting.isHovered)
-        //{
-        //    _ghosting.isHovered = false;
-        //    OnEnableClick.Invoke();
-        //    //_ghosting.ghostingIsActive = false;
-        //    return;
-        //}
+        if (isClicked) return;
 
-        OnEnableClick.Invoke();
-       // OnDisableClick.Invoke();
+        isClicked = true;
+        OnEnableClick?.Invoke();
+
+        StartCoroutine(ResetClicked());
+    }
+
+    private IEnumerator ResetClicked()
+    {
+        yield return new WaitForEndOfFrame();
+
+        isClicked = false;
     }
 
     public bool ToggleValidity()
     {
-        if (_ghosting)
-        {
-            return _ghosting.ghostingIsActive;
-        }
-        return false;
+        return _ghosting != null && _ghosting.ghostingIsActive;
     }
 
     public void ShowInfoPanel()
     {
-        UIManager.Instance.UpdateInfoPanel(baseCh.CharacterData.Data);
+        if (baseCh != null && baseCh.CharacterData != null)
+        {
+            UIManager.Instance.UpdateInfoPanel(baseCh.CharacterData.Data);
+        }
     }
 }
