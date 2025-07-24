@@ -32,15 +32,17 @@ public class ObjectClickerManager : MonoBehaviour
                 ObjectClickable objClickable = hit.collider.gameObject.GetComponent<ObjectClickable>();
                 if (!objClickable) { return; }
 
+                if (GameInputManager.Instance.IsClick)
+                {
+                    LockGhostingVisual(hit, objClickable);
+                }
+
                 if (!objClickable.isHovered)
                 {
                     HoverClickable(true, hit);
                     //Hover Object.
                 }
-                if (GameInputManager.Instance.IsClick)
-                {
-                    LockGhostingVisual(hit, objClickable);
-                }
+               
                 if (GameInputManager.Instance.IsRightClick)
                 {
                     ShowInfoPanel(objClickable);

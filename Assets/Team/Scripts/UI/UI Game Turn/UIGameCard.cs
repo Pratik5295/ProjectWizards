@@ -156,10 +156,7 @@ namespace Team.UI.Gameplay
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            //Toggle Lock Ghosting Effect
-            characterRef.ToggleGhostingLock();
-            //Fire On Click Bark
-            characterRef.OnClickBark();
+            ClickedOnCharacter();
         }
 
         [ContextMenu("Make Interactable")]
@@ -240,11 +237,18 @@ namespace Team.UI.Gameplay
 
         private void OnDetectedClick()
         {
-            characterRef.ToggleGhostingLock();
+            Debug.Log($"Pratik Clicked on model: {gameObject.name}");
+            ClickedOnCharacter();
             UnhighlightCard();
 
-            characterRef.SetGhosting(characterRef.GetGhostingLock);
+        }
 
+        private void ClickedOnCharacter()
+        {
+            //Toggle Lock Ghosting Effect
+            characterRef.ToggleGhostingLock();
+            //Fire On Click Bark
+            characterRef.OnClickBark();
         }
 
         #endregion

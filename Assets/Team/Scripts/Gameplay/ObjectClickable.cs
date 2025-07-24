@@ -50,39 +50,41 @@ public class ObjectClickable : MonoBehaviour
 
     public void HoveredObject()
     {
-        if (_ghosting == null) { return; }
-        if (_ghosting.ghostingIsActive)
-        {
-            return;
-        }
-        isHovered = true;
-        _ghosting.isHovered = true;
+        //if (_ghosting == null) { return; }
+        //if (_ghosting.ghostingIsActive)
+        //{
+        //    return;
+        //}
+        //isHovered = true;
+        //_ghosting.isHovered = true;
         onHovered?.Invoke(true);
     }
     public void UnhoveredObject()
     {
-        if (_ghosting == null) { return; }
-        if (_ghosting.ghostingIsActive && !_ghosting.isHovered)
-        {
-            isHovered = false; 
-            return;
-        }
-        isHovered = false;
-        _ghosting.isHovered = false;
+        //if (_ghosting == null) { return; }
+        //if (_ghosting.ghostingIsActive && !_ghosting.isHovered)
+        //{
+        //    isHovered = false; 
+        //    return;
+        //}
+        //isHovered = false;
+        //_ghosting.isHovered = false;
         onHovered?.Invoke(false);
     }
 
     public void ClickedObject()
     {
         if (_ghosting == null) { return; }
-        if (_ghosting.isHovered)
-        {
-            _ghosting.isHovered = false;
-            OnEnableClick.Invoke();
-            //_ghosting.ghostingIsActive = false;
-            return;
-        }
-        OnDisableClick.Invoke();
+        //if (_ghosting.isHovered)
+        //{
+        //    _ghosting.isHovered = false;
+        //    OnEnableClick.Invoke();
+        //    //_ghosting.ghostingIsActive = false;
+        //    return;
+        //}
+
+        OnEnableClick.Invoke();
+       // OnDisableClick.Invoke();
     }
 
     public bool ToggleValidity()
