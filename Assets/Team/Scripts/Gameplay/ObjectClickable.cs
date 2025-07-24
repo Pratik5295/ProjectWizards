@@ -22,8 +22,8 @@ public class ObjectClickable : MonoBehaviour
             _ghosting = GetComponentInChildren<GenericGhosting>();
             
             onHovered.AddListener(_ghosting.SetGhosting);
-            OnEnableClick.AddListener(_ghosting.enableGhosting);
-            OnDisableClick.AddListener(_ghosting.disableGhosting);
+            //OnEnableClick.AddListener(_ghosting.enableGhosting);
+            //OnDisableClick.AddListener(_ghosting.disableGhosting);
 
             if (GetComponent<Base_Ch>())
             {
@@ -39,6 +39,13 @@ public class ObjectClickable : MonoBehaviour
             }
         }
         Debug.Log($"has initiailised character");
+    }
+
+    private void OnDestroy()
+    {
+        onHovered.RemoveAllListeners();
+        OnEnableClick?.RemoveAllListeners();
+        OnDisableClick?.RemoveAllListeners();
     }
 
     public void HoveredObject()

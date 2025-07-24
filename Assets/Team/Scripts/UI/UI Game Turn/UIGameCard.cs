@@ -1,11 +1,9 @@
 using System.Collections.Generic;
 using DG.Tweening;
-using Ink;
 using Team.Data;
 using Team.GameConstants;
 using Team.Gameplay.Characters;
 using Team.Managers;
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -22,13 +20,13 @@ namespace Team.UI.Gameplay
 {
     public class UIGameCard : UIDragHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
-
-
         [SerializeField]
         private CharacterReskinner characterReskinner;
 
         [SerializeField]
         private Base_Ch characterRef;
+
+        private ObjectClickable objectClickable;
 
         [SerializeField]
         private Vector3 defaultScale = Vector3.one;
@@ -66,7 +64,6 @@ namespace Team.UI.Gameplay
         #region Unity Methods
         protected void Start()
         {
- /*           _turnHolder.OnTurnOrderUpdatedEvent += UpdateTurnIndexText;*/
             OnSiblingIndexUpdatedEvent += OnSiblingIndexUpdatedEventHandler;
 
             UpdateTurnIndexText();
@@ -83,7 +80,12 @@ namespace Team.UI.Gameplay
         private void OnDestroy()
         {
             OnSiblingIndexUpdatedEvent -= OnSiblingIndexUpdatedEventHandler;
-/*            _turnHolder.OnTurnOrderUpdatedEvent -= UpdateTurnIndexText;*/
+
+            if (objectClickable)
+            {
+                objectClickable.onHovered.RemoveAllListeners();
+                objectClickable.OnEnableClick.RemoveAllListeners();
+            }
         }
 
 
@@ -114,14 +116,13 @@ namespace Team.UI.Gameplay
 
             wizardImage.sprite = cardSprites[(int)CharacterCode];
 
-            //interactableColor = data.CharacterSkin.CharacterColor;
-            //cardImage.color = interactableColor;
-
-            //nameText.text = data.CharacterID;
-
             characterReskinner = _skinner;
 
             characterRef = characterReskinner.gameObject.GetComponent<Base_Ch>();
+
+            objectClickable = characterRef.GetComponent<ObjectClickable>();
+            objectClickable.onHovered.AddListener(OnObjectHovered);
+            objectClickable.OnEnableClick.AddListener(OnDetectedClick);
 
             var uiCharacter = characterReskinner.UICharacter;
             uiCharacter?.PopulateCharacterUI(data.CharacterID, data.CharacterSkin);
@@ -135,31 +136,22 @@ namespace Team.UI.Gameplay
         {
             if (_turnHolder.HasSelected) return;
 
-            //characterReskinner.ShowOutline();
-
-            selectedOutline.SetActive(true);
-
             if (characterRef.GetGhostingLock)
             {
                 characterRef.SetGhosting(true);
             }
 
-            transform.DOScale(selectedScale, MetaConstants.ScaleMaxTimer).SetEase(Ease.OutBack).WaitForCompletion();
-
+            HighlightCard();
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            //characterReskinner.HideOutline();
-
-            selectedOutline.SetActive(false);
-
             if (characterRef.GetGhostingLock)
             {
                 characterRef.SetGhosting(false);
             }
 
-            transform.DOScale(defaultScale, MetaConstants.ScaleMaxTimer).SetEase(Ease.OutBack).WaitForCompletion();
+            UnhighlightCard();
         }
 
         public void OnPointerClick(PointerEventData eventData)
@@ -176,7 +168,6 @@ namespace Team.UI.Gameplay
             canvasGroup.interactable = true;
             turnCompletedCard.gameObject.SetActive(false);
             canvasGroup.blocksRaycasts = true;
-            //cardImage.color = interactableColor;
 
         }
 
@@ -186,7 +177,6 @@ namespace Team.UI.Gameplay
             canvasGroup.interactable = false;
             turnCompletedCard.gameObject.SetActive(true);
             canvasGroup.blocksRaycasts = false;
-            //cardImage.color = unInteractableColor;
         }
 
         #endregion
@@ -215,6 +205,46 @@ namespace Team.UI.Gameplay
             base.OnEndDrag(eventData);
 
             _turnHolder.DeactivateGhostCard();
+        }
+
+        #endregion
+
+
+        #region Highlight Identifiers Section
+
+        public void HighlightCard()
+        {
+            selectedOutline.SetActive(true);
+
+            transform.DOScale(selectedScale, MetaConstants.ScaleMaxTimer).SetEase(Ease.OutBack).WaitForCompletion();
+        }
+
+        public void UnhighlightCard()
+        {
+            selectedOutline.SetActive(false);
+
+            transform.DOScale(defaultScale, MetaConstants.ScaleMaxTimer).SetEase(Ease.OutBack).WaitForCompletion();
+        }
+
+        private void OnObjectHovered(bool _hovered)
+        {
+            if (_hovered)
+            {
+                HighlightCard();
+            }
+            else
+            {
+                UnhighlightCard();
+            }
+        }
+
+        private void OnDetectedClick()
+        {
+            characterRef.ToggleGhostingLock();
+            UnhighlightCard();
+
+            characterRef.SetGhosting(characterRef.GetGhostingLock);
+
         }
 
         #endregion
