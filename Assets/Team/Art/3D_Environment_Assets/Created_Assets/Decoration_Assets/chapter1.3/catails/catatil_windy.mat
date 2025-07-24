@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Wheat
+  m_Name: catatil_windy
   m_Shader: {fileID: -6465566751694194690, guid: 957db51a7977e2f4993b4beabfe570f0, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -25,7 +25,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Texture2D:
-        m_Texture: {fileID: 2800000, guid: 76fbceb23f8010945b41f39b7fe0d750, type: 3}
+        m_Texture: {fileID: 2800000, guid: 3ea24182f705f4d4595efd23f1b54506, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -45,10 +45,10 @@ Material:
     - _Bend: 1
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Speed: 0.6
+    - _Speed: 0.81
     - _Strength: 0
-    - _WindScale: 1
-    - _WindSwing: 0.04
+    - _WindScale: 0.56
+    - _WindSwing: 0.02
     m_Colors:
     - _Direction: {r: 0.2, g: 0.2, b: 0.2, a: 0}
   m_BuildTextureStacks: []

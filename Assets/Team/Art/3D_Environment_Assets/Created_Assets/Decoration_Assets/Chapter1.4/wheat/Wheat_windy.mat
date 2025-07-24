@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Wheat
+  m_Name: Wheat_windy
   m_Shader: {fileID: -6465566751694194690, guid: 957db51a7977e2f4993b4beabfe570f0, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -47,8 +47,8 @@ Material:
     - _QueueOffset: 0
     - _Speed: 0.6
     - _Strength: 0
-    - _WindScale: 1
-    - _WindSwing: 0.04
+    - _WindScale: 0.95
+    - _WindSwing: 0.1
     m_Colors:
     - _Direction: {r: 0.2, g: 0.2, b: 0.2, a: 0}
   m_BuildTextureStacks: []
