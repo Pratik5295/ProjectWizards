@@ -86,8 +86,6 @@ namespace Team.Gameplay.TurnSystem
             GenerateCardRanges();
 
             DeactivateGhostCard();
-
-            Debug.Log($"Max Position: {endingPosX}");
         }
 
         public int GetIndex(float _positionX)

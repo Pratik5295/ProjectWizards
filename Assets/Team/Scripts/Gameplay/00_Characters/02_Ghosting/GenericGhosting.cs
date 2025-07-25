@@ -8,6 +8,11 @@ public class GenericGhosting : MonoBehaviour
 
     public bool isHovered = false;
 
+    [SerializeField]
+    private bool _lockGhosting = false;   //Sets lock on the ghosting effect
+
+    public bool IsLocked => !_lockGhosting;
+
     [SerializeField] private GameObject _ghostingEffect;
     protected GameObject ghostingEffectRef;
 
@@ -51,8 +56,7 @@ public class GenericGhosting : MonoBehaviour
 
     public void SetGhosting(bool _value)
     {
-        ghostingContent?.gameObject.SetActive(_value);
-        ghostingIsActive = _value;
+        if (_lockGhosting) return;
 
         if (_value)
         {
@@ -64,4 +68,22 @@ public class GenericGhosting : MonoBehaviour
         }
     }
 
+    public void RefreshGhosting()
+    {
+        if (_lockGhosting)
+            enableGhosting();
+        else
+            disableGhosting();
+    }
+
+    public void ToggleGhostingLock()
+    {
+        //Toggle the lock
+        _lockGhosting = !_lockGhosting;
+    }
+
+    public void ResetGhostingLock()
+    {
+        _lockGhosting = false;
+    }
 }

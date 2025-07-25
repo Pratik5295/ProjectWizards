@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Team.Gameplay.GridSystem;
 using Team.Managers;
 using UnityEngine;
@@ -36,6 +35,13 @@ public class FireSpread : MonoBehaviour
         _levelTileCreator = LevelManager.Instance.CreatedLevel.LevelTiles;
         gridWidth = _levelTileCreator.Max_GridSize_Acc.x;
         gridHeight = _levelTileCreator.Max_GridSize_Acc.y;
+    }
+
+    public void CleanUp()
+    {
+        _levelTileCreator = null;
+        FireballRef?.CleanUp();
+        FireballRef = null;
     }
 
     [ContextMenu("Start A Fire!")]

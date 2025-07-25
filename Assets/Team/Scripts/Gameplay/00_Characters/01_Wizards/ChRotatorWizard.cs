@@ -113,8 +113,6 @@ public class ChRotatorWizard : Base_Ch
     {
         undoAwaiter = new TaskCompletionSource<bool>();
 
-        Debug.Log($"{gameObject.name} Moves count: {HistoryStack.Count}");
-
         if (HistoryStack.Count == 0)
         {
         }
@@ -128,7 +126,7 @@ public class ChRotatorWizard : Base_Ch
                 
                 if (move.Type == PlayerMoveType.PUSH)
                 {
-                    move.interactedWith.UndoMovement(this, move.movedFrom);
+                    move.interactedWith.UndoMovement(this, move);
                 }
                 else if(move.Type == PlayerMoveType.ROTATED)
                 {
