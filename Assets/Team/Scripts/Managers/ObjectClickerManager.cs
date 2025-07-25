@@ -1,105 +1,89 @@
-using Team.GameConstants;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 [DefaultExecutionOrder(20)]
 public class ObjectClickerManager : MonoBehaviour
 {
-    public ObjectClickerManager Instance;
+    public static ObjectClickerManager Instance;
 
-    private GameObject PreviouslyHovered;
+    private GameObject previouslyHovered;
 
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        if (!Instance)
+        if (Instance == null)
         {
             Instance = this;
         }
-        else Destroy(this);
+        else
+        {
+            Destroy(this);
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
         Ray ray = Camera.main.ScreenPointToRay(GameInputManager.Instance.PointerPosition);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit)) //Add a layer mask to this to stop un needed processing of useless objects.
-        {
-            if (hit.collider.GetComponent<ObjectClickable>())
-            {
-                ObjectClickable objClickable = hit.collider.gameObject.GetComponent<ObjectClickable>();
-                if (!objClickable) { return; }
 
-                if (!objClickable.isHovered)
+        if (Physics.Raycast(ray, out hit)) // Add layer mask for optimization if needed
+        {
+            ObjectClickable objClickable = hit.collider.GetComponent<ObjectClickable>();
+
+            if (objClickable != null)
+            {
+                // Handle Hover
+                if (objClickable.gameObject != previouslyHovered)
                 {
-                    HoverClickable(true, hit);
-                    //Hover Object.
+                    HandleUnhoverPrevious();
+                    HandleHoverNew(objClickable);
                 }
+
+                // Handle Left Click
                 if (GameInputManager.Instance.IsClick)
                 {
-                    LockGhostingVisual(hit, objClickable);
+                    objClickable.ClickedObject();
                 }
+
+                // Handle Right Click
                 if (GameInputManager.Instance.IsRightClick)
                 {
-                    ShowInfoPanel(objClickable);
+                    objClickable.ShowInfoPanel();
                 }
             }
             else
             {
-                if (PreviousSelectionCanUnhover())
+                // Unhover if needed
+                if (previouslyHovered != null)
                 {
-                    // Should UnHover.
-                    HoverClickable(false, hit);
+                    HandleUnhoverPrevious();
                 }
             }
         }
-    }
-
-    private bool PreviousSelectionCanUnhover()
-    {
-        if (!PreviouslyHovered) { return false; }
-        ObjectClickable PreviousObjClickable = PreviouslyHovered.GetComponent<ObjectClickable>();
-        if (!PreviousObjClickable)
+        else
         {
-            return false;
-        }
-
-        return PreviouslyHovered && PreviousObjClickable.isHovered;
-    }
-
-    private void HoverClickable(bool shouldHover, RaycastHit hit)
-    {
-        if(hit.collider.gameObject.GetComponent<ObjectClickable>() != PreviouslyHovered) 
-        {
-            if (PreviousSelectionCanUnhover())
+            // No object hit – clear previous hover
+            if (previouslyHovered != null)
             {
-                PreviouslyHovered.GetComponent<ObjectClickable>().UnhoveredObject();
+                HandleUnhoverPrevious();
             }
         }
+    }
 
-        switch (shouldHover)
+    private void HandleHoverNew(ObjectClickable newHover)
+    {
+        previouslyHovered = newHover.gameObject;
+        newHover.HoveredObject();
+    }
+
+    private void HandleUnhoverPrevious()
+    {
+        if (previouslyHovered == null) return;
+
+        ObjectClickable prevObj = previouslyHovered.GetComponent<ObjectClickable>();
+        if (prevObj != null)
         {
-            case true:
-                    PreviouslyHovered = hit.collider.gameObject;
-                    hit.collider.gameObject.GetComponent<ObjectClickable>().HoveredObject();
-                break;
-
-            case false:
-                    PreviouslyHovered.GetComponent<ObjectClickable>().UnhoveredObject();
-                    PreviouslyHovered = null;
-                break;                    
+            prevObj.UnhoveredObject();
         }
-    }
 
-    public void LockGhostingVisual(RaycastHit hit, ObjectClickable objClickable)
-    {
-        objClickable.ClickedObject();
-    }
-
-    private void ShowInfoPanel(ObjectClickable objClickable)
-    {
-        objClickable.ShowInfoPanel();
+        previouslyHovered = null;
     }
 }

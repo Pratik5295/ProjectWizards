@@ -4,7 +4,6 @@ using Team.Data;
 using Team.GameConstants;
 using Team.Gameplay.Characters;
 using Team.Managers;
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -21,13 +20,13 @@ namespace Team.UI.Gameplay
 {
     public class UIGameCard : UIDragHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
-
-
         [SerializeField]
         private CharacterReskinner characterReskinner;
 
         [SerializeField]
         private Base_Ch characterRef;
+
+        private ObjectClickable objectClickable;
 
         [SerializeField]
         private Vector3 defaultScale = Vector3.one;
@@ -40,6 +39,9 @@ namespace Team.UI.Gameplay
 
         [SerializeField]
         private Image wizardImage;
+
+        [SerializeField]
+        private GameObject selectedOutline; //Game Object containing an image with selected outline effect
 
         [SerializeField]
         private Image turnCompletedCard;    //Just a low opacity darken outline image
@@ -62,24 +64,20 @@ namespace Team.UI.Gameplay
         #region Unity Methods
         protected void Start()
         {
- /*           _turnHolder.OnTurnOrderUpdatedEvent += UpdateTurnIndexText;*/
             OnSiblingIndexUpdatedEvent += OnSiblingIndexUpdatedEventHandler;
 
             UpdateTurnIndexText();
-
-            CharacterNumberHandler char_Number = characterRef.GetComponent<CharacterNumberHandler>();
-
-            if (char_Number != null)
-            {
-                int index_Number = transform.GetSiblingIndex();
-                char_Number.UpdateCharacterNumberText(index_Number);
-            }
         }
 
         private void OnDestroy()
         {
             OnSiblingIndexUpdatedEvent -= OnSiblingIndexUpdatedEventHandler;
-/*            _turnHolder.OnTurnOrderUpdatedEvent -= UpdateTurnIndexText;*/
+
+            if (objectClickable)
+            {
+                objectClickable.onHovered.RemoveAllListeners();
+                objectClickable.OnEnableClick.RemoveAllListeners();
+            }
         }
 
 
@@ -99,6 +97,11 @@ namespace Team.UI.Gameplay
             turnIndexIdentifier.sprite = currentIndex;
         }
 
+        public void UpdateCharacterNumber(int _number)
+        {
+            characterRef.UpdateCharacterNumber(_number);
+        }
+
         #endregion
 
         #region Public Methods
@@ -110,17 +113,18 @@ namespace Team.UI.Gameplay
 
             wizardImage.sprite = cardSprites[(int)CharacterCode];
 
-            //interactableColor = data.CharacterSkin.CharacterColor;
-            //cardImage.color = interactableColor;
-
-            //nameText.text = data.CharacterID;
-
             characterReskinner = _skinner;
 
             characterRef = characterReskinner.gameObject.GetComponent<Base_Ch>();
 
+            objectClickable = characterRef.GetComponent<ObjectClickable>();
+            objectClickable.onHovered.AddListener(OnObjectHovered);
+            objectClickable.OnEnableClick.AddListener(OnDetectedClick);
+
             var uiCharacter = characterReskinner.UICharacter;
             uiCharacter?.PopulateCharacterUI(data.CharacterID, data.CharacterSkin);
+
+            selectedOutline.SetActive(false);
 
             MakeInteractable();
         }
@@ -129,30 +133,27 @@ namespace Team.UI.Gameplay
         {
             if (_turnHolder.HasSelected) return;
 
-            characterReskinner.ShowOutline();
+            if (characterRef.GetGhostingLock)
+            {
+                characterRef.SetGhosting(true);
+            }
 
-            transform.DOScale(selectedScale, MetaConstants.ScaleMaxTimer).SetEase(Ease.OutBack).WaitForCompletion();
-           // LayoutRebuilder.ForceRebuildLayoutImmediate(originalParent as RectTransform);
-
+            HighlightCard();
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            characterReskinner.HideOutline();
+            if (characterRef.GetGhostingLock)
+            {
+                characterRef.SetGhosting(false);
+            }
 
-            transform.DOScale(defaultScale, MetaConstants.ScaleMaxTimer).SetEase(Ease.OutBack).WaitForCompletion();
-           // LayoutRebuilder.ForceRebuildLayoutImmediate(originalParent as RectTransform);
-
-
+            UnhighlightCard();
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            //Have base character toggle Ghosting (characterRef)
-            characterRef.ToggleGhosting();
-
-            //Fire On Click Bark
-            characterRef.OnClickBark();
+            ClickedOnCharacter();
         }
 
         [ContextMenu("Make Interactable")]
@@ -161,7 +162,6 @@ namespace Team.UI.Gameplay
             canvasGroup.interactable = true;
             turnCompletedCard.gameObject.SetActive(false);
             canvasGroup.blocksRaycasts = true;
-            //cardImage.color = interactableColor;
 
         }
 
@@ -171,7 +171,6 @@ namespace Team.UI.Gameplay
             canvasGroup.interactable = false;
             turnCompletedCard.gameObject.SetActive(true);
             canvasGroup.blocksRaycasts = false;
-            //cardImage.color = unInteractableColor;
         }
 
         #endregion
@@ -200,6 +199,53 @@ namespace Team.UI.Gameplay
             base.OnEndDrag(eventData);
 
             _turnHolder.DeactivateGhostCard();
+        }
+
+        #endregion
+
+
+        #region Highlight Identifiers Section
+
+        public void HighlightCard()
+        {
+            selectedOutline.SetActive(true);
+
+            transform.DOScale(selectedScale, MetaConstants.ScaleMaxTimer).SetEase(Ease.OutBack).WaitForCompletion();
+        }
+
+        public void UnhighlightCard()
+        {
+            selectedOutline.SetActive(false);
+
+            transform.DOScale(defaultScale, MetaConstants.ScaleMaxTimer).SetEase(Ease.OutBack).WaitForCompletion();
+        }
+
+        private void OnObjectHovered(bool _hovered)
+        {
+            if (_hovered)
+            {
+                HighlightCard();
+            }
+            else
+            {
+                UnhighlightCard();
+            }
+        }
+
+        private void OnDetectedClick()
+        {
+            ClickedOnCharacter();
+            UnhighlightCard();
+
+            characterRef.RefreshGhosting(); 
+        }
+
+        private void ClickedOnCharacter()
+        {
+            //Toggle Lock Ghosting Effect
+            characterRef.ToggleGhostingLock();
+            //Fire On Click Bark
+            characterRef.OnClickBark();
         }
 
         #endregion

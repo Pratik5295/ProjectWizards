@@ -215,6 +215,7 @@ namespace Team.Managers
             foreach (var character in CharactersInLevel.Values)
             {
                 character.SetGhosting(false);
+                character.ResetGhostingLock();
             }
             toggleCharactersGhosting = false;
         }

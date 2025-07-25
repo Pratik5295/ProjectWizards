@@ -78,6 +78,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
     public CharacterReskinner CharacterReskinner;
 
+    private CharacterNumberHandler characterNumberHandler;
+
 
     #region Tile Variables
     [Space(5)]
@@ -195,6 +197,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         GhostManager = GetComponent<ObjectClickable>();
 
         CharacterReskinner = GetComponent<CharacterReskinner>();
+        characterNumberHandler = GetComponent<CharacterNumberHandler>();
 
         transform.position = new Vector3(_currentTile.TilePosition.x, _currentTile.TilePosition.y + ySpawnOffset, _currentTile.TilePosition.z);
 
@@ -391,7 +394,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
                 if (move.Type == PlayerMoveType.PUSH)
                 {
-                    move.interactedWith.UndoMovement(this, move.movedFrom);
+                    move.interactedWith.UndoMovement(this, move);
                 }
             }
             await undoAwaiter.Task;
@@ -401,24 +404,24 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
     protected TaskCompletionSource<bool> undoAbilityWaiter = new TaskCompletionSource<bool>();
 
-    public void UndoMovement(Base_Ch _characterFiredFrom,TileID _moveToTileID)
+    public void UndoMovement(Base_Ch _characterFiredFrom, PlayerMove _previousMove)
     {
-        if (_currentTileID == _moveToTileID)
+        if (_currentTileID == _previousMove.movedFrom)
         {
-            var tile = ref_gridManager.FindTile(_moveToTileID);
+            var tile = ref_gridManager.FindTile(_previousMove.movedFrom);
             transform.position = new Vector3(tile.TilePosition.x, transform.position.y, tile.TilePosition.z);
             //return; 
         }
         _currentTile.UpdateOccupiedStatus();
 
-        _currentTileID = _moveToTileID;
+        _currentTileID = _previousMove.movedFrom;
         _currentTile = ref_gridManager.FindTile(_currentTileID);
 
         _currentTile.SetObjectOccupyingTile(this.gameObject);
 
         transform.position = new Vector3(_currentTile.TilePosition.x, transform.position.y, _currentTile.TilePosition.z);
 
-        ResetRotationToStart(_characterFiredFrom);
+        ResetRotationFromPrevious(_previousMove.previousRotation,_characterFiredFrom);
     }
 
     private void ResetRotationToStart(Base_Ch _fireOn = null)
@@ -427,15 +430,24 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         Vector2 v2Dir = baseRotation.dirToV2(baseRotation.DirectionFacing);
         baseRotation.RotateToFaceDir(v2Dir);
 
+    }
+
+    private void ResetRotationFromPrevious(Enum_GridDirection _previousRotation, Base_Ch _fireOn = null)
+    {
+        Vector2 v2Dir = baseRotation.dirToV2(_previousRotation);
+        baseRotation.RotateToFaceDir(v2Dir);
+
         if (_fireOn != null)
         {
             _fireOn.OnUndoAbilityCompleted();
         }
+
         //FUTURE SCARE
         //else
         //{
         //    OnUndoAbilityCompleted();
         //}
+
     }
 
     public void CompleteReset()
@@ -593,6 +605,11 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         HistoryStackIsEmpty();
     }
 
+    public void UpdateCharacterNumber(int _number)
+    {
+        characterNumberHandler.UpdateCharacterNumberText(_number);
+    }
+
     #region Enabling and Disabling Character
     public void EnableObject()
     {
@@ -612,6 +629,25 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     #endregion
 
     #region Character Move Ghosting Section
+
+    public bool GetGhostingLock => _ghosting.IsLocked;
+
+    public void ToggleGhostingLock()
+    {
+        if (_ghosting == null)
+        {
+            Debug.LogWarning($"{gameObject.name} missing ghosting reference");
+            return;
+        }
+
+        _ghosting.ToggleGhostingLock();
+    }
+
+    public void ResetGhostingLock()
+    {
+        _ghosting.ResetGhostingLock();
+    }
+
 
     public void SetGhosting(bool _value)
     {
@@ -642,6 +678,14 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         {
             //Populate it on ghosting is true
             UIManager.Instance.UpdateInfoPanel(characterData.Data);
+        }
+    }
+
+    public void RefreshGhosting()
+    {
+        if (TryGetComponent<GenericGhosting>(out var ghosting))
+        {
+            ghosting.RefreshGhosting();
         }
     }
 
