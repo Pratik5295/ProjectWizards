@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Team.Gameplay.GameLevelSystem;
 using Team.Gameplay.GridSystem;
 using Team.Gameplay.LevelSystem;
@@ -244,48 +245,63 @@ namespace Team.Managers
             }
         }
 
-        public void StopLevel()
+        public async void StopLevel()
         {
             UIManager.Instance.ShowLevelSelectionUI();
 
-            CleanupLevelContent();
+            await CleanupLevelContentAsync();
         }
 
-        public void CleanupLevelContent()
+        public async Task CleanupLevelContentAsync()
         {
-            //Destroy Level
+            // 1. Destroy Level
             if (createdLevel != null)
             {
                 DestroyImmediate(createdLevel.gameObject);
+                await Task.Yield(); // Give up control to allow frame update
             }
 
-            //Destroy Enviornment
+            // 2. Destroy Environment
             if (createdEnvironment != null)
             {
                 DestroyImmediate(createdEnvironment.gameObject);
+                await Task.Yield();
             }
 
-            //Clean up Characters & Game Cards
-            CharacterManager.Instance.CleanUp();
+            // 3. Clean up Characters & Game Cards
+            if (CharacterManager.Instance != null)
+            {
+                CharacterManager.Instance.CleanUp();
+                await Task.Yield();
+            }
 
-            //Clean up Objectives
-            LevelObjectiveManager.Instance.CleanUp();
-            
-            //Clean up Projectiles active
-            if(ProjectileManager.Instance != null)
+            // 4. Clean up Objectives
+            if (LevelObjectiveManager.Instance != null)
+            {
+                LevelObjectiveManager.Instance.CleanUp();
+                await Task.Yield();
+            }
+
+            // 5. Clean up Projectiles
+            if (ProjectileManager.Instance != null)
             {
                 ProjectileManager.Instance.ImmediateCleanUp();
+                await Task.Yield();
             }
 
-
-            //Clean up any firespreads
-            if(FireSpread.Instance != null)
+            // 6. Clean up FireSpread
+            if (FireSpread.Instance != null)
             {
                 FireSpread.Instance.CleanUp();
+                await Task.Yield();
             }
 
-            //GameTurn Manager Clean up
-            GameTurnManager.Instance.CleanUpLevel();
+            // 7. Clean up Turn Manager
+            if (GameTurnManager.Instance != null)
+            {
+                GameTurnManager.Instance.CleanUpLevel();
+                await Task.Yield();
+            }
         }
 
         public void AddLevelToMap(Level _level)
