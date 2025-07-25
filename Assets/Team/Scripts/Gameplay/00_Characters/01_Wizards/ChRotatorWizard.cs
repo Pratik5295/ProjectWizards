@@ -128,7 +128,7 @@ public class ChRotatorWizard : Base_Ch
                 
                 if (move.Type == PlayerMoveType.PUSH)
                 {
-                    move.interactedWith.UndoMovement(this, move.movedFrom);
+                    move.interactedWith.UndoMovement(this, move);
                 }
                 else if(move.Type == PlayerMoveType.ROTATED)
                 {

@@ -186,6 +186,7 @@ GameObject:
   - component: {fileID: 8606396069411002426}
   - component: {fileID: 8690838730842711621}
   - component: {fileID: 8028853709330918519}
+  - component: {fileID: 7642071522897560659}
   m_Layer: 5
   m_Name: Turn-Order-Parent
   m_TagString: Untagged
@@ -282,6 +283,18 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!225 &7642071522897560659
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4900722413851721876}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &7693810353536815315
 GameObject:
   m_ObjectHideFlags: 0

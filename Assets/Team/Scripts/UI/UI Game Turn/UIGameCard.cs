@@ -67,14 +67,6 @@ namespace Team.UI.Gameplay
             OnSiblingIndexUpdatedEvent += OnSiblingIndexUpdatedEventHandler;
 
             UpdateTurnIndexText();
-
-            CharacterNumberHandler char_Number = characterRef.GetComponent<CharacterNumberHandler>();
-
-            if (char_Number != null)
-            {
-                int index_Number = transform.GetSiblingIndex();
-                char_Number.UpdateCharacterNumberText(index_Number);
-            }
         }
 
         private void OnDestroy()
@@ -103,6 +95,11 @@ namespace Team.UI.Gameplay
         {
             Sprite currentIndex = GameTurnManager.Instance.GetTurnIdentifierSprite(gameObject);
             turnIndexIdentifier.sprite = currentIndex;
+        }
+
+        public void UpdateCharacterNumber(int _number)
+        {
+            characterRef.UpdateCharacterNumber(_number);
         }
 
         #endregion

@@ -82,4 +82,8 @@ public class GenericGhosting : MonoBehaviour
         _lockGhosting = !_lockGhosting;
     }
 
+    public void ResetGhostingLock()
+    {
+        _lockGhosting = false;
+    }
 }
