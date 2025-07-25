@@ -568,10 +568,9 @@ namespace Team.Managers
 
         public void CleanUpLevel()
         {
-            foreach (var turn in currentTurnOrder)
-            {
-                DestroyImmediate(turn.gameObject);
-            }
+            originalOrder.Clear();
+            currentTurnOrder.Clear();
+            RotatedTiles.Clear();
         }
 
         [ContextMenu("Reset Turns")]
