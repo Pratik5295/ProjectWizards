@@ -618,19 +618,19 @@ namespace Team.Managers
             }
 
             // Reset the turn order to original ui order
-            lock (_lockObject)
-            {
-                currentTurnOrder.Clear();
-                for (int i = 0; i < originalOrder.Count; i++)
-                {
-                    var turn = originalOrder[i];
-                    if (turn != null)
-                    {
-                        currentTurnOrder.Add(turn);
-                        turn.transform.SetSiblingIndex(i);
-                    }
-                }
-            }
+            //lock (_lockObject)
+            //{
+            //    //currentTurnOrder.Clear();
+            //    //for (int i = 0; i < originalOrder.Count; i++)
+            //    //{
+            //    //    var turn = originalOrder[i];
+            //    //    if (turn != null)
+            //    //    {
+            //    //        currentTurnOrder.Add(turn);
+            //    //        turn.transform.SetSiblingIndex(i);
+            //    //    }
+            //    //}
+            //}
 
            // ResetBreaker();
 
