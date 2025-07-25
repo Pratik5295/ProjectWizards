@@ -170,6 +170,7 @@ namespace Team.Managers
         {
             foreach (var _character in CharactersInLevel)
             {
+                if (_character.Value == null) continue;
                 DestroyImmediate(_character.Value.gameObject);
             }
 
