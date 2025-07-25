@@ -159,6 +159,8 @@ namespace Team.UI.Gameplay
         [ContextMenu("Make Interactable")]
         public void MakeInteractable()
         {
+            if (canvasGroup == null) return;
+
             canvasGroup.interactable = true;
             turnCompletedCard.gameObject.SetActive(false);
             canvasGroup.blocksRaycasts = true;
@@ -168,6 +170,8 @@ namespace Team.UI.Gameplay
         [ContextMenu("Make Uninteractable")]
         public void MakeUninteractable()
         {
+            if (canvasGroup == null) return;
+
             canvasGroup.interactable = false;
             turnCompletedCard.gameObject.SetActive(true);
             canvasGroup.blocksRaycasts = false;

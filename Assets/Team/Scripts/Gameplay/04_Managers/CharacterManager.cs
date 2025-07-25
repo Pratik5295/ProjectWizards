@@ -170,7 +170,8 @@ namespace Team.Managers
         {
             foreach (var _character in CharactersInLevel)
             {
-                Destroy(_character.Value.gameObject);
+                if (_character.Value == null) continue;
+                DestroyImmediate(_character.Value.gameObject);
             }
 
             CharactersInLevel.Clear();
@@ -180,7 +181,7 @@ namespace Team.Managers
                 var card = cardHolder.GetChild(i);
                 if (card.gameObject.GetComponent<GhostCard>() == null)
                 {
-                    Destroy(card.gameObject);
+                    DestroyImmediate(card.gameObject);
                 }
             }
         }
@@ -214,8 +215,8 @@ namespace Team.Managers
         {
             foreach (var character in CharactersInLevel.Values)
             {
-                character.SetGhosting(false);
                 character.ResetGhostingLock();
+                character.SetGhosting(false);
             }
             toggleCharactersGhosting = false;
         }

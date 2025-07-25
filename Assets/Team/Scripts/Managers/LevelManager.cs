@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Team.Gameplay.GameLevelSystem;
 using Team.Gameplay.GridSystem;
 using Team.Gameplay.LevelSystem;
+using Team.Gameplay.ObjectiveSystem;
 using Team.UI;
 using UnityEngine;
 using static Team.GameConstants.LevelConstants;
@@ -252,18 +253,39 @@ namespace Team.Managers
 
         public void CleanupLevelContent()
         {
+            //Destroy Level
             if (createdLevel != null)
             {
                 DestroyImmediate(createdLevel.gameObject);
             }
 
+            //Destroy Enviornment
             if (createdEnvironment != null)
             {
                 DestroyImmediate(createdEnvironment.gameObject);
             }
 
-            //CharacterManager.Instance.CleanUp();
-            //GameTurnManager.Instance.CleanUpLevel();
+            //Clean up Characters & Game Cards
+            CharacterManager.Instance.CleanUp();
+
+            //Clean up Objectives
+            LevelObjectiveManager.Instance.CleanUp();
+            
+            //Clean up Projectiles active
+            if(ProjectileManager.Instance != null)
+            {
+                ProjectileManager.Instance.ImmediateCleanUp();
+            }
+
+
+            //Clean up any firespreads
+            if(FireSpread.Instance != null)
+            {
+                FireSpread.Instance.CleanUp();
+            }
+
+            //GameTurn Manager Clean up
+            GameTurnManager.Instance.CleanUpLevel();
         }
 
         public void AddLevelToMap(Level _level)

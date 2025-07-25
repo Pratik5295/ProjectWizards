@@ -173,6 +173,11 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
     public System.Action OnTurnComplete;
 
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
+    }
+
     [ContextMenu("Initialise this Character")]
     public virtual void InitialiseCharacter(TileID StartingTileID, Enum_GridDirection _startingDirection)
     {
