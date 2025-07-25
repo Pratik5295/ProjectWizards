@@ -17,6 +17,11 @@ public class PostProcessManager : MonoBehaviour
     [SerializeField]
     private VolumeProfile[] _Profiles;
 
+    [SerializeField]
+    private PostEffectsSO _postEffectsSO;
+
+    private bool isExecutingEffect = false;
+
     private ChromaticAberration _chromatic;
     private Bloom _bloom;
     private Vignette _vignette;
@@ -115,23 +120,30 @@ public class PostProcessManager : MonoBehaviour
     {
         StartCoroutine(Explosion());
     }
+    public void Poisoned()
+    {
+        if (isExecutingEffect) return;
+        StartCoroutine(PoisonScreen());
+    }
 
+
+    #region PostProcessingEffects
     public IEnumerator Explosion()
     {
-        float elapsedTime = 0.0f;
-        float duration = 0.25f;
+        float elapsedTime = _postEffectsSO.E_ElapsedTime;
+        float duration = _postEffectsSO.E_Duration;
 
         float defaultV_Intensity = _vignette.intensity.value;
         float defaultV_Smoothness = _vignette.smoothness.value;
 
-        float targetV_Intensity = 0.4f;
-        float targetV_Smoothness = 0.4f;
+        float targetV_Intensity = _postEffectsSO.E_TargetV_Intensity;
+        float targetV_Smoothness = _postEffectsSO.E_TargetV_Smoothness;
 
         float defaultC_Intensity = _chromatic.intensity.value;
-        float targetC_Intensity = 0.25f;
+        float targetC_Intensity = _postEffectsSO.E_TargetCA_Intensity;
 
         float defaultL_Distortion = _lensDistortion.intensity.value;
-        float targetL_Distortion = -0.085f;
+        float targetL_Distortion = _postEffectsSO.E_TargetLENS_Distortion;
 
         while (elapsedTime < duration)
         {
@@ -162,4 +174,55 @@ public class PostProcessManager : MonoBehaviour
         _vignette.smoothness.value = defaultV_Smoothness;
         _chromatic.intensity.value = defaultC_Intensity;
     }
+
+    public IEnumerator PoisonScreen()
+    {
+        isExecutingEffect = true;
+
+        float elapsedTime = _postEffectsSO.P_ElapsedTime;
+        float duration = _postEffectsSO.P_Duration;
+
+        float defaultV_Intensity = _vignette.intensity.value;
+        float defaultV_Smoothness = _vignette.smoothness.value;
+        Color defaultV_Colour = _vignette.color.value;
+
+        float targetV_Intensity = _postEffectsSO.P_TargetV_Intensity;
+        float targetV_Smoothness = _postEffectsSO.P_TargetV_Smoothness;
+        Color targetV_Colour = _postEffectsSO.P_TargetV_Colour;
+
+        float defaultC_Intensity = _chromatic.intensity.value;
+        float targetC_Intensity = _postEffectsSO.P_TargetCA_Intensity;
+
+        _vignette.color.value = targetV_Colour;
+        while (elapsedTime < duration)
+        {
+            float t = elapsedTime / duration;
+            _vignette.intensity.value = Mathf.Lerp(defaultV_Intensity, targetV_Intensity, t);
+            _vignette.smoothness.value = Mathf.Lerp(defaultV_Smoothness, targetV_Smoothness, t);
+            _chromatic.intensity.value = Mathf.Lerp(defaultC_Intensity, targetC_Intensity, t);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(0.35f);
+
+        elapsedTime = 0.0f;
+        while (elapsedTime < duration)
+        {
+            float t = elapsedTime / duration;
+            _vignette.intensity.value = Mathf.Lerp(targetV_Intensity, defaultV_Intensity, t);
+            _vignette.smoothness.value = Mathf.Lerp(targetV_Smoothness, defaultV_Smoothness, t);
+            _chromatic.intensity.value = Mathf.Lerp(targetC_Intensity, defaultC_Intensity, t);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        _vignette.color.value = defaultV_Colour;
+        _vignette.intensity.value = defaultV_Intensity;
+        _vignette.smoothness.value = defaultV_Smoothness;
+        _chromatic.intensity.value = defaultC_Intensity;
+
+        isExecutingEffect = false;
+    }
+    #endregion
 }

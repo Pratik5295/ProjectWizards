@@ -16,18 +16,20 @@ namespace Team.Managers
         public Action OnLoadingFinishedEvent;
         public Action<float,string> OnLoadPercentChangedEvent;
 
-        public async UniTask<GameLevel> LoadGameLevelAsync(GameObject _levelPrefab, IProgress<float> progress = null)
+        public async UniTask<Tuple<GameLevel, GameObject>> LoadGameLevelAsync(GameObject _levelPrefab, GameObject _environmentPrefab, IProgress<float> progress = null)
         {
             mainProgress = progress;
 
             try
             {
                 OnLoadingStartedEvent?.Invoke();
+                GameInputManager.Instance.canInteract = false;
                 Debug.Log("[GameLoadManager] Starting level instantiation...");
 
                 // Step 1: Instantiate the level prefab (30% progress)
                 progress?.Report(0.0f);
                 levelOperation.SetLevelPrefab(_levelPrefab);
+                levelOperation?.SetEnvironmentPrefab(_environmentPrefab);
 
                 var levelGameObject = await levelOperation.LoadAsync(CreateInstantiationProgress());
 
@@ -36,55 +38,42 @@ namespace Team.Managers
                 {
                     throw new Exception("GameLevel component not found on instantiated prefab!");
                 }
+                if (!_environmentPrefab)
+                {
+                    if (!defaultEnvironment) { Debug.LogError("NO ENVIRONMENT TO SPAWN! (default or SO environment), please assign one"); }
+                    _environmentPrefab = defaultEnvironment;
+                    Debug.LogWarning($"NO Environment set on levelData SO! using default instead: {defaultEnvironment.name}");
+                }
 
                 Debug.Log("[GameLoadManager] Level prefab instantiated, starting content loading...");
 
                 // Step 2: Load the level content (70% progress from 30% to 100%)
                 await gameLevel.LoadLevelAsync(CreateContentLoadingProgress());
 
-                progress?.Report(1.0f);
+                progress?.Report(0.5f);
                 Debug.Log("[GameLoadManager] Level loading completed successfully!");
 
-                OnLoadingFinishedEvent?.Invoke();
+                await UniTask.Yield();
+                var EnvironmentInstance = await levelOperation.LoadEnvironmentAsync(CreateInstantiationProgress());
+                if (!EnvironmentInstance)
+                {
+                    Debug.LogError($"[GameLoadManager] Failed to load level - No Environment loaded.");
+                    return null;
+                }
 
-                return gameLevel;
+                await UniTask.Yield();
+
+                Tuple<GameLevel, GameObject> result = new Tuple<GameLevel, GameObject>(gameLevel, EnvironmentInstance);
+
+                progress?.Report(1f);
+
+                OnLoadingFinishedEvent?.Invoke();
+                GameInputManager.Instance.canInteract = true;
+                return result;
             }
             catch (Exception ex)
             {
                 Debug.LogError($"[GameLoadManager] Failed to load level - {ex.Message}");
-                throw;
-            }
-            finally
-            {
-                mainProgress = null;
-            }
-        }
-
-        public async UniTask<GameObject> LoadEnvironmentAsync(GameObject _environmentPrefab, IProgress<float> progress = null)
-        {
-            mainProgress = progress;
-
-            try
-            {
-                //Step 1: Instantiate the prefab.
-                progress?.Report(0.0f);
-                if (!_environmentPrefab) 
-                {
-                    if (!defaultEnvironment) { Debug.LogError("NO ENVIRONMENT TO SPAWN! (default or SO environment), please assign one");}
-                    _environmentPrefab = defaultEnvironment;
-                    Debug.LogWarning($"NO Environment set on levelData SO! using default instead: {defaultEnvironment.name}");
-                }
-                levelOperation?.SetEnvironmentPrefab(_environmentPrefab);
-
-                progress?.Report(0.5f);
-                var EnvironmentInstance = await levelOperation.LoadEnvironmentAsync(CreateInstantiationProgress());
-                progress?.Report(1.0f);
-
-                return EnvironmentInstance;
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError($"[GameLoadManager] Failed to load Environment of level - {ex.Message}");
                 throw;
             }
             finally

@@ -31,6 +31,7 @@ public class ExplosiveObject : MoveableObstacle
 
         MakeTileUnwalkable();
         StartCoroutine(Explode());
+        isDestroyed = true;
     }
 
     public override void ResetToStart()

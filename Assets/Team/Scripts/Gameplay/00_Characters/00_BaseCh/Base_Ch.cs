@@ -78,7 +78,11 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
     public CharacterReskinner CharacterReskinner;
 
+    [Header("Character Effects")]
+    [SerializeField] private CharacterSO charEffectsSO;
+
     private CharacterNumberHandler characterNumberHandler;
+
 
 
     #region Tile Variables
@@ -521,6 +525,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     {
         if (_currentTile.IsDeathTile())
         {
+            PostProcessManager.instance.Poisoned();
             KillCharacter();
             OnAbilityCompleted();
             OnTurnComplete?.Invoke(); //FUTURE SCARE: Maybe will cause an issue
@@ -537,7 +542,11 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         switch (projectileType)
         {
             case Enum_ProjectileType.Fireball:
-                KillCharacter();
+                if (charEffectsSO)
+                {
+                    Instantiate(charEffectsSO._ignitionVFX, transform.position, Quaternion.identity);
+                }
+                KillCharacter(true);
                 AudioManager.instance.PlayOneShot(FMODEvents.instance.s_death, this.transform.position);
                 break;
 
@@ -548,11 +557,25 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         OnStateChanged?.Invoke();
     }
 
-    private void KillCharacter()
+    private void KillCharacter(bool wasHitFireball = false)
     {
         CharState = Enum_CharacterState.Dead;
+        if (!wasHitFireball)
+        {
+            if (charEffectsSO)
+            {
+                Instantiate(charEffectsSO._deathSmokeVFX, transform.position, Quaternion.identity);
+            }
+        }
+        Vector3 originalScale = _meshRenderer.transform.localScale;
 
-        DisableObject();
+        _meshRenderer.transform.DOScale(charEffectsSO._deathShrinkValue, charEffectsSO._deathShrinkTime)
+            .SetEase(charEffectsSO._deathCurve)
+            .OnComplete(() =>
+            {
+                DisableObject();
+                _meshRenderer.transform.localScale = originalScale;
+            });
     }
 
     public bool checkIfCharAlive()
@@ -573,6 +596,12 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         {
             OnStateChanged?.Invoke();
             CharState = Enum_CharacterState.Alive;
+
+            if (charEffectsSO)
+            {
+                Instantiate(charEffectsSO._deathSmokeVFX, transform.position, Quaternion.identity);
+            }
+
             EnableObject();
         }
     }
@@ -698,9 +727,14 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     {
         if (isJumping) { return; }
         isJumping = true;
-        _meshRenderer.transform.DOJump(_meshRenderer.transform.position, 1f, 1, 0.5f, false)
+        _meshRenderer.transform.DOJump(_meshRenderer.transform.position, charEffectsSO._jumpHeight, 1, charEffectsSO._jumpDuration, false)
+            .SetEase(charEffectsSO._jumpCurve)
             .OnComplete(() =>
             {
+                if (charEffectsSO)
+                {
+                    Instantiate(charEffectsSO._jumpVFX, transform.position, Quaternion.identity);
+                }
                 isJumping = false;
             });
     }

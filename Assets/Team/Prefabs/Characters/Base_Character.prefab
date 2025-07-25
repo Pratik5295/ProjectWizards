@@ -134,9 +134,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fea98c65fa5153c4ea711043ba2e8e43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterData: {fileID: 0}
   CharState: 0
   ref_gridManager: {fileID: 0}
   baseRotation: {fileID: 933473269899832427}
+  CharacterReskinner: {fileID: 0}
+  charEffectsSO: {fileID: 11400000, guid: 78665d3ae74cb0147bf1e23f9e4bbc33, type: 2}
   _currentTileID:
     x: 0
     y: 0
@@ -190,7 +193,9 @@ MonoBehaviour:
     m_PreInfinity: 1
     m_PostInfinity: 2
     m_RotationOrder: 4
+  PushProjectileInstance: {fileID: 0}
   _ghosting: {fileID: 0}
+  IsGhosting: 0
   _characterBark: {fileID: 0}
 --- !u!114 &933473269899832427
 MonoBehaviour:
@@ -218,10 +223,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiCharacter: {fileID: 3922015930314424767}
-  _bodyMeshes:
-  - {fileID: 8564023545181033933}
-  outlineMat: {fileID: 2100000, guid: 40dc7e7a8d152e44ea3f8985978d3896, type: 2}
-  materialArray: []
+  _cachedPriority: 0
+  DefaultObjectiveColor: {r: 0, g: 0, b: 0, a: 0}
+  PrimaryObjectiveColor: {r: 0, g: 0, b: 0, a: 0}
+  SecondaryObjectiveColor: {r: 0, g: 0, b: 0, a: 0}
+  outlineComponent: {fileID: 0}
 --- !u!65 &3760308623249308038
 BoxCollider:
   m_ObjectHideFlags: 0

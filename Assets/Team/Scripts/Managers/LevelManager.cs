@@ -147,25 +147,29 @@ namespace Team.Managers
                     await UniTask.Yield(); // Allow cleanup to complete
                 }
 
-                // Use GameLoadManager to load the level - WAIT for completion
-                createdLevel = await gameLoadManager.LoadGameLevelAsync(
-                    CurrentLevel.Info.Data.GameLevelPrefab.gameObject,
-                    progressReporter
-                );
-
-
                 // Destroy existing environment if not the same.
-                if(createdEnvironment != null && createdEnvironment != CurrentLevel.Info.Data.EnvironmentPrefab)
+                if (createdEnvironment != null)
                 {
                     DestroyImmediate(createdEnvironment);
                     await UniTask.Yield();
                 }
 
+
+                Tuple<GameLevel, GameObject> result = null;
+                // Use GameLoadManager to load the level - WAIT for completion
+                result = await gameLoadManager.LoadGameLevelAsync(
+                    CurrentLevel.Info.Data.GameLevelPrefab.gameObject, CurrentLevel.Info.Data.EnvironmentPrefab,
+                    progressReporter
+                );
+
+                createdLevel = result.Item1;
+                createdEnvironment = result.Item2;
+
                 //Load in Environment.
-                createdEnvironment = await gameLoadManager.LoadEnvironmentAsync(
+               /* createdEnvironment = await gameLoadManager.LoadEnvironmentAsync(
                     CurrentLevel.Info.Data.EnvironmentPrefab,
                     progressReporter
-                    );
+                    );*/
 
                 // Ensure the level is fully loaded before proceeding
                 if (createdLevel == null)

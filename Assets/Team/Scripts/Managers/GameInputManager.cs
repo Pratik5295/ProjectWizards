@@ -25,6 +25,8 @@ public class GameInputManager : MonoBehaviour
 
     public bool IsRightClick;
 
+    public bool canInteract = true;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -42,6 +44,7 @@ public class GameInputManager : MonoBehaviour
 
     private void Update()
     {
+        if (!canInteract) return;
         HandleClickAndDrag();
 
         IsRightClick = _inputActions.UI.RightClick.IsPressed();

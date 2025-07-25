@@ -13,10 +13,7 @@ public class ObjectClickerManager : MonoBehaviour
         {
             Instance = this;
         }
-        else
-        {
-            Destroy(this);
-        }
+        else Destroy(gameObject);
     }
 
     void Update()
