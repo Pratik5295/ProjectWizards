@@ -617,6 +617,7 @@ namespace Team.Managers
                 }
             }
 
+            //FUTURE SCARE: Turn Order is getting reset to OG
             // Reset the turn order to original ui order
             //lock (_lockObject)
             //{

@@ -34,8 +34,6 @@ public class ObjectClickable : MonoBehaviour
         }
 
         baseObstacle = GetComponent<Base_Obstacle>();
-
-        Debug.Log($"Initialized ObjectClickable for: {gameObject.name}");
     }
 
     private void OnDestroy()
