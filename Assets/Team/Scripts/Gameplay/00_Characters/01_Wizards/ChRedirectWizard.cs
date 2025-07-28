@@ -75,7 +75,7 @@ public class ChRedirectWizard : ChProjectileWizard
             {
                 if (move.Type == PlayerMoveType.PUSH)
                 {
-                    move.interactedWith.UndoMovement(this, move.movedFrom);
+                    move.interactedWith.UndoMovement(this, move);
                 }
                 else if (move.Type == PlayerMoveType.DESTROYED)
                 {

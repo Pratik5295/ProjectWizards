@@ -99,6 +99,7 @@ public class OilTile : GridTile
         Base_Obstacle baseObstacle = ObstacleImplementsScript();
         if (baseObstacle.CanBeDestroyed)
         {
+            if (baseObstacle.isDestroyed) { return; }
             baseObstacle.DisableObject();
             GameTurnManager.Instance.AddDestroyedObject(ObjectOccupyingTile);
         }

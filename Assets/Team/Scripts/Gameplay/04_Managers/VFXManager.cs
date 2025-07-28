@@ -6,7 +6,7 @@ public class VFXManager : MonoBehaviour
     private GameObject[] _childObjects;
     private ParticleSystem[] _particleSystems;
 
-
+    public bool shouldDestroyOnEnd = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -23,6 +23,11 @@ public class VFXManager : MonoBehaviour
         for (int i = 0; i < amountOfChildren; i++)
         {
             _childObjects[i] = transform.GetChild(i).gameObject;
+            if (shouldDestroyOnEnd && i == 0)
+            {
+                ParticleDestroyer particleDestroyer = _childObjects[i].AddComponent<ParticleDestroyer>();
+                particleDestroyer.Initialise(this);
+            }
         }
     }
 

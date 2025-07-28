@@ -218,11 +218,11 @@ namespace Team.Gameplay.ObjectiveSystem
             }
         }
 
-        private void ShowLevelCompletedUI()
+        private async void ShowLevelCompletedUI()
         {
             UIManager.Instance.ShowPostGameUI();
 
-            LevelManager.Instance.CleanupLevelContent();
+           await LevelManager.Instance.CleanupLevelContentAsync();
         }
     }
 }

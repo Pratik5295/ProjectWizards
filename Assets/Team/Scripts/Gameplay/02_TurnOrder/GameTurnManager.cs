@@ -69,6 +69,7 @@ namespace Team.Managers
         public Action OnAllTurnsCompleted;
         public Action OnResetLastTurnCompleted;
         public Action OnPlayedTillBreakpoint;
+        public Action OnRestartProcessingEvent;
 
         //Also added by Rían sorrrrrrrrry Pratikkkk
         public Action<bool> OnCharacterNumberVisibilityChanged;
@@ -567,16 +568,17 @@ namespace Team.Managers
 
         public void CleanUpLevel()
         {
-            foreach (var turn in currentTurnOrder)
-            {
-                DestroyImmediate(turn.gameObject);
-            }
+            originalOrder.Clear();
+            currentTurnOrder.Clear();
+            RotatedTiles.Clear();
         }
 
         [ContextMenu("Reset Turns")]
         public async void ResetAllTurns()
         {
             if (_isResetting) return;
+
+            OnRestartProcessingEvent?.Invoke();
 
             _isResetting = true;
             CancelCurrentOperations();
@@ -614,20 +616,21 @@ namespace Team.Managers
                 }
             }
 
+            //FUTURE SCARE: Turn Order is getting reset to OG
             // Reset the turn order to original ui order
-            lock (_lockObject)
-            {
-                currentTurnOrder.Clear();
-                for (int i = 0; i < originalOrder.Count; i++)
-                {
-                    var turn = originalOrder[i];
-                    if (turn != null)
-                    {
-                        currentTurnOrder.Add(turn);
-                        turn.transform.SetSiblingIndex(i);
-                    }
-                }
-            }
+            //lock (_lockObject)
+            //{
+            //    //currentTurnOrder.Clear();
+            //    //for (int i = 0; i < originalOrder.Count; i++)
+            //    //{
+            //    //    var turn = originalOrder[i];
+            //    //    if (turn != null)
+            //    //    {
+            //    //        currentTurnOrder.Add(turn);
+            //    //        turn.transform.SetSiblingIndex(i);
+            //    //    }
+            //    //}
+            //}
 
            // ResetBreaker();
 
@@ -765,6 +768,21 @@ namespace Team.Managers
         {
             turnHolder?.InitializeComplete();
             OnResetLastTurnCompleted?.Invoke();
+
+            PopulateOrderText();
+        }
+
+        private void PopulateOrderText()
+        {
+            int orderIndex = 1;
+            foreach(var turn in originalOrder)
+            {
+                if(turn.TryGetComponent<UIGameCard>(out var card))
+                {
+                    card.UpdateCharacterNumber(orderIndex);
+                    orderIndex++;
+                }
+            }
         }
 
         private void TurnAllCardsInteractable()
@@ -781,5 +799,6 @@ namespace Team.Managers
         }
 
         #endregion
+
     }
 }
