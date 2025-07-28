@@ -162,6 +162,8 @@ namespace Team.Gameplay.GridSystem
             Instantiate(_fireManager, Vector3.zero, Quaternion.identity, transform.parent);
             Instantiate(_projectileManager, Vector3.zero, Quaternion.identity, transform.parent);
             Instantiate(_ClickableManager, Vector3.zero, Quaternion.identity, transform.parent);
+
+            EnvrionmentalsManager.Instance.ExecuteRocketsSpawnLoop();
         }
     }
 }
