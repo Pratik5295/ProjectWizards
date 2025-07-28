@@ -164,6 +164,8 @@ namespace Team.Gameplay.ObjectiveSystem
         public void CleanUp()
         {
             objectivesHolder.ClearAllObjectives();
+            _levelObjectives.Clear();
+            _objectiveMap.Clear();
         }
 
         public void ResetAllObjectives()
