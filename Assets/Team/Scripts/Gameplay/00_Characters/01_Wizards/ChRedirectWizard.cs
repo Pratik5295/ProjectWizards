@@ -71,11 +71,15 @@ public class ChRedirectWizard : ChProjectileWizard
             var move = HistoryStack.Pop();
 
             //If its a character
-            if (move.interactedWith != null)
+            if (move.CharacterInteractions != null)
             {
                 if (move.Type == PlayerMoveType.PUSH)
                 {
-                    move.interactedWith.UndoMovement(this, move);
+                    foreach(var interaction in move.CharacterInteractions)
+                    {
+                        interaction.CharacterInteracted.UndoMovement(interaction, this);
+                    }
+                    
                 }
                 else if (move.Type == PlayerMoveType.DESTROYED)
                 {
@@ -88,19 +92,21 @@ public class ChRedirectWizard : ChProjectileWizard
             }
 
             //If its an obstacle
-            else if (move.interactedObstacle != null)
+            else if (move.ObstaclesInteractions != null)
             {
                 if (move.Type == PlayerMoveType.PUSH)
                 {
-                    if (move.interactedObstacle.TryGetComponent<MoveableObstacle>(out var moveableObstacle))
+                    foreach(var obstacleInteraction in move.ObstaclesInteractions)
                     {
-                        moveableObstacle.ForceUndoMovement(this, move.movedFrom);
+                        if(obstacleInteraction.ObstacleInteracted.TryGetComponent<MoveableObstacle>(out var moveableObstacle))
+                        {
+                            moveableObstacle.ForceUndoMovement(this, obstacleInteraction.PreviousTileID);
+                        }
+                        else
+                        {
+                            //FUTURE SCARE: Unmoveable obstacles need to fire Undo Complete as they wont move
+                        }
                     }
-                    else
-                    {
-                        //FUTURE SCARE: Unmoveable obstacles need to fire Undo Complete as they wont move
-                    }
-
                 }
                 else if (move.Type == PlayerMoveType.DESTROYED)
                 {

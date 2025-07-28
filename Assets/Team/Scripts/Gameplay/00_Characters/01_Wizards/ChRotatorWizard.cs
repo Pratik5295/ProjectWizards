@@ -47,6 +47,13 @@ public class ChRotatorWizard : Base_Ch
 
     private Coroutine activeCoroutine = null;
 
+    [Space(5)]
+    [Header("Player Move Holders")]
+    [SerializeField]
+    private PlayerMove move;
+    public List<CharacterInteraction> CharacterInteractions;
+    public List<ObstacleInteraction> ObstaclesInteractions;
+
     private void OnDestroy()
     {
         if (_landingVFXManager != null)
@@ -62,10 +69,16 @@ public class ChRotatorWizard : Base_Ch
         _landingVFXManager = Instantiate(_rotationLandingVFX).GetComponent<VFXManager>();
         _landingVFXOffset = _landingVFXManager.transform.position.y;
         _landingVFXManager.transform.position = new Vector3(transform.position.x, _landingVFXOffset, transform.position.z);
+
+        CharacterInteractions = new List<CharacterInteraction>();
+        ObstaclesInteractions = new List<ObstacleInteraction>();
     }
 
     public async override Task UseAbility()
     {
+        CharacterInteractions.Clear();
+        ObstaclesInteractions.Clear();
+
         abilityWaiter = new TaskCompletionSource<bool>();
         OnCastBark();
 
@@ -99,13 +112,14 @@ public class ChRotatorWizard : Base_Ch
         }
         rotation = MetaConstants.Enum_Rotation.Clockwise;
 
-        PlayerMove move = new PlayerMove(CurrentTileID, PlayerMoveType.ROTATED, baseRotation.DirectionFacing);
-        HistoryStack.Push(move);
-
         TileDataChanges();
         activeCoroutine = StartCoroutine(LerpUpDown(true));
 
         await abilityWaiter.Task;
+
+        Debug.Log($"Pratik: Adding Rotate moveset: {gameObject.name}");
+        move = new PlayerMove(PlayerMoveType.ROTATED, CharacterInteractions, ObstaclesInteractions);
+        HistoryStack.Push(move);
     }
 
     [ContextMenu("Undo Rotation")]
@@ -126,7 +140,10 @@ public class ChRotatorWizard : Base_Ch
                 
                 if (move.Type == PlayerMoveType.PUSH)
                 {
-                    move.interactedWith.UndoMovement(this, move);
+                    foreach (var _character in move.CharacterInteractions)
+                    {
+                        _character.CharacterInteracted.UndoMovement(_character, this);
+                    }
                 }
                 else if(move.Type == PlayerMoveType.ROTATED)
                 {
@@ -222,7 +239,16 @@ public class ChRotatorWizard : Base_Ch
             }
             if (characterOnTile)
             {
+                //TODO: Check if interected with is character or enviornment
+
+
+                //Add interacted character to the list
+                CharacterInteraction characterInteracted = new CharacterInteraction();
+                characterInteracted.PreviousTileID = characterOnTile.GetComponent<Base_Ch>().CurrentTileID;
+
                 Base_Rotation charactersRotationSc = characterOnTile.GetComponent<Base_Rotation>();
+                characterInteracted.PreviousDirection = charactersRotationSc.DirectionFacing;
+
                 if (rotation == MetaConstants.Enum_Rotation.AntiClockwise)
                 {
                     charactersRotationSc.changeFacingDirection(DirectionUtilities.RotateAntiClockwise(charactersRotationSc.DirectionFacing));
@@ -231,6 +257,8 @@ public class ChRotatorWizard : Base_Ch
                 {
                     charactersRotationSc.changeFacingDirection(DirectionUtilities.RotateClockwise(charactersRotationSc.DirectionFacing));
                 }
+
+                CharacterInteractions.Add(characterInteracted);
             }
 
             if (i == 0) //Skip to next iteration in the loop if its the center tile.

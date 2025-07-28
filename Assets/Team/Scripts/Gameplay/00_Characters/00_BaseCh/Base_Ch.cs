@@ -20,30 +20,40 @@ public enum PlayerMoveType
     ROTATED
 }
 
+[System.Serializable]
+public class CharacterInteraction
+{
+    public Base_Ch CharacterInteracted;
+    public TileID PreviousTileID;
+    public Enum_GridDirection PreviousDirection;
+}
+
+[System.Serializable]
+public class ObstacleInteraction
+{
+    public Base_Obstacle ObstacleInteracted;
+    public TileID PreviousTileID;
+    public Enum_GridDirection PreviousDirection;
+}
+
+
 /// <summary>
 /// A Move performed by the player
 /// </summary>
 [System.Serializable]
 public class PlayerMove
 {
-    //FUTURE SCARE: Update the previous Rotation here. So the character can rotate back to previous move's rotation
-    public TileID movedFrom;
-
     public PlayerMoveType Type;
 
-    public Enum_GridDirection previousRotation;
+    public List<CharacterInteraction> CharacterInteractions;
 
-    public Base_Ch interactedWith;
+    public List<ObstacleInteraction> ObstaclesInteractions;
 
-    public Base_Obstacle interactedObstacle;
-
-    public PlayerMove(TileID _movedFrom, PlayerMoveType _move, Enum_GridDirection _previousRotation, Base_Ch _interacted = null, Base_Obstacle _interactedObstacle = null)
+    public PlayerMove(PlayerMoveType _move,List<CharacterInteraction> _charactersInteractedList = null, List<ObstacleInteraction> _interactedObstacle = null)
     {
-        movedFrom = _movedFrom;
         Type = _move;
-        previousRotation = _previousRotation;
-        interactedWith = _interacted;
-        interactedObstacle = _interactedObstacle;
+        CharacterInteractions = _charactersInteractedList;
+        ObstaclesInteractions = _interactedObstacle;
     }
 }
 
@@ -403,7 +413,11 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
                 if (move.Type == PlayerMoveType.PUSH)
                 {
-                    move.interactedWith.UndoMovement(this, move);
+                    foreach(var _character in move.CharacterInteractions)
+                    {
+                        _character.CharacterInteracted.UndoMovement(_character,this);
+                    }
+                    
                 }
             }
             await undoAwaiter.Task;
@@ -413,24 +427,24 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
 
     protected TaskCompletionSource<bool> undoAbilityWaiter = new TaskCompletionSource<bool>();
 
-    public void UndoMovement(Base_Ch _characterFiredFrom, PlayerMove _previousMove)
+    public void UndoMovement(CharacterInteraction _characterInteracted,Base_Ch _characterFiredFrom)
     {
-        if (_currentTileID == _previousMove.movedFrom)
+        if (_currentTileID == _characterInteracted.PreviousTileID)
         {
-            var tile = ref_gridManager.FindTile(_previousMove.movedFrom);
+            var tile = ref_gridManager.FindTile(_characterInteracted.PreviousTileID);
             transform.position = new Vector3(tile.TilePosition.x, transform.position.y, tile.TilePosition.z);
             //return; 
         }
         _currentTile.UpdateOccupiedStatus();
 
-        _currentTileID = _previousMove.movedFrom;
+        _currentTileID = _characterInteracted.PreviousTileID;
         _currentTile = ref_gridManager.FindTile(_currentTileID);
 
         _currentTile.SetObjectOccupyingTile(this.gameObject);
 
         transform.position = new Vector3(_currentTile.TilePosition.x, transform.position.y, _currentTile.TilePosition.z);
 
-        ResetRotationFromPrevious(_previousMove.previousRotation,_characterFiredFrom);
+        ResetRotationFromPrevious(_characterInteracted.PreviousDirection, _characterFiredFrom);
     }
 
     private void ResetRotationToStart(Base_Ch _fireOn = null)
