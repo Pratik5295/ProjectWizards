@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Team.Data;
 using Team.Gameplay.Characters;
@@ -166,21 +167,28 @@ namespace Team.Managers
         }
 
         [ContextMenu("Remove all characters")]
-        public void RemoveAllCharacters()
+        public async void RemoveAllCharacters()
         {
-            foreach (var _character in CharactersInLevel)
+            // Step 1: Destroy characters
+            foreach (var characterPair in CharactersInLevel)
             {
-                Destroy(_character.Value.gameObject);
+                if (characterPair.Value == null) continue;
+
+                Destroy(characterPair.Value.gameObject);
+                await Task.Yield(); // Yield to prevent freezing
             }
 
             CharactersInLevel.Clear();
 
-            for (int i = 0; i < cardHolder.childCount; i++)
+            // Step 2: Destroy cards (except GhostCards)
+            for (int i = cardHolder.childCount - 1; i >= 0; i--)
             {
                 var card = cardHolder.GetChild(i);
+
                 if (card.gameObject.GetComponent<GhostCard>() == null)
                 {
                     Destroy(card.gameObject);
+                    await Task.Yield(); // Yield between card removals
                 }
             }
         }
@@ -214,6 +222,7 @@ namespace Team.Managers
         {
             foreach (var character in CharactersInLevel.Values)
             {
+                character.ResetGhostingLock();
                 character.SetGhosting(false);
             }
             toggleCharactersGhosting = false;

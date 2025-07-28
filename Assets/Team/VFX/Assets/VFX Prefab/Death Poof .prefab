@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 1232672245054452588}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.318, y: -4.255, z: 0.387}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -43,7 +43,7 @@ ParticleSystem:
   serializedVersion: 8
   lengthInSec: 1
   simulationSpeed: 1
-  stopAction: 1
+  stopAction: 3
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
@@ -4935,7 +4935,7 @@ Transform:
   m_GameObject: {fileID: 6652383528985021400}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.55953, y: 1.84372, z: -0.02749}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4954,3 +4954,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e68b4d5a503c7c40a7a9e9e86e6bc14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shouldDestroyOnEnd: 1

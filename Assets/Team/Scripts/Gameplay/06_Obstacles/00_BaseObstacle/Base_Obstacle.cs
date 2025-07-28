@@ -49,6 +49,8 @@ public class Base_Obstacle : MonoBehaviour, IDestroyable
 
     private bool isInitialised = false;
 
+    [SerializeField] private CharacterSO charEffectsSO;
+
     [Header("Functionality Variables")]
     [SerializeField]
     protected bool canBeDestroyed = true;
@@ -63,6 +65,12 @@ public class Base_Obstacle : MonoBehaviour, IDestroyable
     public bool CanBeDestroyed
     {
         get { return canBeDestroyed; }
+    }
+
+    public bool isDestroyed
+    {
+        get;
+        protected set;
     }
 
     private void Start()
@@ -105,6 +113,8 @@ public class Base_Obstacle : MonoBehaviour, IDestroyable
         Vector2 v2Dir = baseRotation.dirToV2(baseRotation.DirectionFacing);
         baseRotation.RotateToFaceDir(v2Dir);
 
+        isDestroyed = false;
+
         transform.position = new Vector3(_currentGridTile.TilePosition.x, _currentGridTile.TilePosition.y + ySpawnOffset, _currentGridTile.TilePosition.z);
         isInitialised = true;
 
@@ -146,6 +156,13 @@ public class Base_Obstacle : MonoBehaviour, IDestroyable
     public virtual void EnableObject()
     {
         if (!canBeDestroyed) { return; }
+
+        if (charEffectsSO)
+        {
+            Instantiate(charEffectsSO._deathSmokeVFX, transform.position, Quaternion.identity);
+        }
+
+        isDestroyed = false;
         _collider.enabled = true;
         _meshRenderer.enabled = true;
         _currentGridTile.SetObjectOccupyingTile(this.gameObject);
@@ -156,6 +173,12 @@ public class Base_Obstacle : MonoBehaviour, IDestroyable
     {
         if (!canBeDestroyed) { return; }
 
+        if (charEffectsSO)
+        {
+            Instantiate(charEffectsSO._ignitionVFX, transform.position, Quaternion.identity);
+        }
+
+        isDestroyed = true;
         _collider.enabled = false;
         _meshRenderer.enabled = false;
         _currentGridTile.SetObjectOccupyingTile(null);

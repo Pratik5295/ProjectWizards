@@ -1,9 +1,11 @@
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Team.Gameplay.GameLevelSystem;
 using Team.Gameplay.GridSystem;
 using Team.Gameplay.LevelSystem;
+using Team.Gameplay.ObjectiveSystem;
 using Team.UI;
 using UnityEngine;
 using static Team.GameConstants.LevelConstants;
@@ -145,25 +147,29 @@ namespace Team.Managers
                     await UniTask.Yield(); // Allow cleanup to complete
                 }
 
-                // Use GameLoadManager to load the level - WAIT for completion
-                createdLevel = await gameLoadManager.LoadGameLevelAsync(
-                    CurrentLevel.Info.Data.GameLevelPrefab.gameObject,
-                    progressReporter
-                );
-
-
                 // Destroy existing environment if not the same.
-                if(createdEnvironment != null && createdEnvironment != CurrentLevel.Info.Data.EnvironmentPrefab)
+                if (createdEnvironment != null)
                 {
                     DestroyImmediate(createdEnvironment);
                     await UniTask.Yield();
                 }
 
+
+                Tuple<GameLevel, GameObject> result = null;
+                // Use GameLoadManager to load the level - WAIT for completion
+                result = await gameLoadManager.LoadGameLevelAsync(
+                    CurrentLevel.Info.Data.GameLevelPrefab.gameObject, CurrentLevel.Info.Data.EnvironmentPrefab,
+                    progressReporter
+                );
+
+                createdLevel = result.Item1;
+                createdEnvironment = result.Item2;
+
                 //Load in Environment.
-                createdEnvironment = await gameLoadManager.LoadEnvironmentAsync(
+               /* createdEnvironment = await gameLoadManager.LoadEnvironmentAsync(
                     CurrentLevel.Info.Data.EnvironmentPrefab,
                     progressReporter
-                    );
+                    );*/
 
                 // Ensure the level is fully loaded before proceeding
                 if (createdLevel == null)
@@ -243,27 +249,63 @@ namespace Team.Managers
             }
         }
 
-        public void StopLevel()
+        public async void StopLevel()
         {
             UIManager.Instance.ShowLevelSelectionUI();
 
-            CleanupLevelContent();
+            await CleanupLevelContentAsync();
         }
 
-        public void CleanupLevelContent()
+        public async Task CleanupLevelContentAsync()
         {
+            // 1. Destroy Level
             if (createdLevel != null)
             {
                 DestroyImmediate(createdLevel.gameObject);
+                await Task.Yield(); // Give up control to allow frame update
             }
 
+            // 2. Destroy Environment
             if (createdEnvironment != null)
             {
                 DestroyImmediate(createdEnvironment.gameObject);
+                await Task.Yield();
             }
 
-            //CharacterManager.Instance.CleanUp();
-            //GameTurnManager.Instance.CleanUpLevel();
+            // 3. Clean up Characters & Game Cards
+            if (CharacterManager.Instance != null)
+            {
+                CharacterManager.Instance.CleanUp();
+                await Task.Yield();
+            }
+
+            // 4. Clean up Objectives
+            if (LevelObjectiveManager.Instance != null)
+            {
+                LevelObjectiveManager.Instance.CleanUp();
+                await Task.Yield();
+            }
+
+            // 5. Clean up Projectiles
+            if (ProjectileManager.Instance != null)
+            {
+                ProjectileManager.Instance.ImmediateCleanUp();
+                await Task.Yield();
+            }
+
+            // 6. Clean up FireSpread
+            if (FireSpread.Instance != null)
+            {
+                FireSpread.Instance.CleanUp();
+                await Task.Yield();
+            }
+
+            // 7. Clean up Turn Manager
+            if (GameTurnManager.Instance != null)
+            {
+                GameTurnManager.Instance.CleanUpLevel();
+                await Task.Yield();
+            }
         }
 
         public void AddLevelToMap(Level _level)
