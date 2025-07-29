@@ -147,14 +147,14 @@ public class ChRotatorWizard : Base_Ch
                 }
                 else if(move.Type == PlayerMoveType.ROTATED)
                 {
-                    await UndoRotate();
+                    await UndoRotate(move);
                 }
             }
             await undoAwaiter.Task;
         }
     }
 
-    private async Task UndoRotate()
+    private async Task UndoRotate(PlayerMove _move)
     {
         GetTilesToRotate();
 
@@ -187,6 +187,13 @@ public class ChRotatorWizard : Base_Ch
         rotation = MetaConstants.Enum_Rotation.AntiClockwise;
         TileDataChanges();
         activeCoroutine = StartCoroutine(LerpUpDown(true,true));
+
+        //Enforce the characters interactions are in place
+
+        foreach(var characterInteraction in _move.CharacterInteractions)
+        {
+            
+        }
 
         await undoAbilityWaiter.Task;
     }

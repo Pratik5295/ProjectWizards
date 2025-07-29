@@ -107,7 +107,17 @@ public class ChProjectileWizard : Base_Ch
 
             List<ObstacleInteraction> obstacleInteractions = new List<ObstacleInteraction>();
 
-            if (_projectileHandler.characterInteracted.gameObject.CompareTag(MetaConstants.CharacterTag))
+            //Check if project handler interacted with a character or obstacle
+
+            if(_projectileHandler.characterInteracted == null && _projectileHandler.obstacleInteracted == null)
+            {
+                Debug.LogWarning("No character or obstacle interacted with, ending turn without recording move.");
+                OnAbilityCompleted();
+                return;
+            }
+
+            if (_projectileHandler.characterInteracted != null 
+                && _projectileHandler.characterInteracted.gameObject.CompareTag(MetaConstants.CharacterTag))
             {
                 CharacterInteraction interactedCharacter = new CharacterInteraction();
 
@@ -116,7 +126,9 @@ public class ChProjectileWizard : Base_Ch
                 interactedCharacter.PreviousDirection = _projectileHandler.characterInteracted.GetComponent<Base_Rotation>().DirectionFacing;
                 characterInteractions.Add(interactedCharacter);
             }
-            else if (_projectileHandler.characterInteracted.gameObject.CompareTag(MetaConstants.EnvironmentTag))
+            
+            if (_projectileHandler.obstacleInteracted != null 
+                && _projectileHandler.obstacleInteracted.gameObject.CompareTag(MetaConstants.EnvironmentTag))
             {
                 ObstacleInteraction obstacleInteraction = new ObstacleInteraction();
 
