@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 320569409086996540}
   - component: {fileID: 3888580578082637064}
   - component: {fileID: 8564023545181033933}
+  - component: {fileID: 4775189289171179075}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -86,6 +87,28 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!95 &4775189289171179075
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5063510673096400438}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b4c8ea4fdfaa02a45b7737d81ae38cd4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5407380294395882597
 GameObject:
   m_ObjectHideFlags: 0
@@ -153,11 +176,13 @@ MonoBehaviour:
   baseRotation: {fileID: 0}
   _collider: {fileID: 0}
   _meshRenderer: {fileID: 0}
+  charEffectsSO: {fileID: 0}
   canBeDestroyed: 1
   _ghosting: {fileID: 4118845384335995682}
   IsGhosting: 0
   PushProjectileInstance: {fileID: 0}
   RefFireballProjectile: {fileID: 0}
+  _chargeUpAnimation: {fileID: 0}
   _explosionEffect: {fileID: 7739599241381896197}
   ExplosionDelayTime: 1
 --- !u!114 &933473269899832427
@@ -215,7 +240,6 @@ MonoBehaviour:
   OnDisableClick:
     m_PersistentCalls:
       m_Calls: []
-  isHovered: 0
 --- !u!1001 &6734385307520696145
 PrefabInstance:
   m_ObjectHideFlags: 0
