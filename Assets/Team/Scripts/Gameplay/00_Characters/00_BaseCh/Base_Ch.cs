@@ -362,7 +362,10 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         {
             movementAmount = 0; movementAmount += 2;
         }
-        else movementAmount++;
+        else
+        {
+            movementAmount++;
+        }
 
         smoothingTime = .1f;
         return movementAmount;
