@@ -398,6 +398,19 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         }
     }
 
+    public void ReleaseControl()
+    {
+        if(undoAwaiter != null && !undoAwaiter.Task.IsCompleted)
+        {
+            undoAwaiter.SetResult(true);
+        }
+
+        if (abilityWaiter != null && !abilityWaiter.Task.IsCompleted)
+        {
+            abilityWaiter.SetResult(true);
+        }
+    }
+
     protected virtual async Task CharacterUndoStack()
     {
         undoAwaiter = new TaskCompletionSource<bool>();

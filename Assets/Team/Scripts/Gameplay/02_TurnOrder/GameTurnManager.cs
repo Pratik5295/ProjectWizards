@@ -568,9 +568,17 @@ namespace Team.Managers
 
         public void CleanUpLevel()
         {
+            EmptyQueue();
+
             originalOrder.Clear();
             currentTurnOrder.Clear();
             RotatedTiles.Clear();
+
+            _isResetting = false;
+            CancelCurrentOperations();
+
+            OnResetLastTurnCompleted?.Invoke();
+            isQueueLoaded = false;
         }
 
         [ContextMenu("Reset Turns")]
