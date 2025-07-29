@@ -455,7 +455,15 @@ public class ChRotatorWizard : Base_Ch
 
             float fraction = elapsedTime / _lerpDuration;
 
-            _rotatorHolder.transform.rotation = Quaternion.Slerp(startingRotation, targetRotation, fraction);
+            if (gameObject != null && _rotatorHolder != null)
+            {
+                _rotatorHolder.transform.rotation = Quaternion.Slerp(startingRotation, targetRotation, fraction);
+            }
+            else
+            {
+                StopAllCoroutines();
+                ReleaseControl();
+            }
 
             yield return null;
         }

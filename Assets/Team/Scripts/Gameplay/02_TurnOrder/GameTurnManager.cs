@@ -209,6 +209,7 @@ namespace Team.Managers
                 RotatedTiles?.Clear();
                 ChangedTiles?.Clear();
                 isQueueLoaded = false;
+                _isProcessingTurns = false;
             }
         }
 
