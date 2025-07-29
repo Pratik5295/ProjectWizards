@@ -168,7 +168,7 @@ public class ChProjectileWizard : Base_Ch
 
                 //If its a character interacted 
 
-                if (move.CharacterInteractions != null)
+                if (move.CharacterInteractions != null && move.CharacterInteractions.Count > 0)
                 {
 
                     if (move.Type == PlayerMoveType.PUSH)
@@ -184,7 +184,7 @@ public class ChProjectileWizard : Base_Ch
                     }
                 }
 
-                else if (move.ObstaclesInteractions != null)
+                if (move.ObstaclesInteractions != null && move.ObstaclesInteractions.Count > 0)
                 {
                     if (move.Type == PlayerMoveType.PUSH)
                     {

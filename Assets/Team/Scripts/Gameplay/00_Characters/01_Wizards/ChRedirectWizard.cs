@@ -71,7 +71,7 @@ public class ChRedirectWizard : ChProjectileWizard
             var move = HistoryStack.Pop();
 
             //If its a character
-            if (move.CharacterInteractions != null)
+            if (move.CharacterInteractions != null && move.CharacterInteractions.Count > 0)
             {
                 if (move.Type == PlayerMoveType.PUSH)
                 {
@@ -92,7 +92,7 @@ public class ChRedirectWizard : ChProjectileWizard
             }
 
             //If its an obstacle
-            else if (move.ObstaclesInteractions != null)
+            if (move.ObstaclesInteractions != null && move.ObstaclesInteractions.Count > 0)
             {
                 if (move.Type == PlayerMoveType.PUSH)
                 {
