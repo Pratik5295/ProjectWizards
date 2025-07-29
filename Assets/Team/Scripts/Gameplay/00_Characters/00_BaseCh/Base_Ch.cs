@@ -447,6 +447,18 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         ResetRotationFromPrevious(_characterInteracted.PreviousDirection, _characterFiredFrom);
     }
 
+    public void SetCharacterPositionOnTile(TileID _tileID)
+    {
+        //Set Current to unoccupied
+        
+    }
+
+    public void SetRotationToDirection(Enum_GridDirection _direction)
+    {
+        Vector2 v2Dir = baseRotation.dirToV2(_direction);
+        baseRotation.RotateToFaceDir(v2Dir);
+    }
+
     private void ResetRotationToStart(Base_Ch _fireOn = null)
     {
         baseRotation.changeFacingDirection(startingDirection);

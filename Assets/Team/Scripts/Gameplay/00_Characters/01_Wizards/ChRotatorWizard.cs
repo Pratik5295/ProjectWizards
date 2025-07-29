@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Xml.Schema;
 using Team.GameConstants;
 using Team.Gameplay.GridSystem;
 using Team.Managers;
@@ -188,12 +189,29 @@ public class ChRotatorWizard : Base_Ch
         TileDataChanges();
         activeCoroutine = StartCoroutine(LerpUpDown(true,true));
 
-        //Enforce the characters interactions are in place
+        //FUTURE SCARE: Complete this foolproofing while undoing the rotation characters and obstacles.
+        //Currently it will only undo rotation of characters, but touch this later.
 
-        foreach(var characterInteraction in _move.CharacterInteractions)
+        foreach (var characterInteraction in _move.CharacterInteractions)
         {
-            
+            var character = characterInteraction.CharacterInteracted;
+            if (character)
+            {
+                //Get Direction from interaction
+                var direction = characterInteraction.PreviousDirection;
+                character.SetRotationToDirection(direction);
+
+                //Get Tile ID from interaction
+                var tileID = characterInteraction.PreviousTileID;
+                character.SetCharacterPositionOnTile(tileID);
+            }
         }
+
+        //FUTURE SCARE: Complete this foolproofing while undoing the rotation obstacles.
+        //foreach(var obstacleInteraction in _move.ObstaclesInteractions)
+        //{
+
+        //}
 
         await undoAbilityWaiter.Task;
     }
@@ -246,15 +264,24 @@ public class ChRotatorWizard : Base_Ch
             }
             if (characterOnTile)
             {
-                //TODO: Check if interected with is character or enviornment
-
-
-                //Add interacted character to the list
-                CharacterInteraction characterInteracted = new CharacterInteraction();
-                characterInteracted.PreviousTileID = characterOnTile.GetComponent<Base_Ch>().CurrentTileID;
-
                 Base_Rotation charactersRotationSc = characterOnTile.GetComponent<Base_Rotation>();
-                characterInteracted.PreviousDirection = charactersRotationSc.DirectionFacing;
+
+                if (characterOnTile.GetComponent<Base_Obstacle>())
+                {
+                    ObstacleInteraction obstacleInteracted = new ObstacleInteraction();
+                    obstacleInteracted.PreviousTileID = characterOnTile.GetComponent<Base_Obstacle>().CurrentTileID;
+                    obstacleInteracted.PreviousDirection = charactersRotationSc.DirectionFacing;
+
+                    ObstaclesInteractions.Add(obstacleInteracted);
+                }
+                else if (characterOnTile.GetComponent<Base_Ch>())
+                {
+                    CharacterInteraction characterInteracted = new CharacterInteraction();
+                    characterInteracted.PreviousTileID = characterOnTile.GetComponent<Base_Ch>().CurrentTileID;
+                    characterInteracted.PreviousDirection = charactersRotationSc.DirectionFacing;
+
+                    CharacterInteractions.Add(characterInteracted);
+                }
 
                 if (rotation == MetaConstants.Enum_Rotation.AntiClockwise)
                 {
@@ -264,8 +291,6 @@ public class ChRotatorWizard : Base_Ch
                 {
                     charactersRotationSc.changeFacingDirection(DirectionUtilities.RotateClockwise(charactersRotationSc.DirectionFacing));
                 }
-
-                CharacterInteractions.Add(characterInteracted);
             }
 
             if (i == 0) //Skip to next iteration in the loop if its the center tile.
