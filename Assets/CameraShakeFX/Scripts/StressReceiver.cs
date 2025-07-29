@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class StressReceiver : MonoBehaviour 
 {
@@ -10,7 +11,21 @@ public class StressReceiver : MonoBehaviour
     [Tooltip("Maximum angle that the gameobject can shake. In euler angles.")]
     public Vector3 MaximumAngularShake = Vector3.one * 5;
     [Tooltip("Maximum translation that the gameobject can receive when applying the shake effect.")]
-    public Vector3 MaximumTranslationShake = Vector3.one * .75f;
+    private Vector3 MaximumTranslationShake = Vector3.one * .75f;
+
+
+    [Tooltip("Exponent for calculating the shake factor. Useful for creating different effect fade outs")]
+    public float DefaultTraumaExponent = 1;
+    [Tooltip("Maximum translation that the gameobject can receive when applying the shake effect.")]
+    public Vector3 DefaultMaximumTranslationShake = Vector3.one * .75f;
+    [Tooltip("Maximum angle that the gameobject can shake. In euler angles.")]
+    public Vector3 DefaultMaximumAngularShake = Vector3.one * 5;
+
+    private void Start()
+    {
+        MaximumTranslationShake = DefaultMaximumTranslationShake;
+        MaximumAngularShake = DefaultMaximumAngularShake;
+    }
 
     private void Update()
     {
@@ -45,6 +60,7 @@ public class StressReceiver : MonoBehaviour
             transform.localRotation = Quaternion.Euler(transform.localRotation.eulerAngles - _lastRotation);
             _lastPosition = Vector3.zero;
             _lastRotation = Vector3.zero;
+            ResetTranslationAngularShake();
         }
     }
 
@@ -55,5 +71,18 @@ public class StressReceiver : MonoBehaviour
     public void InduceStress(float Stress)
     {
         _trauma = Mathf.Clamp01(_trauma + Stress);
+    }
+
+    public void SetTranslationRotationShake(Vector3 newShake, Vector3 newAngular)
+    {
+        MaximumTranslationShake = newShake;
+        MaximumAngularShake = newAngular;
+    }
+
+    public void ResetTranslationAngularShake()
+    {
+        MaximumTranslationShake = DefaultMaximumTranslationShake;
+        MaximumAngularShake = DefaultMaximumAngularShake;
+        TraumaExponent = DefaultTraumaExponent;
     }
 }

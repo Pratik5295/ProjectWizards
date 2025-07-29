@@ -13,6 +13,7 @@ namespace Team.GameConstants
     public static partial class MetaConstants
     {
         public const float ShowPostGameScreenAfter = 2f;
+        public const float CamShakeValue = 0.25f;
     }
 }
 
@@ -208,6 +209,11 @@ namespace Team.Gameplay.ObjectiveSystem
                 if (!result && objective.Data.Priority == ObjectivePriority.PRIMARY)   //Primary Objectives failing would result in level failure
                 {
                     levelCompleted = false;
+                    StressReceiver CameraShaker = Camera.main.GetComponent<StressReceiver>();
+                    CameraShaker.TraumaExponent = 0.1f;
+                    CameraShaker.SetTranslationRotationShake(new Vector3(0.75f, 0, 0.2f), Vector3.zero);
+                    CameraShaker.InduceStress(MetaConstants.CamShakeValue);
+                    //Play a one shot audio for failure.
                 }
                 objectivesHolder.UpdateObjective(objective.Data, result);
             }

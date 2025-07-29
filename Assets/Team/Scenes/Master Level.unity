@@ -432,7 +432,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TraumaExponent: 1
   MaximumAngularShake: {x: 2, y: 2, z: 2}
-  MaximumTranslationShake: {x: 0.75, y: 0.75, z: 0.75}
+  DefaultTraumaExponent: 1
+  DefaultMaximumTranslationShake: {x: 0.75, y: 0.75, z: 0.75}
+  DefaultMaximumAngularShake: {x: 5, y: 5, z: 5}
 --- !u!114 &136548013 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4553810900400166690, guid: ed6f9072faaf15346b0a2406055f4524, type: 3}

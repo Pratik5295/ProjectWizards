@@ -214,6 +214,10 @@ namespace Team.Managers
 
         public void OnCurrentLevelCompleted()
         {
+            if (EnvrionmentalsManager.Instance)
+            {
+                EnvrionmentalsManager.Instance.isRunning = false;
+            }
             //Notify level its completed
             CurrentLevel.OnLevelCompleted();
 
