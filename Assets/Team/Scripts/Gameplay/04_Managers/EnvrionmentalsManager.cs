@@ -58,9 +58,9 @@ public class EnvrionmentalsManager : MonoBehaviour
         isRunning = false;
 
         int RandomChoice = UnityEngine.Random.Range(0, QuadraticCurves.Length);
-        GameObject RandomCurve = Instantiate(QuadraticCurves[RandomChoice], QuadraticCurves[RandomChoice].transform.position, Quaternion.identity);
+        GameObject RandomCurve = Instantiate(QuadraticCurves[RandomChoice], QuadraticCurves[RandomChoice].transform.position, Quaternion.identity, transform.parent);
 
-        GameObject RocketInstance = Instantiate(Rocket, Vector3.zero, Quaternion.identity);
+        GameObject RocketInstance = Instantiate(Rocket, Vector3.zero, Quaternion.identity, transform);
         RocketInstance.GetComponent<Racoon>().curve = RandomCurve.GetComponent<QuadraticCurve>();
     }
 
