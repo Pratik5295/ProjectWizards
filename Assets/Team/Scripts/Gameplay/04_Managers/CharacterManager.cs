@@ -174,6 +174,8 @@ namespace Team.Managers
             {
                 if (characterPair.Value == null) continue;
 
+                characterPair.Value.ReleaseControl();
+
                 Destroy(characterPair.Value.gameObject);
                 await Task.Yield(); // Yield to prevent freezing
             }

@@ -56,7 +56,7 @@ namespace Team.Managers
             _screenManager = GetComponent<ScreenManager>();
 
             //Forced to show level selection as the first screen
-            ShowLevelSelectionUI();
+            ShowMenuUI();
 
             if (_turnManager != null)
             {
@@ -148,6 +148,10 @@ namespace Team.Managers
             }
         }
 
+        public void ShowMenuUI()
+        {
+            _screenManager.ShowScreen(GameConstants.MetaConstants.GameScreen.MENU);
+        }
 
         public void ShowLevelSelectionUI()
         {
