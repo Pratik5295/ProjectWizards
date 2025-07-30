@@ -23,9 +23,6 @@ namespace Team.Managers
         private GameLoadManager gameLoadManager;
 
         [SerializeField]
-        private UILevelSelectionScreen selectionScreen;
-
-        [SerializeField]
         private GameLevel createdLevel = null;
         public GameLevel CreatedLevel
         {

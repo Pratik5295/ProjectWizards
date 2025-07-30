@@ -27,6 +27,8 @@ namespace Team.Gameplay.LevelSystem
         public List<LevelDataSO> Levels; //Objects will be created out of this
 
         //Update to throw Chapter Description and stuff over here
+        public Sprite ChapterSprite;
+        public Sprite ChapterNumberSprite;
     }
 
 

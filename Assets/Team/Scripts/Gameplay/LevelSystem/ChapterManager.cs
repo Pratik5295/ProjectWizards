@@ -30,8 +30,9 @@ namespace Team.Gameplay.LevelSystem
 
         private void Start()
         {
-            LoadChaptersMap();
+            //LoadChaptersMap();
         }
+
 
         private void LoadChaptersMap()
         {
