@@ -1,5 +1,8 @@
+using DG.Tweening;
 using NUnit.Framework.Constraints;
 using System.Collections;
+using Team.GameConstants;
+using Team.Managers;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -19,6 +22,9 @@ public class PostProcessManager : MonoBehaviour
 
     [SerializeField]
     private PostEffectsSO _postEffectsSO;
+
+    [SerializeField]
+    private Material fullScreenMaterial;
 
     private bool isExecutingEffect = false;
 
@@ -177,6 +183,7 @@ public class PostProcessManager : MonoBehaviour
 
     public IEnumerator PoisonScreen()
     {
+        if (isExecutingEffect) yield break;
         isExecutingEffect = true;
 
         float elapsedTime = _postEffectsSO.P_ElapsedTime;
@@ -223,6 +230,11 @@ public class PostProcessManager : MonoBehaviour
         _chromatic.intensity.value = defaultC_Intensity;
 
         isExecutingEffect = false;
+    }
+
+    public void EnableDisableWinEffect(float value)
+    {
+        fullScreenMaterial.SetFloat("_OnOffValue", value);
     }
     #endregion
 }
