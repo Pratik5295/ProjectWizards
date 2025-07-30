@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Team.GameConstants;
 using UnityEngine;
 
 [DefaultExecutionOrder(2)]
@@ -24,7 +26,7 @@ public class ChProjectileWizard : Base_Ch
     [Header("---Wizard Projectile Stats---")]
     [Range(-1, -300)]
     [SerializeField] private int _projectileRange = -1;
-    
+
 
     void Awake()
     {
@@ -40,7 +42,7 @@ public class ChProjectileWizard : Base_Ch
 
         curve.controlPoint = new GameObject("Curve_ControlPoint").transform;
         curve.controlPoint.transform.parent = curve.transform;
-        curve.controlPoint.localPosition = new Vector3(_projectileRange/2, 0, 0);
+        curve.controlPoint.localPosition = new Vector3(_projectileRange / 2, 0, 0);
 
         if (transform.GetComponentInChildren<ProjectileGhosting>())
         {
@@ -53,9 +55,9 @@ public class ChProjectileWizard : Base_Ch
     public async override Task UseAbility()
     {
         abilityWaiter = new TaskCompletionSource<bool>();
-        if (_projectilePrefab == null) 
-        { 
-            StartCoroutine(ShakeCharacter(0.25f)); 
+        if (_projectilePrefab == null)
+        {
+            StartCoroutine(ShakeCharacter(0.25f));
             endTurn(null);
             return;
         }
@@ -82,7 +84,7 @@ public class ChProjectileWizard : Base_Ch
         ProjectileInstance = null;
         scProjectile = null;
 
-        if(_projectileHandler != null)
+        if (_projectileHandler != null)
         {
             //Turn detected
 
@@ -99,11 +101,49 @@ public class ChProjectileWizard : Base_Ch
                     break;
             }
 
+            //Characters interacted with
+            List<CharacterInteraction> characterInteractions = new List<CharacterInteraction>();
+            //Obstacles Interacted with
 
-            PlayerMove playerMove 
+            List<ObstacleInteraction> obstacleInteractions = new List<ObstacleInteraction>();
+
+            //Check if project handler interacted with a character or obstacle
+
+            if(_projectileHandler.characterInteracted == null && _projectileHandler.obstacleInteracted == null)
+            {
+                Debug.LogWarning("No character or obstacle interacted with, ending turn without recording move.");
+                OnAbilityCompleted();
+                return;
+            }
+
+            if (_projectileHandler.characterInteracted != null 
+                && _projectileHandler.characterInteracted.gameObject.CompareTag(MetaConstants.CharacterTag))
+            {
+                CharacterInteraction interactedCharacter = new CharacterInteraction();
+
+                interactedCharacter.CharacterInteracted = _projectileHandler.characterInteracted;
+                interactedCharacter.PreviousTileID = _projectileHandler.beforeTileID;
+                interactedCharacter.PreviousDirection = _projectileHandler.characterInteracted.GetComponent<Base_Rotation>().DirectionFacing;
+                characterInteractions.Add(interactedCharacter);
+            }
+            
+            if (_projectileHandler.obstacleInteracted != null 
+                && _projectileHandler.obstacleInteracted.gameObject.CompareTag(MetaConstants.EnvironmentTag))
+            {
+                ObstacleInteraction obstacleInteraction = new ObstacleInteraction();
+
+                obstacleInteraction.ObstacleInteracted = _projectileHandler.obstacleInteracted;
+                obstacleInteraction.PreviousTileID = _projectileHandler.beforeTileID;
+                obstacleInteraction.PreviousDirection = baseRotation.DirectionFacing;
+
+                obstacleInteractions.Add(obstacleInteraction);
+            }
+
+            //Update Player Move with new data
+
+            PlayerMove playerMove
                 = new PlayerMove
-                (_projectileHandler.beforeTileID, type, baseRotation.DirectionFacing,
-                _projectileHandler.characterInteracted, _projectileHandler.obstacleInteracted);
+                (type, characterInteractions, obstacleInteractions);
 
             HistoryStack.Push(playerMove);
         }
@@ -128,36 +168,41 @@ public class ChProjectileWizard : Base_Ch
 
                 //If its a character interacted 
 
-                if (move.interactedWith != null)
+                if (move.CharacterInteractions != null && move.CharacterInteractions.Count > 0)
                 {
 
                     if (move.Type == PlayerMoveType.PUSH)
                     {
-                        move.interactedWith.UndoMovement(this, move);
+                        foreach (var _character in move.CharacterInteractions)
+                        {
+                            _character.CharacterInteracted.UndoMovement(_character, this);
+                        }
                     }
                     else if (move.Type == PlayerMoveType.DESTROYED)
                     {
-                        UndoDestroy(this,move);
+                        UndoDestroy(this, move);
                     }
                 }
 
-                else if(move.interactedObstacle != null)
+                if (move.ObstaclesInteractions != null && move.ObstaclesInteractions.Count > 0)
                 {
                     if (move.Type == PlayerMoveType.PUSH)
                     {
-                        if (move.interactedObstacle.TryGetComponent<MoveableObstacle>(out var moveableObstacle))
+                        foreach (var obstacleInteraction in move.ObstaclesInteractions)
                         {
-                            moveableObstacle.ForceUndoMovement(this, move.movedFrom);
-                        }
-                        else
-                        {
-                            //FUTURE SCARE: Unmoveable obstacles need to fire Undo Complete as they wont move
-                            //Need to do the same in redirect wizard
+                            if (obstacleInteraction.ObstacleInteracted.TryGetComponent<MoveableObstacle>(out var moveableObstacle))
+                            {
+                                moveableObstacle.ForceUndoMovement(this, obstacleInteraction.PreviousTileID);
+                            }
+                            else
+                            {
+                                //FUTURE SCARE: Unmoveable obstacles need to fire Undo Complete as they wont move
+                            }
                         }
                     }
-                    else if(move.Type == PlayerMoveType.DESTROYED)
+                    else if (move.Type == PlayerMoveType.DESTROYED)
                     {
-                        UndoDestroyObstacle(this,move); 
+                        UndoDestroyObstacle(this, move);
                     }
                 }
             }
@@ -165,20 +210,22 @@ public class ChProjectileWizard : Base_Ch
         }
     }
 
-    protected void UndoDestroy(Base_Ch _character,PlayerMove _move)
+    protected void UndoDestroy(Base_Ch _character, PlayerMove _move)
     {
-        var ch = _move.interactedWith;
-
-        ch.resetCharState(true);
+        foreach (var _ch in _move.CharacterInteractions)
+        {
+            _ch.CharacterInteracted.resetCharState(true);
+        }
 
         _character.OnUndoAbilityCompleted();
     }
 
     protected void UndoDestroyObstacle(Base_Ch _character, PlayerMove _move)
     {
-        var interactedObstacle = _move.interactedObstacle;
-
-        interactedObstacle.ResetToStart();
+        foreach (var obstacleInteraction in _move.ObstaclesInteractions)
+        {
+            obstacleInteraction.ObstacleInteracted.ResetToStart();
+        }
 
         _character.OnUndoAbilityCompleted();
     }

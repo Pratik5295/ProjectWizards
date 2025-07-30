@@ -47,6 +47,13 @@ public class ChRotatorWizard : Base_Ch
 
     private Coroutine activeCoroutine = null;
 
+    [Space(5)]
+    [Header("Player Move Holders")]
+    [SerializeField]
+    private PlayerMove move;
+    public List<CharacterInteraction> CharacterInteractions;
+    public List<ObstacleInteraction> ObstaclesInteractions;
+
     private void OnDestroy()
     {
         if (_landingVFXManager != null)
@@ -62,10 +69,16 @@ public class ChRotatorWizard : Base_Ch
         _landingVFXManager = Instantiate(_rotationLandingVFX).GetComponent<VFXManager>();
         _landingVFXOffset = _landingVFXManager.transform.position.y;
         _landingVFXManager.transform.position = new Vector3(transform.position.x, _landingVFXOffset, transform.position.z);
+
+        CharacterInteractions = new List<CharacterInteraction>();
+        ObstaclesInteractions = new List<ObstacleInteraction>();
     }
 
     public async override Task UseAbility()
     {
+        CharacterInteractions.Clear();
+        ObstaclesInteractions.Clear();
+
         abilityWaiter = new TaskCompletionSource<bool>();
         OnCastBark();
 
@@ -99,13 +112,14 @@ public class ChRotatorWizard : Base_Ch
         }
         rotation = MetaConstants.Enum_Rotation.Clockwise;
 
-        PlayerMove move = new PlayerMove(CurrentTileID, PlayerMoveType.ROTATED, baseRotation.DirectionFacing);
-        HistoryStack.Push(move);
-
         TileDataChanges();
         activeCoroutine = StartCoroutine(LerpUpDown(true));
 
         await abilityWaiter.Task;
+
+        Debug.Log($"Pratik: Adding Rotate moveset: {gameObject.name}");
+        move = new PlayerMove(PlayerMoveType.ROTATED, CharacterInteractions, ObstaclesInteractions);
+        HistoryStack.Push(move);
     }
 
     [ContextMenu("Undo Rotation")]
@@ -126,18 +140,21 @@ public class ChRotatorWizard : Base_Ch
                 
                 if (move.Type == PlayerMoveType.PUSH)
                 {
-                    move.interactedWith.UndoMovement(this, move);
+                    foreach (var _character in move.CharacterInteractions)
+                    {
+                        _character.CharacterInteracted.UndoMovement(_character, this);
+                    }
                 }
                 else if(move.Type == PlayerMoveType.ROTATED)
                 {
-                    await UndoRotate();
+                    await UndoRotate(move);
                 }
             }
             await undoAwaiter.Task;
         }
     }
 
-    private async Task UndoRotate()
+    private async Task UndoRotate(PlayerMove _move)
     {
         GetTilesToRotate();
 
@@ -170,6 +187,30 @@ public class ChRotatorWizard : Base_Ch
         rotation = MetaConstants.Enum_Rotation.AntiClockwise;
         TileDataChanges();
         activeCoroutine = StartCoroutine(LerpUpDown(true,true));
+
+        //FUTURE SCARE: Complete this foolproofing while undoing the rotation characters and obstacles.
+        //Currently it will only undo rotation of characters, but touch this later.
+
+        foreach (var characterInteraction in _move.CharacterInteractions)
+        {
+            var character = characterInteraction.CharacterInteracted;
+            if (character)
+            {
+                //Get Direction from interaction
+                var direction = characterInteraction.PreviousDirection;
+                character.SetRotationToDirection(direction);
+
+                //Get Tile ID from interaction
+                var tileID = characterInteraction.PreviousTileID;
+                character.SetCharacterPositionOnTile(tileID);
+            }
+        }
+
+        //FUTURE SCARE: Complete this foolproofing while undoing the rotation obstacles.
+        //foreach(var obstacleInteraction in _move.ObstaclesInteractions)
+        //{
+
+        //}
 
         await undoAbilityWaiter.Task;
     }
@@ -223,6 +264,24 @@ public class ChRotatorWizard : Base_Ch
             if (characterOnTile)
             {
                 Base_Rotation charactersRotationSc = characterOnTile.GetComponent<Base_Rotation>();
+
+                if (characterOnTile.GetComponent<Base_Obstacle>())
+                {
+                    ObstacleInteraction obstacleInteracted = new ObstacleInteraction();
+                    obstacleInteracted.PreviousTileID = characterOnTile.GetComponent<Base_Obstacle>().CurrentTileID;
+                    obstacleInteracted.PreviousDirection = charactersRotationSc.DirectionFacing;
+
+                    ObstaclesInteractions.Add(obstacleInteracted);
+                }
+                else if (characterOnTile.GetComponent<Base_Ch>())
+                {
+                    CharacterInteraction characterInteracted = new CharacterInteraction();
+                    characterInteracted.PreviousTileID = characterOnTile.GetComponent<Base_Ch>().CurrentTileID;
+                    characterInteracted.PreviousDirection = charactersRotationSc.DirectionFacing;
+
+                    CharacterInteractions.Add(characterInteracted);
+                }
+
                 if (rotation == MetaConstants.Enum_Rotation.AntiClockwise)
                 {
                     charactersRotationSc.changeFacingDirection(DirectionUtilities.RotateAntiClockwise(charactersRotationSc.DirectionFacing));
@@ -396,7 +455,15 @@ public class ChRotatorWizard : Base_Ch
 
             float fraction = elapsedTime / _lerpDuration;
 
-            _rotatorHolder.transform.rotation = Quaternion.Slerp(startingRotation, targetRotation, fraction);
+            if (gameObject != null && _rotatorHolder != null)
+            {
+                _rotatorHolder.transform.rotation = Quaternion.Slerp(startingRotation, targetRotation, fraction);
+            }
+            else
+            {
+                StopAllCoroutines();
+                ReleaseControl();
+            }
 
             yield return null;
         }
