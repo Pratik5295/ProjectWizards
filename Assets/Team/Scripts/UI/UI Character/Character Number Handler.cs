@@ -19,6 +19,7 @@ public class CharacterNumberHandler : MonoBehaviour
     private void OnDisable()
     {
         GameTurnManager.Instance.OnCharacterNumberVisibilityChanged -= ToggleNumberActive;
+        
     }
 
     // Update is called once per frame
