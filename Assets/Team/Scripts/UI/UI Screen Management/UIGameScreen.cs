@@ -36,20 +36,20 @@ namespace Team.UI
 
         public void ShowTurnOrderParent()
         {
-            turnOrderParent.DOFade(1, 0.2f).OnStart(() =>
-            {
-                turnOrderParent.interactable = true;
-                turnOrderParent.blocksRaycasts = true;
-            });
+            //turnOrderParent.DOFade(1, 0.2f).OnStart(() =>
+            //{
+            //    turnOrderParent.interactable = true;
+            //    turnOrderParent.blocksRaycasts = true;
+            //});
         }
 
         public void HideTurnOrderParent()
         {
-            turnOrderParent.DOFade(0, 0.2f).OnComplete(() =>
-            {
-                turnOrderParent.interactable = false;
-                turnOrderParent.blocksRaycasts = false;
-            });
+            //turnOrderParent.DOFade(0, 0.2f).OnComplete(() =>
+            //{
+            //    turnOrderParent.interactable = false;
+            //    turnOrderParent.blocksRaycasts = false;
+            //});
         }
     }
 }

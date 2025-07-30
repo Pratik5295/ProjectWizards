@@ -62,7 +62,10 @@ public class OilTile : GridTile
         //Do not include anything that is relient on the level having been loaded first!
         _startingTileID = TileID;
         _startingObjectInstance = objectOccupyingTile;
-    }
+
+        _startingMaterial = tileObject.transform.GetChild(0).GetComponent<MeshRenderer>().material;
+        normalColour = _startingMaterial.color;
+}
 
     private GameObject SpawnOilTileObject()
     {

@@ -11,6 +11,8 @@ public class ExplosiveObject : MoveableObstacle
 {
     public FireballProjectile RefFireballProjectile;
 
+    [SerializeField] private Animator _chargeUpAnimation;
+
     [SerializeField] private GameObject _explosionEffect;
     private VFXManager _explosionVFX;
 
@@ -22,6 +24,7 @@ public class ExplosiveObject : MoveableObstacle
     {
         base.InitialiseObstacle(StartingTileID, startingDirection);
 
+        _chargeUpAnimation = transform.GetChild(0).GetComponent<Animator>();
         _explosionVFX = _explosionEffect.GetComponent<VFXManager>();
     }
 
@@ -38,12 +41,13 @@ public class ExplosiveObject : MoveableObstacle
     {
         base.ResetToStart();
 
+        _chargeUpAnimation.SetTrigger("Reset");
         hasFireStarted = false;
     }
 
     protected IEnumerator Explode()
     {
-        //Start Animation Here!
+        _chargeUpAnimation.SetTrigger("Explode");
         yield return new WaitForSeconds(ExplosionDelayTime);
 
         _collider.enabled = false;
