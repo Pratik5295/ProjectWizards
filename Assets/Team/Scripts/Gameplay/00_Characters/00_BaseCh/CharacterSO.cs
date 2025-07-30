@@ -16,6 +16,10 @@ public class CharacterSO : ScriptableObject
     public GameObject _ignitionVFX;
     public GameObject _jumpVFX;
 
+    [Header("Push VFX Colours")]
+    public Color GrassColour;
+    public Color IceColour;
+
 
     [Header("AnimationCurves")]
     public AnimationCurve _jumpCurve;

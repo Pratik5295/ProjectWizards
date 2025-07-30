@@ -24,4 +24,27 @@ public static class DirectionUtilities
     {
         return (Enum_GridDirection)(((int)dir + 3) % 4);
     }
+
+    public static float DirectionRotation(Enum_GridDirection dir)
+    {
+        switch (dir)
+        {
+            case Enum_GridDirection.NORTH:
+                return 0;
+                
+
+            case Enum_GridDirection.EAST:
+                return 90;
+                
+
+            case Enum_GridDirection.SOUTH:
+                return 180;
+                
+
+            case Enum_GridDirection.WEST:
+                return 270;
+                
+        }
+        return 0;
+    }
 }

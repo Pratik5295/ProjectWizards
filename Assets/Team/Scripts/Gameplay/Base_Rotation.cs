@@ -81,6 +81,30 @@ public class Base_Rotation : MonoBehaviour
                 break;
         }
     }
+    public virtual Vector3 GetAngleFromV2(Vector2 dir)
+    {
+        switch (dir.x)
+        {
+            case 1:
+                return new Vector3(transform.rotation.x, 90, transform.rotation.z);
+
+            case -1:
+                return new Vector3(transform.rotation.x, 270, transform.rotation.z);
+            case 0:
+                break;
+        }
+        switch (dir.y)
+        {
+            case 1:
+                return new Vector3(transform.rotation.x, 0, transform.rotation.z);
+
+            case -1:
+                return new Vector3(transform.rotation.x, 180, transform.rotation.z);
+            case 0:
+                break;
+        }
+        return new Vector3(transform.rotation.x, 0, transform.rotation.z);
+    }
 
     public Vector2 dirToV2(Enum_GridDirection direction)
     {

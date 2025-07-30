@@ -91,6 +91,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     [Header("Character Effects")]
     [SerializeField] private CharacterSO charEffectsSO;
 
+    [SerializeField] private ParticleSystem PushBurstEffect;
+
     private CharacterNumberHandler characterNumberHandler;
 
 
@@ -282,6 +284,8 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
             {
                 if (targetTile.IsIceTile())
                 {
+                    ColourChangePushParticles(charEffectsSO.IceColour);
+
                     movementAmount = IceTileLogic(movementAmount);
                     wasPushed = true;
                 }
@@ -818,5 +822,22 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         _characterUI.UpdateBark(bark);
     }
 
+    #endregion
+
+    #region VFX Methods
+
+    private void ChangeParticlesFacingDirection(Vector2 dir)
+    {
+        Vector2 alteredDir = new Vector2(dir.x * -1, dir.y * -1);
+        Vector3 particleDirection = baseRotation.GetAngleFromV2(alteredDir);
+
+        PushBurstEffect.transform.eulerAngles = particleDirection;
+    }
+
+    private void ColourChangePushParticles(Color TilesParticleColour)
+    {
+        ParticleSystem.MainModule settings = PushBurstEffect.main;
+        settings.startColor = TilesParticleColour;
+    }
     #endregion
 }
