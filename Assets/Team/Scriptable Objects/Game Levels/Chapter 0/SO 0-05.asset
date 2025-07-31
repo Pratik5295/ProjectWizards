@@ -15,7 +15,12 @@ MonoBehaviour:
   Data:
     Stats:
       LevelID: 16
-      LevelName: Level 0-05
+      LevelName: Order Above All
+      LevelDescription: "You are the only one who can restore the divine order\u2026"
+      LevelObjectives:
+      - PRIMARY  <br><br>Ensure the highlighted Stoynik mage reaches the target goal
+        safely.
+      - OPTIONAL  <br><br>Ensure the highlighted Ogonik mage survives.
       State: 1
       NextLevel: 17
     GameLevelPrefab: {fileID: 7179478679921865884, guid: 72e6b28ac1896244f8d9461626d37716, type: 3}
