@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace Team.UI
 {
@@ -16,10 +17,18 @@ namespace Team.UI
         private TextMeshProUGUI levelObjective;
 
 
-        public void PopulateData(string _title,string _description)
+        public void PopulateData(string _title,string _description, List<string> _objectives)
         {
             levelTitle.text = _title;
             levelDescription.text = _description;
+
+            string message = string.Empty;
+            foreach (var objective in _objectives)
+            {
+                message += objective + " ,";
+            }
+
+            levelObjective.text = message;
         }
     }
 }

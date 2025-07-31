@@ -26,6 +26,8 @@ namespace Team.Gameplay.LevelSystem
     {
         public LevelID LevelID;
         public string LevelName;
+        public string LevelDescription;
+        public List<string> LevelObjectives;
         public LevelState State;
         public LevelID NextLevel;
 

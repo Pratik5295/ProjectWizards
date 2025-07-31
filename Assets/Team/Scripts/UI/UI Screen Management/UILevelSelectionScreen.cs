@@ -54,8 +54,8 @@ namespace Team.UI
         public void OnSetLevelInfoPanel(LevelData _info)
         {
             string title = _info.Stats.LevelName;
-            string description = _info.Stats.LevelID.ToString();
-            infoPanel.PopulateData(title,description);
+            string description = _info.Stats.LevelDescription;
+            infoPanel.PopulateData(title,description,_info.Stats.LevelObjectives);
         }
 
         public void PlaySelectedLevel()
