@@ -12,6 +12,9 @@ namespace Team.UI
         [SerializeField]
         private UILevel[] levelBoxes = new UILevel[6];
 
+        [SerializeField]
+        private UILevelPanel infoPanel;
+
 
         public void OnBackButtonClicked()
         {
@@ -46,6 +49,18 @@ namespace Team.UI
             }
 
             return null;
+        }
+
+        public void OnSetLevelInfoPanel(LevelData _info)
+        {
+            string title = _info.Stats.LevelName;
+            string description = _info.Stats.LevelID.ToString();
+            infoPanel.PopulateData(title,description);
+        }
+
+        public void PlaySelectedLevel()
+        {
+            LevelManager.Instance.LoadCurrentLevel();
         }
     }
 }

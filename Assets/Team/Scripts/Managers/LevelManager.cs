@@ -102,6 +102,7 @@ namespace Team.Managers
                         UIManager.Instance.ResetNoTutorial();
                     }
 
+                    levelSelectionScreen.OnSetLevelInfoPanel(CurrentLevel.Info);
 
                     OnCurrentLevelUpdated?.Invoke(CurrentLevel.Info);
                 }
@@ -261,7 +262,7 @@ namespace Team.Managers
 
         public async void StopLevel()
         {
-            UIManager.Instance.ShowChapterSelectionUI();
+            UIManager.Instance.ShowLevelSelectionUI();
 
             await CleanupLevelContentAsync();
         }

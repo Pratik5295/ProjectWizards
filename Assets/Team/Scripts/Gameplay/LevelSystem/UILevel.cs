@@ -10,9 +10,6 @@ namespace Team.Gameplay.LevelSystem
 {
     public class UILevel : MonoBehaviour
     {
-        [SerializeField]
-        private TextMeshProUGUI levelNameText;
-
         public ChapterID ChapterID;
 
         [SerializeField]
@@ -52,8 +49,6 @@ namespace Team.Gameplay.LevelSystem
 
             Status = levelData.Stats.State;    //Status filled based on initial state from SO
 
-            levelNameText.text = levelData.Stats.LevelName;
-
             ValidateState();
         }
 
@@ -76,7 +71,6 @@ namespace Team.Gameplay.LevelSystem
         {
             //All levels playable, the locking part happens through chapters
             LevelManager.Instance.SetCurrentLevel(this,levelData.Stats.LevelID);
-            LevelManager.Instance.LoadCurrentLevel();
         }
 
         public void OnLevelCompleted(bool isLoaded = false)
