@@ -8,25 +8,22 @@ using static Team.GameConstants.MetaConstants;
 
 namespace Team.Gameplay.LevelSystem
 {
-    public class Level : MonoBehaviour
+    public class UILevel : MonoBehaviour
     {
-        [SerializeField]
-        private TextMeshProUGUI levelNameText;
-
         public ChapterID ChapterID;
 
         [SerializeField]
-        private LevelDataSO levelData;
+        private LevelData levelData;
 
-        public LevelDataSO Info => levelData;
+        public LevelData Info => levelData;
 
-        public LevelID LevelID => Info.Data.Stats.LevelID;
-
-        [SerializeField]
-        private Color unlockedColor;
+        public LevelID LevelID => Info.Stats.LevelID;
 
         [SerializeField]
-        private Color completedColor;
+        private Sprite defaultIcon;
+
+        [SerializeField]
+        private Sprite completeIcon;
 
         [SerializeField]
         private Image levelImage;
@@ -40,14 +37,17 @@ namespace Team.Gameplay.LevelSystem
 
         public Action<LevelID> OnCompletedLevel;
 
+        public void Reset()
+        {
+            levelImage.sprite = defaultIcon;
+        }
 
-        public void PopulateLevelInfo(LevelDataSO _data)
+
+        public void PopulateLevelInfo(LevelData _data)
         {
             levelData = _data;
 
-            Status = levelData.Data.Stats.State;    //Status filled based on initial state from SO
-
-            levelNameText.text = levelData.Data.Stats.LevelName;
+            Status = levelData.Stats.State;    //Status filled based on initial state from SO
 
             ValidateState();
         }
@@ -59,25 +59,24 @@ namespace Team.Gameplay.LevelSystem
         {
             if (IsCompleted)
             {
-                levelImage.color = completedColor;
+                levelImage.sprite = completeIcon;
             }
             else
             {
-                levelImage.color = unlockedColor;
+                levelImage.sprite = defaultIcon;
             }
         }
 
         public void OnLevelSelected()
         {
             //All levels playable, the locking part happens through chapters
-            LevelManager.Instance.SetCurrentLevel(levelData.Data.Stats.LevelID);
-            LevelManager.Instance.LoadCurrentLevel();
+            LevelManager.Instance.SetCurrentLevel(this,levelData.Stats.LevelID);
         }
 
         public void OnLevelCompleted(bool isLoaded = false)
         {
             Status = LevelState.COMPLETED;
-            OnCompletedLevel?.Invoke(Info.Data.Stats.LevelID);
+            OnCompletedLevel?.Invoke(Info.Stats.LevelID);
 
             ValidateState();
 

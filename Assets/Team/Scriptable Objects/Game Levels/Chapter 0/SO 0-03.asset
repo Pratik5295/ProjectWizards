@@ -30,11 +30,12 @@ MonoBehaviour:
         Data4: 0
       Path: 
     TutorialSteps:
-    - message: 1/2 <br> <br>This is the Ogonik mage. They launch fire projectiles
+    - header: 
+      message: 1/2 <br> <br>This is the Ogonik mage. They launch fire projectiles
         that destroy the first target they hit. Use them to eliminate other mages
         or obstacles. <br><br> Click the box to dismiss.
-      uiElement: 0
-    - message: 2/2 <br><br> These are obstacles. They do not have any action but
-        are affected by other spells. You can also right-click on obstacles to access
-        their information panel. <br> <br>Click the box to dismiss.
-      uiElement: 0
+      uiElement: 5
+    - header: 
+      message: 2/2 <br><br> These are obstacles. They do not have any action but
+        are affected by other spells. <br> <br>Click the box to dismiss.
+      uiElement: 6
