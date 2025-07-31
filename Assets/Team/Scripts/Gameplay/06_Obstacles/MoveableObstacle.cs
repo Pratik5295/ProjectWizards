@@ -75,7 +75,20 @@ public class MoveableObstacle : Base_Obstacle, IMoveable
 
         WasPushed(wasPushed);
 
-        PlayerMove playerMove = new PlayerMove(_previousGridTile.TileID, PlayerMoveType.PUSH, baseRotation.DirectionFacing,null,this);
+
+        //Obstacles Interacted with
+
+        List<ObstacleInteraction> obstacleInteractions = new List<ObstacleInteraction>();
+
+        ObstacleInteraction obstacleInteraction = new ObstacleInteraction();
+
+        obstacleInteraction.ObstacleInteracted = this;
+        obstacleInteraction.PreviousTileID = _previousGridTile.TileID;
+        obstacleInteraction.PreviousDirection = baseRotation.DirectionFacing;
+
+        obstacleInteractions.Add(obstacleInteraction);
+
+        PlayerMove playerMove = new PlayerMove(PlayerMoveType.PUSH,null, obstacleInteractions);
         HistoryStack.Push(playerMove);
     }
 

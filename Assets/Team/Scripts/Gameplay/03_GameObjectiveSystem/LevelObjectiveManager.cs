@@ -7,12 +7,15 @@ using Team.Gameplay.Characters;
 using Team.Managers;
 using Team.UI;
 using UnityEngine;
+using DG.Tweening;
+using UnityEngine.Rendering.Universal;
 
 namespace Team.GameConstants
 {
     public static partial class MetaConstants
     {
         public const float ShowPostGameScreenAfter = 2f;
+        public const float CamShakeValue = 0.25f;
     }
 }
 
@@ -208,15 +211,33 @@ namespace Team.Gameplay.ObjectiveSystem
                 if (!result && objective.Data.Priority == ObjectivePriority.PRIMARY)   //Primary Objectives failing would result in level failure
                 {
                     levelCompleted = false;
+                    //Play a one shot audio for failure.
                 }
                 objectivesHolder.UpdateObjective(objective.Data, result);
             }
 
             if (levelCompleted)
             {
-                LevelManager.Instance.OnCurrentLevelCompleted();
-                UIManager.Instance.ShowEmptyUI();
-                Invoke(nameof(ShowLevelCompletedUI), MetaConstants.ShowPostGameScreenAfter);
+                float screenEffectValue = 0f;
+                DOTween.To(() => screenEffectValue, x =>
+                { screenEffectValue = x; PostProcessManager.instance.EnableDisableWinEffect(x); },
+                    1f, 
+                    1f).SetEase(Ease.InOutSine).OnComplete(() =>
+                    {
+                        DOTween.To(() => screenEffectValue, x =>
+                        { screenEffectValue = x; PostProcessManager.instance.EnableDisableWinEffect(x); },
+                        0f,
+                        1f)
+                        .OnComplete(() =>
+                        {
+                             LevelManager.Instance.OnCurrentLevelCompleted();
+                             UIManager.Instance.ShowEmptyUI();
+                             Invoke(nameof(ShowLevelCompletedUI), MetaConstants.ShowPostGameScreenAfter);
+                        });
+                    }); 
+
+
+
             }
         }
 
