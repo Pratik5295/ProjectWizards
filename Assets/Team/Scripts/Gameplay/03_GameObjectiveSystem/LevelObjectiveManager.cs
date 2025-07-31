@@ -219,6 +219,9 @@ namespace Team.Gameplay.ObjectiveSystem
             if (levelCompleted)
             {
                 float screenEffectValue = 0f;
+                VFXManager ConfettiEffect = Camera.main.GetComponentInChildren<VFXManager>();
+                if (ConfettiEffect) { ConfettiEffect.EnableParticleEffectChildren(); }
+
                 DOTween.To(() => screenEffectValue, x =>
                 { screenEffectValue = x; PostProcessManager.instance.EnableDisableWinEffect(x); },
                     1f, 
