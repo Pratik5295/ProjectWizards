@@ -12,9 +12,10 @@ namespace Team.GameConstants
             MENU = 1,
             DIALOGUE = 2,
             GAME = 3,
-            LEVEL_SELECT = 4,
+            CHAPTER_SELECT = 4,
             POST_GAME = 5,
-            LOADING = 6
+            LOADING = 6,
+            LEVEL_SELECT = 7
         }
     }
 }
