@@ -47,11 +47,6 @@ namespace Team.Gameplay.LevelSystem
 
         #region Unity Methods
 
-        private void Start()
-        {
-           
-        }
-
         private void OnDestroy()
         {
             UnSubscribeEvents();
@@ -153,7 +148,7 @@ namespace Team.Gameplay.LevelSystem
         {
             foreach (var levelSO in chapterData.Data.Levels)
             {
-                LevelManager.Instance.AllLevels.Add(levelSO.Data);
+                LevelManager.Instance.AllLevels.Add(new LevelPacket(CurrentChapterID,levelSO.Data));
             }
         }
 

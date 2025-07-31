@@ -20,6 +20,9 @@ namespace Team.UI
         [SerializeField]
         private UIChapter UIChapter;
 
+        [SerializeField]
+        private UILevelSelectionScreen levelSelectionScreen;
+
         [SerializeField] private RectTransform chapterContainer;
         [SerializeField] private float elementSpacing = 1100f; // space between items (1550 - 450 = 1100)
         [SerializeField] private float animationDuration = 0.5f;
@@ -94,6 +97,9 @@ namespace Team.UI
             ChapterID currentChapter = ChapterInfo[currentChapterIndex].Data.ChapterID;
 
             ChapterManager.Instance.SelectCurrentChapter(currentChapter);
+
+            //Fill up level selection info
+            levelSelectionScreen.PopulateLevelsForChapter(currentChapter);
 
             //Go to level selection screen
             UIManager.Instance.ShowLevelSelectionUI();

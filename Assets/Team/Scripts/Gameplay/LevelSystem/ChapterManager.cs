@@ -43,7 +43,7 @@ namespace Team.Gameplay.LevelSystem
                 ChaptersMap.Add(chapter.chapterData.Data.ChapterID, chapter);
                 chapter.Initialize();
             }
-            //LevelManager.Instance.LoadLevelMap();
+            LevelManager.Instance.LoadLevelMap();
         }
 
         public void SelectCurrentChapter(ChapterID _chapterID)

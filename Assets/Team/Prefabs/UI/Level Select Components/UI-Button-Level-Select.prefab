@@ -257,7 +257,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2181743336950163010}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 880159794112952998}
+        m_TargetAssemblyTypeName: Team.Gameplay.LevelSystem.UILevel, Assembly-CSharp
+        m_MethodName: OnLevelSelected
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &880159794112952998
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,7 +284,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelNameText: {fileID: 7016723467518397152}
   ChapterID: 0
-  levelData: {fileID: 0}
+  levelData:
+    Stats:
+      LevelID: 0
+      LevelName: 
+      State: 0
+      NextLevel: 0
+    GameLevelPrefab: {fileID: 0}
+    EnvironmentPrefab: {fileID: 0}
+    DialogueAsset: {fileID: 0}
+    HasBreakPoint: 0
+    s_ambience:
+      Guid:
+        Data1: 0
+        Data2: 0
+        Data3: 0
+        Data4: 0
+      Path: 
+    TutorialSteps: []
   defaultIcon: {fileID: 21300000, guid: 18740f923ad52da4a969e44dbbda624b, type: 3}
   completeIcon: {fileID: 21300000, guid: 08bc473a02d73744795260e5fe099a21, type: 3}
   levelImage: {fileID: 2181743336950163010}

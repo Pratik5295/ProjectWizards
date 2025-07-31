@@ -16,11 +16,11 @@ namespace Team.Gameplay.LevelSystem
         public ChapterID ChapterID;
 
         [SerializeField]
-        private LevelDataSO levelData;
+        private LevelData levelData;
 
-        public LevelDataSO Info => levelData;
+        public LevelData Info => levelData;
 
-        public LevelID LevelID => Info.Data.Stats.LevelID;
+        public LevelID LevelID => Info.Stats.LevelID;
 
         [SerializeField]
         private Sprite defaultIcon;
@@ -46,13 +46,13 @@ namespace Team.Gameplay.LevelSystem
         }
 
 
-        public void PopulateLevelInfo(LevelDataSO _data)
+        public void PopulateLevelInfo(LevelData _data)
         {
             levelData = _data;
 
-            Status = levelData.Data.Stats.State;    //Status filled based on initial state from SO
+            Status = levelData.Stats.State;    //Status filled based on initial state from SO
 
-            levelNameText.text = levelData.Data.Stats.LevelName;
+            levelNameText.text = levelData.Stats.LevelName;
 
             ValidateState();
         }
@@ -75,14 +75,14 @@ namespace Team.Gameplay.LevelSystem
         public void OnLevelSelected()
         {
             //All levels playable, the locking part happens through chapters
-            LevelManager.Instance.SetCurrentLevel(levelData.Data.Stats.LevelID);
+            LevelManager.Instance.SetCurrentLevel(this,levelData.Stats.LevelID);
             LevelManager.Instance.LoadCurrentLevel();
         }
 
         public void OnLevelCompleted(bool isLoaded = false)
         {
             Status = LevelState.COMPLETED;
-            OnCompletedLevel?.Invoke(Info.Data.Stats.LevelID);
+            OnCompletedLevel?.Invoke(Info.Stats.LevelID);
 
             ValidateState();
 
