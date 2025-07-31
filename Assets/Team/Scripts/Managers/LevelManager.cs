@@ -39,6 +39,8 @@ namespace Team.Managers
 
         public List<UILevel> LevelList = new List<UILevel>();
 
+        public List<LevelData> AllLevels = new List<LevelData>();
+
         public Dictionary<LevelID, UILevel> LevelMap = new Dictionary<LevelID, UILevel>();
 
         public UILevel CurrentLevel;
@@ -63,11 +65,6 @@ namespace Team.Managers
             {
                 Destroy(gameObject);
             }
-        }
-
-        private void Start()
-        {
-            //LoadLevelMap();
         }
 
         public void SetCurrentLevel(LevelID _level)

@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using Team.Gameplay.LevelSystem;
 using DG.Tweening;
+using static Team.GameConstants.LevelConstants;
 
 namespace Team.UI
 {
@@ -75,11 +76,6 @@ namespace Team.UI
 
         private void ShowCurrentChapterData()
         {
-            // Update UIChapter display
-            //var data = ChapterDataList[currentChapterIndex];
-            //UIChapterInfo info = new UIChapterInfo(data.ChapterName, data.ChapterSprite, data.ChapterNumberSprite);
-            //UIChapter.PopulateChapterInfo(info);
-
             // Calculate target anchored position for the container
             float targetX = -currentChapterIndex * elementSpacing;
 
@@ -94,6 +90,11 @@ namespace Team.UI
 
         public void OnSelectButtonClicked()
         {
+            //Set The Current selected chapter
+            ChapterID currentChapter = ChapterInfo[currentChapterIndex].Data.ChapterID;
+
+            ChapterManager.Instance.SelectCurrentChapter(currentChapter);
+
             //Go to level selection screen
             UIManager.Instance.ShowLevelSelectionUI();
         }

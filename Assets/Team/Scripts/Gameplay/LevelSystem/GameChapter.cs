@@ -136,6 +136,7 @@ namespace Team.Gameplay.LevelSystem
 
             //Generate all level objects
             //CreateLevelUI();
+            LoadAllLevels();
 
             //Update canvas group to interactable/uninteractable
             if (Status == ChapterState.LOCKED)
@@ -145,6 +146,14 @@ namespace Team.Gameplay.LevelSystem
             else
             {
                 MakeInteractable();
+            }
+        }
+
+        private void LoadAllLevels()
+        {
+            foreach (var levelSO in chapterData.Data.Levels)
+            {
+                LevelManager.Instance.AllLevels.Add(levelSO.Data);
             }
         }
 
@@ -193,11 +202,11 @@ namespace Team.Gameplay.LevelSystem
 
         public void OnChapterCompletedLevels(List<LevelID> levelIds)
         {
-            foreach (var id in levelIds)
-            {
-                var level = LevelObjects.FirstOrDefault(x => x.LevelID == id);
-                level.OnLevelCompleted(true);
-            }
+            //foreach (var id in levelIds)
+            //{
+            //    var level = LevelObjects.FirstOrDefault(x => x.LevelID == id);
+            //    level.OnLevelCompleted(true);
+            //}
         }
 
         #endregion

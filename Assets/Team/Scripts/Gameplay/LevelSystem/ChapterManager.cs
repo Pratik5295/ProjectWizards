@@ -14,7 +14,8 @@ namespace Team.Gameplay.LevelSystem
 
         public Dictionary<ChapterID,GameChapter> ChaptersMap = new Dictionary<ChapterID, GameChapter>();
 
-        
+        [SerializeField]
+        private ChapterID CurrentChapterID;
 
         private void Awake()
         {
@@ -43,6 +44,11 @@ namespace Team.Gameplay.LevelSystem
                 chapter.Initialize();
             }
             //LevelManager.Instance.LoadLevelMap();
+        }
+
+        public void SelectCurrentChapter(ChapterID _chapterID)
+        {
+            CurrentChapterID = _chapterID;
         }
 
         [ContextMenu("Get All Chapter Details")]
