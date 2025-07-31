@@ -17,7 +17,8 @@ namespace Team.GameConstants
             R_BoardBox,
             L_BoardBox,
             TurnOrderBox,
-            ObjectiveBox
+            ObjectiveBox,
+            PlayBox
 
         }
     }
