@@ -153,9 +153,14 @@ namespace Team.Managers
             _screenManager.ShowScreen(GameConstants.MetaConstants.GameScreen.MENU);
         }
 
+        public void ShowChapterSelectionUI()
+        {
+            _screenManager.ShowScreen(GameConstants.MetaConstants.GameScreen.CHAPTER_SELECT);
+        }
+
         public void ShowLevelSelectionUI()
         {
-            _screenManager.ShowScreen(GameConstants.MetaConstants.GameScreen.LEVEL_SELECT);
+            _screenManager.ShowScreen(GameConstants.MetaConstants.GameScreen.LEVEL_SELECT); 
         }
 
         public void ShowPostGameUI()
