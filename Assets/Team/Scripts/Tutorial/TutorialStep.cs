@@ -13,6 +13,13 @@ namespace Team.GameConstants
             BOX_2, 
             BOX_3, 
             BOX_4,
+            BOX_5,
+            R_BoardBox,
+            L_BoardBox,
+            TurnOrderBox,
+            ObjectiveBox,
+            PlayBox
+
         }
     }
 }
@@ -22,11 +29,13 @@ namespace Team.Gameplay.Tutorial
     [System.Serializable]
     public class TutorialData
     {
+        public string header;
         public string message;
         public TutUIElement uiElement;
 
         public TutorialData(TutorialData _data)
         {
+            header = _data.header;
             message = _data.message;
             uiElement = _data.uiElement;
         }
@@ -43,10 +52,13 @@ namespace Team.Gameplay.Tutorial
         public TutUIElement ElementID => elementID;
 
         [SerializeField]
+        private TextMeshProUGUI _headerText;
+        [SerializeField]
         private TextMeshProUGUI _tutorialText;
 
-        public void PopulateTutorialBox(string _message)
+        public void PopulateTutorialBox(string _header, string _message)
         {
+            _headerText.text = _header;
             _tutorialText.text = _message;  
         }
 
