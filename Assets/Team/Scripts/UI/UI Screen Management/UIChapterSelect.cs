@@ -83,6 +83,7 @@ namespace Team.UI
         public void OnSelectButtonClicked()
         {
             //Go to level selection screen
+            UIManager.Instance.ShowLevelSelectionUI();
         }
     }
 }

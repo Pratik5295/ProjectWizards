@@ -252,7 +252,7 @@ namespace Team.Managers
 
         public async void StopLevel()
         {
-            UIManager.Instance.ShowLevelSelectionUI();
+            UIManager.Instance.ShowChapterSelectionUI();
 
             await CleanupLevelContentAsync();
         }
