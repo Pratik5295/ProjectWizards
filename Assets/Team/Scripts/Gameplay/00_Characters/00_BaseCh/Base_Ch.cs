@@ -372,7 +372,10 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         {
             movementAmount = 0; movementAmount += 2;
         }
-        else movementAmount++;
+        else
+        {
+            movementAmount++;
+        }
 
         smoothingTime = .1f;
         return movementAmount;
@@ -569,10 +572,6 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
             OnAbilityCompleted();
             OnTurnComplete?.Invoke(); //FUTURE SCARE: Maybe will cause an issue
         }
-        if (_currentTile.IsIceTile())
-        {
-
-        }
     }
 
 
@@ -581,6 +580,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         switch (projectileType)
         {
             case Enum_ProjectileType.Fireball:
+                _currentTile.UpdateOccupiedStatus(false, gameObject);
                 if (charEffectsSO)
                 {
                     Instantiate(charEffectsSO._ignitionVFX, transform.position, Quaternion.identity);
@@ -599,6 +599,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     private void KillCharacter(bool wasHitFireball = false)
     {
         CharState = Enum_CharacterState.Dead;
+
         if (!wasHitFireball)
         {
             if (charEffectsSO)
@@ -696,6 +697,7 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
     {
         _meshRenderer.gameObject.SetActive(false);
         _collider.enabled = false;
+
 
         _currentTile.UpdateOccupiedStatus(false, gameObject);
     }

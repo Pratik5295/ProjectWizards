@@ -38,4 +38,10 @@ public class PostEffectsSO : ScriptableObject
     [Space(8f)]
 
     public float P_TargetCA_Intensity = 0.75f;
+
+
+    [Header("Ice Post Effect Variables")]
+
+    public float I_TargetV_Intensity = 0.4f;
+    public Color I_TargetV_Colour = Color.aliceBlue;
 }
