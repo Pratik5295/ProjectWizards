@@ -2,7 +2,7 @@ using Team.Managers;
 using UnityEngine;
 using System.Collections.Generic;
 using Team.Gameplay.LevelSystem;
-using UnityEngine.Android;
+using DG.Tweening;
 
 namespace Team.UI
 {
@@ -18,6 +18,11 @@ namespace Team.UI
         //For now let it be one screen UI
         [SerializeField]
         private UIChapter UIChapter;
+
+        [SerializeField] private RectTransform chapterContainer;
+        [SerializeField] private float elementSpacing = 1100f; // space between items (1550 - 450 = 1100)
+        [SerializeField] private float animationDuration = 0.5f;
+
 
         public override void Start()
         {
@@ -70,9 +75,16 @@ namespace Team.UI
 
         private void ShowCurrentChapterData()
         {
-            var data = ChapterDataList[currentChapterIndex];
-            UIChapterInfo info = new UIChapterInfo(data.ChapterName, data.ChapterSprite, data.ChapterNumberSprite);
-            UIChapter.PopulateChapterInfo(info);
+            // Update UIChapter display
+            //var data = ChapterDataList[currentChapterIndex];
+            //UIChapterInfo info = new UIChapterInfo(data.ChapterName, data.ChapterSprite, data.ChapterNumberSprite);
+            //UIChapter.PopulateChapterInfo(info);
+
+            // Calculate target anchored position for the container
+            float targetX = -currentChapterIndex * elementSpacing;
+
+            // Animate the container to move to the correct position
+            chapterContainer.DOAnchorPosX(targetX, animationDuration).SetEase(Ease.InOutCubic);
         }
 
         public void GoBackToMainMenu()

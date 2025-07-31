@@ -8,7 +8,7 @@ using static Team.GameConstants.MetaConstants;
 
 namespace Team.Gameplay.LevelSystem
 {
-    public class Level : MonoBehaviour
+    public class UILevel : MonoBehaviour
     {
         [SerializeField]
         private TextMeshProUGUI levelNameText;
@@ -23,10 +23,10 @@ namespace Team.Gameplay.LevelSystem
         public LevelID LevelID => Info.Data.Stats.LevelID;
 
         [SerializeField]
-        private Color unlockedColor;
+        private Sprite defaultIcon;
 
         [SerializeField]
-        private Color completedColor;
+        private Sprite completeIcon;
 
         [SerializeField]
         private Image levelImage;
@@ -39,6 +39,11 @@ namespace Team.Gameplay.LevelSystem
         public LevelState Status;
 
         public Action<LevelID> OnCompletedLevel;
+
+        public void Reset()
+        {
+            levelImage.sprite = defaultIcon;
+        }
 
 
         public void PopulateLevelInfo(LevelDataSO _data)
@@ -59,11 +64,11 @@ namespace Team.Gameplay.LevelSystem
         {
             if (IsCompleted)
             {
-                levelImage.color = completedColor;
+                levelImage.sprite = completeIcon;
             }
             else
             {
-                levelImage.color = unlockedColor;
+                levelImage.sprite = defaultIcon;
             }
         }
 

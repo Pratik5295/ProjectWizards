@@ -37,11 +37,11 @@ namespace Team.Managers
         }
 
 
-        public List<Level> LevelList = new List<Level>();
+        public List<UILevel> LevelList = new List<UILevel>();
 
-        public Dictionary<LevelID, Level> LevelMap = new Dictionary<LevelID, Level>();
+        public Dictionary<LevelID, UILevel> LevelMap = new Dictionary<LevelID, UILevel>();
 
-        public Level CurrentLevel;
+        public UILevel CurrentLevel;
         public LevelID CurrentLevelID;
 
         public Action<LevelData> OnCurrentLevelUpdated;
@@ -309,7 +309,7 @@ namespace Team.Managers
             }
         }
 
-        public void AddLevelToMap(Level _level)
+        public void AddLevelToMap(UILevel _level)
         {
             LevelList.Add(_level);
         }

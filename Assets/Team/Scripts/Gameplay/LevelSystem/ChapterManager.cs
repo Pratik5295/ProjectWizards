@@ -30,7 +30,7 @@ namespace Team.Gameplay.LevelSystem
 
         private void Start()
         {
-            //LoadChaptersMap();
+            LoadChaptersMap();
         }
 
 
@@ -42,7 +42,7 @@ namespace Team.Gameplay.LevelSystem
                 ChaptersMap.Add(chapter.chapterData.Data.ChapterID, chapter);
                 chapter.Initialize();
             }
-            LevelManager.Instance.LoadLevelMap();
+            //LevelManager.Instance.LoadLevelMap();
         }
 
         [ContextMenu("Get All Chapter Details")]
