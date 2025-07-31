@@ -124,6 +124,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a9cecd0600af76543b8c36377b3e5b1f, type: 2}
   ChapterDataList: []
   UIChapter: {fileID: 228248715581440313}
+  levelSelectionScreen: {fileID: 0}
   chapterContainer: {fileID: 3884766325877435303}
   elementSpacing: 1100
   animationDuration: 0.5
@@ -363,10 +364,10 @@ RectTransform:
   - {fileID: 30975784444597670}
   m_Father: {fileID: 602932588070778370}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 30}
-  m_SizeDelta: {x: -700, y: -140}
+  m_SizeDelta: {x: 900, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &5954701763756944736
 GameObject:
