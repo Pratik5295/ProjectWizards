@@ -9,78 +9,68 @@ namespace Team.UI
 {
     public class UIInforPanel : MonoBehaviour
     {
+        [Header("Panel & Animation")]
         public RectTransform leftPanel;
         public float duration = 0.5f;
-
-        [SerializeField]
-        private bool isOpen = true;
-
-        // Positions
         private float openX = 250f;
         private float closedX = -180f;
 
-        [SerializeField]
-        private TextMeshProUGUI characterNameText;
+        [Header("Text & Video References")]
+        [SerializeField] private TextMeshProUGUI characterNameText;
+        [SerializeField] private TextMeshProUGUI abilityNameText;
+        [SerializeField] private TextMeshProUGUI abilityDescriptionText;
+        [SerializeField] private VideoPlayer gameplayVideo;
 
-        [SerializeField]
-        private TextMeshProUGUI abilityNameText;
+        [Header("State Tracking")]
+        [SerializeField] private bool isOpen = true;
+        [SerializeField] private string _cacheCharacterName;
 
-        [SerializeField]
-        private TextMeshProUGUI abilityDescriptionText;
-
-        [SerializeField]
-        private VideoPlayer gameplayVideo;
-
-        [SerializeField]
-        private string _cacheCharacterName;
-
+        private Tween currentTween = null;
         private Coroutine activeCoroutine = null;
+        private bool isLocked = false;
 
         public void Populate(CharacterDataStruct _data)
         {
-            if (activeCoroutine != null) return;
+            if (isLocked) return;
+            isLocked = true;
 
+            // First time opening
             if (string.IsNullOrEmpty(_cacheCharacterName))
             {
-                activeCoroutine = StartCoroutine(HandleOpeningPanel(_data));
-
+                activeCoroutine = StartCoroutine(OpenPanel(_data));
             }
+            // Same character clicked — close panel
+            else if (string.Equals(_cacheCharacterName, _data.CharacterName))
+            {
+                activeCoroutine = StartCoroutine(ClosePanel());
+            }
+            // Different character — switch panels
             else
             {
-                //Has name, check if its the same data file
-                if (string.Equals(_cacheCharacterName, _data.CharacterName))
-                {
-                    activeCoroutine = StartCoroutine(ClosePanel());
-                }
-                else
-                {
-                    //Opening different character, close current panel and open new one
-                    activeCoroutine =  StartCoroutine(PopulateCoroutine(_data));
-                }
-            }
-          
-        }
-
-        private IEnumerator PopulateCoroutine(CharacterDataStruct _data)
-        {
-            if (isOpen)
-            {
-                // Close panel and wait for animation to finish
-                yield return leftPanel.DOAnchorPosX(closedX, 0.2f).SetEase(Ease.InOutQuad).WaitForCompletion();
-
-                activeCoroutine = StartCoroutine(HandleOpeningPanel(_data));
-                isOpen = false;
-
-            }
-            else
-            {
-                // Open panel and wait if needed
-                yield return activeCoroutine = StartCoroutine(HandleOpeningPanel(_data));
+                activeCoroutine = StartCoroutine(SwapPanel(_data));
             }
         }
 
-        private IEnumerator HandleOpeningPanel(CharacterDataStruct _data)
+        private IEnumerator SwapPanel(CharacterDataStruct _data)
         {
+            KillCurrentTween();
+
+            // Close the current panel
+            currentTween = leftPanel.DOAnchorPosX(closedX, 0.2f).SetEase(Ease.InOutQuad);
+            yield return currentTween.WaitForCompletion();
+
+            isOpen = false;
+            _cacheCharacterName = string.Empty;
+
+            // Open new panel
+            yield return OpenPanel(_data);
+        }
+
+        private IEnumerator OpenPanel(CharacterDataStruct _data)
+        {
+            _cacheCharacterName = _data.CharacterName;
+
+            // Set content
             characterNameText.text = _data.CharacterName;
             abilityNameText.text = _data.AbilityName;
             abilityDescriptionText.text = _data.AbilityDescription;
@@ -88,23 +78,40 @@ namespace Team.UI
             gameplayVideo.clip = _data.AbilityVideo;
             gameplayVideo.Play();
 
-            // Open panel and wait if needed
-            yield return leftPanel.DOAnchorPosX(openX, duration).SetEase(Ease.InOutQuad).WaitForCompletion();
+            KillCurrentTween();
+
+            // Animate panel in
+            currentTween = leftPanel.DOAnchorPosX(openX, duration).SetEase(Ease.InOutQuad);
+            yield return currentTween.WaitForCompletion();
 
             isOpen = true;
-            _cacheCharacterName = _data.CharacterName;
+            
 
             activeCoroutine = null;
+            isLocked = false;
         }
 
         public IEnumerator ClosePanel()
         {
-            yield return leftPanel.DOAnchorPosX(closedX, 0.1f).SetEase(Ease.InOutQuad).WaitForCompletion();
+            KillCurrentTween();
+
+            currentTween = leftPanel.DOAnchorPosX(closedX, 0.1f).SetEase(Ease.InOutQuad);
+            yield return currentTween.WaitForCompletion();
 
             isOpen = false;
             _cacheCharacterName = string.Empty;
 
             activeCoroutine = null;
+            isLocked = false;
+        }
+
+        private void KillCurrentTween()
+        {
+            if (currentTween != null && currentTween.IsActive())
+            {
+                currentTween.Kill();
+                currentTween = null;
+            }
         }
     }
 }
