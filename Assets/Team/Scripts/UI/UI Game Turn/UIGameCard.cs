@@ -41,6 +41,9 @@ namespace Team.UI.Gameplay
         private Image wizardImage;
 
         [SerializeField]
+        private Image wizardBackgroundImage;
+
+        [SerializeField]
         private GameObject eyeObject;
 
         [SerializeField]
@@ -63,6 +66,9 @@ namespace Team.UI.Gameplay
 
         [SerializeField]
         private List<Sprite> cardSprites;
+
+        [SerializeField]
+        private List<Sprite> cardBackgroundSprites;
 
         #region Unity Methods
         protected void Start()
@@ -122,6 +128,8 @@ namespace Team.UI.Gameplay
             var CharacterCode = data.CharacterSkin.CharacterCode;
 
             wizardImage.sprite = cardSprites[(int)CharacterCode];
+
+            wizardBackgroundImage.sprite = cardBackgroundSprites[(int)CharacterCode];
 
             characterReskinner = _skinner;
 

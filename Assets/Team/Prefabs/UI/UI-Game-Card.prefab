@@ -596,6 +596,7 @@ MonoBehaviour:
   selectedScale: {x: 1.25, y: 1.25, z: 1.25}
   turnIndexIdentifier: {fileID: 8855314706832243483}
   wizardImage: {fileID: 116761877164976257}
+  wizardBackgroundImage: {fileID: 6074487038884162383}
   eyeObject: {fileID: 5158867922295398190}
   selectedOutline: {fileID: 739742781372475618}
   turnCompletedCard: {fileID: 2337515644879564602}
@@ -605,7 +606,12 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 752caa0074b65304fbfe3f16d4a5c566, type: 3}
   - {fileID: 21300000, guid: 185f9dfe917b1d643907ae7eaba5b124, type: 3}
   - {fileID: 21300000, guid: e1129310129b3ab46acfbc8444f79955, type: 3}
-  - {fileID: 21300000, guid: 2c932ff301b30ca4980a2e5f029e1047, type: 3}
+  - {fileID: 21300000, guid: 98ea2b22e82c5754b9ae1fa5e57a6a83, type: 3}
+  cardBackgroundSprites:
+  - {fileID: 21300000, guid: 3d610f27eb354654baf0d7d46e1f36ab, type: 3}
+  - {fileID: 21300000, guid: 614173c8a3bed9d4caf09f7625e3e67a, type: 3}
+  - {fileID: 21300000, guid: 1393921cff051a545bb886b4b3094fcf, type: 3}
+  - {fileID: 21300000, guid: a79f37d87b29c2b489e1a05181eb484d, type: 3}
 --- !u!114 &1385570991418537669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -634,7 +640,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
