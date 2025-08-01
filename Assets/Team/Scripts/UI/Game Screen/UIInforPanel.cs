@@ -86,14 +86,13 @@ namespace Team.UI
             abilityDescriptionText.text = _data.AbilityDescription;
 
             gameplayVideo.clip = _data.AbilityVideo;
+            gameplayVideo.Play();
 
             // Open panel and wait if needed
             yield return leftPanel.DOAnchorPosX(openX, duration).SetEase(Ease.InOutQuad).WaitForCompletion();
 
             isOpen = true;
             _cacheCharacterName = _data.CharacterName;
-
-            gameplayVideo.Play();
 
             activeCoroutine = null;
         }
