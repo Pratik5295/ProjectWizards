@@ -3,6 +3,7 @@ using DG.Tweening;
 using Team.Data;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Video;
 
 namespace Team.UI
 {
@@ -26,6 +27,9 @@ namespace Team.UI
 
         [SerializeField]
         private TextMeshProUGUI abilityDescriptionText;
+
+        [SerializeField]
+        private VideoPlayer gameplayVideo;
 
         [SerializeField]
         private string _cacheCharacterName;
@@ -81,11 +85,15 @@ namespace Team.UI
             abilityNameText.text = _data.AbilityName;
             abilityDescriptionText.text = _data.AbilityDescription;
 
+            gameplayVideo.clip = _data.AbilityVideo;
+
             // Open panel and wait if needed
             yield return leftPanel.DOAnchorPosX(openX, duration).SetEase(Ease.InOutQuad).WaitForCompletion();
 
             isOpen = true;
             _cacheCharacterName = _data.CharacterName;
+
+            gameplayVideo.Play();
 
             activeCoroutine = null;
         }
