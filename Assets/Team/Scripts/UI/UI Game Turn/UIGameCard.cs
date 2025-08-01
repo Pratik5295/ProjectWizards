@@ -41,6 +41,9 @@ namespace Team.UI.Gameplay
         private Image wizardImage;
 
         [SerializeField]
+        private GameObject eyeObject;
+
+        [SerializeField]
         private GameObject selectedOutline; //Game Object containing an image with selected outline effect
 
         [SerializeField]
@@ -67,6 +70,8 @@ namespace Team.UI.Gameplay
             OnSiblingIndexUpdatedEvent += OnSiblingIndexUpdatedEventHandler;
 
             UpdateTurnIndexText();
+
+            UpdateEye(false);
         }
 
         private void OnDestroy()
@@ -77,6 +82,11 @@ namespace Team.UI.Gameplay
             {
                 objectClickable.onHovered.RemoveAllListeners();
                 objectClickable.OnEnableClick.RemoveAllListeners();
+            }
+
+            if (characterRef != null)
+            {
+                characterRef.OnGhostingLockTriggered -= UpdateEye;
             }
         }
 
@@ -116,6 +126,11 @@ namespace Team.UI.Gameplay
             characterReskinner = _skinner;
 
             characterRef = characterReskinner.gameObject.GetComponent<Base_Ch>();
+
+            if (characterRef != null)
+            {
+                characterRef.OnGhostingLockTriggered += UpdateEye;
+            }
 
             objectClickable = characterRef.GetComponent<ObjectClickable>();
             objectClickable.onHovered.AddListener(OnObjectHovered);
@@ -222,6 +237,11 @@ namespace Team.UI.Gameplay
             selectedOutline.SetActive(false);
 
             transform.DOScale(defaultScale, MetaConstants.ScaleMaxTimer).SetEase(Ease.OutBack).WaitForCompletion();
+        }
+
+        private void UpdateEye(bool _lock)
+        {
+            eyeObject.SetActive(_lock);
         }
 
         private void OnObjectHovered(bool _hovered)
