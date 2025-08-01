@@ -234,10 +234,18 @@ namespace Team.Managers
 
 
             var nextLevelID = GetNextLevel();
-            var levelUI = levelSelectionScreen.GetLevelBox(nextLevelID);
 
-            //CurrentLevel.Info.Data.Stats.State = LevelState.COMPLETED;
-            SetCurrentLevel(levelUI,nextLevelID);
+            if (nextLevelID == LevelID.CHAPTERCOMPLETE)
+            {
+                CurrentLevelID = LevelID.CHAPTERCOMPLETE;
+            }
+            else
+            {
+                var levelUI = levelSelectionScreen.GetLevelBox(nextLevelID);
+
+                //CurrentLevel.Info.Data.Stats.State = LevelState.COMPLETED;
+                SetCurrentLevel(levelUI, nextLevelID);
+            }
         }
 
         public void PlayNextLevel()
@@ -245,6 +253,10 @@ namespace Team.Managers
             if (CurrentLevelID == LevelID.NONE)
             {
                 Debug.Log("No next level to play");
+            }
+            else if(CurrentLevelID == LevelID.CHAPTERCOMPLETE)
+            {
+                UIManager.Instance.ShowChapterSelectionUI();
             }
             else
             {

@@ -5,6 +5,7 @@ namespace Team.GameConstants
     {
         public enum LevelID
         {
+            CHAPTERCOMPLETE = 500,
             TEST = 999,
             NONE = -100,
             Ch101 = 0,
