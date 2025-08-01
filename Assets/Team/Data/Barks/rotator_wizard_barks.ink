@@ -1,14 +1,14 @@
 === OnClick ===
-- Who dares defy the earth?
-- Earth Mother, I will protect these lands...
+- Earth Mother...
+- I protect the lands.
 - My life for Mokosh!
-- No mercy for defilers like them.
-- Forgive them, they don't know like I do.
+- No mercy!
+- This is my land!
 ->DONE
 
 === OnCast ===
 - Bite the dust!
-- For the Earth Mother!
+- For Mokosh!
 - Watch your step!
 - Give me strength!
 - Rise!
