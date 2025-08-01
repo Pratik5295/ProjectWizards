@@ -90,10 +90,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2649131057077244431}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -50, y: 0}
+  m_SizeDelta: {x: 300, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3911014411109666271
 CanvasRenderer:
@@ -138,7 +138,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 406317207395901655}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 60bda170af270144091c3504fee760a1, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: e48c7841fd5d6d94ca6aa3040b5f4a15, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -152,12 +152,14 @@ VideoPlayer:
   m_TimeUpdateMode: 2
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 2
-  m_TargetAudioSources: []
-  m_DirectAudioVolumes: []
+  m_TargetAudioSources:
+  - {fileID: 0}
+  m_DirectAudioVolumes:
+  - 1
   m_Url: 
-  m_EnabledAudioTracks: 
-  m_DirectAudioMutes: 
-  m_ControlledAudioTrackCount: 0
+  m_EnabledAudioTracks: 01
+  m_DirectAudioMutes: 00
+  m_ControlledAudioTrackCount: 1
   m_PlayOnAwake: 1
   m_SkipOnDrop: 1
   m_Looping: 1
@@ -545,9 +547,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftPanel: {fileID: 0}
   duration: 0.5
+  isOpen: 1
   characterNameText: {fileID: 6382831268967962897}
   abilityNameText: {fileID: 4010120022445440250}
   abilityDescriptionText: {fileID: 8992247954977977143}
+  _cacheCharacterName: 
 --- !u!1001 &788666472379245252
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -639,6 +643,10 @@ PrefabInstance:
     - target: {fileID: 5937354830685912021, guid: a750fc2159d79e74884bc0be8c9a1c46, type: 3}
       propertyPath: m_text
       value: Character Wizard
+      objectReference: {fileID: 0}
+    - target: {fileID: 5937354830685912021, guid: a750fc2159d79e74884bc0be8c9a1c46, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4286571254
       objectReference: {fileID: 0}
     - target: {fileID: 5937354830685912021, guid: a750fc2159d79e74884bc0be8c9a1c46, type: 3}
       propertyPath: m_VerticalAlignment
@@ -772,7 +780,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5937354830685912021, guid: b530c8a18573c974590426f276e4d7be, type: 3}
       propertyPath: m_fontSize
-      value: 25.5
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 5937354830685912021, guid: b530c8a18573c974590426f276e4d7be, type: 3}
       propertyPath: m_enableAutoSizing
