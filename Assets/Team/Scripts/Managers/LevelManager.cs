@@ -82,6 +82,11 @@ namespace Team.Managers
 
         public void SetCurrentLevel(UILevel _uiLevel,LevelID _level)
         {
+            if(CurrentLevel != null)
+            {
+                CurrentLevel.UnSelected();
+            }
+
             CurrentLevelID = _level;
 
             if (CurrentLevelID != LevelID.NONE)
@@ -90,6 +95,7 @@ namespace Team.Managers
                 if (LevelMap.ContainsKey(CurrentLevelID))
                 {
                     CurrentLevel = _uiLevel;
+                    CurrentLevel.Selected();
 
 
                     //Check if the level has tutorials
