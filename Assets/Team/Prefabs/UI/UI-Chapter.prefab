@@ -469,7 +469,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2728830239950422474, guid: a750fc2159d79e74884bc0be8c9a1c46, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2728830239950422474, guid: a750fc2159d79e74884bc0be8c9a1c46, type: 3}
       propertyPath: m_AnchorMax.y
@@ -485,7 +485,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2728830239950422474, guid: a750fc2159d79e74884bc0be8c9a1c46, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 500
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2728830239950422474, guid: a750fc2159d79e74884bc0be8c9a1c46, type: 3}
       propertyPath: m_SizeDelta.y
@@ -521,11 +521,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2728830239950422474, guid: a750fc2159d79e74884bc0be8c9a1c46, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 459
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2728830239950422474, guid: a750fc2159d79e74884bc0be8c9a1c46, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -102
+      value: -100
       objectReference: {fileID: 0}
     - target: {fileID: 2728830239950422474, guid: a750fc2159d79e74884bc0be8c9a1c46, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -545,11 +545,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5937354830685912021, guid: a750fc2159d79e74884bc0be8c9a1c46, type: 3}
       propertyPath: m_fontSize
-      value: 64
+      value: 72
       objectReference: {fileID: 0}
     - target: {fileID: 5937354830685912021, guid: a750fc2159d79e74884bc0be8c9a1c46, type: 3}
       propertyPath: m_fontSizeBase
       value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 5937354830685912021, guid: a750fc2159d79e74884bc0be8c9a1c46, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5937354830685912021, guid: a750fc2159d79e74884bc0be8c9a1c46, type: 3}
       propertyPath: m_fontColor32.rgba
