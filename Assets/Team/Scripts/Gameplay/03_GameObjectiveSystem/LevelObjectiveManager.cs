@@ -7,6 +7,8 @@ using Team.Gameplay.Characters;
 using Team.Managers;
 using Team.UI;
 using UnityEngine;
+using DG.Tweening;
+using UnityEngine.Rendering.Universal;
 
 namespace Team.GameConstants
 {
@@ -33,6 +35,8 @@ namespace Team.Gameplay.ObjectiveSystem
         [SerializeField] private UIObjectivesHolder objectivesHolder;
 
         public string Description => "Loading Objectives...";
+
+        public Action OnObjectivesCheckCompletedEvent;
 
         private void Awake()
         {
@@ -209,10 +213,6 @@ namespace Team.Gameplay.ObjectiveSystem
                 if (!result && objective.Data.Priority == ObjectivePriority.PRIMARY)   //Primary Objectives failing would result in level failure
                 {
                     levelCompleted = false;
-                    StressReceiver CameraShaker = Camera.main.GetComponent<StressReceiver>();
-                    CameraShaker.TraumaExponent = 0.1f;
-                    CameraShaker.SetTranslationRotationShake(new Vector3(0.75f, 0, 0.2f), Vector3.zero);
-                    CameraShaker.InduceStress(MetaConstants.CamShakeValue);
                     //Play a one shot audio for failure.
                 }
                 objectivesHolder.UpdateObjective(objective.Data, result);
@@ -220,9 +220,30 @@ namespace Team.Gameplay.ObjectiveSystem
 
             if (levelCompleted)
             {
-                LevelManager.Instance.OnCurrentLevelCompleted();
-                UIManager.Instance.ShowEmptyUI();
-                Invoke(nameof(ShowLevelCompletedUI), MetaConstants.ShowPostGameScreenAfter);
+                float screenEffectValue = 0f;
+                VFXManager ConfettiEffect = Camera.main.GetComponentInChildren<VFXManager>();
+                if (ConfettiEffect) { ConfettiEffect.EnableParticleEffectChildren(); }
+
+                DOTween.To(() => screenEffectValue, x =>
+                { screenEffectValue = x; PostProcessManager.instance.EnableDisableWinEffect(x); },
+                    1f, 
+                    1f).SetEase(Ease.InOutSine).OnComplete(() =>
+                    {
+                        DOTween.To(() => screenEffectValue, x =>
+                        { screenEffectValue = x; PostProcessManager.instance.EnableDisableWinEffect(x); },
+                        0f,
+                        1f)
+                        .OnComplete(() =>
+                        {
+                             LevelManager.Instance.OnCurrentLevelCompleted();
+                             UIManager.Instance.ShowEmptyUI();
+                             Invoke(nameof(ShowLevelCompletedUI), MetaConstants.ShowPostGameScreenAfter);
+                        });
+                    }); 
+            }
+            else
+            {
+                OnObjectivesCheckCompletedEvent?.Invoke();
             }
         }
 

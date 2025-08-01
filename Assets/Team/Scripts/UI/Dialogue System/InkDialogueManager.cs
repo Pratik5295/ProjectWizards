@@ -11,10 +11,10 @@ namespace Team.GameConstants
     {
         public const float HideDialogueScreenAfter = 2f;
         public const float DialoguePauseBetweenLines = 1f;
-        public const float TypeWriterSpeed = 0.05f;
+        public const float TypeWriterSpeed = 0.04f;
 
         public const float MaxScrollHeight = 2000f;
-        public const float DialogueScrollSpeed = 20f;
+        public const float DialogueScrollSpeed = 25f;
     }
 }
 

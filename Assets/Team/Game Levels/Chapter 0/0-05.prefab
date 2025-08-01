@@ -4987,16 +4987,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelTiles: {fileID: 2857168496891649937}
   CharactersMap:
-  - CharacterID: Fireball Wizard 1
-    CharacterPrefab: {fileID: 5407380294395882597, guid: a0b6075a9aa68a6489dd045aa099c594, type: 3}
-    StartTileID:
-      x: 3
-      y: 5
-    FacingDirection: 2
-    CharacterSkin:
-      CharacterCode: 0
-      SkinMaterial: {fileID: 2100000, guid: 419fe366c67e0c5448ce0f92f5ea0370, type: 2}
-      CharacterColor: {r: 1, g: 0, b: 0, a: 1}
   - CharacterID: Absorb Wizard 1
     CharacterPrefab: {fileID: 5407380294395882597, guid: 604f4677b03d1274db7eb86d5b6438d1, type: 3}
     StartTileID:
@@ -5017,6 +5007,16 @@ MonoBehaviour:
       CharacterCode: 1
       SkinMaterial: {fileID: 2100000, guid: 91c0701f2e59aaa4aa8070d3b87243a0, type: 2}
       CharacterColor: {r: 1, g: 0.9964248, b: 0, a: 1}
+  - CharacterID: Fireball Wizard 1
+    CharacterPrefab: {fileID: 5407380294395882597, guid: a0b6075a9aa68a6489dd045aa099c594, type: 3}
+    StartTileID:
+      x: 3
+      y: 5
+    FacingDirection: 2
+    CharacterSkin:
+      CharacterCode: 0
+      SkinMaterial: {fileID: 2100000, guid: 419fe366c67e0c5448ce0f92f5ea0370, type: 2}
+      CharacterColor: {r: 1, g: 0, b: 0, a: 1}
   _objectiveMap:
   - ObjectiveName: Ensure the highlighted Stoynik mage reaches the target goal safely.
     ObjectiveTargets:

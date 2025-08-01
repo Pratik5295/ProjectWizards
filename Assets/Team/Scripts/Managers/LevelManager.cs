@@ -1,7 +1,7 @@
-using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Team.Gameplay.GameLevelSystem;
 using Team.Gameplay.GridSystem;
 using Team.Gameplay.LevelSystem;
@@ -12,6 +12,19 @@ using static Team.GameConstants.LevelConstants;
 
 namespace Team.Managers
 {
+    [System.Serializable]
+    public struct LevelPacket
+    {
+        public ChapterID chapterID;
+        public LevelData LevelData;
+
+        public LevelPacket(ChapterID _chapterId, LevelData _levelData)
+        {
+            chapterID = _chapterId;
+            LevelData = _levelData;
+        }
+    }
+
     [DefaultExecutionOrder(-20)]
     public class LevelManager : MonoBehaviour
     {
@@ -23,7 +36,7 @@ namespace Team.Managers
         private GameLoadManager gameLoadManager;
 
         [SerializeField]
-        private UILevelSelectionScreen selectionScreen;
+        private UILevelSelectionScreen levelSelectionScreen;
 
         [SerializeField]
         private GameLevel createdLevel = null;
@@ -39,12 +52,13 @@ namespace Team.Managers
             get { return createdEnvironment; }
         }
 
+        public List<LevelPacket> AllLevels = new List<LevelPacket>();
 
-        public List<Level> LevelList = new List<Level>();
+        public Dictionary<LevelID, LevelData> LevelMap = new Dictionary<LevelID, LevelData>();
 
-        public Dictionary<LevelID, Level> LevelMap = new Dictionary<LevelID, Level>();
+        public UILevel CurrentLevel;
 
-        public Level CurrentLevel;
+        public string CurrentLevelName => CurrentLevel.Info.Stats.LevelName;
         public LevelID CurrentLevelID;
 
         public Action<LevelData> OnCurrentLevelUpdated;
@@ -58,7 +72,7 @@ namespace Team.Managers
 
         private void Awake()
         {
-            if(Instance == null)
+            if (Instance == null)
             {
                 Instance = this;
             }
@@ -68,42 +82,43 @@ namespace Team.Managers
             }
         }
 
-        private void Start()
+        public void SetCurrentLevel(UILevel _uiLevel,LevelID _level)
         {
-            //LoadLevelMap();
-        }
+            if(CurrentLevel != null)
+            {
+                CurrentLevel.UnSelected();
+            }
 
-        public void SetCurrentLevel(LevelID _level)
-        {
             CurrentLevelID = _level;
 
-            if(CurrentLevelID != LevelID.NONE)
+            if (CurrentLevelID != LevelID.NONE)
             {
                 //Check if the current level exists in the map
                 if (LevelMap.ContainsKey(CurrentLevelID))
                 {
-                    var original = LevelMap[_level];
-                    CurrentLevel = original;
+                    CurrentLevel = _uiLevel;
+                    CurrentLevel.Selected();
 
 
                     //Check if the level has tutorials
-                    if (CurrentLevel.Info.Data.HasTutorial)
+                    if (CurrentLevel.Info.HasTutorial)
                     {
-                        UIManager.Instance.InitializeTutorial(CurrentLevel.Info.Data.TutorialSteps);
+                        UIManager.Instance.InitializeTutorial(CurrentLevel.Info.TutorialSteps);
                     }
                     else
                     {
                         UIManager.Instance.ResetNoTutorial();
                     }
 
+                    levelSelectionScreen.OnSetLevelInfoPanel(CurrentLevel.Info);
 
-                    OnCurrentLevelUpdated?.Invoke(CurrentLevel.Info.Data);
+                    OnCurrentLevelUpdated?.Invoke(CurrentLevel.Info);
                 }
                 else
                 {
                     Debug.Log($"New current level:{CurrentLevelID} doesnt exist in the level map.");
                 }
-               
+
             }
         }
 
@@ -132,8 +147,6 @@ namespace Team.Managers
                 IsLoading = true;
                 OnLoadingStarted?.Invoke();
 
-                Debug.Log($"[LevelManager] Starting to load level: {CurrentLevel.Info.Data.Stats.LevelName}");
-
                 // Progress tracking with proper logging
                 var progressReporter = new Progress<float>(progress =>
                 {
@@ -158,7 +171,7 @@ namespace Team.Managers
                 Tuple<GameLevel, GameObject> result = null;
                 // Use GameLoadManager to load the level - WAIT for completion
                 result = await gameLoadManager.LoadGameLevelAsync(
-                    CurrentLevel.Info.Data.GameLevelPrefab.gameObject, CurrentLevel.Info.Data.EnvironmentPrefab,
+                    CurrentLevel.Info.GameLevelPrefab.gameObject, CurrentLevel.Info.EnvironmentPrefab,
                     progressReporter
                 );
 
@@ -166,10 +179,10 @@ namespace Team.Managers
                 createdEnvironment = result.Item2;
 
                 //Load in Environment.
-               /* createdEnvironment = await gameLoadManager.LoadEnvironmentAsync(
-                    CurrentLevel.Info.Data.EnvironmentPrefab,
-                    progressReporter
-                    );*/
+                /* createdEnvironment = await gameLoadManager.LoadEnvironmentAsync(
+                     CurrentLevel.Info.Data.EnvironmentPrefab,
+                     progressReporter
+                     );*/
 
                 // Ensure the level is fully loaded before proceeding
                 if (createdLevel == null)
@@ -183,21 +196,19 @@ namespace Team.Managers
                 FireSpread.Instance.Initialise();
 
                 // Setup dialogue if available
-                if (CurrentLevel.Info.Data.DialogueAsset != null)
+                if (CurrentLevel.Info.DialogueAsset != null)
                 {
-                    UIManager.Instance.SetCurrentDialogue(CurrentLevel.Info.Data.DialogueAsset);
+                    UIManager.Instance.SetCurrentDialogue(CurrentLevel.Info.DialogueAsset);
                 }
 
                 // Setup turn manager breakpoint
                 if (GameTurnManager.Instance != null)
                 {
-                    GameTurnManager.Instance.HasBreakpoint(CurrentLevel.Info.Data.HasBreakPoint);
+                    GameTurnManager.Instance.HasBreakpoint(CurrentLevel.Info.HasBreakPoint);
                 }
 
                 // Wait one more frame to ensure everything is properly initialized
                 await UniTask.Yield();
-
-                Debug.Log($"[LevelManager] Level {CurrentLevel.Info.Data.Stats.LevelName} loaded successfully!");
             }
             catch (Exception ex)
             {
@@ -221,8 +232,12 @@ namespace Team.Managers
             //Notify level its completed
             CurrentLevel.OnLevelCompleted();
 
+
+            var nextLevelID = GetNextLevel();
+            var levelUI = levelSelectionScreen.GetLevelBox(nextLevelID);
+
             //CurrentLevel.Info.Data.Stats.State = LevelState.COMPLETED;
-            SetCurrentLevel(GetNextLevel());
+            SetCurrentLevel(levelUI,nextLevelID);
         }
 
         public void PlayNextLevel()
@@ -243,7 +258,7 @@ namespace Team.Managers
         /// </summary>
         public void StartLevel()
         {
-            if (CurrentLevel.Info.Data.DialogueAsset == null)
+            if (CurrentLevel.Info.DialogueAsset == null)
             {
                 UIManager.Instance.ShowGameUI();
             }
@@ -312,10 +327,6 @@ namespace Team.Managers
             }
         }
 
-        public void AddLevelToMap(Level _level)
-        {
-            LevelList.Add(_level);
-        }
 
         /// <summary>
         /// Fill out the level map dictionary based on all the levels contained 
@@ -323,21 +334,22 @@ namespace Team.Managers
         /// </summary>
         public void LoadLevelMap()
         {
-            if(LevelList.Count == 0)
+            if (AllLevels.Count == 0)
             {
                 Debug.LogError("The level list is empty", gameObject);
                 return;
             }
 
-            foreach(var level in LevelList)
+            foreach (var level in AllLevels)
             {
-                LevelMap.Add(level.Info.Data.Stats.LevelID, level);
+                var levelID = level.LevelData.Stats.LevelID;
+                LevelMap.Add(levelID, level.LevelData);
             }
         }
 
         private LevelID GetNextLevel()
         {
-            return CurrentLevel.Info.Data.Stats.NextLevel;
+            return CurrentLevel.Info.Stats.NextLevel;
         }
     }
 }

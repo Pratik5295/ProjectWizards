@@ -15,7 +15,11 @@ MonoBehaviour:
   Data:
     Stats:
       LevelID: 16
-      LevelName: Level 0-05
+      LevelName: Order Above All
+      LevelDescription: "You are the only one who can restore the divine order\u2026"
+      LevelObjectives:
+      - Ensure the highlighted Stoynik mage reaches the target goal safely.
+      - Ensure the highlighted Ogonik mage survives.
       State: 1
       NextLevel: 17
     GameLevelPrefab: {fileID: 7179478679921865884, guid: 72e6b28ac1896244f8d9461626d37716, type: 3}
@@ -30,11 +34,13 @@ MonoBehaviour:
         Data4: 0
       Path: 
     TutorialSteps:
-    - message: ' 1/2 <br><br> After absorbing a spell, Stoyniki mages are vulnerable
+    - header: 
+      message: ' 1/2 <br><br> After absorbing a spell, Stoyniki mages are vulnerable
         to other projectiles. Use them to redirect projectile spells. <br><br> Click
         the box to dismiss.'
-      uiElement: 0
-    - message: 2/2 <br> <br> Some levels present you with an optional objective.
+      uiElement: 5
+    - header: 
+      message: 2/2 <br> <br> Some levels present you with an optional objective.
         They are not required to complete a level, but provide an extra challenge
         for those seeking it. <br><br>  Click the box to dismiss.
-      uiElement: 0
+      uiElement: 8

@@ -15,7 +15,10 @@ MonoBehaviour:
   Data:
     Stats:
       LevelID: 13
-      LevelName: Level 0-02
+      LevelName: Change Their Position
+      LevelDescription: "Control the battle to achieve your goals\u2026"
+      LevelObjectives:
+      - Ensure the highlighted Vetrun mage reaches the target goal safely.
       State: 1
       NextLevel: 14
     GameLevelPrefab: {fileID: 7325720232876965129, guid: 1fc85299639a8e14789a3d52f8892ab7, type: 3}
@@ -30,7 +33,8 @@ MonoBehaviour:
         Data4: 0
       Path: 
     TutorialSteps:
-    - message: 1/1 <br> <br>This is the Zemiri mage. They lift and turn tiles, with
+    - header: 
+      message: 1/1 <br> <br>This is the Zemiri mage. They lift and turn tiles, with
         anything on them, clockwise. Use them to manipulate the direction other mages
         are facing. <br> <br>Click the box to dismiss.
-      uiElement: 0
+      uiElement: 5

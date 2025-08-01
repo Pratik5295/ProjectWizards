@@ -15,10 +15,13 @@ MonoBehaviour:
   Data:
     Stats:
       LevelID: 12
-      LevelName: Level 0-01
+      LevelName: Control Their Action
+      LevelDescription: "The Kronicle has been awakened as a Divine last resort\u2026"
+      LevelObjectives:
+      - Ensure the highlighted Vetrun mage reaches the target goal safely.
       State: 1
       NextLevel: 13
-    GameLevelPrefab: {fileID: 4506163112564564748, guid: ed8f67727afed3f488cb70442f83de54, type: 3}
+    GameLevelPrefab: {fileID: 8420477792311323245, guid: ca52b96aa2dfc734ea5af72b25a8fddf, type: 3}
     EnvironmentPrefab: {fileID: 573041560392627169, guid: 9a9b9829f6c83ba47948e1b439322926, type: 3}
     DialogueAsset: {fileID: 4900000, guid: ac68b47203cbb354991ab739c974e56d, type: 3}
     HasBreakPoint: 0
@@ -30,32 +33,40 @@ MonoBehaviour:
         Data4: 0
       Path: 
     TutorialSteps:
-    - message: 1/8 <br><br> In this game, you control the order in which mages take
+    - header: 
+      message: 1/8 <br><br> In this game, you control the order in which mages take
         their predetermined actions  to complete an objective. <br><br> Click the
         box to dismiss.
-      uiElement: 0
-    - message: 2/8 <br><br> This is the Turn Order Bar. Each portrait in it represents
+      uiElement: 5
+    - header: 
+      message: 2/8 <br><br> This is the Turn Order Bar. Each portrait in it represents
         a mage in the field. You can drag the portraits to determine the order in
         which mages cast their spells. <br><br> Click the box to dismiss.
-      uiElement: 1
-    - message: 3/8 <br><br> The left-most mage will go first and the right-most mage
+      uiElement: 7
+    - header: 
+      message: 3/8 <br><br> The left-most mage will go first and the right-most mage
         will go last. <br><br> Click the box to dismiss.
-      uiElement: 0
-    - message: 4/8 <br><br> In this level, you control the Vetruni mages. They fire
+      uiElement: 7
+    - header: 
+      message: 4/8 <br><br> In this level, you control the Vetruni mages. They fire
         wind projectiles that push the target they hit.  <br> <br>Click the box to
         dismiss.
-      uiElement: 0
-    - message: 5/8 <br><br> You can hover over both portraits and mages in the level
+      uiElement: 5
+    - header: 
+      message: 5/8 <br><br> You can hover over both portraits and mages in the level
         to see a preview of their spell. <br><br> Click the box to dismiss.
-      uiElement: 0
-    - message: 6/8 <br> <br>You can use also left-click to lock and unlock previews
+      uiElement: 5
+    - header: 
+      message: 6/8 <br> <br>You can use also left-click to lock and unlock previews
         and right-click to access a mage's information panel. <br><br> Click the
         box to dismiss.
-      uiElement: 0
-    - message: 7/8 <br> <br>This is the level objective. You must fulfill it to pass
+      uiElement: 7
+    - header: 
+      message: 7/8 <br> <br>This is the level objective. You must fulfill it to pass
         the level. <br> <br>Click the box to dismiss.
-      uiElement: 1
-    - message: 8/8 <br><br> When you are ready, press Play to see whether you created
+      uiElement: 8
+    - header: 
+      message: 8/8 <br><br> When you are ready, press Play to see whether you created
         the correct order. If your order is wrong, a Restart button will appear.
         <br><br> Click the box to dismiss.
-      uiElement: 0
+      uiElement: 9

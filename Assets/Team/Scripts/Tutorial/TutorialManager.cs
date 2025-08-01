@@ -61,7 +61,7 @@ namespace Team.Managers
 
             currentStep = GetElementByType(step.uiElement);
 
-            currentStep.PopulateTutorialBox(step.message);
+            currentStep.PopulateTutorialBox(step.header, step.message);
 
             currentStep.gameObject.SetActive(true);
         }
@@ -83,7 +83,7 @@ namespace Team.Managers
 
                 currentStep = GetElementByType(step.uiElement);
 
-                currentStep.PopulateTutorialBox(step.message);
+                currentStep.PopulateTutorialBox(step.header, step.message);
 
                 currentStep.gameObject.SetActive(true);
             }
