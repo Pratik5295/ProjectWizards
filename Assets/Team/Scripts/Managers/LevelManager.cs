@@ -57,6 +57,8 @@ namespace Team.Managers
         public Dictionary<LevelID, LevelData> LevelMap = new Dictionary<LevelID, LevelData>();
 
         public UILevel CurrentLevel;
+
+        public string CurrentLevelName => CurrentLevel.Info.Stats.LevelName;
         public LevelID CurrentLevelID;
 
         public Action<LevelData> OnCurrentLevelUpdated;
