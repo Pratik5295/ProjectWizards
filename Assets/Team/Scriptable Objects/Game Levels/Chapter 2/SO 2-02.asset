@@ -15,7 +15,12 @@ MonoBehaviour:
   Data:
     Stats:
       LevelID: 7
-      LevelName: 2-02
+      LevelName: Overwhelmed
+      LevelDescription: One by one, the loyalists give their lives in the name of
+        protecting the dignity of their diety. The few remaining are outnumbered
+        5-to-1...
+      LevelObjectives:
+      - Defeat the highlighted Zemir mage.
       State: 1
       NextLevel: 8
     GameLevelPrefab: {fileID: 3168187852947123936, guid: c9d1d6ac6d5b5324fbeebbcb915dbc28, type: 3}

@@ -15,7 +15,12 @@ MonoBehaviour:
   Data:
     Stats:
       LevelID: 5
-      LevelName: 1-06
+      LevelName: From Skirmish to War
+      LevelDescription: "The Defenders of Volshavia are scattered all over the kingdom,
+        disorganised and weak, while Koschev's warbands have now become armies. They
+        begin the march to Perun's Step in order to send a clear message\u2026"
+      LevelObjectives:
+      - Defeat the highlighted Ogonik mage.
       State: 1
       NextLevel: -100
     GameLevelPrefab: {fileID: 5031299853038245827, guid: 3d442cb16caea294680b5a14475adf40, type: 3}

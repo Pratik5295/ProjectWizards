@@ -15,11 +15,24 @@ MonoBehaviour:
   Data:
     Stats:
       LevelID: 3
-      LevelName: 1-04
+      LevelName: Followers of Mokosh
+      LevelDescription: "The Zemiri, proud followers of the Earth Mother, only care
+        about the safety of the earth they walk upon. Many have left their families,
+        farms and animals in a hurry to meet with the Vetruni in the Gardens, to
+        train and be ready for war\u2026"
+      LevelObjectives:
+      - Ensure the highlighted Zemir mage reaches the target goal safely.
       State: 1
       NextLevel: 4
     GameLevelPrefab: {fileID: 332373388132692383, guid: 8ed95ab5f52f9bc41b3b3271b27391a0, type: 3}
     EnvironmentPrefab: {fileID: 7296427355831463175, guid: 43fc7d6d6f1e59d4ea786a8416c47be8, type: 3}
     DialogueAsset: {fileID: 0}
     HasBreakPoint: 0
+    s_ambience:
+      Guid:
+        Data1: 0
+        Data2: 0
+        Data3: 0
+        Data4: 0
+      Path: 
     TutorialSteps: []
