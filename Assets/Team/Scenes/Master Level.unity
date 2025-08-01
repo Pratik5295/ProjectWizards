@@ -508,6 +508,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7638729199516412782, guid: ad8e50a5c91934045b0781e96ba065aa, type: 3}
   m_PrefabInstance: {fileID: 327422296}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &336670284 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8288549276550955440, guid: 329ab8d882f5c9f4ab11873f22d956f7, type: 3}
+  m_PrefabInstance: {fileID: 2422107491572252979}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ff3c8c01e14a504aa2298cb209e26d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &341624804 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4254206908453149956, guid: b0a6b0178f3cd6d4bb76bd079efb0460, type: 3}
@@ -1937,23 +1948,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5067922478391756583, guid: 329ab8d882f5c9f4ab11873f22d956f7, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5067922478391756583, guid: 329ab8d882f5c9f4ab11873f22d956f7, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5067922478391756583, guid: 329ab8d882f5c9f4ab11873f22d956f7, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 240
       objectReference: {fileID: 0}
     - target: {fileID: 5067922478391756583, guid: 329ab8d882f5c9f4ab11873f22d956f7, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 5067922478391756583, guid: 329ab8d882f5c9f4ab11873f22d956f7, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -160
       objectReference: {fileID: 0}
     - target: {fileID: 5119196839461072634, guid: 329ab8d882f5c9f4ab11873f22d956f7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -2421,7 +2432,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8683071621568238653, guid: 329ab8d882f5c9f4ab11873f22d956f7, type: 3}
       propertyPath: uiTutorialList.Array.size
-      value: 10
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 8683071621568238653, guid: 329ab8d882f5c9f4ab11873f22d956f7, type: 3}
       propertyPath: 'uiTutorialList.Array.data[2]'
@@ -2455,6 +2466,10 @@ PrefabInstance:
       propertyPath: 'uiTutorialList.Array.data[9]'
       value: 
       objectReference: {fileID: 625647036}
+    - target: {fileID: 8683071621568238653, guid: 329ab8d882f5c9f4ab11873f22d956f7, type: 3}
+      propertyPath: 'uiTutorialList.Array.data[10]'
+      value: 
+      objectReference: {fileID: 336670284}
     - target: {fileID: 8802126147139731937, guid: 329ab8d882f5c9f4ab11873f22d956f7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 2
