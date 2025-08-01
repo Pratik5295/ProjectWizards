@@ -478,7 +478,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1571968470272347612, guid: 0ad9edccdd951c0408d136bc580ac762, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2139549691079125722, guid: 0ad9edccdd951c0408d136bc580ac762, type: 3}
       propertyPath: m_Materials.Array.size
@@ -885,6 +885,10 @@ PrefabInstance:
     - target: {fileID: 7760099576484758681, guid: 23635d73fcbd5104895531e536a1e3ee, type: 3}
       propertyPath: m_Name
       value: Env_Chapter2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7760099576484758681, guid: 23635d73fcbd5104895531e536a1e3ee, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
