@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Team.Managers;
+using Team.UI;
 using TMPro;
 using UnityEngine;
 using static Team.GameConstants.LevelConstants;
@@ -19,7 +20,7 @@ namespace Team.Gameplay.LevelSystem
 
         public List<LevelID> CompletedLevels = new List<LevelID>();
 
-        public List<Level> LevelObjects = new List<Level>();
+        public List<UILevel> LevelObjects = new List<UILevel>();
 
         public int LevelsCompleted => CompletedLevels.Count;
 
@@ -27,23 +28,24 @@ namespace Team.Gameplay.LevelSystem
 
         public ChapterID NextChapterID => chapterData.NextLevel;
 
+        //[Space(5)]
+        //[Header("UI Variables/Components")]
+        //[SerializeField]
+        //private GameObject uiLevelPrefab;
+        //[SerializeField]
+        //private TextMeshProUGUI chapterTitleText;
+        //[SerializeField]
+        //private Transform chapterHolderTransform;
+        //[SerializeField]
+        //private CanvasGroup chapterCanvasGroup;
+
         [Space(5)]
-        [Header("UI Variables/Components")]
+        [Header("UI Section")]
+
         [SerializeField]
-        private GameObject uiLevelPrefab;
-        [SerializeField]
-        private TextMeshProUGUI chapterTitleText;
-        [SerializeField]
-        private Transform chapterHolderTransform;
-        [SerializeField]
-        private CanvasGroup chapterCanvasGroup;
+        private UIChapter UIChapter;
 
         #region Unity Methods
-
-        private void Start()
-        {
-           
-        }
 
         private void OnDestroy()
         {
@@ -81,7 +83,7 @@ namespace Team.Gameplay.LevelSystem
 
         #region Level Objects Region
 
-        public void AddLevel(Level level)
+        public void AddLevel(UILevel level)
         {
             if (LevelObjects.Contains(level)) return;
 
@@ -93,7 +95,7 @@ namespace Team.Gameplay.LevelSystem
 
         private void UnSubscribeEvents()
         {
-            foreach (Level level in LevelObjects)
+            foreach (UILevel level in LevelObjects)
             {
                 level.OnCompletedLevel -= OnLevelCompleted;
             }
@@ -121,13 +123,18 @@ namespace Team.Gameplay.LevelSystem
             levelToCompleteRequirement = chapterData.LevelsToCompleteToUnlock;
 
             //Populate self name
-            chapterTitleText.text = chapterData.Data.ChapterName;
+
+            UIChapterInfo info = new UIChapterInfo(chapterData.Data.ChapterName, chapterData.Data.ChapterSprite, chapterData.Data.ChapterNumberSprite);
+            UIChapter.PopulateChapterInfo(info);
+
+            //chapterTitleText.text = chapterData.Data.ChapterName;
 
             //Generate all level objects
-            CreateLevelUI();
+            //CreateLevelUI();
+            LoadAllLevels();
 
             //Update canvas group to interactable/uninteractable
-            if(Status == ChapterState.LOCKED)
+            if (Status == ChapterState.LOCKED)
             {
                 MakeUnInteractable();
             }
@@ -137,32 +144,40 @@ namespace Team.Gameplay.LevelSystem
             }
         }
 
+        private void LoadAllLevels()
+        {
+            foreach (var levelSO in chapterData.Data.Levels)
+            {
+                LevelManager.Instance.AllLevels.Add(new LevelPacket(CurrentChapterID,levelSO.Data));
+            }
+        }
+
         public void CreateLevelUI()
         {
             foreach(var levelSO in chapterData.Data.Levels)
             {
-                var level = Instantiate(uiLevelPrefab, chapterHolderTransform).GetComponent<Level>();
-                level.PopulateLevelInfo(levelSO);
+                //var level = Instantiate(uiLevelPrefab, chapterHolderTransform).GetComponent<UILevel>();
+                //level.PopulateLevelInfo(levelSO);
 
-                //Populate Level Manager with Level
-                LevelManager.Instance.AddLevelToMap(level);
+                ////Populate Level Manager with Level
+                //LevelManager.Instance.AddLevelToMap(level);
 
-                //Add local listener to the chapter
-                AddLevel(level);
+                ////Add local listener to the chapter
+                //AddLevel(level);
 
-                //Load the level with its relevant chapter id
-                level.ChapterID = CurrentChapterID;
+                ////Load the level with its relevant chapter id
+                //level.ChapterID = CurrentChapterID;
             }
         }
 
         private void MakeInteractable()
         {
-            chapterCanvasGroup.interactable = true;
+            //chapterCanvasGroup.interactable = true;
         }
 
         private void MakeUnInteractable()
         {
-            chapterCanvasGroup.interactable = false;
+            //chapterCanvasGroup.interactable = false;
         }
 
         #endregion
@@ -182,11 +197,11 @@ namespace Team.Gameplay.LevelSystem
 
         public void OnChapterCompletedLevels(List<LevelID> levelIds)
         {
-            foreach (var id in levelIds)
-            {
-                var level = LevelObjects.FirstOrDefault(x => x.LevelID == id);
-                level.OnLevelCompleted(true);
-            }
+            //foreach (var id in levelIds)
+            //{
+            //    var level = LevelObjects.FirstOrDefault(x => x.LevelID == id);
+            //    level.OnLevelCompleted(true);
+            //}
         }
 
         #endregion

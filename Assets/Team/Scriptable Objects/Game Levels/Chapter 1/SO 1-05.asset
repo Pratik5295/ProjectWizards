@@ -15,7 +15,12 @@ MonoBehaviour:
   Data:
     Stats:
       LevelID: 4
-      LevelName: 1-05
+      LevelName: 'Proud Craftsmen '
+      LevelDescription: "The admired Stoyniki, craftsmen able to enhance their creations
+        with magic, leave the comfort of Zagorod and go north to help control skirmishes\u2026"
+      LevelObjectives:
+      - Defeat the highlighted Zemir mage.
+      - Ensure the highlighted Stoynik mage reaches the target goal safely.
       State: 1
       NextLevel: 5
     GameLevelPrefab: {fileID: 1803155446698858720, guid: 355e8014e849bc74dacd60c165095e64, type: 3}
@@ -30,10 +35,12 @@ MonoBehaviour:
         Data4: 0
       Path: 
     TutorialSteps:
-    - message: 1/2 <br> <br>This is an explosive barrel. When hit by a fire projectile,
+    - header: 
+      message: 1/2 <br> <br>This is an explosive barrel. When hit by a fire projectile,
         they explode in an area around them and destroy anything on the tiles. <br><br>
         Click the box to dismiss.
-      uiElement: 0
-    - message: 2/2 <br><br> You can hover or left-click over barrels to see the area
+      uiElement: 6
+    - header: 
+      message: 2/2 <br><br> You can hover or left-click over barrels to see the area
         affected. <br> <br>Click the box to dismiss.
-      uiElement: 0
+      uiElement: 6

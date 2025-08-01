@@ -7,12 +7,12 @@ namespace Team.UI
     {
         public void OnNewGameClicked()
         {
-            UIManager.Instance.ShowLevelSelectionUI();
+            UIManager.Instance.ShowChapterSelectionUI();
         }
 
         public void OnLoadGameClicked()
         {
-            UIManager.Instance.ShowLevelSelectionUI();
+            UIManager.Instance.ShowChapterSelectionUI();
         }
 
         public void OnQuitGameClicked()

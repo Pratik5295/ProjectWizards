@@ -36,6 +36,8 @@ namespace Team.Gameplay.ObjectiveSystem
 
         public string Description => "Loading Objectives...";
 
+        public Action OnObjectivesCheckCompletedEvent;
+
         private void Awake()
         {
             if (Instance == null)
@@ -219,6 +221,9 @@ namespace Team.Gameplay.ObjectiveSystem
             if (levelCompleted)
             {
                 float screenEffectValue = 0f;
+                VFXManager ConfettiEffect = Camera.main.GetComponentInChildren<VFXManager>();
+                if (ConfettiEffect) { ConfettiEffect.EnableParticleEffectChildren(); }
+
                 DOTween.To(() => screenEffectValue, x =>
                 { screenEffectValue = x; PostProcessManager.instance.EnableDisableWinEffect(x); },
                     1f, 
@@ -235,9 +240,10 @@ namespace Team.Gameplay.ObjectiveSystem
                              Invoke(nameof(ShowLevelCompletedUI), MetaConstants.ShowPostGameScreenAfter);
                         });
                     }); 
-
-
-
+            }
+            else
+            {
+                OnObjectivesCheckCompletedEvent?.Invoke();
             }
         }
 

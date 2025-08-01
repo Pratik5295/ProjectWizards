@@ -7,6 +7,8 @@ namespace Team.UI
 {
     public class UIObjective : MonoBehaviour
     {
+        [SerializeField] private TextMeshProUGUI _objectiveTextBox;
+
         [SerializeField]
         private TextMeshProUGUI objectiveText;
 
@@ -59,11 +61,13 @@ namespace Team.UI
             switch (_priority)
             {
                 case ObjectivePriority.PRIMARY:
-                    iconImage.sprite = primarySprite;
+                    //iconImage.sprite = primarySprite;
+                    _objectiveTextBox.text = "Primary Objective:";
                     break;
 
                 case ObjectivePriority.SECONDARY:
-                    iconImage.sprite = secondarySprite;
+                    //iconImage.sprite = secondarySprite;
+                    _objectiveTextBox.text = "Secondary Objective:";
                     break;
 
                 default:

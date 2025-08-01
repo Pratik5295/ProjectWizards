@@ -15,7 +15,13 @@ MonoBehaviour:
   Data:
     Stats:
       LevelID: 2
-      LevelName: 1-03
+      LevelName: The Messenger
+      LevelDescription: "Storms ravage the land and water is freezing over during
+        Harvest, a sign that the gods are angry. A mysterious messenger travelling
+        through one such mountain village requires aid from the local mages in order
+        to pass\u2026"
+      LevelObjectives:
+      - Ensure the highlighted Zemir mage reaches the target goal safely.
       State: 1
       NextLevel: 3
     GameLevelPrefab: {fileID: 2859916604523878457, guid: 9b49ea9874b294f45b0764f62a977b15, type: 3}
@@ -30,7 +36,8 @@ MonoBehaviour:
         Data4: 0
       Path: 
     TutorialSteps:
-    - message: 1/1 <br> <br>Ice tiles are a tile variation. Mages who are pushed
+    - header: 
+      message: 1/1 <br> <br>Ice tiles are a tile variation. Mages who are pushed
         onto ice tiles slide in the same direction until they land on a different
         tile. <br><br> Click the box to dismiss.
-      uiElement: 0
+      uiElement: 6

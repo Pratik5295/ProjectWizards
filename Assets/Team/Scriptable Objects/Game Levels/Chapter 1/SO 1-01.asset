@@ -15,7 +15,13 @@ MonoBehaviour:
   Data:
     Stats:
       LevelID: 0
-      LevelName: 1-01
+      LevelName: Disciples from the Garden
+      LevelDescription: The Vetruni, protectors of the woodlands, were the first
+        to act. Small detachments made their way towards Castle Groznik to stop rebels
+        from advancing. One such group is found near the main road, honing their
+        skills while waiting to catch any so-called traitor...
+      LevelObjectives:
+      - Ensure the highlighted Vetrun mage reaches the target goal safely.
       State: 1
       NextLevel: 1
     GameLevelPrefab: {fileID: 2412565330083962340, guid: 448c7706f26506e47b37e5e0779a414c, type: 3}
@@ -30,8 +36,9 @@ MonoBehaviour:
         Data4: 0
       Path: 
     TutorialSteps:
-    - message: 1/1 <br> <br>Some levels include multiple mages of the same type.
+    - header: 
+      message: 1/1 <br> <br>Some levels include multiple mages of the same type.
         Each mage is assigned a unique number in the Turn Order Bar to tell them
         apart. To see these numbers displayed on the board, click the Unit Numbers
         button. <br><br> Click here to dismiss.
-      uiElement: 0
+      uiElement: 1

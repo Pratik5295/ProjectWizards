@@ -15,7 +15,12 @@ MonoBehaviour:
   Data:
     Stats:
       LevelID: 6
-      LevelName: 2-01
+      LevelName: A Last Stand
+      LevelDescription: The rebel forces reach the holy site quickly, almost uninterrupted
+        by the Defenders. At early dawn, taken by complete surprise, the few loyalists
+        present try to mount a defense...
+      LevelObjectives:
+      - Defeat the highlighted Vetrun mage.
       State: 1
       NextLevel: 7
     GameLevelPrefab: {fileID: 6475981915181890083, guid: 445ca1004aa74c542ab6f1ec0f067f85, type: 3}
@@ -30,6 +35,7 @@ MonoBehaviour:
         Data4: 0
       Path: 
     TutorialSteps:
-    - message: 1/1 <br> <br>Cursed tiles are a tile variation. Mages who land on
+    - header: 
+      message: 1/1 <br> <br>Cursed tiles are a tile variation. Mages who land on
         this tile are immediately destroyed. <br> <br>Click the box to dismiss.
-      uiElement: 0
+      uiElement: 5

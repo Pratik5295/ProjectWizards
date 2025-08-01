@@ -15,11 +15,24 @@ MonoBehaviour:
   Data:
     Stats:
       LevelID: 17
-      LevelName: Level 0-06
+      LevelName: Koschev's Rebellion
+      LevelDescription: The time has come. Mass desertion and infighting takes over
+        Volshavia, as a state of confusion and anger turns friendship into hatred
+        and life into death. The first organised rebel forces step out of Castle
+        Groznik and are met with immediate resistance...
+      LevelObjectives:
+      - Ensure all mages survive.
       State: 1
       NextLevel: -100
     GameLevelPrefab: {fileID: 8013481686207207643, guid: ea29b70254b33de4b8cbf455702307fc, type: 3}
     EnvironmentPrefab: {fileID: 573041560392627169, guid: 9a9b9829f6c83ba47948e1b439322926, type: 3}
     DialogueAsset: {fileID: 0}
     HasBreakPoint: 0
+    s_ambience:
+      Guid:
+        Data1: 0
+        Data2: 0
+        Data3: 0
+        Data4: 0
+      Path: 
     TutorialSteps: []
