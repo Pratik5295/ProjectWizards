@@ -18,7 +18,8 @@ namespace Team.GameConstants
             L_BoardBox,
             TurnOrderBox,
             ObjectiveBox,
-            PlayBox
+            PlayBox,
+            ExplosiveBox
 
         }
     }
