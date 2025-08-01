@@ -1,6 +1,7 @@
 using DG.Tweening;
 using Team.Data;
 using Team.Managers;
+using TMPro;
 using UnityEngine;
 
 namespace Team.UI
@@ -15,6 +16,9 @@ namespace Team.UI
 
         [SerializeField]
         private CanvasGroup turnOrderParent;
+
+        [SerializeField]
+        private TextMeshProUGUI levelTitleText;
 
         public void PopulateInfoPanel(CharacterDataStruct _data)
         {
@@ -50,6 +54,11 @@ namespace Team.UI
                 turnOrderParent.interactable = false;
                 turnOrderParent.blocksRaycasts = false;
             });
+        }
+
+        public void SetLevelTitleText(string _title)
+        {
+            levelTitleText.text = _title;
         }
     }
 }

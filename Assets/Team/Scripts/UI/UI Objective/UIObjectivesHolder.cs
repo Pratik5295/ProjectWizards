@@ -10,18 +10,12 @@ namespace Team.UI
         [SerializeField]
         private GameObject uiObjectivePrefab;
 
-        [SerializeField]
-        private TextMeshProUGUI levelTitleText;
 
         [SerializeField]
         private Transform objectivesHolder;
 
         public Dictionary<GameObjectiveData, UIObjective> UIObjectivesMap = new Dictionary<GameObjectiveData, UIObjective>();
 
-        public void SetLevelTitle(string _title)
-        {
-            levelTitleText.text = _title;
-        }
 
         public void AddObjective(GameObjectiveData _data)
         {

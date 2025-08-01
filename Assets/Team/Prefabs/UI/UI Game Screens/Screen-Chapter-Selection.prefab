@@ -1275,11 +1275,23 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4755168514626189902, guid: 8e39f3e4e6b6127439e3e0d8fac6ae5d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4755168514626189902, guid: 8e39f3e4e6b6127439e3e0d8fac6ae5d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1088341111078090936}
     - target: {fileID: 4755168514626189902, guid: 8e39f3e4e6b6127439e3e0d8fac6ae5d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 2653554668717512936}
+    - target: {fileID: 4755168514626189902, guid: 8e39f3e4e6b6127439e3e0d8fac6ae5d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4755168514626189902, guid: 8e39f3e4e6b6127439e3e0d8fac6ae5d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4755168514626189902, guid: 8e39f3e4e6b6127439e3e0d8fac6ae5d, type: 3}
@@ -1288,6 +1300,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4755168514626189902, guid: 8e39f3e4e6b6127439e3e0d8fac6ae5d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Team.UI.UIChapterSelect, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4755168514626189902, guid: 8e39f3e4e6b6127439e3e0d8fac6ae5d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: Team.UI.UIChapterSelect, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4755168514626189902, guid: 8e39f3e4e6b6127439e3e0d8fac6ae5d, type: 3}
