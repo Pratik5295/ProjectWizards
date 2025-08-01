@@ -36,6 +36,8 @@ namespace Team.Gameplay.ObjectiveSystem
 
         public string Description => "Loading Objectives...";
 
+        public Action OnObjectivesCheckCompletedEvent;
+
         private void Awake()
         {
             if (Instance == null)
@@ -238,9 +240,10 @@ namespace Team.Gameplay.ObjectiveSystem
                              Invoke(nameof(ShowLevelCompletedUI), MetaConstants.ShowPostGameScreenAfter);
                         });
                     }); 
-
-
-
+            }
+            else
+            {
+                OnObjectivesCheckCompletedEvent?.Invoke();
             }
         }
 
