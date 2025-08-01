@@ -590,7 +590,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1693800436668302920, guid: 8e39f3e4e6b6127439e3e0d8fac6ae5d, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1693800436668302920, guid: 8e39f3e4e6b6127439e3e0d8fac6ae5d, type: 3}
       propertyPath: m_AnchorMin.x
@@ -598,7 +598,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1693800436668302920, guid: 8e39f3e4e6b6127439e3e0d8fac6ae5d, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1693800436668302920, guid: 8e39f3e4e6b6127439e3e0d8fac6ae5d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -630,11 +630,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1693800436668302920, guid: 8e39f3e4e6b6127439e3e0d8fac6ae5d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 420
       objectReference: {fileID: 0}
     - target: {fileID: 1693800436668302920, guid: 8e39f3e4e6b6127439e3e0d8fac6ae5d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 1693800436668302920, guid: 8e39f3e4e6b6127439e3e0d8fac6ae5d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -683,6 +683,10 @@ PrefabInstance:
     - target: {fileID: 7984102954111906859, guid: 8e39f3e4e6b6127439e3e0d8fac6ae5d, type: 3}
       propertyPath: m_Name
       value: Button-Continue
+      objectReference: {fileID: 0}
+    - target: {fileID: 7984102954111906859, guid: 8e39f3e4e6b6127439e3e0d8fac6ae5d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -805,7 +809,7 @@ PrefabInstance:
     - target: {fileID: 6642835871202401259, guid: 8e39f3e4e6b6127439e3e0d8fac6ae5d, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 49cc501e1cb66114eb714fbc74f63cca, type: 3}
+      objectReference: {fileID: 21300000, guid: 1b62e375d04c80d41a2de637d9f5a246, type: 3}
     - target: {fileID: 7984102954111906859, guid: 8e39f3e4e6b6127439e3e0d8fac6ae5d, type: 3}
       propertyPath: m_Name
       value: Button-New-Game (1)
