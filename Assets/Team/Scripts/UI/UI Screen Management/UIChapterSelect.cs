@@ -89,6 +89,8 @@ namespace Team.UI
         public void GoBackToMainMenu()
         {
             UIManager.Instance.ShowMenuUI();
+
+            ResetChapterScroll(true);
         }
 
         public void OnSelectButtonClicked()
@@ -105,5 +107,24 @@ namespace Team.UI
             //Go to level selection screen
             UIManager.Instance.ShowLevelSelectionUI();
         }
+
+        public void ResetChapterScroll(bool instant = false)
+        {
+            currentChapterIndex = 0;
+
+            float targetX = 0f;
+
+            if (instant)
+            {
+                // Instantly move to start
+                chapterContainer.anchoredPosition = new Vector2(targetX, chapterContainer.anchoredPosition.y);
+            }
+            else
+            {
+                // Animate to start
+                chapterContainer.DOAnchorPosX(targetX, animationDuration).SetEase(Ease.InOutCubic);
+            }
+        }
+
     }
 }

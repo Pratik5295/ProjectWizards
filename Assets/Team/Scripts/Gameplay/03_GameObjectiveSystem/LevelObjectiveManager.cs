@@ -145,7 +145,6 @@ namespace Team.Gameplay.ObjectiveSystem
 
                 _levelObjectives.Add(objective);
 
-                objectivesHolder.SetLevelTitle("Disciples of the Garden");
                 objectivesHolder.AddObjective(data);
 
                 // Report progress

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Team.Data;
+using Team.Gameplay.LevelSystem;
 using Team.Gameplay.ObjectiveSystem;
 using Team.Gameplay.Tutorial;
 using Team.UI;
@@ -14,6 +15,8 @@ namespace Team.Managers
         public static UIManager Instance = null;
 
         private GameTurnManager _turnManager;
+
+        private LevelManager _levelManager;
 
         [SerializeField]
         private LevelObjectiveManager levelObjectiveManager;
@@ -60,6 +63,8 @@ namespace Team.Managers
             _screenManager = GetComponent<ScreenManager>();
             levelObjectiveManager = LevelObjectiveManager.Instance;
 
+            _levelManager = LevelManager.Instance;
+
 
             //Forced to show level selection as the first screen
             ShowMenuUI();
@@ -86,6 +91,12 @@ namespace Team.Managers
 
             //Initialize Tutorial Manager
             _tutorialManager = _tutorialManager.InitializeTutorialsUI(); //Updates itself with the newer instance
+
+            if(_levelManager != null)
+            {
+                _levelManager.OnCurrentLevelUpdated += OnLevelUpdated;
+
+            }
         }
 
         private void OnDestroy()
@@ -102,6 +113,11 @@ namespace Team.Managers
             if (levelObjectiveManager != null)
             {
                 levelObjectiveManager.OnObjectivesCheckCompletedEvent -= OnObjectiveCheckCompletedHandler;
+            }
+
+            if (_levelManager != null)
+            {
+                _levelManager.OnCurrentLevelUpdated -= OnLevelUpdated;
             }
         }
 
@@ -246,5 +262,16 @@ namespace Team.Managers
 
         #endregion
 
+
+        public void UpdateLevelTitleOnObjectives(string _title)
+        {
+            gameScreen.SetLevelTitleText(_title);
+        }
+
+        private void OnLevelUpdated(LevelData _data)
+        {
+            UpdateLevelTitleOnObjectives(_data.Stats.LevelName);
+
+        }
     }
 }
