@@ -1,9 +1,9 @@
 === OnClick ===
-- The spirits have spoken.
-- My powers are all around you.
-- Don't walk into a storm...
-- Spirits, guide my hand.
-- I have to protect my home.
+- Spirits have spoken.
+- I am chosen!
+- Storm is coming...
+- Guide my hand...
+- I fight for them.
 ->DONE
 
 === OnCast ===

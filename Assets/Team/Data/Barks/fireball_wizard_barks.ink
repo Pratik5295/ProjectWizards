@@ -1,15 +1,13 @@
 === OnClick ===
-- Perun, make me mighty!
 - Flame guide me.
-- What to do...
-- Foul traitors, just you wait!
-- We must restore Perun's trust in us.
+- What now...
+- Foul traitors!
+- Why, Perun?
 ->DONE
 
 === OnCast ====
 - Burn!
 - For Perun!
 - Fall, traitor!
-- I'll reduce you to cinders!
-- The Flame shall cleanse you!
+- Reduced to cinders!
 ->DONE
