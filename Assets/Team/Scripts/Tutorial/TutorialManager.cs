@@ -56,6 +56,7 @@ namespace Team.Managers
 
         public void StartTutorial()
         {
+            GameInputManager.Instance.canInteract = false;
             currentIndex = 0;
             var step = tutorialSteps[0];
 
@@ -76,6 +77,8 @@ namespace Team.Managers
                 UIManager.Instance.OnTutorialCompleted();
 
                 ClearTutorialSteps();
+
+                GameInputManager.Instance.canInteract = true;
             }
             else
             {

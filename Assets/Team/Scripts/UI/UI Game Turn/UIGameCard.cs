@@ -170,6 +170,7 @@ namespace Team.UI.Gameplay
             {
                 characterRef.SetGhosting(false);
             }
+            characterRef.HideOutline();
 
             UnhighlightCard();
         }

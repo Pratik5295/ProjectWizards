@@ -745,6 +745,11 @@ public class Base_Ch : MonoBehaviour, IMoveable, IProjectileHittable, IUsableAbi
         }
     }
 
+    public void HideOutline()
+    {
+        CharacterReskinner.HideOutline();
+    }
+
     public void ToggleGhosting()
     {
         if (_ghosting == null) return;

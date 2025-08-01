@@ -45,7 +45,7 @@ public class ObjectClickable : MonoBehaviour
 
     public void HoveredObject()
     {
-        if (isHovered) return;
+        if (isHovered || !GameInputManager.Instance.canInteract) return;
 
         isHovered = true;
         onHovered?.Invoke(true);
@@ -53,7 +53,7 @@ public class ObjectClickable : MonoBehaviour
 
     public void UnhoveredObject()
     {
-        if (!isHovered) return;
+        if (!isHovered || !GameInputManager.Instance.canInteract) return;
 
         isHovered = false;
         onHovered?.Invoke(false);

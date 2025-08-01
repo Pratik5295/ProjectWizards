@@ -52,7 +52,8 @@ public class Racoon : MonoBehaviour
             //Orient the projectile, if the direction is valid.
             if (direction != Vector3.zero)
             {
-                transform.forward = direction.normalized;
+                Quaternion lookRotation = Quaternion.LookRotation(direction.normalized, Vector3.up);
+                _mesh.transform.localRotation = lookRotation * Quaternion.Euler(0, 0f, 0);
             }
 
             if (t >= 1f || time >= _lifespan)
