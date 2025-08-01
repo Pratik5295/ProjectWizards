@@ -95,11 +95,12 @@ namespace Team.UI
         {
             //Set The Current selected chapter
             ChapterID currentChapter = ChapterInfo[currentChapterIndex].Data.ChapterID;
+            string ChapterTitle = ChapterInfo[currentChapterIndex].Data.ChapterName;
 
             ChapterManager.Instance.SelectCurrentChapter(currentChapter);
 
             //Fill up level selection info
-            levelSelectionScreen.PopulateLevelsForChapter(currentChapter);
+            levelSelectionScreen.PopulateLevelsForChapter(currentChapter, ChapterTitle);
 
             //Go to level selection screen
             UIManager.Instance.ShowLevelSelectionUI();

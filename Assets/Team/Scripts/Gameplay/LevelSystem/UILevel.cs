@@ -29,6 +29,9 @@ namespace Team.Gameplay.LevelSystem
         private Image levelImage;
 
         [SerializeField]
+        private GameObject outlineImage;
+
+        [SerializeField]
         private Button button;  //Temporary will be removed later
 
         public bool IsCompleted => Status == LevelState.COMPLETED;
@@ -40,6 +43,13 @@ namespace Team.Gameplay.LevelSystem
         public void Reset()
         {
             levelImage.sprite = defaultIcon;
+
+            UnSelected();
+        }
+
+        private void Start()
+        {
+            UnSelected();
         }
 
 
@@ -89,6 +99,16 @@ namespace Team.Gameplay.LevelSystem
                     SaveManager.Instance.UpdateLevelCompletedOnChapter(ChapterID, LevelID);
                 }
             }
+        }
+
+        public void UnSelected()
+        {
+            outlineImage.SetActive(false);
+        }
+
+        public void Selected()
+        {
+            outlineImage.SetActive(true);
         }
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Team.Data;
+using Team.Gameplay.ObjectiveSystem;
 using Team.Gameplay.Tutorial;
 using Team.UI;
 using Team.UI.DialogueSystem;
@@ -13,6 +14,9 @@ namespace Team.Managers
         public static UIManager Instance = null;
 
         private GameTurnManager _turnManager;
+
+        [SerializeField]
+        private LevelObjectiveManager levelObjectiveManager;
 
         [Header("Components")]
 
@@ -54,6 +58,8 @@ namespace Team.Managers
         {
             _turnManager = GameTurnManager.Instance;
             _screenManager = GetComponent<ScreenManager>();
+            levelObjectiveManager = LevelObjectiveManager.Instance;
+
 
             //Forced to show level selection as the first screen
             ShowMenuUI();
@@ -69,6 +75,11 @@ namespace Team.Managers
             else
             {
                 Debug.LogWarning("Turn Manager was not found",gameObject);
+            }
+
+            if(levelObjectiveManager != null)
+            {
+                levelObjectiveManager.OnObjectivesCheckCompletedEvent += OnObjectiveCheckCompletedHandler;
             }
 
             OnTurnResetCompletedHandler();
@@ -87,12 +98,22 @@ namespace Team.Managers
                 _turnManager.OnPlayedTillBreakpoint -= OnReachedBreakpointHandler;
                 _turnManager.OnRestartProcessingEvent -= OnTurnResetStartedHandler;
             }
+
+            if (levelObjectiveManager != null)
+            {
+                levelObjectiveManager.OnObjectivesCheckCompletedEvent -= OnObjectiveCheckCompletedHandler;
+            }
+        }
+
+        private void OnObjectiveCheckCompletedHandler()
+        {
+            restartButton.SetActive(true);
         }
 
         private void OnRoundTurnsCompletedHandler()
         {
             playButton.SetActive(false);
-            restartButton.SetActive(true);
+            //restartButton.SetActive(true);
         }
 
 

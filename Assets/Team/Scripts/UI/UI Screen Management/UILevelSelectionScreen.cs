@@ -3,6 +3,7 @@ using Team.Managers;
 using UnityEngine;
 using static Team.GameConstants.LevelConstants;
 using System.Linq;
+using TMPro;
 
 namespace Team.UI
 {
@@ -15,14 +16,18 @@ namespace Team.UI
         [SerializeField]
         private UILevelPanel infoPanel;
 
+        [SerializeField]
+        private TextMeshProUGUI ChapterTitle;
+
 
         public void OnBackButtonClicked()
         {
             UIManager.Instance.ShowChapterSelectionUI();
         }
 
-        public void PopulateLevelsForChapter(ChapterID _currentChapter)
+        public void PopulateLevelsForChapter(ChapterID _currentChapter, string _chapterTitle)
         {
+            ChapterTitle.text = _chapterTitle;
             //Get List 
 
             var list 
